@@ -1,11 +1,12 @@
 json: JSON.stringify
 
-get '*', (path) ->
-  host: @headers.host
-  if false # host == 'nodeknockout.com' or host == 'nodeknockout.heroku.com'
-    @redirect 'www.nodeknockout.com' + path
+get '/', ->
+  [host, path]: [@headers.host, @url.href]
+  if true # host == 'nodeknockout.com' or host == 'nodeknockout.heroku.com
+    @render 'request.html.haml', { locals: { request: require('sys').inspect(this) } }
+    # @redirect 'http://www.nodeknockout.com' + path
   else
-    @pass path
+    @pass()
 
 get '/', ->
   @render 'index.html.haml'
