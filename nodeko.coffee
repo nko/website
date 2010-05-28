@@ -2,7 +2,7 @@ json: JSON.stringify
 
 get '*', (path) ->
   host: @headers.host
-  if host == 'nodeknockout.com' or host == 'nodeknockout.heroku.com'
+  if false # host == 'nodeknockout.com' or host == 'nodeknockout.heroku.com'
     @redirect 'www.nodeknockout.com' + path
   else
     @pass path
