@@ -1,9 +1,63 @@
+// http://kuler.adobe.com/#themeID/337112
+!black = #10222B
+!dark_green = #95AB63
+!light_green = #BDD684
+!light_blue = #95b1b5
+!white = #F6FFF0
+
 body
   :padding 0
   :margin 0
-  :background-image url("/images/nodeko.png")
-  :background-repeat no-repeat
-  :background-attachment fixed
-  :background-position 50% 40%
-  *
-    :display none
+  :text-align center
+  :min-height 800px
+  :background-color !black
+  //:background -webkit-gradient(linear, left top, left bottom, from(!light_blue), to(!black))
+
+a:link, a:visited
+  :color !light_blue
+  :text-decoration none
+a:hover
+  :text-decoration underline
+
+#page
+  :margin 20px auto
+  :width 600px
+  :text-align left
+  :background-color !white
+  :border solid 1px rgba(0, 0, 0, 0.5)
+  :padding 1em 20px
+  :-webkit-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
+  :-moz-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
+  :color !black
+  p
+    :line-height 1.6em
+    &.center
+      :text-align center
+  .button
+    :background-color !light_blue
+    :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.6)), to(rgba(255, 255, 255, 0.1)))
+    &:active
+      :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.2)), to(rgba(255, 255, 255, 0.3)))
+    :border solid 1px !light_blue
+    :padding 10px
+    :color !white
+    :text-shadow 0px -1px 0px rgba(0, 0, 0, 0.15)
+    :-webkit-border-radius 3px
+    :-moz-border-radius 3px
+  .ribbon
+    :background-color !light_green
+    :padding 10px
+    :margin 0px 0px 0px -25px
+    :padding-left 25px
+    :color !white
+    :text-shadow 0px -1px 0px rgba(0, 0, 0, 0.15)
+    :-webkit-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
+    :-moz-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
+    a
+      :text-shadow 0px 1px 0px rgba(255, 255, 255, 0.3)
+  .footer
+    :margin-top 3em
+    :font-size small
+    .vr
+      :margin 1ex
+      :color rgba(255, 255, 255, 0.6)
