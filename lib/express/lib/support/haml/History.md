@@ -1,4 +1,22 @@
 
+0.4.4 / 2010-05-27
+==================
+
+  * Fixed arbitrary whitespace support
+
+0.4.3 / 2010-05-25
+==================
+
+  * Fixed support for CRLF / CR line-endings, converted on input
+  * Exporting HamlError
+
+0.4.2 / 2010-05-25
+==================
+
+  * Added HamlError
+  * Buffer newline indentation. Closes #23
+  * Benchmarks with node-bench
+
 0.4.1 / 2010-05-17
 ==================
 
