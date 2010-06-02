@@ -6,6 +6,7 @@
 !white = #F6FFEF
 
 body
+  :font-family 'helvetica neue', helvetica, arial, sans-serif
   :padding 0
   :margin 0
   :text-align center
@@ -45,8 +46,10 @@ a:hover
     :-moz-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
     :background-color !light_blue
     :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.6)), to(rgba(255, 255, 255, 0.1)))
+    :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1))
     &:active
       :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.2)), to(rgba(255, 255, 255, 0.3)))
+      :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3))
     :border solid 1px !light_blue
     :padding 15px
     :color !white
