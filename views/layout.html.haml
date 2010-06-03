@@ -6,7 +6,30 @@
     %meta{ name: 'apple-mobile-web-app-capable', content: 'yes' }
     %meta{ name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }
     %link{ rel: 'stylesheet', type: 'text/css', href: '/application.css' }
+    :javascript
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16773586-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+  %body
+    != body
     %script{ src: 'http://code.jquery.com/jquery.min.js', type: 'text/javascript' }
     %script{ src: '/javascripts/underscore.min.js', type: 'text/javascript' }
     %script{ src: '/application.js', type: 'text/javascript' }
-  %body!= body
+    :javascript
+      $(function() {
+        $('a').click(function() {
+          var href = this.href;
+          try {
+            if(/^https?:/.test(href)) {
+              _gaq.push(['_trackPageview', href]);
+              setTimeout('document.location = "' + href + '"', 100);
+              return false;
+            }
+          } catch(e) {}
+        });
+      });
