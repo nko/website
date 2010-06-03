@@ -1,7 +1,7 @@
 get /.*/, ->
   [host, path]: [@headers.host, @url.href]
   if host == 'www.nodeknockout.com' or host == 'nodeknockout.heroku.com'
-    @redirect 'http://nodeknockout.com' + path
+    @redirect 'http://nodeknockout.com' + path, 301
   else
     @pass()
 
