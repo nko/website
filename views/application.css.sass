@@ -12,7 +12,8 @@ body
   :text-align center
   :min-height 800px
   :background-color !black
-  //:background -webkit-gradient(linear, left top, left bottom, from(!light_blue), to(!black))
+  :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.3)), to(transparent))
+  :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.3), transparent)
 
 a:link, a:visited
   :color !light_blue
@@ -24,7 +25,7 @@ a:hover
   :margin 20px auto
   :width 70ex
   :text-align left
-  :background-color !white
+  :background !white url('/images/noise.png')
   :border solid 1px rgba(0, 0, 0, 0.5)
   :padding 1em 20px
   :-webkit-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
