@@ -58,10 +58,10 @@ lib/nodeunit:
 lib/socket.io: 
   branch: master
   remote: braid/lib/socket.io
-  revision: fbce6379a5065b5c5b95a3eaeabf57a555557548
+  revision: 71d80181fa83eec8b647f198bb473ebee38f8df4
   squashed: true
   type: git
-  url: http://github.com/LearnBoost/Socket.IO-node.git
+  url: git://github.com/visnup/Socket.IO-node.git
 lib/socket.io/lib/vendor/js-oo: 
   branch: master
   remote: braid/lib/socket.io/lib/vendor/js-oo
