@@ -1,3 +1,6 @@
+MongoDB: require('./lib/node-mongodb-native/lib/mongodb/db').Db
+MongoServer: require('./lib/node-mongodb-native/lib/mongodb/connection').Server
+
 get /.*/, ->
   [host, path]: [@headers.host, @url.href]
   if host == 'www.nodeknockout.com' or host == 'nodeknockout.heroku.com'
@@ -7,6 +10,11 @@ get /.*/, ->
 
 get '/', ->
   @render 'index.html.haml'
+
+get '/register', ->
+  server: new MongoServer 'localhost', 27017
+  db: new MongoDB 'nodeko', server
+  @render 'register.html.haml'
 
 get '/*.js', (file) ->
   try
