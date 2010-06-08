@@ -29,7 +29,7 @@ a:hover
   :display table-cell
   :vertical-align top
 
-.ribbon
+.ribbon, .localtime
   :display inline-block
   :background-color !light_green
   :border solid 1px !dark_green
@@ -65,6 +65,20 @@ a:hover
   p#date
     :text-align center
     :font-size x-large
+  time
+    :position relative
+    :overflow visible
+    :border-bottom 1px dotted !black
+    .localtime
+      :position absolute
+      :top -4em
+      :right 0em
+      :background rgba(255,255,255,0.9)
+      :border 1px solid !black
+      :color !black
+      :white-space nowrap
+      div
+        :font-size small
   p
     :line-height 1.5em
     &.center
