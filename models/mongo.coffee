@@ -19,6 +19,11 @@ _.extend Mongo, {
     _.extend klass, Mongo.ClassMethods
     klass
 
+  blessAll: (namespace) ->
+    for name, klass of namespace
+      klass::serialize: or name
+      @bless klass
+
   InstanceMethods: {
     collection: (fn) ->
       Mongo.db.collection @serializer.name, fn

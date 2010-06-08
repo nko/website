@@ -1,11 +1,8 @@
 Mongo: require('./mongo').Mongo
 
-class Team
-  serialize: 'Team'
-
+class exports.Team
   constructor: (options) ->
     @name: options?.name
-exports.Team: Mongo.bless Team
 
 # class Person extends MongoModel
 #   type: 'Person'
@@ -14,3 +11,5 @@ exports.Team: Mongo.bless Team
 #     @email: options?.email
 #     @password: options?.password
 #     @team: options?.team
+
+Mongo.blessAll exports
