@@ -11,8 +11,8 @@ class Mongo
     @server: new MongoServer @host, @port
     @db: new MongoDB @dbname, @server
     if @user?
-      @db.authenticate @user, @password, =>
-        @db.open -> # no callback
+      @db.open =>
+        @db.authenticate @user, @password, -> # no callback
     else @db.open -> # no callback
 
   parseUrl: (urlString)->
