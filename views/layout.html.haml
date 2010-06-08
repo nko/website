@@ -22,14 +22,10 @@
     %script{ src: '/application.js', type: 'text/javascript' }
     :javascript
       $(function() {
-        $('a').click(function() {
+        $('a').mousedown(function() {
           var href = this.href;
           try {
-            if(/^https?:/.test(href)) {
-              _gaq.push(['_trackPageview', href]);
-              setTimeout('document.location = "' + href + '"', 100);
-              return false;
-            }
+            if (/^https?:/.test(href)) _gaq.push(['_trackPageview', href]);
           } catch(e) {}
         });
       });
