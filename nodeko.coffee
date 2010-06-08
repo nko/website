@@ -1,5 +1,6 @@
-MongoDB: require('./lib/node-mongodb-native/lib/mongodb/db').Db
-MongoServer: require('./lib/node-mongodb-native/lib/mongodb/connection').Server
+sys: require 'sys'
+models: require './models/models'
+Team: models.Team
 
 get /.*/, ->
   [host, path]: [@headers.host, @url.href]
@@ -11,10 +12,23 @@ get /.*/, ->
 get '/', ->
   @render 'index.html.haml'
 
-get '/register', ->
-  server: new MongoServer 'localhost', 27017
-  db: new MongoDB 'nodeko', server
-  @render 'register.html.haml'
+get '/teams/new', ->
+  @team: new Team()
+  @render 'teams/new.html.haml'
+
+post '/teams', ->
+  @team: new Team(@params.post)
+  @team.save (error, res) =>
+    if error?
+      @error: error
+      @render 'teams/new.html.haml'
+    else
+      @redirect '/teams'
+
+get '/teams', ->
+  Team.all (error, teams) =>
+    @teams: teams
+    @render 'teams/list.html.haml'
 
 get '/*.js', (file) ->
   try
