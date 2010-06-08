@@ -1,13 +1,26 @@
 sys: require 'sys'
+url: require 'url'
 require '../public/javascripts/underscore'
 MongoDB: require('../lib/node-mongodb-native/lib/mongodb/db').Db
 MongoServer: require('../lib/node-mongodb-native/lib/mongodb/connection').Server
 
 class Mongo
+  localUrl: 'http://localhost:27017/nodeko'
   constructor: ->
-    @server: new MongoServer 'localhost', 27017
-    @db: new MongoDB 'nodeko', @server
-    @db.open -> # no callback
+    @parseUrl process.env['MONGOHQ_URL'] or @localUrl
+    @server: new MongoServer @host, @port
+    @db: new MongoDB @dbname, @server
+    if @user?
+      @db.authenticate @user, @password, =>
+        @db.open -> # no callback
+    else @db.open -> # no callback
+
+  parseUrl: (urlString)->
+    uri: url.parse urlString
+    @host: uri.hostname
+    @port: parseInt(uri.port)
+    @dbname: uri.pathname.replace(/^\//,'')
+    [@user, @password]: uri.auth.split(':') if uri.auth?
 exports.Mongo: Mongo
 
 _.extend Mongo, {
