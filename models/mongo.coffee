@@ -62,7 +62,7 @@ _.extend Mongo, {
   }
 
   ClassMethods: {
-    find: (query, fn) ->
+    first: (query, fn) ->
       @prototype.collection (error, collection) ->
         return fn error if error?
         collection.findOne Mongo.queryify(query), (error, item) ->

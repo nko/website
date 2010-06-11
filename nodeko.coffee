@@ -12,10 +12,12 @@ get /.*/, ->
 get '/', ->
   @render 'index.html.haml'
 
+# new team
 get '/teams/new', ->
   @team: new Team()
   @render 'teams/new.html.haml'
 
+# create team
 post '/teams', ->
   @team: new Team(@params.post)
   @team.save (error, res) =>
@@ -25,19 +27,22 @@ post '/teams', ->
     else
       @redirect '/teams'
 
+# list teams
 get '/teams', ->
   Team.all (error, teams) =>
     @teams: teams
     @render 'teams/list.html.haml'
 
+# show team
 get '/teams/:id', ->
-  Team.find @param('id'), (error, team) =>
+  Team.first @param('id'), (error, team) =>
     @team: team
     @invites: team.invites or []
     @render 'teams/show.html.haml'
 
-post '/teams/:id', -> # del not working
-  Team.find @param('id'), (error, team) =>
+# delete team
+post '/teams/:id', -> # delete not working
+  Team.first @param('id'), (error, team) =>
     team.remove (error, result) =>
       @redirect '/teams'
 
