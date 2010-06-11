@@ -1,3 +1,18 @@
+%h1 Register
+%p.note
+  Not sure? No worries! You can update these
+  details after registration too.
+
 %form{ method: 'POST', action: '/teams' }
-  %input{ type: 'text', placeholder: 'Team Name', name: 'name' }
+  %h2
+    %label{ for: 'name' } Team/Project Name
+  %input{ type: 'text', placeholder: 'Team Name', name: 'name', id: 'name' }
+
+  %h2 Members Emails
+  .note We don&rsquo;t spam.
+  %ol
+    - for (var i = 1; i < 5; i++)
+      %li
+        %input{ type: 'email', placeholder: 'member' + i + '@team.com', name: 'invites[]'}
+  .note Each team member will receive an e-mail with a password.
   %input{ type: 'submit', value: 'Register!' }

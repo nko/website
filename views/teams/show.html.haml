@@ -1,0 +1,18 @@
+.note
+  This is it for now.  We&rsquo;ll likely ask for more
+  details soon.
+
+%h1= this.team.name
+- if (this.members)
+  %h2 Members
+  %ul
+    - each member in this.members
+      %li
+        %a{ href: '/people/' + member.id() }= member.name
+- if (this.invites)
+  %h2 Invites
+  %ul
+  - each email in this.invites
+    %li
+      %a{ href: "mailto:" + email }= email
+      .button Resend

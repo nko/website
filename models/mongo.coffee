@@ -1,15 +1,16 @@
 sys: require 'sys'
 url: require 'url'
 require '../public/javascripts/underscore'
-MongoDB: require('../lib/node-mongodb-native/lib/mongodb/db').Db
+MongoDb: require('../lib/node-mongodb-native/lib/mongodb/db').Db
 MongoServer: require('../lib/node-mongodb-native/lib/mongodb/connection').Server
+MongoId: require('../lib/node-mongodb-native/lib/mongodb/bson/bson').ObjectID
 
 class Mongo
   localUrl: 'http://localhost:27017/nodeko'
   constructor: ->
     @parseUrl process.env['MONGOHQ_URL'] or @localUrl
     @server: new MongoServer @host, @port
-    @db: new MongoDB @dbname, @server
+    @db: new MongoDb @dbname, @server
     if @user?
       @db.open =>
         @db.authenticate @user, @password, -> # no callback
@@ -41,6 +42,8 @@ _.extend Mongo, {
     collection: (fn) ->
       Mongo.db.collection @serializer.name, fn
 
+    id: -> @_id.toHexString()
+
     save: (fn) ->
       @collection (error, collection) =>
         return fn error if error?
@@ -49,6 +52,12 @@ _.extend Mongo, {
   }
 
   ClassMethods: {
+    find: (query, fn) ->
+      query: { _id: MongoId.createFromHexString(query) } if _.isString query
+      @prototype.collection (error, collection) ->
+        return fn error if error?
+        collection.findOne query, fn
+
     all: (fn) ->
       @prototype.collection (error, collection) ->
         return fn error if error?

@@ -3,6 +3,7 @@ Mongo: require('./mongo').Mongo
 class exports.Team
   constructor: (options) ->
     @name: options?.name
+    @invites: _.compact(options?.invites or [])
 
 # class Person extends MongoModel
 #   type: 'Person'

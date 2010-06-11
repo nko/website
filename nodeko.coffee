@@ -30,6 +30,12 @@ get '/teams', ->
     @teams: teams
     @render 'teams/list.html.haml'
 
+get '/teams/:id', ->
+  Team.find @param('id'), (error, team) =>
+    @team: team
+    @invites: team?.invites or []
+    @render 'teams/show.html.haml'
+
 get '/*.js', (file) ->
   try
     @render "${file}.js.coffee", { layout: false }

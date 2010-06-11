@@ -11,5 +11,6 @@ configure(function() {
 require('express/plugins');
 use(Static); // required for public/[images, javascripts]
 use(Logger);
+use(MethodOverride); // required for put / del routes
 
 require('./nodeko')

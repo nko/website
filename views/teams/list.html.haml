@@ -1,4 +1,5 @@
 %ul
   - each team in this.teams
-    %li= team.name
+    %li
+      %a{ href: '/teams/' + team.id() }= team.name
 %a{ href: '/teams/new', class: 'button' } Register Now!
