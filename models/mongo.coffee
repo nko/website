@@ -38,6 +38,11 @@ _.extend Mongo, {
       klass::serialize: or name
       @bless klass
 
+  queryify: (query) ->
+    if _.isString query
+      { _id: MongoId.createFromHexString(query) }
+    else query
+
   InstanceMethods: {
     collection: (fn) ->
       Mongo.db.collection @serializer.name, fn
@@ -49,14 +54,20 @@ _.extend Mongo, {
         return fn error if error?
         serialized: Serializer.pack this
         collection.insert serialized, fn
+
+    remove: (fn) ->
+      @collection (error, collection) =>
+        return fn error if error?
+        collection.remove Mongo.queryify(@id()), fn
   }
 
   ClassMethods: {
     find: (query, fn) ->
-      query: { _id: MongoId.createFromHexString(query) } if _.isString query
       @prototype.collection (error, collection) ->
         return fn error if error?
-        collection.findOne query, fn
+        collection.findOne Mongo.queryify(query), (error, item) ->
+          return fn error if error?
+          fn null, Serializer.unpack item
 
     all: (fn) ->
       @prototype.collection (error, collection) ->

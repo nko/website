@@ -33,8 +33,13 @@ get '/teams', ->
 get '/teams/:id', ->
   Team.find @param('id'), (error, team) =>
     @team: team
-    @invites: team?.invites or []
+    @invites: team.invites or []
     @render 'teams/show.html.haml'
+
+post '/teams/:id', -> # del not working
+  Team.find @param('id'), (error, team) =>
+    team.remove (error, result) =>
+      @redirect '/teams'
 
 get '/*.js', (file) ->
   try
