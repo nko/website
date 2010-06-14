@@ -10,7 +10,7 @@ $ ->
     [y, m, d, h, i, s]: $this.attr('datetime').split(/[-:TZ]/)...
     ms: Date.UTC y, m-1, d, h, i, s
     dt: new Date(ms)
-    $('<div class="localtime">')
+    $('<div class="localtime blue">')
       .html("
         ${dt.strftime('%a %b %d, %I%P %Z').replace(/\b0/,'')}
         <div>${prettyDate(dt)}</div>

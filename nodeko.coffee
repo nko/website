@@ -56,6 +56,12 @@ get '/*.css', (file) ->
   @render "${file}.css.sass", { layout: false }
 
 get '/*', (file) ->
+  try
+    @render "${file}.html.haml"
+  catch e
+    @pass "/${file}"
+
+get '/*', (file) ->
   @pass "/public/${file}"
 
 server: run parseInt(process.env.PORT || 8000), null

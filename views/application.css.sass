@@ -38,6 +38,22 @@ a img
   :text-shadow 0px -1px 0px rgba(0, 0, 0, 0.15)
   :-webkit-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
   :-moz-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
+.blue
+  :background-color !light_blue
+  :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.2)), to(rgba(255, 255, 255, 0.0)))
+  :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0))
+  :border-color rgba(0, 0, 0, 0.15)
+  :color #ccc
+  a
+    :color !white
+    :text-shadow 0px -1px 0px rgba(0, 0, 0, 0.15)
+    :text-decoration none
+    &:hover
+      :text-decoration underline
+  .vr
+    :margin 1ex
+    :color rgba(100, 100, 100, 0.1)
+    :color rgba(0, 0, 0, 0.15)
 
 #page
   :width 70ex
@@ -55,6 +71,17 @@ a img
     :color transparent
     :text-shadow none
     :padding 20px
+  nav
+    :display block
+    :text-align center
+    :padding 10px
+    :font-size medium
+    ul
+      :list-style-type none
+      :margin 0px
+      :padding 0px
+    li
+      :display inline
   h2
     :margin-bottom 0px
   .heart
@@ -76,8 +103,6 @@ a img
       :top -4em
       :right 0px
       :white-space nowrap
-      :background-color !light_blue
-      :border-color rgba(0, 0, 0, 0.15)
       :color !white
       div
         :font-size small
@@ -101,8 +126,8 @@ a img
     :-webkit-border-radius 3px
     :-moz-border-radius 3px
     :position relative
-    :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.6)), to(rgba(255, 255, 255, 0.1)))
-    :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1))
+    :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.35)), to(rgba(255, 255, 255, 0)))
+    :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0))
     &:active
       :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.2)), to(rgba(255, 255, 255, 0.3)))
       :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3))
@@ -116,18 +141,6 @@ a img
     :margin-top 3em
     :padding 8px 25px
     :font-size small
-    :background-color !light_blue
-    :border-color rgba(0, 0, 0, 0.15)
-    :color #ccc
-    a
-      :color !white
-      :text-shadow 0px -1px 0px rgba(0, 0, 0, 0.15)
-      :text-decoration none
-      &:hover
-        :text-decoration underline
-    .vr
-      :margin 1ex
-      :color rgba(0, 0, 0, 0.15)
 
 #sponsors
   :width 30ex
@@ -140,7 +153,7 @@ a img
     :background-color rgba(149, 171, 99, 0.4)
     :border-color rgba(149, 171, 99, 0.2)
     :margin-left 0px
-    :margin-top 157px
+    :margin-top 187px
     :display block
   a
     :color #a7c7cb !important
