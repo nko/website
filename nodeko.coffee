@@ -14,18 +14,18 @@ get '/', ->
 
 # new team
 get '/teams/new', ->
-  @team: new Team()
-  @render 'teams/new.html.haml'
+  @team: new Team {}, =>
+    @render 'teams/new.html.haml'
 
 # create team
 post '/teams', ->
-  @team: new Team(@params.post)
-  @team.save (error, res) =>
-    if error?
-      @error: error
-      @render 'teams/new.html.haml'
-    else
-      @redirect '/teams'
+  @team: new Team @params.post, =>
+    @team.save (error, res) =>
+      if error?
+        @error: error
+        @render 'teams/new.html.haml'
+      else
+        @redirect '/teams'
 
 # list teams
 get '/teams', ->
@@ -37,7 +37,8 @@ get '/teams', ->
 get '/teams/:id', ->
   Team.first @param('id'), (error, team) =>
     @team: team
-    @invites: team.invites or []
+    sys.puts sys.inspect @team
+    @members: team.members or []
     @render 'teams/show.html.haml'
 
 # delete team
