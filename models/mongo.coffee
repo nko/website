@@ -43,6 +43,14 @@ _.extend Mongo, {
       { _id: MongoId.createFromHexString(query) }
     else query
 
+  instantiate: (data, fn) ->
+    unpacked: Serializer.unpack data
+    if unpacked?.beforeInstantiate?
+      unpacked.beforeInstantiate ->
+        fn null, unpacked
+    else
+      fn null, unpacked
+
   InstanceMethods: {
     collection: (fn) ->
       Mongo.db.collection @serializer.name, fn
@@ -50,10 +58,15 @@ _.extend Mongo, {
     id: -> @_id.toHexString()
 
     save: (fn) ->
-      @collection (error, collection) =>
-        return fn error if error?
-        serialized: Serializer.pack this
-        collection.insert serialized, fn
+      saveFn: =>
+        @collection (error, collection) =>
+          return fn error if error?
+          serialized: Serializer.pack this
+          collection.insert serialized, fn
+      if @beforeSave?
+        @beforeSave saveFn
+      else
+        saveFn()
 
     remove: (fn) ->
       @collection (error, collection) =>
@@ -62,20 +75,30 @@ _.extend Mongo, {
   }
 
   ClassMethods: {
+    firstOrCreate: (query, fn) ->
+      @first query, (error, item) =>
+        return fn error if error?
+        return fn null, item if item?
+        created: new @prototype.serializer.klass(query)
+        fn null, created
+
     first: (query, fn) ->
+      [query, fn]: [null, query] unless fn?
       @prototype.collection (error, collection) ->
         return fn error if error?
         collection.findOne Mongo.queryify(query), (error, item) ->
           return fn error if error?
-          fn null, Serializer.unpack item
+          Mongo.instantiate item, fn
 
-    all: (fn) ->
+    all: (query, fn) ->
+      [query, fn]: [null, query] unless fn?
       @prototype.collection (error, collection) ->
         return fn error if error?
         collection.find (error, cursor) ->
           return fn error if error?
           cursor.toArray (error, array) ->
             return fn error if error?
+            # TODO call beforeInstantiate on these?
             fn null, Serializer.unpack array
   }
 }
@@ -84,7 +107,6 @@ class Serializer
   constructor: (klass, name, options) ->
     [@klass, @name]: [klass, name]
 
-    @allowNesting: options?.allowNesting
     @allowed: {}
     for i in _.compact _.flatten [options?.exclude]
       @allowed[i]: false
@@ -99,11 +121,12 @@ class Serializer
       _.isNumber(value) or
       _.isBoolean(value) or
       _.isArray(value) or
-      value.serializer?.allowNesting
+      value.serializer?
 
   pack: (instance) ->
     packed: { serializer: @name }
     for k, v of instance when @shouldSerialize(k, v)
+      v: { id: v._id, serializer: v?.serializer.name } if v?.serializer
       packed[k]: Serializer.pack v
     packed
 

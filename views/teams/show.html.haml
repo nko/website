@@ -8,14 +8,9 @@
   %ul
     - each member in this.members
       %li
-        %a{ href: '/people/' + member.id() }= member.name
-- if (this.invites)
-  %h2 Invites
-  %ul
-  - each email in this.invites
-    %li
-      %a{ href: "mailto:" + email }= email
-      .button Resend
+        %a{ href: '/people/' + member.id() }= member.name || member.email
+        %a{ href: '#'}.button Reinvite
+        %a{ href: '#'}.button Remove
 %form{ method: "POST", action: "/teams/" + this.team.id() }
   %input{ type: "hidden", name: "_method", value: "delete" }
   %input{ type: "submit", name: "delete", value: "Delete this team?"}
