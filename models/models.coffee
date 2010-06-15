@@ -1,5 +1,6 @@
 Mongo: require('./mongo').Mongo
 sys: require 'sys'
+require '../public/javascripts/Math.uuid'
 
 nko: {}
 
@@ -59,7 +60,9 @@ _.extend Person, {
     @first { email: credentials.email }, (error, person) ->
       return fn ['Unknown email'] unless person?
       return fn ['Invalid password'] unless person.password is credentials.password
-      fn null, person
+      person.token: Math.uuid()
+      person.save (errors, resp) ->
+        fn null, person
 }
 
 nko.Person: Person
