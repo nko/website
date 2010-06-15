@@ -1,6 +1,7 @@
 sys: require 'sys'
 models: require './models/models'
 Team: models.Team
+Person: models.Person
 
 get /.*/, ->
   [host, path]: [@headers.host, @url.href]
@@ -45,6 +46,23 @@ del '/teams/:id', -> # delete not working
   Team.first @param('id'), (error, team) =>
     team.remove (error, result) =>
       @redirect '/teams'
+
+# edit person
+get '/people/:id/edit', ->
+  Person.first @param('id'), (error, person) =>
+    @person: person
+    @render 'people/edit.html.haml'
+
+# update person
+put '/people/:id', ->
+  Person.first @param('id'), (error, person) =>
+    person.update @params.post
+    person.save (error, resp) =>
+      Team.first { 'members._id': person._id }, (error, team) =>
+        if team?
+          @redirect '/teams/' + team.id()
+        else
+          @redirect '/'
 
 get '/*.js', (file) ->
   try

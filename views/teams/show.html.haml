@@ -8,9 +8,10 @@
   %ul
     - each member in this.members
       %li
-        %a{ href: '/people/' + member.id() }= member.name || member.email
-        %a{ href: '#'}.button Reinvite
-        %a{ href: '#'}.button Remove
+        = member.name || member.email
+        %a{ href: '#'} Reinvite
+        %a{ href: '/people/' + member.id() + '/edit' } Edit
+        %a{ href: '#'} Remove
 %form{ method: "POST", action: "/teams/" + this.team.id() }
   %input{ type: "hidden", name: "_method", value: "delete" }
   %input{ type: "submit", name: "delete", value: "Delete this team?"}

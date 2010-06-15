@@ -39,6 +39,7 @@ _.extend Mongo, {
       @bless klass
 
   queryify: (query) ->
+    return {} unless query?
     if _.isString query
       { _id: MongoId.createFromHexString(query) }
     else query
@@ -71,6 +72,10 @@ _.extend Mongo, {
           @_id: saved._id
           fn error, saved
 
+    update: (attributes) ->
+      for k,v of attributes
+        this[k]: v
+
     remove: (fn) ->
       @collection (error, collection) =>
         return fn error if error?
@@ -97,7 +102,7 @@ _.extend Mongo, {
       [query, fn]: [null, query] unless fn?
       @prototype.collection (error, collection) ->
         return fn error if error?
-        collection.find (error, cursor) ->
+        collection.find Mongo.queryify(query), (error, cursor) ->
           return fn error if error?
           cursor.toArray (error, array) ->
             return fn error if error?

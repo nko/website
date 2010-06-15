@@ -1,0 +1,19 @@
+%h1 Edit Profile
+
+%form{ method: 'POST', action: '/people/' + this.person.id() + '?_method=PUT' }
+  %label{ for: 'name' } Name
+  %input{ type: 'text', name: 'name', id: 'name', value: this.person.name }
+  
+  %label{ for: 'email' } Email
+  .note We don&rsquo;t spam.  Only visible to team members.
+  %input{ type: 'email', name: 'email', id: 'email', value: this.person.email }
+  
+  %label{ for: 'password' } Password
+  %a{ href: '#' }.note Click to change.
+  %input{ type: 'password', name: 'password', id: 'password' }
+  
+  %label{ for: 'link' } Link
+  .note Optional. Let other participants know who you are.
+  %input{ type: 'text', name: 'link', id: 'link', value: this.person.link }
+  
+  %input{ type: 'submit', value: 'Save' }
