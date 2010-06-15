@@ -52,6 +52,15 @@ class Person
       vowels[Math.floor vowels.length * Math.random()] +
       alphabet[Math.floor alphabet.length * Math.random()]
     syllables.join ''
+
+_.extend Person, {
+  login: (credentials, fn) ->
+    @first { email: credentials.email }, (error, person) ->
+      return fn ['Unknown email'] unless person?
+      return fn ['Invalid password'] unless person.password is credentials.password
+      fn null, person
+}
+
 nko.Person: Person
 
 Mongo.blessAll nko

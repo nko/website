@@ -58,11 +58,31 @@ put '/people/:id', ->
   Person.first @param('id'), (error, person) =>
     person.update @params.post
     person.save (error, resp) =>
-      Team.first { 'members._id': person._id }, (error, team) =>
-        if team?
-          @redirect '/teams/' + team.id()
-        else
-          @redirect '/'
+      redirect_to_team this, person
+
+redirect_to_team: (request, person) ->
+  Team.first { 'members._id': person._id }, (error, team) =>
+    if team?
+      request.redirect '/teams/' + team.id()
+    else
+      request.redirect '/'
+
+# sign in
+get '/login', ->
+  @person: new Person()
+  @render 'login.html.haml'
+
+post '/login', ->
+  Person.login @params.post, (error, person) =>
+    if person?
+      if person.name?
+        redirect_to_team this, person
+      else
+        @redirect '/people/' + person.id() + '/edit'
+    else
+      @errors: error
+      @person: new Person(@params.post)
+      @render 'login.html.haml'
 
 get '/*.js', (file) ->
   try

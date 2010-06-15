@@ -1,0 +1,19 @@
+%h1 Sign in
+
+- if (this.errors)
+  %ul.errors
+    - each error in this.errors
+      %li= error
+
+%form{ method: 'POST', action: 'login' }
+  %input{ type: 'hidden', name: 'return_to', value: this.param('return_to') }
+  %p
+    %label{ for: 'email' } Email
+    %br
+    %input{ type: 'email', name: 'email', id: 'email', value: this.person.email }
+  %p
+    %label{ for: 'password' } Password
+    %br
+    %input{ type: 'password', name: 'password', id: 'password' }
+  %p
+    %input{ type: 'submit', value: 'Sign in' }
