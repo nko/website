@@ -1,9 +1,10 @@
 $ ->
-  [y, m, d, h, i, s]: $('time').attr('datetime').split(/[-:TZ]/)...
-  ms: Date.UTC y, m-1, d, h, i, s
-  $('<div class="about">')
-    .html(prettyDate(new Date(ms)))
-    .appendTo('#date')
+  if $('time').length > 0
+    [y, m, d, h, i, s]: $('time').attr('datetime').split(/[-:TZ]/)...
+    ms: Date.UTC y, m-1, d, h, i, s
+    $('<div class="about">')
+      .html(prettyDate(new Date(ms)))
+      .appendTo('#date')
 
   $('time').hover ->
     $this: $(this)
