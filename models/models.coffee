@@ -38,9 +38,10 @@ nko.Team: Team
 
 class Person
   constructor: (options) ->
-    @email: options?.email
+    @name: options?.name or ''
+    @email: options?.email or ''
+    @link: options?.link or ''
     @password: options?.password or @randomPassword()
-    @team: options?.team?._id
 
   # http://e-huned.com/2008/10/13/random-pronounceable-strings-in-ruby/
   randomPassword: ->

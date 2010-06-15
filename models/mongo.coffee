@@ -73,7 +73,7 @@ _.extend Mongo, {
           fn error, saved
 
     update: (attributes) ->
-      for k,v of attributes
+      for k, v of attributes when @hasOwnProperty(k)
         this[k]: v
 
     remove: (fn) ->
@@ -149,7 +149,7 @@ _.extend Serializer, {
   instances: {}
 
   pack: (data, nested) ->
-    ret: if s: data?.serializer
+    if s: data?.serializer
       s.pack data, nested
     else if _.isArray(data)
       Serializer.pack i, true for i in data

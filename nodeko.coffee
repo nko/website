@@ -59,16 +59,11 @@ get '/people/:id/edit', ->
 # update person
 put '/people/:id', ->
   Person.first @param('id'), (error, person) =>
-    person.update @params.post
+    attributes: @params.post
+    delete attributes.password if attributes.password is ''
+    person.update attributes
     person.save (error, resp) =>
-      redirect_to_team this, person
-
-redirect_to_team: (request, person) ->
-  Team.first { 'members._id': person._id }, (error, team) =>
-    if team?
-      request.redirect '/teams/' + team.id()
-    else
-      request.redirect '/'
+      redirectToTeam this, person
 
 # sign in
 get '/login', ->
@@ -79,13 +74,20 @@ post '/login', ->
   Person.login @params.post, (error, person) =>
     if person?
       if person.name?
-        redirect_to_team this, person
+        redirectToTeam this, person
       else
         @redirect '/people/' + person.id() + '/edit'
     else
       @errors: error
       @person: new Person(@params.post)
       @render 'login.html.haml'
+
+redirectToTeam: (request, person) ->
+  Team.first { 'members._id': person._id }, (error, team) =>
+    if team?
+      request.redirect '/teams/' + team.id()
+    else
+      request.redirect '/'
 
 get '/*.js', (file) ->
   try
