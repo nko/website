@@ -37,9 +37,12 @@ get '/teams', ->
 # show team
 get '/teams/:id', ->
   Team.first @param('id'), (error, team) =>
-    @team: team
-    @members: team.members or []
-    @render 'teams/show.html.haml'
+    if team?
+      @team: team
+      @members: team.members or []
+      @render 'teams/show.html.haml'
+    else
+      @redirect '/'
 
 # delete team
 del '/teams/:id', -> # delete not working
