@@ -3,16 +3,6 @@ sys: require 'sys'
 
 nko: {}
 
-randomPassword: ->
-  alphabet: ['a'..'z']
-  vowels: 'a e i o u'.split(' ')
-  consonants: _.without alphabet, vowels...
-  syllables: for i in [0..3]
-    consonants[Math.floor consonants.length * Math.random()] +
-    vowels[Math.floor vowels.length * Math.random()] +
-    alphabet[Math.floor alphabet.length * Math.random()]
-  syllables.join ''
-
 class Team
   constructor: (options, fn) ->
     @name: options?.name
@@ -49,8 +39,19 @@ nko.Team: Team
 class Person
   constructor: (options) ->
     @email: options?.email
-    @password: options?.password
+    @password: options?.password or @randomPassword()
     @team: options?.team?._id
+
+  # http://e-huned.com/2008/10/13/random-pronounceable-strings-in-ruby/
+  randomPassword: ->
+    alphabet: 'abcdefghijklmnopqrstuvwxyz'.split('')
+    vowels: 'aeiou'.split('')
+    consonants: _.without alphabet, vowels...
+    syllables: for i in [0..3]
+      consonants[Math.floor consonants.length * Math.random()] +
+      vowels[Math.floor vowels.length * Math.random()] +
+      alphabet[Math.floor alphabet.length * Math.random()]
+    syllables.join ''
 nko.Person: Person
 
 Mongo.blessAll nko
