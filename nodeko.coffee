@@ -37,7 +37,6 @@ get '/teams', ->
 get '/teams/:id', ->
   Team.first @param('id'), (error, team) =>
     @team: team
-    sys.puts sys.inspect @team
     @members: team.members or []
     @render 'teams/show.html.haml'
 

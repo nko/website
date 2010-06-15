@@ -31,8 +31,7 @@ class Team
         fn() if --threads is 0
 
   beforeInstantiate: (fn) ->
-    query: { email: { $in: _.pluck @members, 'email' }}
-    sys.puts sys.inspect query
+    query: { _id: { $in: _.pluck @members, '_id' }}
     Person.all query, (error, members) =>
       @members: members
       fn()

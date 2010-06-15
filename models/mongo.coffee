@@ -58,15 +58,18 @@ _.extend Mongo, {
     id: -> @_id.toHexString()
 
     save: (fn) ->
-      saveFn: =>
-        @collection (error, collection) =>
-          return fn error if error?
-          serialized: Serializer.pack this
-          collection.insert serialized, fn
       if @beforeSave?
-        @beforeSave saveFn
+        @beforeSave => @_save fn
       else
-        saveFn()
+        @_save fn
+
+    _save: (fn) ->
+      @collection (error, collection) =>
+        return fn error if error?
+        serialized: Serializer.pack this
+        collection.save serialized, (error, saved) =>
+          @_id: saved._id
+          fn error, saved
 
     remove: (fn) ->
       @collection (error, collection) =>
@@ -115,19 +118,20 @@ class Serializer
     @copy: -> # empty constructor
     @copy.prototype: @klass.prototype # same prototype
 
-  shouldSerialize: (name, value) ->
+  shouldSerialize: (name, value, nested) ->
     return false unless value?
+    return false if nested and name isnt '_id'
     @allowed[name] ?= _.isString(value) or
       _.isNumber(value) or
       _.isBoolean(value) or
       _.isArray(value) or
-      value.serializer?
+      value.serializer? or
+      name is '_id'
 
-  pack: (instance) ->
+  pack: (instance, nested) ->
     packed: { serializer: @name }
-    for k, v of instance when @shouldSerialize(k, v)
-      v: { id: v._id, serializer: v?.serializer.name } if v?.serializer
-      packed[k]: Serializer.pack v
+    for k, v of instance when @shouldSerialize(k, v, nested)
+      packed[k]: Serializer.pack v, true
     packed
 
   unpack: (data) ->
@@ -139,11 +143,11 @@ class Serializer
 _.extend Serializer, {
   instances: {}
 
-  pack: (data) ->
-    if s: data?.serializer
-      s.pack data
+  pack: (data, nested) ->
+    ret: if s: data?.serializer
+      s.pack data, nested
     else if _.isArray(data)
-      Serializer.pack i for i in data
+      Serializer.pack i, true for i in data
     else
       data
 
