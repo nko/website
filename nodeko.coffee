@@ -26,7 +26,7 @@ post '/teams', ->
         @error: error
         @render 'teams/new.html.haml'
       else
-        @redirect '/teams'
+        @redirect '/teams/' + @team.id()
 
 # list teams
 get '/teams', ->
