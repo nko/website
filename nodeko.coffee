@@ -42,7 +42,7 @@ get '/teams/:id', ->
     @render 'teams/show.html.haml'
 
 # delete team
-post '/teams/:id', -> # delete not working
+del '/teams/:id', -> # delete not working
   Team.first @param('id'), (error, team) =>
     team.remove (error, result) =>
       @redirect '/teams'
