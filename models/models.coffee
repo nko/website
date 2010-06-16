@@ -1,4 +1,5 @@
 Mongo: require('./mongo').Mongo
+http: require 'express/http'
 sys: require 'sys'
 require '../public/javascripts/Math.uuid'
 
@@ -34,7 +35,8 @@ class Team
     for email in emails
       Person.firstOrCreate { email: email }, (error, member) =>
         @members.push member
-        fn() if --threads is 0
+        member.inviteTo this, ->
+          fn() if --threads is 0
 nko.Team: Team
 
 class Person
@@ -43,6 +45,30 @@ class Person
     @email: options?.email or ''
     @link: options?.link or ''
     @password: options?.password or @randomPassword()
+
+  inviteTo: (team, fn) ->
+    message: """
+      Hi,
+
+      You've been invited to the $team.name Node.js Knockout team!
+
+      Here are your credentials:
+      email: $@email
+      password: $@password
+
+      Please sign in to http://nodeknockout.com/login to complete your registration.
+
+      Thanks!
+      The Node.js Knockout Organizers
+      """
+    http.post 'http://www.postalgone.com/mail', {
+      # sender: '"Node.js Knockout" <all@nodeknockout.com>',
+      from: 'all@nodeknockout.com',
+      to: @email,
+      subject: "You've been invited to Node.js Knockout",
+      body: message }, (error, body, response) ->
+        sys.puts body
+        fn()
 
   authKey: ->
     @id() + ':' + @token
