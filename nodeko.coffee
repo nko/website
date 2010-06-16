@@ -75,7 +75,9 @@ post '/login', ->
     if person?
       @setCurrentPerson person
       if person.name?
-        @redirectToTeam person
+        if returnTo: @param('return_to')
+          @redirect returnTo
+        else @redirectToTeam person
       else
         @redirect '/people/' + person.id() + '/edit'
     else
