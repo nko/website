@@ -48,7 +48,7 @@
             %span.vr |
             %a{ href: '/teams/new' } Register
           - if (this.currentPerson)
-            %img{ src: 'http://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=monsterid&s=40' }
+            %img{ src: 'http://www.gravatar.com/avatar/' + this.currentPerson.emailHash + '?s=40&d=monsterid' }
             %a{ href: '/people/' + this.currentPerson.id() + '/edit' }= this.currentPerson.name
             %br
             %a{ href: '/logout' } Sign out

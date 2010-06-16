@@ -1,9 +1,15 @@
 Mongo: require('./mongo').Mongo
 http: require 'express/http'
 sys: require 'sys'
+crypto: require 'crypto'
 require '../public/javascripts/Math.uuid'
 
 nko: {}
+
+md5: (str) ->
+  hash: crypto.createHash 'md5'
+  hash.update str
+  hash.digest 'hex'
 
 class Team
   constructor: (options, fn) ->
@@ -67,6 +73,7 @@ class Person
     @email: options?.email or ''
     @link: options?.link or ''
     @password: options?.password or @randomPassword()
+    @calculateHashes()
 
   inviteTo: (team, fn) ->
     message: """
@@ -97,6 +104,14 @@ class Person
   logout: (fn) ->
     @token: null
     @save fn
+
+  beforeSave: (fn) ->
+    @calculateHashes()
+    fn()
+
+  calculateHashes: ->
+    @emailHash: md5 @email
+    @passwordHash: md5 @password
 
   # http://e-huned.com/2008/10/13/random-pronounceable-strings-in-ruby/
   randomPassword: ->
