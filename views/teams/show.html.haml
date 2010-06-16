@@ -1,21 +1,31 @@
 %h1= this.team.name
 
-- if (this.currentPerson)
+- if (!this.editAllowed)
   %p.note
-    This is it for now.  We&rsquo;ll likely ask for more
-    details soon.
+    Your looking at the
+    %a{ href: '/' } Node.js Knockout
+    team profile for
+    != ' <a href="/teams/' + this.team.id() + '">' + this.team.name + '</a>.'
+  %p
+    %a{ href: '/' } Find out more.
 
-- if (!this.currentPerson)
+- if (this.editAllowed)
+  - if (this.currentPerson)
+    %p.note
+      This is it for now.  We&rsquo;ll likely ask for more
+      details soon.
+  
+  - if (!this.currentPerson)
+    %p.note
+      Nice work! Your team,
+      != ' <a href="/teams/' + this.team.id() + '">' + this.team.name + '</a>, '
+      is registered for Node.js Knockout.
+      Now you can
+      %a{ href: '/login' } sign in and update your profile information.
+  
   %p.note
-    Nice work! Your team,
-    != ' <a href="/teams/' + this.team.id() + '">' + this.team.name + '</a>, '
-    is registered for Node.js Knockout.
-    Now you can
-    %a{ href: '/login' } sign in and update your profile information.
-
-%p.note
-  %a.addthis_button{ href: 'http://www.addthis.com/bookmark.php' } Spread the word!
-  Let others know you&rsquo;re competing.
+    %a.addthis_button{ href: 'http://www.addthis.com/bookmark.php' } Spread the word!
+    Let others know you&rsquo;re competing.
 
 %h2 Members
   - if (!this.members.length)
@@ -41,7 +51,7 @@
     %p
       = this.invites.length + ' '
       outstanding
-      = this.invites.length === 1 ? ' invitation' : ' invitations'
+      = this.invites.length === 1 ? ' invitation.' : ' invitations.'
   
   - if (this.editAllowed)
     %ul
