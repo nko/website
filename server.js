@@ -11,6 +11,7 @@ configure(function() {
   use(Static); // required for public/[images, javascripts]
   use(Logger);
   use(MethodOverride); // required for put / del routes
+  use(Cookie);
 });
 
 require('./nodeko')

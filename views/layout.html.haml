@@ -41,6 +41,10 @@
           %span.vr |
           by
           %a{ href: 'http://www.fortnightlabs.com/' } fortnight labs
+          - if (this.currentPerson)
+            %span.vr |
+            you
+            %a{ href: '/people/' + this.currentPerson.id() + '/edit' }= this.currentPerson.name
       %aside#sponsors
         %h2.ribbon
           .container Sponsors

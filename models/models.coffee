@@ -44,6 +44,13 @@ class Person
     @link: options?.link or ''
     @password: options?.password or @randomPassword()
 
+  authKey: ->
+    @id() + ':' + @token
+
+  logout: (fn) ->
+    @token: null
+    @save fn
+
   # http://e-huned.com/2008/10/13/random-pronounceable-strings-in-ruby/
   randomPassword: ->
     alphabet: 'abcdefghijklmnopqrstuvwxyz'.split('')
@@ -63,6 +70,14 @@ _.extend Person, {
       person.token: Math.uuid()
       person.save (errors, resp) ->
         fn null, person
+
+  firstByAuthKey: (authKey, fn) ->
+    [id, token]: authKey.split ':' if authKey?
+    return fn null, null unless id and token
+
+    query: Mongo.queryify id
+    query.token: token
+    @first query, fn
 }
 
 nko.Person: Person

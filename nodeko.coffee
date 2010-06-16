@@ -1,7 +1,7 @@
 sys: require 'sys'
+Request: require('express/request').Request
 models: require './models/models'
-Team: models.Team
-Person: models.Person
+[Team, Person]: [models.Team, models.Person]
 
 get /.*/, ->
   [host, path]: [@headers.host, @url.href]
@@ -73,6 +73,7 @@ get '/login', ->
 post '/login', ->
   Person.login @params.post, (error, person) =>
     if person?
+      @setCurrentPerson person
       if person.name?
         redirectToTeam this, person
       else
@@ -88,6 +89,12 @@ redirectToTeam: (request, person) ->
       request.redirect '/teams/' + team.id()
     else
       request.redirect '/'
+
+get '/logout', ->
+  @redirect '/' unless @currentPerson?
+  @currentPerson.logout (error, resp) =>
+    @setCurrentPerson null
+    @redirect '/'
 
 get '/*.js', (file) ->
   try
@@ -106,5 +113,27 @@ get '/*', (file) ->
 
 get '/*', (file) ->
   @pass "/public/${file}"
+
+configure ->
+  CurrentPerson: Plugin.extend {
+    extend: {
+      init: ->
+        Request.include {
+          setCurrentPerson: (person) ->
+            @cookie 'authKey', person?.authKey()
+          getCurrentPerson: (fn) ->
+            Person.firstByAuthKey @cookie('authKey'), fn
+        }
+    }
+
+    'on': {
+      request: (event, fn) ->
+        event.request.getCurrentPerson (error, person) ->
+          event.request.currentPerson: person
+          fn()
+        true # wait for async completion
+    }
+  }
+  use CurrentPerson
 
 server: run parseInt(process.env.PORT || 8000), null
