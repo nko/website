@@ -1,17 +1,46 @@
-.note
-  This is it for now.  We&rsquo;ll likely ask for more
-  details soon.
-
 %h1= this.team.name
+
+- if (this.currentPerson)
+  %p.note
+    This is it for now.  We&rsquo;ll likely ask for more
+    details soon.
+
+- if (!this.currentPerson)
+  %p.note
+    Nice work! Your team,
+    != ' <a href="/teams/' + this.team.id() + '">' + this.team.name + '</a>, '
+    is registered for Node.js Knockout.
+    Now you can
+    %a{ href: '/login' } sign in and update your profile information.
+
+%p.note
+  %a.addthis_button{ href: 'http://www.addthis.com/bookmark.php' } Spread the word!
+  Let others know you&rsquo;re competing.
+
 - if (this.members)
   %h2 Members
   %ul
     - each member in this.members
       %li
-        = member.name || member.email
-        %a{ href: '#'} Reinvite
-        %a{ href: '/people/' + member.id() + '/edit' } Edit
-        %a{ href: '#'} Remove
+        - if (member.link)
+          %a{ href: member.link }= member.name
+        - if (!member.link)
+          = member.name
+
+- if (this.invites)
+  %h2 Invitations
+  
+  - if (!this.editAllowed)
+    = this.invites.length
+    outstanding
+    = this.invites.length === 1 ? 'invitation' : 'invitations'
+  
+  - if (this.editAllowed)
+    %ul
+      - each invite in this.invites
+        %li
+          %a{ href: 'mailto:' + invite.email }= invite.email
+          %a{ href: '/teams' + this.team.id() + '/invite/' + invite.id() } Resend
 
 - if (this.editAllowed)
   %a.button{ href: '/teams/' + this.team.id() + '/edit' } Edit

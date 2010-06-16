@@ -40,7 +40,9 @@ get '/teams/:id', ->
   Team.first @param('id'), (error, team) =>
     if team?
       @team: team
-      @members: team.members or []
+      people: team.members or []
+      @members: _.select people, (person) -> person.name
+      @invites: _.without people, @members...
       @editAllowed: @canEditTeam team
       @render 'teams/show.html.haml'
     else
