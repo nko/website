@@ -18,6 +18,7 @@ class Team
 
   beforeSave: (fn) ->
     threads: @members.length
+    return fn() unless threads
     for member in @members
       member.save (error, res) ->
         fn() if --threads is 0
@@ -29,9 +30,9 @@ class Team
       fn()
 
   setMembers: (emails, fn) ->
-    return fn() unless emails?.length
     @members: []
     threads: emails.length
+    return setTimeout fn, 0 unless threads
     for email in emails
       Person.firstOrCreate { email: email }, (error, member) =>
         @members.push member
