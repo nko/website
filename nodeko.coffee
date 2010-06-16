@@ -120,7 +120,11 @@ get '/login', ->
 post '/login', ->
   Person.login @params.post, (error, person) =>
     if person?
-      @setCurrentPerson person
+      if @param 'remember'
+        d: new Date()
+        d.setTime(d.getTime() + 1000 * 60 * 60 * 24 * 180)
+        options: { expires: d }
+      @setCurrentPerson person, options
       if person.name
         if returnTo: @param('return_to')
           @redirect returnTo
@@ -170,8 +174,8 @@ configure ->
     extend: {
       init: ->
         Request.include {
-          setCurrentPerson: (person) ->
-            @cookie 'authKey', person?.authKey()
+          setCurrentPerson: (person, options) ->
+            @cookie 'authKey', person?.authKey(), options
           getCurrentPerson: (fn) ->
             Person.firstByAuthKey @cookie('authKey'), fn
         }
