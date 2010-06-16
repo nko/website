@@ -75,7 +75,33 @@ class Person
     @password: options?.password or @randomPassword()
     @calculateHashes()
 
+  resetPassword: (fn) ->
+    @password: @randomPassword()
+    @calculateHashes()
+    @save (error, res) =>
+      # TODO get this into a view
+      message: """
+        Hi,
+
+        You (or somebody like you) reset the password for this email address.
+
+        Here are your new credentials:
+        email: $@email
+        password: $@password
+
+        Thanks!
+        The Node.js Knockout Organizers
+        """
+      http.post 'http://www.postalgone.com/mail', {
+        # sender: '"Node.js Knockout" <all@nodeknockout.com>',
+        from: 'all@nodeknockout.com',
+        to: @email,
+        subject: "Password reset for Node.js Knockout",
+        body: message }, (error, body, response) ->
+          fn()
+
   inviteTo: (team, fn) ->
+    # TODO get this into a view
     message: """
       Hi,
 

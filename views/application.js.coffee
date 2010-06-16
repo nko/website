@@ -19,6 +19,22 @@ $ ->
   $('input.url').click ->
     this.select() if @value is @defaultValue
 
+  $('form.reset_password').submit ->
+    form: $ this
+    email: form.find('input[type=email]').val()
+    $.ajax {
+      type: form.attr('method')
+      url: form.attr('action')
+      data: form.serialize()
+      success: (data) ->
+        form.replaceWith """
+          <h2>$email has been sent a new password</h2>
+          <p>It should arrive shortly.</p>"""
+      error: (xhr) ->
+        $('#errors').append "<li>$xhr.responseText</li>"
+    }
+    false
+
   $('input[type=submit]').click (evt) ->
     form: $(this).closest('form')
     errors: $('#errors').html('')

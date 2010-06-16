@@ -133,6 +133,16 @@ get '/logout', ->
   @logout =>
     @redirect '/'
 
+# reset password
+post '/reset_password', ->
+  Person.first { email: @param('email') }, (error, person) =>
+    # TODO assumes xhr
+    unless person?
+      @respond 404, 'Email not found'
+    else
+      person.resetPassword =>
+        @respond 200, 'OK'
+
 get '/*.js', (file) ->
   try
     @render "${file}.js.coffee", { layout: false }
