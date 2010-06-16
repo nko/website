@@ -44,7 +44,7 @@
       %aside#sidebar
         #current_person
           - if (!this.currentPerson)
-            %a{ href: '/login' } Sign in
+            %a{ href: '/login?return_to=' + this.url.href } Sign in
             %span.vr |
             %a{ href: '/teams/new' } Register
           - if (this.currentPerson)
