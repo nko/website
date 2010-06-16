@@ -78,6 +78,18 @@ del '/teams/:id', -> # delete not working
       team.remove (error, result) =>
         @redirect '/teams'
 
+# resend invitation
+get '/teams/:teamId/invite/:personId', ->
+  Team.first @param('teamId'), (error, team) =>
+    @ensurePermitted team, =>
+      Person.first @param('personId'), (error, person) =>
+        person.inviteTo team, =>
+          if @isXHR
+            @respond 200, 'OK'
+          else
+            # TODO flash "Sent a new invitation to $@person.email"
+            @redirect '/teams/' + team.id()
+
 # edit person
 get '/people/:id/edit', ->
   Person.first @param('id'), (error, person) =>
