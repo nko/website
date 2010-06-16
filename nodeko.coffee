@@ -121,7 +121,7 @@ post '/login', ->
   Person.login @params.post, (error, person) =>
     if person?
       @setCurrentPerson person
-      if person.name?
+      if person.name
         if returnTo: @param('return_to')
           @redirect returnTo
         else @redirectToTeam person
