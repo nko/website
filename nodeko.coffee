@@ -103,7 +103,7 @@ put '/people/:id', ->
     @ensurePermitted person, =>
       attributes: @params.post
       delete attributes.password if attributes.password is ''
-      attributes.link: '' unless /^https?:\/\//.test attributes.link
+      attributes.link: '' unless /^https?:\/\/.+\./.test attributes.link
       person.update attributes
       person.save (error, resp) =>
         @redirectToTeam person
