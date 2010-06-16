@@ -4,7 +4,7 @@
 
 %form{ method: 'POST', action: '/people/' + this.person.id() + '?_method=PUT' }
   %h2
-    %label{ for: 'name' } Name
+    %label{ for: 'name' } Your Name
   %input{ type: 'text', name: 'name', id: 'name', value: this.person.name, autofocus: true }
   
   %h2

@@ -12,25 +12,32 @@
 - if (this.editAllowed)
   - if (this.currentPerson)
     %p.note
-      This is it for now.  We&rsquo;ll likely ask for more
+      This is it for now!  We&rsquo;ll likely ask for more
       details soon.
+    
+    %p.note
+      In the meantime,
+      %a.addthis_button{ href: 'http://www.addthis.com/bookmark.php' } spread the word!
+      More competitors means more people for you to dominate!
   
   - if (!this.currentPerson)
     %p.note
       Nice work! Your team,
       != ' <a href="/teams/' + this.team.id() + '">' + this.team.name + '</a>, '
-      is registered for Node.js Knockout.
-      Now you can
-      %a{ href: '/login' } sign in and update your profile information.
-  
-  %p.note
-    %a.addthis_button{ href: 'http://www.addthis.com/bookmark.php' } Spread the word!
-    Let others know you&rsquo;re competing.
+      is officially registered for Node.js Knockout.
+    
+    %p.note
+      %strong
+        An invitation email with log-in information has been sent to each team member.
+      All team members now need to
+      %a{ href: '/login' } sign in and update their profile information.
 
-%h2 Members
+%h2 Confirmed Team Members
   - if (!this.members.length)
     %p
-      No members
+      No invitations have been accepted yet.
+      - if (this.editAllowed)
+        %strong Check your email for your invitation.
   
   - if (this.members.length)
     %ul
@@ -45,7 +52,7 @@
             %a{ href: '/people/' + member.id() + '/edit' } that&rsquo;s you!
 
 - if (this.invites.length)
-  %h2 Invitations
+  %h2 Pending Invitations
   
   - if (!this.editAllowed)
     %p
