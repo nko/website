@@ -1,0 +1,5 @@
+%h1 Edit Team
+
+%form{ method: 'POST', action: '/teams/' + this.team.id() + '?_method=PUT' }
+  != this.partial('teams/form.html.haml')
+  %input.button{ type: 'submit', value: 'Update' }
