@@ -13,6 +13,12 @@ get /.*/, ->
 get '/', ->
   @render 'index.html.haml'
 
+# list teams
+get '/teams', ->
+  Team.all (error, teams) =>
+    @teams: teams
+    @render 'teams/list.html.haml'
+
 # new team
 get '/teams/new', ->
   @team: new Team {}, =>
@@ -27,12 +33,6 @@ post '/teams', ->
         @render 'teams/new.html.haml'
       else
         @redirect '/teams/' + @team.id()
-
-# list teams
-get '/teams', ->
-  Team.all (error, teams) =>
-    @teams: teams
-    @render 'teams/list.html.haml'
 
 # show team
 get '/teams/:id', ->
