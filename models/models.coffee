@@ -82,7 +82,7 @@ class Person
     alphabet: 'abcdefghijklmnopqrstuvwxyz'.split('')
     vowels: 'aeiou'.split('')
     consonants: _.without alphabet, vowels...
-    syllables: for i in [0..3]
+    syllables: for i in [0..2]
       consonants[Math.floor consonants.length * Math.random()] +
       vowels[Math.floor vowels.length * Math.random()] +
       alphabet[Math.floor alphabet.length * Math.random()]
