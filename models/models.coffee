@@ -7,8 +7,17 @@ nko: {}
 
 class Team
   constructor: (options, fn) ->
-    @name: options?.name
+    @name: options?.name or ''
+    @token: Math.uuid()
     @setMembers _.compact(options?.members or []), fn
+
+  # TODO DRY
+  authKey: ->
+    @id() + ':' + @token
+
+  hasMember: (member) ->
+    return false unless member?
+    _.include _.invoke(@members, 'id'), member.id()
 
   validate: ->
     unless @members?.length

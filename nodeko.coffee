@@ -32,6 +32,7 @@ post '/teams', ->
         @error: error
         @render 'teams/new.html.haml'
       else
+        @cookie 'teamAuthKey', @team.authKey()
         @redirect '/teams/' + @team.id()
 
 # show team
@@ -40,6 +41,7 @@ get '/teams/:id', ->
     if team?
       @team: team
       @members: team.members or []
+      @editAllowed: @canEditTeam team
       @render 'teams/show.html.haml'
     else
       @redirect '/'
@@ -47,23 +49,26 @@ get '/teams/:id', ->
 # delete team
 del '/teams/:id', -> # delete not working
   Team.first @param('id'), (error, team) =>
-    team.remove (error, result) =>
-      @redirect '/teams'
+    @ensurePermitted team, =>
+      team.remove (error, result) =>
+        @redirect '/teams'
 
 # edit person
 get '/people/:id/edit', ->
   Person.first @param('id'), (error, person) =>
-    @person: person
-    @render 'people/edit.html.haml'
+    @ensurePermitted person, =>
+      @person: person
+      @render 'people/edit.html.haml'
 
 # update person
 put '/people/:id', ->
   Person.first @param('id'), (error, person) =>
-    attributes: @params.post
-    delete attributes.password if attributes.password is ''
-    person.update attributes
-    person.save (error, resp) =>
-      @redirectToTeam person
+    @ensurePermitted person, =>
+      attributes: @params.post
+      delete attributes.password if attributes.password is ''
+      person.update attributes
+      person.save (error, resp) =>
+        @redirectToTeam person
 
 # sign in
 get '/login', ->
@@ -87,8 +92,7 @@ post '/login', ->
 
 get '/logout', ->
   @redirect '/' unless @currentPerson?
-  @currentPerson.logout (error, resp) =>
-    @setCurrentPerson null
+  @logout =>
     @redirect '/'
 
 get '/*.js', (file) ->
@@ -141,6 +145,29 @@ Request.include {
 
   redirectToLogin: ->
     @redirect "/login?return_to=$@url.href"
+
+  logout: (fn) ->
+    @currentPerson.logout (error, resp) =>
+      @setCurrentPerson null
+      fn()
+
+  ensurePermitted: (other, fn) ->
+    permitted: if other.hasMember?
+      @canEditTeam other
+    else
+      other.id() is @currentPerson.id()
+    if permitted then fn()
+    else
+      unless @currentPerson?
+        @redirectToLogin()
+      else
+        # TODO flash "Oops! You don't have permissions to see that. Try logging in as somebody else."
+        @logout =>
+          @redirectToLogin()
+
+  canEditTeam: (team) ->
+    @cookie('teamAuthKey') is team.authKey() or
+      team.hasMember(@currentPerson)
 }
 
 server: run parseInt(process.env.PORT || 8000), null
