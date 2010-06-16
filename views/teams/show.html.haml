@@ -17,23 +17,31 @@
   %a.addthis_button{ href: 'http://www.addthis.com/bookmark.php' } Spread the word!
   Let others know you&rsquo;re competing.
 
-- if (this.members)
-  %h2 Members
-  %ul
-    - each member in this.members
-      %li
-        - if (member.link)
-          %a{ href: member.link }= member.name
-        - if (!member.link)
-          = member.name
+%h2 Members
+  - if (!this.members.length)
+    %p
+      No members
+  
+  - if (this.members.length)
+    %ul
+      - each member in this.members
+        %li
+          - if (member.link)
+            %a{ href: member.link }= member.name
+          - if (!member.link)
+            = member.name
+          - if (this.currentPerson && member.id() === this.currentPerson.id())
+            &nbsp;&ndash;
+            %a{ href: '/people/' + member.id() + '/edit' } that&rsquo;s you!
 
-- if (this.invites)
+- if (this.invites.length)
   %h2 Invitations
   
   - if (!this.editAllowed)
-    = this.invites.length
-    outstanding
-    = this.invites.length === 1 ? 'invitation' : 'invitations'
+    %p
+      = this.invites.length + ' '
+      outstanding
+      = this.invites.length === 1 ? ' invitation' : ' invitations'
   
   - if (this.editAllowed)
     %ul
