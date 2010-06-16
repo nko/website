@@ -102,7 +102,11 @@ put '/people/:id', ->
   Person.first @param('id'), (error, person) =>
     @ensurePermitted person, =>
       attributes: @params.post
-      delete attributes.password if attributes.password is ''
+
+      # TODO this shouldn't be necessary
+      person.setPassword attributes.password if attributes.password
+      delete attributes.password
+
       attributes.link: '' unless /^https?:\/\/.+\./.test attributes.link
       person.update attributes
       person.save (error, resp) =>

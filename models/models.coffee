@@ -109,7 +109,7 @@ class Person
 
       Here are your credentials:
       email: $@email
-      password: $@password
+      ${if @password then 'password: ' + @password else 'and whatever password you set'}
 
       Please sign in to http://nodeknockout.com/login to complete your registration.
 
@@ -138,9 +138,14 @@ class Person
     @calculateHashes()
     fn()
 
+  setPassword: (password) ->
+    # overwrite the default password
+    @passwordHash: md5 password
+    @password: ''
+
   calculateHashes: ->
     @emailHash: md5 @email
-    @passwordHash: md5 @password
+    @passwordHash: md5 @password if @password
 
   # http://e-huned.com/2008/10/13/random-pronounceable-strings-in-ruby/
   randomPassword: ->
@@ -157,7 +162,7 @@ _.extend Person, {
   login: (credentials, fn) ->
     @first { email: credentials.email }, (error, person) ->
       return fn ['Unknown email'] unless person?
-      return fn ['Invalid password'] unless person.password is credentials.password
+      return fn ['Invalid password'] unless person.passwordHash is md5 credentials.password
       person.token: Math.uuid()
       person.save (errors, resp) ->
         fn null, person
