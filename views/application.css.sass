@@ -28,6 +28,11 @@ a img
   :display table-cell
   :vertical-align top
 
+input
+  :font-size xx-large
+  :padding 5px 5px
+  :margin 5px 0px
+
 .ribbon, .localtime
   :display inline-block
   :background-color !light_green
@@ -108,19 +113,22 @@ a img
         :font-size small
   p
     :line-height 1.5em
-    &.button
+    &.footnote
       :text-align center
       :font-size small
-  a.button
+  .button
+    &.large
+      :padding 15px
+      :font-size x-large
     :display inline-block
     :margin-bottom 0.5ex
-    :font-size x-large
+    :font-size large
+    :padding 2px 10px
     :text-decoration none
     :-webkit-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
     :-moz-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
     :background-color !light_blue
     :border solid 1px !light_blue
-    :padding 15px
     :color !white
     :text-shadow 0px -1px 0px rgba(0, 0, 0, 0.15)
     :-webkit-border-radius 3px
@@ -137,6 +145,8 @@ a img
       :right -10px
       :width 50px
       :height 28px
+  .hidden
+    :display none
   footer
     :margin-top 3em
     :padding 8px 25px

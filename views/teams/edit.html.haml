@@ -2,4 +2,5 @@
 
 %form{ method: 'POST', action: '/teams/' + this.team.id() + '?_method=PUT' }
   != this.partial('teams/form.html.haml')
-  %input.button{ type: 'submit', value: 'Update' }
+  %p
+    %input.button{ type: 'submit', value: 'Save' }

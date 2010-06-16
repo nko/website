@@ -103,6 +103,7 @@ put '/people/:id', ->
     @ensurePermitted person, =>
       attributes: @params.post
       delete attributes.password if attributes.password is ''
+      attributes.link: '' unless /^https?:\/\//.test attributes.link
       person.update attributes
       person.save (error, resp) =>
         @redirectToTeam person
@@ -192,7 +193,7 @@ Request.include {
     permitted: if other.hasMember?
       @canEditTeam other
     else
-      other.id() is @currentPerson.id()
+      @currentPerson? and (other.id() is @currentPerson.id())
     if permitted then fn()
     else
       unless @currentPerson?

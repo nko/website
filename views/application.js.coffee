@@ -11,6 +11,14 @@ $ ->
   $('a.delete').click ->
     confirm 'Are you sure?'
 
+  $('a.reveal').click ->
+    $(this).hide().next('.hidden').slideDown ->
+      $(this).find('input').select()
+    false
+
+  $('input.url').click ->
+    this.select() if @value is @defaultValue
+
   if $('time').length > 0
     [y, m, d, h, i, s]: $('time').attr('datetime').split(/[-:TZ]/)...
     ms: Date.UTC y, m-1, d, h, i, s

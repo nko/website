@@ -48,8 +48,10 @@
       - each invite in this.invites
         %li
           %a{ href: 'mailto:' + invite.email }= invite.email
+          &nbsp;&ndash;&nbsp;
           %a.resend{ href: '/teams/' + this.team.id() + '/invite/' + invite.id() } Resend
 
-- if (this.editAllowed)
-  %a.button{ href: '/teams/' + this.team.id() + '/edit' } Edit
-  %a.delete.button{ href: '/teams/' + this.team.id() + '?_method=DELETE' } Delete
+%p
+  - if (this.editAllowed)
+    %a.button{ href: '/teams/' + this.team.id() + '/edit' } Edit
+    %a.delete.button{ href: '/teams/' + this.team.id() + '?_method=DELETE' } Delete
