@@ -9,7 +9,7 @@ class Team
   constructor: (options, fn) ->
     @name: options?.name or ''
     @token: Math.uuid()
-    @setMembers _.compact(options?.members or []), fn
+    @setMembers options?.emails, fn
 
   # TODO DRY
   authKey: ->
@@ -18,6 +18,9 @@ class Team
   hasMember: (member) ->
     return false unless member?
     _.include _.invoke(@members, 'id'), member.id()
+
+  emails: ->
+    _.pluck @members, 'email'
 
   validate: ->
     unless @members?.length
@@ -39,10 +42,19 @@ class Team
       fn()
 
   setMembers: (emails, fn) ->
-    @members: []
-    threads: emails.length
+    emails: _.compact emails or []
+    @members: or []
+    oldEmails: @emails()
+
+    keepEmails: _.intersect emails, oldEmails
+    @members: _.select @members, (m) ->
+      _.include keepEmails, m.email
+
+    newEmails: _.without emails, oldEmails...
+    threads: newEmails.length
     return setTimeout fn, 0 unless threads
-    for email in emails
+
+    for email in newEmails
       Person.firstOrCreate { email: email }, (error, member) =>
         @members.push member
         member.inviteTo this, ->
@@ -77,7 +89,6 @@ class Person
       to: @email,
       subject: "You've been invited to Node.js Knockout",
       body: message }, (error, body, response) ->
-        sys.puts body
         fn()
 
   authKey: ->

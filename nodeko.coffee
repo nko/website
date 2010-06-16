@@ -44,7 +44,30 @@ get '/teams/:id', ->
       @editAllowed: @canEditTeam team
       @render 'teams/show.html.haml'
     else
+      # TODO make this a 404
       @redirect '/'
+
+# edit team
+get '/teams/:id/edit', ->
+  Team.first @param('id'), (error, team) =>
+    @ensurePermitted team, =>
+      @team: team
+      @render 'teams/edit.html.haml'
+
+# update team
+put '/teams/:id', ->
+  Team.first @param('id'), (error, team) =>
+    team.update @params.post
+
+    # TODO shouldn't need this
+    team.setMembers @params.post.emails, =>
+      team.save (error, result) =>
+        if error?
+          @error: error
+          @team: team
+          @render 'teams/edit.html.haml'
+        else
+          @redirect '/teams/' + team.id()
 
 # delete team
 del '/teams/:id', -> # delete not working
