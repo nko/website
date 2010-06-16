@@ -59,6 +59,8 @@ _.extend Mongo, {
     id: -> @_id.toHexString()
 
     save: (fn) ->
+      errors: @validate() if @validate?
+      return fn errors if errors?.length
       if @beforeSave?
         @beforeSave => @_save fn
       else

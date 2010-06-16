@@ -27,9 +27,9 @@ get '/teams/new', ->
 # create team
 post '/teams', ->
   @team: new Team @params.post, =>
-    @team.save (error, res) =>
-      if error?
-        @error: error
+    @team.save (errors, res) =>
+      if errors?
+        @errors: errors
         @render 'teams/new.html.haml'
       else
         @cookie 'teamAuthKey', @team.authKey()
@@ -63,9 +63,9 @@ put '/teams/:id', ->
 
     # TODO shouldn't need this
     team.setMembers @params.post.emails, =>
-      team.save (error, result) =>
-        if error?
-          @error: error
+      team.save (errors, result) =>
+        if errors?
+          @errors: errors
           @team: team
           @render 'teams/edit.html.haml'
         else

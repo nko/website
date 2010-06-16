@@ -29,10 +29,10 @@ class Team
     _.pluck @members, 'email'
 
   validate: ->
-    unless @members?.length
-      ['Team needs at least one member']
-    else
-      _.compress _.flatten [member.validate() for member in @members]
+    errors: []
+    errors.push 'Must have team name' unless @name
+    errors.push 'Team needs at least one member' unless @members?.length
+    errors.concat _.compact _.flatten [member.validate() for member in @members]
 
   beforeSave: (fn) ->
     threads: @members.length
@@ -104,6 +104,9 @@ class Person
   logout: (fn) ->
     @token: null
     @save fn
+
+  validate: ->
+    ['Invalid email address'] unless /^[a-zA-Z0-9+._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test @email
 
   beforeSave: (fn) ->
     @calculateHashes()

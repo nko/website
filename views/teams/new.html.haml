@@ -4,6 +4,8 @@
   Not sure? No worries! You can update these
   details after registration too.
 
+!= this.partial("errors.html.haml")
+
 %form{ method: 'POST', action: '/teams' }
   != this.partial('teams/form.html.haml')
   %p

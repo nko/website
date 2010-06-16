@@ -1,9 +1,6 @@
 %h1 Sign in
 
-- if (this.errors)
-  %ul.errors
-    - each error in this.errors
-      %li= error
+!= this.partial('errors.html.haml')
 
 %form{ method: 'POST', action: 'login' }
   %input{ type: 'hidden', name: 'return_to', value: this.param('return_to') }

@@ -1,5 +1,7 @@
 %h1 Edit Profile
 
+!= this.partial("errors.html.haml")
+
 %form{ method: 'POST', action: '/people/' + this.person.id() + '?_method=PUT' }
   %h2
     %label{ for: 'name' } Name

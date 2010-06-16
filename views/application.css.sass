@@ -4,6 +4,7 @@
 !light_green = #BDD684
 !light_blue = #7e9699
 !white = #F6FFEF
+!red = #580000
 
 body
   :font-family 'helvetica neue', helvetica, arial, sans-serif
@@ -99,6 +100,11 @@ input
       :font-size small
       :line-height 150%
       :margin-top 0.5ex
+  ul#errors
+    li
+      :color !red
+      :font-weight bold
+      :line-height 1.5em
   time
     :position relative
     :overflow visible
