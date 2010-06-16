@@ -63,7 +63,7 @@ put '/people/:id', ->
     delete attributes.password if attributes.password is ''
     person.update attributes
     person.save (error, resp) =>
-      redirectToTeam this, person
+      @redirectToTeam person
 
 # sign in
 get '/login', ->
@@ -75,20 +75,13 @@ post '/login', ->
     if person?
       @setCurrentPerson person
       if person.name?
-        redirectToTeam this, person
+        @redirectToTeam person
       else
         @redirect '/people/' + person.id() + '/edit'
     else
       @errors: error
       @person: new Person(@params.post)
       @render 'login.html.haml'
-
-redirectToTeam: (request, person) ->
-  Team.first { 'members._id': person._id }, (error, team) =>
-    if team?
-      request.redirect '/teams/' + team.id()
-    else
-      request.redirect '/'
 
 get '/logout', ->
   @redirect '/' unless @currentPerson?
@@ -135,5 +128,17 @@ configure ->
     }
   }
   use CurrentPerson
+
+Request.include {
+  redirectToTeam: (person) ->
+    Team.first { 'members._id': person._id }, (error, team) =>
+      if team?
+        @redirect '/teams/' + team.id()
+      else
+        @redirect '/'
+
+  redirectToLogin: ->
+    @redirect "/login?return_to=$@url.href"
+}
 
 server: run parseInt(process.env.PORT || 8000), null
