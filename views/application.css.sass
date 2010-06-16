@@ -24,7 +24,7 @@ a img
   :display table
   :margin 20px auto
 
-#page, #sponsors
+#page, #sidebar
   :display table-cell
   :vertical-align top
 
@@ -152,24 +152,31 @@ input
     :padding 8px 25px
     :font-size small
 
-#sponsors
-  :width 30ex
-  h2 .container
-    :padding-left 10px
-  p
-    :padding-left 10px
-  p#mongodb
-    :margin-top -1.2em
-  h2.ribbon
-    :color !white
-    :background-color rgba(149, 171, 99, 0.4)
-    :border-color rgba(149, 171, 99, 0.2)
-    :margin-left 0px
-    :margin-top 197px
-    :display block
+aside#sidebar
+  :text-shadow 0px 1px 0px rgba(0, 0, 0, 0.8)
+  :font-size small
   a
     :color #a7c7cb !important
-    :text-shadow 0px 1px 0px rgba(0, 0, 0, 0.8)
-    :font-size small
-  img
-    :border 0px
+  #current_person
+    :display inline-block
+    :margin 20px auto
+    span.vr
+      :color !white
+    img
+      :float left
+      :margin-right 10px
+    :text-align left
+    :margin-top 20px
+    :height 18px
+  #sponsors
+    :margin-top 95px
+    a
+      :color #a7c7cb !important
+    h2 .container
+      :padding-left 10px
+    p
+      :padding-left 10px
+    p#mongodb
+      :margin-top -1.2em
+    img
+      :border 0px
