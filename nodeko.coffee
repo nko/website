@@ -76,7 +76,7 @@ del '/teams/:id', -> # delete not working
   Team.first @param('id'), (error, team) =>
     @ensurePermitted team, =>
       team.remove (error, result) =>
-        @redirect '/teams'
+        @redirect '/'
 
 # resend invitation
 get '/teams/:teamId/invite/:personId', ->

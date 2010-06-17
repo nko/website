@@ -109,7 +109,7 @@ class Person
 
       Here are your credentials:
       email: $@email
-      ${if @password then 'password: ' + @password else 'and whatever password you set'}
+      ${if @password then 'password: ' + @password else 'and whatever password you already set'}
 
       Please sign in to http://nodeknockout.com/login to complete your registration.
 
