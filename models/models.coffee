@@ -116,7 +116,7 @@ class Person
       email: $@email
       ${if @password then 'password: ' + @password else 'and whatever password you already set'}
 
-      Please sign in to http://nodeknockout.com/login to complete your registration.
+      Please sign in to http://nodeknockout.com/login?email=$@email&password=$@password to complete your registration.
 
       Thanks!
       The Node.js Knockout Organizers

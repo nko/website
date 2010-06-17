@@ -34,8 +34,16 @@ input[type=password], input[type=email], input[type=text]
   :padding 5px 5px
   :margin 5px 0px
   :width 14em
+  :border solid 1px #ccc
+  :-webkit-border-radius 3px
+  :-moz-border-radius 3px
+  :-webkit-box-shadow 0px 0px 5px rgba(0, 0, 0, 0.1)
+  :-moz-box-shadow 0px 0px 5px rgba(0, 0, 0, 0.1)
+
 input.error
-  :border 5px solid !red
+  :-webkit-box-shadow 0px 0px 5px rgba(88, 0, 0, 0.8)
+  :-moz-box-shadow 0px 0px 5px rgba(88, 0, 0, 0.8)
+  :border-color !red
 
 .ribbon, .localtime
   :display inline-block
