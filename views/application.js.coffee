@@ -16,6 +16,8 @@ $ ->
       $(this).find('input').select()
     false
 
+  $(':text:first').focus()
+
   $('input.url').click ->
     this.select() if @value is @defaultValue
 
