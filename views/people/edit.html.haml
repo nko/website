@@ -1,10 +1,14 @@
-%h1 Edit Profile
+%h1.ribbon
+  - if (this.person.name)
+    Edit Profile
+  - if (!this.person.name)
+    Finish your registration
 
 != this.partial("errors.html.haml")
 
 %form{ method: 'POST', action: '/people/' + this.person.id() + '?_method=PUT' }
   %h3
-    %label{ for: 'name' } Your Name
+    %label{ for: 'name' } Name
   %input{ type: 'text', name: 'name', id: 'name', value: this.person.name, autofocus: true }
   
   %h3
