@@ -128,7 +128,8 @@ class Serializer
   shouldSerialize: (name, value, nested) ->
     return false unless value?
     return false if nested and name isnt '_id'
-    @allowed[name] ?= _.isString(value) or
+    @allowed[name] ?= value instanceof Date or
+      _.isString(value) or
       _.isNumber(value) or
       _.isBoolean(value) or
       _.isArray(value) or

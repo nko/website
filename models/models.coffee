@@ -15,6 +15,7 @@ class Team
   constructor: (options, fn) ->
     @name: options?.name or ''
     @token: Math.uuid()
+    @createdAt: new Date()
     @setMembers options?.emails, fn
 
   # TODO DRY
