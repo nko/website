@@ -10,6 +10,9 @@ get /.*/, ->
   else
     @pass()
 
+get '/register', ->
+  @redirect '/teams/new'
+
 get '/', ->
   @render 'index.html.haml'
 
