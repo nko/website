@@ -3,25 +3,54 @@
 != this.partial("errors.html.haml")
 
 %form{ method: 'POST', action: '/people/' + this.person.id() + '?_method=PUT' }
-  %h2
+  %h3
     %label{ for: 'name' } Your Name
   %input{ type: 'text', name: 'name', id: 'name', value: this.person.name, autofocus: true }
   
-  %h2
+  %h3
     %label{ for: 'email' } Email
   .note We don&rsquo;t spam.  Only visible to team members.
   %input{ type: 'email', name: 'email', id: 'email', value: this.person.email }
   
-  %h2
+  %h3
     %label{ for: 'password' } Password
   %a.reveal{ href: '#' } Click to change.
   .hidden
     %input{ type: 'password', name: 'password', id: 'password' }
   
-  %h2
+  %h2 Optional Information
+  %p.note
+    All this stuff is optional for now.  Fill it out and we won't bug you about it later.
+  %h3
     %label{ for: 'link' } Link
   .note Optional. Let other participants know who you are.
-  %input.link{ type: 'text', name: 'link', id: 'link', value: this.person.link || 'http://' }
+  %input.url{ type: 'text', name: 'link', id: 'link', value: this.person.link || 'http://' }
+  
+  %h3
+    %label{ for: 'github' } GitHub
+  .note
+    GitHub username. During the contest, code must be pushed to
+    %a{ href: 'http://heroku.com' } GitHub
+    (this helps us proctor).
+  %input{ type: 'text', name: 'github', id: 'github', value: this.person.github }
+  
+  %h3
+    %label{ for: 'heroku' } Heroku
+  .note
+    Heroku username. Optional. Entries can be deployed to
+    %a{ href: 'http://heroku.com' } Heroku
+    or
+    != ' <a href="http://www.joyent.com/?utm_source=web&utm_medium=sponsorship&utm_campaign=nodeknockout">Joyent</a>.'
+  %input{ type: 'text', name: 'heroku', id: 'heroku', value: this.person.heroku }
+  
+  %h3
+    %label{ for: 'joyent' } Joyent
+  .note
+    Joyent username. Optional. Entries can be deployed to
+    %a{ href: 'http://www.joyent.com/?utm_source=web&utm_medium=sponsorship&utm_campaign=nodeknockout' } Joyent
+    or
+    != ' <a href="http://heroku.com">Heroku</a>.'
+  %input{ type: 'text', name: 'joyent', id: 'joyent', value: this.person.joyent }
   
   %p
     %input.button{ type: 'submit', value: 'Save' }

@@ -35,18 +35,18 @@ $ ->
     }
     false
 
-  $('input[type=submit]').click (evt) ->
+  $('form').submit (evt) ->
     form: $(this).closest('form')
     errors: $('#errors').html('')
     form.find('input').removeClass 'error'
 
+    hasError: false
     highlightError: (selector, message, fn) ->
       invalid: form.find(selector).filter fn
       if invalid.length
         errors.append "<li>$message</li>"
         invalid.addClass 'error'
-        evt.stopPropagation()
-        evt.preventDefault()
+        hasError: true
 
     highlightError 'input[type=email]', 'Invalid email address',->
       val: $(this).val()
@@ -55,9 +55,14 @@ $ ->
     highlightError 'input[name=name]', 'Name is required', -> !$(this).val()
     highlightError 'input[type=email]:first', 'Email is required', -> !$(this).val()
     highlightError 'input[type=password]:visible', 'Password required', -> !$(this).val()
-    highlightError 'input.link', 'Invalid link', ->
+    highlightError 'input.url', 'Invalid link', ->
       val: $(this).val()
-      val and not /^https?:\/\//.test val
+      val and val isnt @defaultValue and not /^https?:\/\/.*\./.test val
+
+    unless hasError
+      $('input.url').each ->
+        @value: '' if @value is @defaultValue
+    not hasError
 
 
   if $('time').length > 0

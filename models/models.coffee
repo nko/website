@@ -72,7 +72,11 @@ class Person
   constructor: (options) ->
     @name: options?.name or ''
     @email: options?.email or ''
+
     @link: options?.link or ''
+    @github: options?.github or ''
+    @heroku: options?.heroku or ''
+    @joyent: options?.joyent or ''
     @password: options?.password or @randomPassword()
     @calculateHashes()
 
