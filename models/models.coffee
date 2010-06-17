@@ -93,7 +93,7 @@ class Person
         The Node.js Knockout Organizers
         """
       http.post 'http://www.postalgone.com/mail', {
-        sender: '"Node.js Knockout" <mail@postalgone.com>',
+        sender: '"Node.js Knockout" <mail@nodeknockout.com>',
         from: 'all@nodeknockout.com',
         to: @email,
         subject: "Password reset for Node.js Knockout",
@@ -117,7 +117,7 @@ class Person
       The Node.js Knockout Organizers
       """
     http.post 'http://www.postalgone.com/mail', {
-      sender: '"Node.js Knockout" <mail@postalgone.com>',
+      sender: '"Node.js Knockout" <mail@nodeknockout.com>',
       from: 'all@nodeknockout.com',
       to: @email,
       subject: "You've been invited to Node.js Knockout",
