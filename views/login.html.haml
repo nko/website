@@ -1,4 +1,4 @@
-%h1 Sign in
+%h1.ribbon Sign in
 
 != this.partial('errors.html.haml')
 
@@ -7,14 +7,14 @@
   %p
     %label{ for: 'email' } Email
     %br
-    %input{ type: 'email', name: 'email', id: 'email', value: this.person.email }
+    %input{ type: 'email', name: 'email', id: 'email', value: this.person.email || this.param('email'), autofocus: true }
   %p
     %label{ for: 'password' } Password
     %br
-    %input{ type: 'password', name: 'password', id: 'password' }
+    %input{ type: 'password', name: 'password', id: 'password', value: this.param('password') }
   %p
-    %input{ type: 'checkbox', name: 'remember', id: 'remember' }
-    %label{ for: 'remember' } stay logged in
+    %input{ type: 'checkbox', name: 'remember', id: 'remember', checked: true }
+    %label{ for: 'remember' } Stay logged in
   %p
     %input.button{ type: 'submit', value: 'Sign in' }
     %a{ href: 'reset_password' } Forgot your password?
