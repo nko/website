@@ -196,16 +196,32 @@ aside#pullout
   a
     :color #a7c7cb !important
   #current_person
-    :display inline-block
-    :margin 20px auto
-    span.vr
-      :color !white
-    img
-      :float left
-      :margin-right 10px
+    :display table
+    :border-spacing 10px
+    :margin 50px auto 0px
     :text-align left
-    :margin-top 20px
-    :height 18px
+    :line-height 125%
+    :font-size medium
+    :background-color rgba(0, 0, 0, 0.3)
+    :border solid 1px rgba(0, 0, 0, 0.3)
+    :-webkit-border-radius 3px
+    :-moz-border-radius 3px
+    :-webkit-box-reflect below 2px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(red))
+    .vr
+      :color !white
+      :margin 0px 10px
+    img, .info
+      :display table-cell
+      :vertical-align middle
+    img
+      :-webkit-transform rotate(-5deg)
+      :-moz-transform rotate(-5deg)
+      :border solid 2px rgba(255, 255, 255, 0.7)
+      :width 40px
+      :height 40px
+    a[href$=logout]
+      :color #999 !important
+      :font-size small
   #sponsors
     :position absolute
     :top 130px

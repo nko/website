@@ -53,9 +53,10 @@
             %a{ href: '/teams/new' } Register
           - if (this.currentPerson)
             %img{ src: 'http://www.gravatar.com/avatar/' + this.currentPerson.emailHash + '?s=40&d=monsterid' }
-            %a{ href: '/people/' + this.currentPerson.id() + '/edit' }= this.currentPerson.name || this.currentPerson.email
-            %br
-            %a{ href: '/logout' } Sign out
+            .info
+              %a{ href: '/people/' + this.currentPerson.id() + '/edit' }= this.currentPerson.name || this.currentPerson.email
+              %br
+              %a{ href: '/logout' } Sign out
         #sponsors
           %p
             %a{ href: 'http://github.com' }
