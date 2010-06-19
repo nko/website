@@ -90,6 +90,7 @@ input.error
     a
       :color transparent
   nav
+    :position relative
     :text-align center
     :font-size medium
     :padding 12px 0px 10px
@@ -113,6 +114,25 @@ input.error
     .vr
       :margin 1ex
       :color rgba(100, 100, 100, 0.3)
+    a.twitter
+      .say
+        :display none
+        :font-size x-small
+        :position absolute
+        :top -60px
+        :right 45px
+        :background-color rgba(255, 255, 255, 0.5)
+        :padding 8px
+        :border solid 1px rgba(0, 0, 0, 0.1)
+        :-webkit-border-radius 5px
+        :-moz-border-radius 5px
+        :-webkit-box-shadow 0px 0px 10px rgba(0, 0, 0, 0.1)
+      img
+        :position absolute
+        :top -24px
+        :right -10px
+        :width 50px
+        :height 28px
   h2, h3
     :margin-bottom 0px
   .heart
@@ -168,18 +188,11 @@ input.error
     :text-shadow 0px -1px 0px rgba(0, 0, 0, 0.15)
     :-webkit-border-radius 3px
     :-moz-border-radius 3px
-    :position relative
     :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.35)), to(rgba(255, 255, 255, 0)))
     :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0))
     &:active
       :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.2)), to(rgba(255, 255, 255, 0.3)))
       :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3))
-    img
-      :position absolute
-      :top -25px
-      :right -10px
-      :width 50px
-      :height 28px
   .hidden
     :display none
   footer

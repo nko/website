@@ -16,6 +16,11 @@ $ ->
       $(this).find('input').select()
     false
 
+  $('a.twitter').hover ->
+    $('.say', this).stop().fadeIn('fast')
+  , ->
+    $('.say', this).fadeOut()
+
   $(':input:visible:first').focus()
 
   $('input.url').click ->
