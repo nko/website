@@ -167,6 +167,7 @@ get '/*', (file) ->
   try
     @render "${file}.html.haml"
   catch e
+    throw e if e.errno != 2
     @pass "/${file}"
 
 get '/*', (file) ->
