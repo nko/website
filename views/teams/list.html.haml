@@ -3,7 +3,7 @@
 %p
   - if (this.yourTeams.length === 1)
     Your team:
-    %a { href: '/teams/' + this.yourTeams[0].id() }= this.yourTeams[0].name
+    %a{ href: '/teams/' + this.yourTeams[0].id() }= this.yourTeams[0].name
   - if (this.yourTeams.length > 1)
     Your teams:
     - each team in this.yourTeams
