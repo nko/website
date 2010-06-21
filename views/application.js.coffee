@@ -95,7 +95,6 @@ $ ->
 
   $('.body._judging img').each ->
     r: 'rotate(' + new String(Math.random()*6-3) + 'deg)'
-    console.log r
     $(this)
       .css('-webkit-transform', r)
       .css('-moz-transform', r)
