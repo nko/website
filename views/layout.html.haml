@@ -22,13 +22,13 @@
         %nav
           %ul
             %li
-              %a{ href: '/' } Home
-              %span.vr |
-            %li
-              %a{ href: '/teams' } Teams
+              %a{ href: '/judging' } Judges
               %span.vr |
             %li
               %a{ href: '/faq' } FAQ
+              %span.vr |
+            %li
+              %a{ href: '/teams' } Teams
               %span.vr |
             %li
               %a{ href: '/sponsors' } Sponsors
@@ -38,7 +38,7 @@
           %a.twitter{ href: 'http://twitter.com/node_knockout' }
             .say!= 'Follow us<br/> on Twitter!'
             %img{ src: '/images/bird.png' }
-        .body!= body
+        .body{ 'class': 'body ' + this.url.pathname.replace('/', '_') }!= body
         %footer.ribbon.blue
           email
           %a{ href: 'mailto:all@nodeknockout.com' } all@nodeknockout.com
