@@ -1,7 +1,17 @@
-%h1
+%h2.ribbon
   Teams
+%p
+  - if (this.yourTeams.length === 1)
+    Your team:
+    %a { href: '/teams/' + this.yourTeams[0].id() }= this.yourTeams[0].name
+  - if (this.yourTeams.length > 1)
+    Your teams:
+    - each team in this.yourTeams
+      %a{ href: '/teams/' + team.id() }= team.name
+%h3
+  All Teams
   = ' (' + this.teams.length + ')'
-%ul
+%ol
   - each team in this.teams
     %li
       %a{ href: '/teams/' + team.id() }= team.name

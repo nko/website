@@ -20,6 +20,12 @@ get '/', ->
 get '/teams', ->
   Team.all (error, teams) =>
     @teams: teams
+    @yourTeams: if @currentPerson?
+      _.select teams, (team) =>
+        # TODO this is gross
+        _ids: _.pluck(team.members, '_id')
+        _.include _.pluck(_ids, 'id'), @currentPerson._id.id
+    else []
     @render 'teams/list.html.haml'
 
 # new team
