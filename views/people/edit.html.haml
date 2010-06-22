@@ -8,7 +8,7 @@
 
 %form{ method: 'POST', action: '/people/' + this.person.id() + '?_method=PUT' }
   %h3
-    %label{ for: 'name' } Name
+    %label{ for: 'name' } Name / Handle
   %input{ type: 'text', name: 'name', id: 'name', value: this.person.name, autofocus: true }
   
   %h3
