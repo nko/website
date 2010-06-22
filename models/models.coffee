@@ -116,10 +116,14 @@ class Person
       email: $@email
       ${if @password then 'password: ' + @password else 'and whatever password you already set'}
 
-      Please sign in to http://nodeknockout.com/login?email=$@email&password=$@password to complete your registration.
+      You still need to complete your registration.
+      Please sign in at: http://nodeknockout.com/login?email=$@email&password=$@password to do so.
+
 
       Thanks!
       The Node.js Knockout Organizers
+
+      Node.js Knockout is a 48-hour programming contest using node.js from Aug 28-29, 2010.
       """
     http.post 'http://www.postalgone.com/mail', {
       sender: '"Node.js Knockout" <mail@nodeknockout.com>',
