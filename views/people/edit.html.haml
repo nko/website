@@ -8,7 +8,7 @@
 
 %form{ method: 'POST', action: '/people/' + this.person.id() + '?_method=PUT' }
   %h3
-    %label{ for: 'name' } Name
+    %label{ for: 'name' } Name / Handle
   %input{ type: 'text', name: 'name', id: 'name', value: this.person.name, autofocus: true }
   
   %h3
@@ -18,7 +18,7 @@
   
   %h3
     %label{ for: 'password' } Password
-  %a.reveal{ href: '#' } Click to change.
+  %a.reveal{ href: '#' } Click to change
   .hidden
     %input{ type: 'password', name: 'password', id: 'password' }
   
