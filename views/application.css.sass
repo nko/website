@@ -1,10 +1,9 @@
 // http://kuler.adobe.com/#themeID/337112
-!black = #10222B
-!dark_green = #95AB63
-!light_green = #BDD684
+!black = hsl(200, 35%, 12%)
+!light_green = hsl(78, 60%, 75%)
 !light_blue = #7e9699
 !white = #F6FFEF
-!red = #a80000
+!red = hsl(359, 100%, 33%)
 
 body
   :font-family 'helvetica neue', helvetica, arial, sans-serif
@@ -13,8 +12,8 @@ body
   :text-align center
   :min-height 800px
   :background-color !black
-  :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.3)), to(transparent))
-  :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.3), transparent)
+  :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.3)), to(transparent))
+  :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 100%, 0.3), transparent)
 
 a:link, a:visited
   :color !light_blue
@@ -37,51 +36,50 @@ input[type=password], input[type=email], input[type=text]
   :border solid 1px #ccc
   :-webkit-border-radius 3px
   :-moz-border-radius 3px
-  :-webkit-box-shadow 0px 0px 5px rgba(0, 0, 0, 0.1)
-  :-moz-box-shadow 0px 0px 5px rgba(0, 0, 0, 0.1)
+  :-webkit-box-shadow 0px 0px 5px hsla(0, 0%, 0%, 0.1)
+  :-moz-box-shadow 0px 0px 5px hsla(0, 0%, 0%, 0.1)
 
 input.error
-  :-webkit-box-shadow 0px 0px 5px rgba(88, 0, 0, 0.8)
-  :-moz-box-shadow 0px 0px 5px rgba(88, 0, 0, 0.8)
+  :-webkit-box-shadow 0px 0px 5px hsla(359, 100%, 33%, 0.8)
+  :-moz-box-shadow 0px 0px 5px hsla(359, 100%, 33%, 0.8)
   :border-color !red
 
 .ribbon, .localtime
   :display inline-block
-  :background-color !light_green
-  :border solid 1px !dark_green
+  :background-color hsla(78, 60%, 75%, 0.8)
+  :border solid 1px hsla(0, 0%, 0%, 0.1)
   :margin-left -25px
   :padding 5px 25px
   :color !white
-  :text-shadow 0px -1px 0px rgba(0, 0, 0, 0.15)
-  :-webkit-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
-  :-moz-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
+  :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
+  :-webkit-box-shadow 0px 2px 5px hsla(0, 0%, 0%, 0.1)
+  :-moz-box-shadow 0px 2px 5px hsla(0, 0%, 0%, 0.1)
 .blue
   :background-color !light_blue
-  :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.2)), to(rgba(255, 255, 255, 0.0)))
-  :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0))
-  :border-color rgba(0, 0, 0, 0.15)
+  :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.2)), to(hsla(0, 0%, 100%, 0.0)))
+  :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 100%, 0.2), hsla(0, 0%, 100%, 0))
+  :border-color hsla(0, 0%, 0%, 0.15)
   :color #ccc
   a
     :color !white
-    :text-shadow 0px -1px 0px rgba(0, 0, 0, 0.15)
+    :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
     :text-decoration none
     &:hover
       :text-decoration underline
   .vr
     :margin 1ex
-    :color rgba(100, 100, 100, 0.1)
-    :color rgba(0, 0, 0, 0.15)
+    :color hsla(0, 0%, 0%, 0.15)
 
 #page
   :width 70ex
   :text-align left
   :background !white url('/images/noise.png')
-  :border solid 1px rgba(0, 0, 0, 0.5)
+  :border solid 1px hsla(0, 0%, 0%, 0.5)
   :padding 1em 20px
-  :-webkit-box-shadow 1px 1px 10px rgba(0, 0, 0, 0.2)
-  :-moz-box-shadow 1px 1px 10px rgba(0, 0, 0, 0.2)
+  :-webkit-box-shadow 1px 1px 10px hsla(0, 0%, 0%, 0.2)
+  :-moz-box-shadow 1px 1px 10px hsla(0, 0%, 0%, 0.2)
   :color !black
-  :text-shadow 0px 1px 0px rgba(255, 255, 255, 0.9)
+  :text-shadow 0px 1px 0px hsla(0, 0%, 100%, 0.9)
   header h1#logo
     :text-align center
     :background url('/images/nodeko.png') no-repeat 50% 50%
@@ -97,10 +95,10 @@ input.error
     :font-size medium
     :padding 12px 0px 10px
     :background-color rgba(126, 150, 153, 0.15)
-    :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), color-stop(0.15, transparent))
-    :background-image -moz-linear-gradient(-90deg, rgba(0, 0, 0, 0.1), transparent 10%)
-    :-webkit-box-shadow 0px 2px 3px rgba(0, 0, 0, 0.1)
-    :-moz-box-shadow 0px 2px 3px rgba(0, 0, 0, 0.1)
+    :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 0%, 0.1)), color-stop(0.15, transparent))
+    :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.1), transparent 10%)
+    :-webkit-box-shadow 0px 2px 3px hsla(0, 0%, 0%, 0.1)
+    :-moz-box-shadow 0px 2px 3px hsla(0, 0%, 0%, 0.1)
     :-webkit-border-radius 3px
     :-moz-border-radius 3px
     ul
@@ -123,12 +121,12 @@ input.error
         :position absolute
         :top -60px
         :right 45px
-        :background-color rgba(255, 255, 255, 0.5)
+        :background-color hsla(0, 0%, 100%, 0.5)
         :padding 8px
-        :border solid 1px rgba(0, 0, 0, 0.1)
+        :border solid 1px hsla(0, 0%, 0%, 0.1)
         :-webkit-border-radius 5px
         :-moz-border-radius 5px
-        :-webkit-box-shadow 0px 0px 10px rgba(0, 0, 0, 0.1)
+        :-webkit-box-shadow 0px 0px 10px hsla(0, 0%, 0%, 0.1)
       img
         :position absolute
         :top -24px
@@ -174,27 +172,34 @@ input.error
       :padding 15px
       :font-size x-large
       :background-color !red
-      :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.5)), to(rgba(255, 255, 255, 0)))
-      :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0))
-      :border-color rgba(0, 0, 0, 0.15)
+      :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.5)), to(hsla(0, 0%, 100%, 0)))
+      :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 100%, 0.5), hsla(0, 0%, 100%, 0))
+      :border-color hsla(0, 0%, 0%, 0.15)
+      &:hover
+        :-webkit-box-shadow 0px 0px 8px hsla(359, 100%, 50%, 0.6)
+        :-moz-box-shadow 0px 0px 8px hsla(359, 100%, 50%, 0.6)
     :display inline-block
     :margin-bottom 0.5ex
     :font-size large
     :padding 2px 10px
     :text-decoration none
-    :-webkit-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
-    :-moz-box-shadow 1px 1px 5px rgba(0, 0, 0, 0.1)
+    :-webkit-box-shadow 1px 1px 5px hsla(0, 0%, 0%, 0.1)
+    :-moz-box-shadow 1px 1px 5px hsla(0, 0%, 0%, 0.1)
     :background-color !light_blue
     :border solid 1px !light_blue
     :color !white
-    :text-shadow 0px -1px 0px rgba(0, 0, 0, 0.15)
+    :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
     :-webkit-border-radius 3px
     :-moz-border-radius 3px
-    :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.35)), to(rgba(255, 255, 255, 0)))
-    :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0))
+    :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.35)), to(hsla(0, 0%, 100%, 0)))
+    :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 100%, 0.35), hsla(0, 0%, 100%, 0))
+    :-webkit-transition -webkit-box-shadow 150ms linear
+    &:hover
+      :-webkit-box-shadow 0px 0px 5px hsla(0, 0%, 0%, 0.5)
+      :-moz-box-shadow 0px 0px 5px hsla(0, 0%, 0%, 0.5)
     &:active
-      :background-image -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.2)), to(rgba(255, 255, 255, 0.3)))
-      :background-image -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3))
+      :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.2)), to(hsla(0, 0%, 100%, 0.3)))
+      :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 100%, 0.2), hsla(0, 0%, 100%, 0.3))
   .hidden
     :display none
   footer
@@ -206,7 +211,7 @@ aside#pullout
   :display block
   :position relative
   :width 240px
-  :text-shadow 0px 1px 0px rgba(0, 0, 0, 0.8)
+  :text-shadow 0px 1px 0px hsla(0, 0%, 0%, 0.8)
   :font-size small
   :padding-left 10px
   a
@@ -218,11 +223,11 @@ aside#pullout
     :text-align left
     :line-height 125%
     :font-size medium
-    :background-color rgba(0, 0, 0, 0.3)
-    :border solid 1px rgba(0, 0, 0, 0.3)
+    :background-color hsla(0, 0%, 0%, 0.3)
+    :border solid 1px hsla(0, 0%, 0%, 0.3)
     :-webkit-border-radius 3px
     :-moz-border-radius 3px
-    :-webkit-box-reflect below 2px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.6, transparent), to(rgba(255, 255, 255, 0.6)))
+    :-webkit-box-reflect below 2px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.6, transparent), to(hsla(0, 0%, 100%, 0.6)))
     .vr
       :color !white
       :margin 0px 10px
@@ -232,7 +237,7 @@ aside#pullout
     img
       :-webkit-transform rotate(-5deg)
       :-moz-transform rotate(-5deg)
-      :border solid 2px rgba(255, 255, 255, 0.7)
+      :border solid 2px hsla(0, 0%, 100%, 0.7)
       :width 40px
       :height 40px
     a[href$=logout]
@@ -263,8 +268,8 @@ aside#pullout
     :padding 3px
     :-webkit-border-radius 3px
     :-moz-border-radius 3px
-    :-webkit-box-shadow 0px 0px 5px rgba(0, 0, 0, 0.3)
-    :-moz-box-shadow 0px 0px 5px rgba(0, 0, 0, 0.3)
+    :-webkit-box-shadow 0px 0px 5px hsla(0, 0%, 0%, 0.3)
+    :-moz-box-shadow 0px 0px 5px hsla(0, 0%, 0%, 0.3)
   h3
     :margin-left 140px
     :clear left
