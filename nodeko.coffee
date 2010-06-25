@@ -26,7 +26,7 @@ get '/teams', ->
         _ids: _.pluck(team.members, '_id')
         _.include _.pluck(_ids, 'id'), @currentPerson._id.id
     else []
-    @render 'teams/list.html.haml'
+    @render 'teams/index.html.haml'
 
 # new team
 get '/teams/new', ->
