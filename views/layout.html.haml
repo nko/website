@@ -38,7 +38,7 @@
           %a.twitter{ href: 'http://twitter.com/node_knockout' }
             .say!= 'Follow us<br/> on Twitter!'
             %img{ src: '/images/bird.png' }
-        .body{ 'class': 'body ' + this.url.pathname.replace('/', '_') }!= body
+        .body{ 'class': 'body ' + this.url.pathname.replace(this.param('id'), '').replace(/\//g, '_') }!= body
         %footer.ribbon.blue
           email
           %a{ href: 'mailto:all@nodeknockout.com' } all@nodeknockout.com

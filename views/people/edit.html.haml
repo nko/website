@@ -22,39 +22,38 @@
   .hidden
     %input{ type: 'password', name: 'password', id: 'password' }
   
-  %h2 Optional Information
-  %p.note
-    All this stuff is optional for now.  Fill it out and we won't bug you about it later.
+  %h2 Optional
+  %p
+    Everything below is optional for now. Fill it out and we won't bug you about
+    it later.
   %h3
     %label{ for: 'link' } Link
-  .note Optional. Let other participants know who you are.
+    .note Let other participants know who you are.
   %input.url{ type: 'text', name: 'link', id: 'link', value: this.person.link || 'http://' }
   
   %h3
-    %label{ for: 'github' } GitHub
-  .note
-    GitHub username. During the contest, code must be pushed to
-    %a{ href: 'http://github.com' } GitHub
-    (this helps us proctor).
+    %label{ for: 'github' } GitHub username
+    .note
+      During the contest, code must be pushed to
+      %a{ href: 'http://github.com' } GitHub
+      to help us proctor.
   %input{ type: 'text', name: 'github', id: 'github', value: this.person.github }
-  
-  %h3
-    %label{ for: 'heroku' } Heroku
-  .note
-    Heroku username. Optional. Entries can be deployed to
-    %a{ href: 'http://heroku.com' } Heroku
-    or
-    != ' <a href="http://www.joyent.com/?utm_source=web&utm_medium=sponsorship&utm_campaign=nodeknockout">Joyent</a>.'
-  %input{ type: 'text', name: 'heroku', id: 'heroku', value: this.person.heroku }
-  
-  %h3
-    %label{ for: 'joyent' } Joyent
-  .note
-    Joyent username. Optional. Entries can be deployed to
+
+  %h2 Deployment
+  %p
+    Entries can be deployed to either
     %a{ href: 'http://www.joyent.com/?utm_source=web&utm_medium=sponsorship&utm_campaign=nodeknockout' } Joyent
     or
-    != ' <a href="http://heroku.com">Heroku</a>.'
+    != ' <a href="http://heroku.com">Heroku</a>. '
+    Both services have donated virtual servers to be used by contestants during
+    the competition. If you already have accounts, please provide your
+    usernames to facilitate setup later.
+  %h3
+    %label{ for: 'joyent' } Joyent username
   %input{ type: 'text', name: 'joyent', id: 'joyent', value: this.person.joyent }
+  %h3
+    %label{ for: 'heroku' } Heroku username
+  %input{ type: 'text', name: 'heroku', id: 'heroku', value: this.person.heroku }
   
   %p
     %input.button{ type: 'submit', value: 'Save' }
