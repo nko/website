@@ -1,0 +1,26 @@
+#attending_form
+  %h3
+    Coming to Knockout HQ?
+    %span.saving Saving&hellip;
+    %span.saved Saved
+    %span.error Save failed!
+  
+  #attending_input
+    %input{ type: 'checkbox', name: 'attending', id: 'attending', checked: 'team' in this && this.team.joyent_count }
+    %label{ 'for': 'attending' }
+      != '<b>Yes</b>, '
+      our team wants to hack at the
+      != ' <a href="http://nodeknockout.posterous.com/knockout-hq">Knockout HQ</a> '
+      != ' <span class="more_info">(<a href="/locations">more information</a>)</span>.'
+  
+  #attending_count
+    How many people on your team will be attending?
+    %input{ type: 'text', size: 2, name: 'joyent_count', id: 'joyent_count', value: 'team' in this && this.team.joyent_count }
+  
+  .note
+    Participants can compete from anywhere virtually.
+    Interested teams are encouraged to compete
+    %a{ href: '/locations' } in person
+    at the
+    %a{ href: 'http://nodeknockout.posterous.com/knockout-hq' } Knockout HQ
+    in San Francisco.

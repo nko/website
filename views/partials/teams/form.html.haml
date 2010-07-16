@@ -5,8 +5,10 @@
 
 %h2 Team Member Emails
 .note We don&rsquo;t spam. Teams can have 1-4 people.
-%ol
+%ol#members
   - for (var i = 1; i < 5; i++)
     %li
       %input{ type: 'email', placeholder: 'member' + i + '@team.com', name: 'emails[]', value: this.team.emails()[i - 1] }
 %p Each team member will receive an e-mail with a password.
+
+!= this.partial('teams/attending.html.haml')

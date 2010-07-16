@@ -11,14 +11,7 @@
 
 - if (this.editAllowed)
   - if (this.currentPerson)
-    %p.note
-      This is it for now!  We&rsquo;ll likely ask for more
-      details soon.
-    
-    %p.note
-      In the meantime,
-      %a.addthis_button{ href: 'http://www.addthis.com/bookmark.php' } spread the word!
-      More competitors means more people for you to dominate!
+    != this.partial('teams/attending.html.haml')
   
   - if (!this.currentPerson)
     %p.note
@@ -32,43 +25,38 @@
       All team members now need to
       %a{ href: '/login' } sign in and update their profile information.
 
-%h2 Confirmed Team Members
-  - if (!this.members.length)
-    %p
-      No invitations have been accepted yet.
-      - if (this.editAllowed)
-        %strong Check your email for your invitation.
-  
-  - if (this.members.length)
-    %ul
-      - each member in this.members
-        %li
-          - if (member.link)
-            %a{ href: member.link }= member.name
-          - if (!member.link)
-            = member.name
-          - if (this.currentPerson && member.id() === this.currentPerson.id())
-            &nbsp;&ndash;
-            %a{ href: '/people/' + member.id() + '/edit' } that&rsquo;s you!
+%h2 Team Members
+- if (!this.members.length)
+  %p
+    No invitations have been accepted yet.
+    - if (this.editAllowed)
+      %strong Check your email for your invitation.
 
-- if (this.invites.length)
-  %h2 Pending Invitations
-  
-  - if (!this.editAllowed)
-    %p
-      = this.invites.length + ' '
-      outstanding
-      = this.invites.length === 1 ? ' invitation.' : ' invitations.'
-  
-  - if (this.editAllowed)
-    %ul
+- if (this.members.length)
+  %ul#members
+    - each member in this.members
+      %li
+        - if (member.link)
+          %a{ href: member.link }= member.name
+        - if (!member.link)
+          = member.name
+        - if (this.currentPerson && member.id() === this.currentPerson.id())
+          &nbsp;&ndash;
+          %a{ href: '/people/' + member.id() + '/edit' } that&rsquo;s you!
+    - if (this.invites.length && this.editAllowed)
       - each invite in this.invites
         %li
           %a{ href: 'mailto:' + invite.email }= invite.email
           &nbsp;&ndash;&nbsp;
           %a.resend{ href: '/teams/' + this.team.id() + '/invite/' + invite.id() } Resend
 
-%p
-  - if (this.editAllowed)
+- if (this.invites.length && !this.editAllowed)
+  %p
+    = this.invites.length + ' '
+    outstanding
+    = this.invites.length === 1 ? ' invitation.' : ' invitations.'
+
+- if (this.editAllowed)
+  %p
     %a.button{ href: '/teams/' + this.team.id() + '/edit' } Edit
     %a.delete.button{ href: '/teams/' + this.team.id() + '?_method=DELETE' } Delete

@@ -11,7 +11,10 @@ get /.*/, ->
     @pass()
 
 get '/register', ->
-  @redirect '/teams/new'
+  if @currentPerson?
+    @redirectToTeam @currentPerson, '/teams/new'
+  else
+    @redirect '/teams/new'
 
 get '/', ->
   @render 'index.html.haml'
@@ -68,10 +71,9 @@ get '/teams/:id/edit', ->
 # update team
 put '/teams/:id', ->
   Team.first @param('id'), (error, team) =>
+    team.joyent_count: or 0
     team.update @params.post
-
-    # TODO shouldn't need this
-    team.setMembers @params.post.emails, =>
+    save: =>
       team.save (errors, result) =>
         if errors?
           @errors: errors
@@ -79,6 +81,10 @@ put '/teams/:id', ->
           @render 'teams/edit.html.haml'
         else
           @redirect '/teams/' + team.id()
+    # TODO shouldn't need this
+    if @params.post.emails
+      team.setMembers @params.post.emails, save
+    else save()
 
 # delete team
 del '/teams/:id', -> # delete not working
@@ -202,12 +208,12 @@ configure ->
   use CurrentPerson
 
 Request.include {
-  redirectToTeam: (person) ->
+  redirectToTeam: (person, alternatePath) ->
     Team.first { 'members._id': person._id }, (error, team) =>
       if team?
         @redirect '/teams/' + team.id()
       else
-        @redirect '/'
+        @redirect (alternatePath or '/')
 
   redirectToLogin: ->
     @redirect "/login?return_to=$@url.href"
