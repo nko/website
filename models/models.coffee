@@ -13,7 +13,7 @@ md5: (str) ->
 
 class Team
   constructor: (options, fn) ->
-    @joyent_count: or 0
+    @joyent_count: options?.joyent_count or 0
     @name: options?.name or ''
     @token: Math.uuid()
     @createdAt: new Date()
