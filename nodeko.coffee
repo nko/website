@@ -71,20 +71,21 @@ get '/teams/:id/edit', ->
 # update team
 put '/teams/:id', ->
   Team.first @param('id'), (error, team) =>
-    team.joyent_count: or 0
-    team.update @params.post
-    save: =>
-      team.save (errors, result) =>
-        if errors?
-          @errors: errors
-          @team: team
-          @render 'teams/edit.html.haml'
-        else
-          @redirect '/teams/' + team.id()
-    # TODO shouldn't need this
-    if @params.post.emails
-      team.setMembers @params.post.emails, save
-    else save()
+    @ensurePermitted team, =>
+      team.joyent_count: or 0
+      team.update @params.post
+      save: =>
+        team.save (errors, result) =>
+          if errors?
+            @errors: errors
+            @team: team
+            @render 'teams/edit.html.haml'
+          else
+            @redirect '/teams/' + team.id()
+      # TODO shouldn't need this
+      if @params.post.emails
+        team.setMembers @params.post.emails, save
+      else save()
 
 # delete team
 del '/teams/:id', -> # delete not working
