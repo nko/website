@@ -26,13 +26,6 @@
       %a{ href: '/login' } sign in and update their profile information.
 
 %h2 Team Members
-- if (!this.members.length)
-  %p
-    No invitations have been accepted yet.
-    - if (this.editAllowed)
-      %strong Check your email for your invitation.
-
-- if (this.members.length)
   %ul#members
     - each member in this.members
       %li
@@ -47,8 +40,9 @@
       - each invite in this.invites
         %li
           %a{ href: 'mailto:' + invite.email }= invite.email
+          invited
           &nbsp;&ndash;&nbsp;
-          %a.resend{ href: '/teams/' + this.team.id() + '/invite/' + invite.id() } Resend
+          %a.resend{ href: '/teams/' + this.team.id() + '/invite/' + invite.id() } reinvite
 
 - if (this.invites.length && !this.editAllowed)
   %p
