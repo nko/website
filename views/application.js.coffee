@@ -92,7 +92,7 @@ $ ->
     saveAttendingCount: ->
       ac: getAttendingCount()
       if ac == attendingCount
-        setTimeout saveAttendingCount, 2500
+        setTimeout saveAttendingCount, 50
       else
         attendingCount: ac
         $('#attending_form .saving').show()
@@ -102,12 +102,12 @@ $ ->
           data: { joyent_count: ac },
           error: (xhr, status, err) ->
             $('#attending_form .saving').hide()
-            $('#attending_form .error').show().delay().fadeOut()
+            $('#attending_form .error').show().delay('slow').fadeOut()
           success: (data, status, xhr) ->
             $('#attending_form .saving').hide()
-            $('#attending_form .saved').show().delay().fadeOut()
+            $('#attending_form .saved').show().delay('slow').fadeOut()
           complete: (xhr, status) ->
-            setTimeout saveAttendingCount, 2500
+            setTimeout saveAttendingCount, 50
         }
     saveAttendingCount()
 
