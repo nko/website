@@ -35,8 +35,12 @@ get '/teams', ->
 
 # new team
 get '/teams/new', ->
-  @team: new Team {}, =>
-    @render 'teams/new.html.haml'
+  Team.all (error, teams) =>
+    if teams.length >= 200
+      @redirect '/'
+    else
+      @team: new Team {}, =>
+        @render 'teams/new.html.haml'
 
 # create team
 post '/teams', ->
