@@ -17,7 +17,9 @@ get '/register', ->
     @redirect '/teams/new'
 
 get '/', ->
-  @render 'index.html.haml'
+  Team.all (error, teams) =>
+    @spotsLeft: 200 - teams.length
+    @render 'index.html.haml'
 
 # list teams
 get '/teams', ->

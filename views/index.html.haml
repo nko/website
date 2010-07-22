@@ -10,11 +10,20 @@
   Combining the two, we got:
   %br
   != ' <strong>Node.js Knockout &mdash; a 48-hour node.js coding contest</strong>. '
-%p.footnote
-  %a.large.button{ href: '/teams/new' }
-    Register now!
-  %br
-    before it&rsquo;s too late
+- if (this.spotsLeft > 0)
+  %p.footnote
+    %a.large.button{ href: '/teams/new' }
+      Register now!
+    %br
+      = this.spotsLeft + ' spots left'
+- if (this.spotsLeft <= 0)
+  %p.footnote
+    %span.large Sorry, Knockout&rsquo;s full!
+    %br
+    You can still
+    %a{ href: 'http://twitter.com/?status=Shoot.+%40node_knockout+is+full.+Any+teams+have+space%3F' } request to join a team
+    or
+    != ' <a href="mailto:all@nodeknockout.com?subject=Interested in Judging Node.js Knockout">be a judge</a>.'
 %h2.ribbon When
 %h3#date
   August 28 &ndash; 29, 2010
