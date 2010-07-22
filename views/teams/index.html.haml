@@ -15,6 +15,6 @@
   - each team in this.teams
     %li
       %a{ href: '/teams/' + team.id() }= team.name
-- if (teams.length < 200)
+- if (this.teams.length < 200)
   %p
     %a.button{ href: '/teams/new' } Register Now!
