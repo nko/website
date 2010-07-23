@@ -36,7 +36,7 @@ get '/teams', ->
 # new team
 get '/teams/new', ->
   Team.all (error, teams) =>
-    if teams.length >= 200
+    if teams.length >= 222
       @redirect '/'
     else
       @team: new Team {}, =>
