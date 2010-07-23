@@ -18,7 +18,7 @@ get '/register', ->
 
 get '/', ->
   Team.all (error, teams) =>
-    @spotsLeft: 200 - teams.length
+    @spotsLeft: 222 - teams.length
     @render 'index.html.haml'
 
 # list teams
