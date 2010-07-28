@@ -6,9 +6,9 @@
 # with the outside.
 
 # Set up exported variables for both **Node.js** and the browser.
-this.exports: this unless process?
+this.exports = this unless process?
 
-exports.Scope: class Scope
+exports.Scope = class Scope
 
   # The top-level **Scope** object.
   @root: null
@@ -18,19 +18,19 @@ exports.Scope: class Scope
   # where it should declare its variables, and a reference to the function that
   # it wraps.
   constructor: (parent, expressions, method) ->
-    [@parent, @expressions, @method]: [parent, expressions, method]
-    @variables: {}
+    [@parent, @expressions, @method] = [parent, expressions, method]
+    @variables = {}
     if @parent
-      @temp_var: @parent.temp_var
+      @tempVar = @parent.tempVar
     else
-      Scope.root: this
-      @temp_var: '_a'
+      Scope.root = this
+      @tempVar = '_a'
 
   # Look up a variable name in lexical scope, and declare it if it does not
   # already exist.
   find: (name) ->
     return true if @check name
-    @variables[name]: 'var'
+    @variables[name] = 'var'
     false
 
   # Test variables and return true the first time fn(v, k) returns true
@@ -42,50 +42,50 @@ exports.Scope: class Scope
   # Reserve a variable name as originating from a function parameter for this
   # scope. No `var` required for internal references.
   parameter: (name) ->
-    @variables[name]: 'param'
+    @variables[name] = 'param'
 
   # Just check to see if a variable has already been declared, without reserving.
   check: (name) ->
-    return true if @variables[name]
+    return true if @variables.hasOwnProperty name
     !!(@parent and @parent.check(name))
 
   # If we need to store an intermediate result, find an available name for a
   # compiler-generated variable. `_a`, `_b`, and so on...
-  free_variable: ->
-    while @check @temp_var
-      ordinal: 1 + parseInt @temp_var.substr(1), 36
-      @temp_var: '_' + ordinal.toString(36).replace(/\d/g, 'a')
-    @variables[@temp_var]: 'var'
-    @temp_var
+  freeVariable: ->
+    while @check @tempVar
+      ordinal = 1 + parseInt @tempVar.substr(1), 36
+      @tempVar = '_' + ordinal.toString(36).replace(/\d/g, 'a')
+    @variables[@tempVar] = 'var'
+    @tempVar
 
   # Ensure that an assignment is made at the top of this scope
   # (or at the top-level scope, if requested).
   assign: (name, value) ->
-    @variables[name]: {value: value, assigned: true}
+    @variables[name] = value: value, assigned: true
 
   # Does this scope reference any variables that need to be declared in the
   # given function body?
-  has_declarations: (body) ->
+  hasDeclarations: (body) ->
     body is @expressions and @any (k, val) -> val is 'var'
 
   # Does this scope reference any assignments that need to be declared at the
   # top of the given function body?
-  has_assignments: (body) ->
+  hasAssignments: (body) ->
     body is @expressions and @any (k, val) -> val.assigned
 
   # Return the list of variables first declared in this scope.
-  declared_variables: ->
+  declaredVariables: ->
     (key for key, val of @variables when val is 'var').sort()
 
   # Return the list of assignments that are supposed to be made at the top
   # of this scope.
-  assigned_variables: ->
-    "$key = $val.value" for key, val of @variables when val.assigned
+  assignedVariables: ->
+    "#key = #val.value" for key, val of @variables when val.assigned
 
   # Compile the JavaScript for all of the variable declarations in this scope.
-  compiled_declarations: ->
-    @declared_variables().join ', '
+  compiledDeclarations: ->
+    @declaredVariables().join ', '
 
   # Compile the JavaScript for all of the variable assignments in this scope.
-  compiled_assignments: ->
-    @assigned_variables().join ', '
+  compiledAssignments: ->
+    @assignedVariables().join ', '

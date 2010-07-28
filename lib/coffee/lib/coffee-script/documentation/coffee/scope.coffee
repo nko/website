@@ -1,5 +1,5 @@
-num: 1
-change_numbers: ->
-  new_num: -1
-  num: 10
-new_num: change_numbers()
+outer: 1
+changeNumbers: ->
+  inner: -1
+  outer: 10
+inner: changeNumbers()

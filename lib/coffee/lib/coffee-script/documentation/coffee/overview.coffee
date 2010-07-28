@@ -1,9 +1,9 @@
 # Assignment:
 number: 42
-opposite_day: true
+opposite: true
 
 # Conditions:
-number: -42 if opposite_day
+number: -42 if opposite
 
 # Functions:
 square: (x) -> x * x
@@ -26,4 +26,4 @@ race: (winner, runners...) ->
 alert "I knew it!" if elvis?
 
 # Array comprehensions:
-cubed_list: math.cube num for num in list
+cubes: math.cube num for num in list

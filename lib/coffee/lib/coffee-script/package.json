@@ -1,7 +1,18 @@
 {
     "name":         "coffee-script",
     "description":  "Unfancy JavaScript",
-    "keywords":     ["javascript", "language"],
+    "keywords":     ["javascript", "language", "coffeescript", "compiler"],
     "author":       "Jeremy Ashkenas",
-    "version":      "0.6.2"
+    "version":      "0.7.2",
+    "licenses":     [{
+      "type":       "MIT",
+      "url":        "http://github.com/jashkenas/coffee-script/raw/master/LICENSE"
+    }],
+    "engines":      {
+      "node":       ">=0.1.99"
+    },
+    "bin":          {
+      "coffee":     "./bin/coffee",
+      "cake":       "./bin/cake"
+    }
 }
