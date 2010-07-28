@@ -9,11 +9,13 @@
   Install the [Kiwi package manager for nodejs](http://github.com/visionmedia/kiwi)
   and run:
   
-      $ kiwi -v install sass
-  
-## Usage
+      $ kiwi install sass
 
-With sass.js in the load path you can then use:
+Or npm:
+
+      $ npm install sass
+
+## Usage
 
     var sass = require('sass')
     sass.render('... string of sass ...')

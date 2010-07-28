@@ -44,7 +44,7 @@ lib/express/lib/support/multipart:
 lib/express/lib/support/sass: 
   branch: master
   remote: braid/lib/express/lib/support/sass
-  revision: 70c2dd2e28452fea4760dde55f7d065dbb946fc7
+  revision: 738177239c6b55521a1b0cb12aadccb794eb1609
   squashed: true
   type: git
   url: git://github.com/visionmedia/sass.js.git
