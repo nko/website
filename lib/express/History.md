@@ -1,3 +1,62 @@
+	
+1.0.0beta2 / 2010-07-23
+==================
+
+  * Added more examples
+  * Added; exporting `Server` constructor
+  * Added `Server#helpers()` for view locals
+  * Added `Server#dynamicHelpers()` for dynamic view locals. Closes #349
+  * Added support for absolute view paths
+  * Added; _home_ setting defaults to `Server#route` for mounted apps. Closes #363
+  * Added Guillermo Rauch to the contributor list
+  * Added support for "as" for non-collection partials. Closes #341
+  * Fixed _install.sh_, ensuring _~/.node_libraries_ exists. Closes #362 [thanks jf]
+  * Fixed `res.render()` exceptions, now passed to `next()` when no callback is given [thanks guillermo]
+  * Fixed instanceof `Array` checks, now `Array.isArray()`
+  * Fixed express(1) expansion of public dirs. Closes #348
+  * Fixed middleware precedence. Closes #345
+  * Fixed view watcher, now async [thanks aheckmann]
+
+1.0.0beta / 2010-07-15
+==================
+
+  * Re-write
+    - much faster
+    - much lighter
+    - Check [ExpressJS.com](http://expressjs.com) for migration guide and updated docs
+
+0.14.0 / 2010-06-15
+==================
+
+  * Utilize relative requires
+  * Added Static bufferSize option [aheckmann]
+  * Fixed caching of view and partial subdirectories [aheckmann]
+  * Fixed mime.type() comments now that ".ext" is not supported
+  * Updated haml submodule
+  * Updated class submodule
+  * Removed bin/express
+
+0.13.0 / 2010-06-01
+==================
+
+  * Added node v0.1.97 compatibility
+  * Added support for deleting cookies via Request#cookie('key', null)
+  * Updated haml submodule
+  * Fixed not-found page, now using using charset utf-8
+  * Fixed show-exceptions page, now using using charset utf-8
+  * Fixed view support due to fs.readFile Buffers
+  * Changed; mime.type() no longer accepts ".type" due to node extname() changes
+
+0.12.0 / 2010-05-22
+==================
+
+  * Added node v0.1.96 compatibility
+  * Added view `helpers` export which act as additional local variables
+  * Updated haml submodule
+  * Changed ETag; removed inode, modified time only
+  * Fixed LF to CRLF for setting multiple cookies
+  * Fixed cookie complation; values are now urlencoded
+  * Fixed cookies parsing; accepts quoted values and url escaped cookies
 
 0.11.0 / 2010-05-06
 ==================

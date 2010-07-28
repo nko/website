@@ -1,92 +1,92 @@
 --- 
 lib/coffee/lib/coffee-script: 
-  branch: master
-  remote: braid/lib/coffee/lib/coffee-script
-  revision: 485346f0e57bf3e56bc715ee81c88145e1590b6c
   squashed: true
-  type: git
   url: http://github.com/jashkenas/coffee-script.git
-lib/express: 
   branch: master
-  remote: braid/lib/express
-  revision: d579d62eb61f10234fdfe69dc5c2f6d7fa67bfd1
-  squashed: true
   type: git
-  url: git://github.com/visionmedia/express.git
-lib/express/lib/support/class: 
-  branch: master
-  remote: braid/lib/express/lib/support/class
-  revision: 6fa0d584c18bfab7aa707db226245f9eff85d1b6
-  squashed: true
-  type: git
-  url: git://github.com/visionmedia/class.js.git
-lib/express/lib/support/ext: 
-  branch: master
-  remote: braid/lib/express/lib/support/ext
-  revision: 282c20ccb6a6f1ade55a98ce24bf8b68a508b0f6
-  squashed: true
-  type: git
-  url: git://github.com/visionmedia/ext.js.git
-lib/express/lib/support/haml: 
-  branch: master
-  remote: braid/lib/express/lib/support/haml
-  revision: 0d4880294b6a2bd9b998ce2fbb521fc9a41290a4
-  squashed: true
-  type: git
-  url: git://github.com/visionmedia/haml.js.git
-lib/express/lib/support/multipart: 
-  branch: master
-  remote: braid/lib/express/lib/support/multipart
-  revision: 0b77a68582a9a533c4c57bd01210553f6d881868
-  squashed: true
-  type: git
-  url: git://github.com/isaacs/multipart-js.git
-lib/express/lib/support/sass: 
-  branch: master
-  remote: braid/lib/express/lib/support/sass
-  revision: 738177239c6b55521a1b0cb12aadccb794eb1609
-  squashed: true
-  type: git
-  url: git://github.com/visionmedia/sass.js.git
-lib/node-mongodb-native: 
-  branch: master
-  remote: braid/lib/node-mongodb-native
-  revision: f7671cd0b5b3a849fc542723e9817a9fa2c1b31a
-  squashed: true
-  type: git
-  url: http://github.com/christkv/node-mongodb-native.git
-lib/nodeunit: 
-  branch: master
-  remote: braid/lib/nodeunit
-  revision: 3437a428ef736fbcdae66c92a7a3bb0806f1a2af
-  squashed: true
-  type: git
-  url: http://github.com/caolan/nodeunit.git
+  revision: 485346f0e57bf3e56bc715ee81c88145e1590b6c
+  remote: braid/lib/coffee/lib/coffee-script
 lib/socket.io: 
-  branch: master
-  remote: braid/lib/socket.io
-  revision: 71d80181fa83eec8b647f198bb473ebee38f8df4
   squashed: true
-  type: git
   url: git://github.com/visnup/Socket.IO-node.git
+  branch: master
+  type: git
+  revision: 71d80181fa83eec8b647f198bb473ebee38f8df4
+  remote: braid/lib/socket.io
 lib/socket.io/lib/vendor/js-oo: 
-  branch: master
-  remote: braid/lib/socket.io/lib/vendor/js-oo
-  revision: 1f94bd897994a952114cb1f280c1949d5e6a0648
   squashed: true
-  type: git
   url: git://github.com/visionmedia/js-oo.git
+  branch: master
+  type: git
+  revision: 1f94bd897994a952114cb1f280c1949d5e6a0648
+  remote: braid/lib/socket.io/lib/vendor/js-oo
+lib/express/lib/support/ext: 
+  squashed: true
+  url: git://github.com/visionmedia/ext.js.git
+  branch: master
+  type: git
+  revision: 282c20ccb6a6f1ade55a98ce24bf8b68a508b0f6
+  remote: braid/lib/express/lib/support/ext
+lib/nodeunit: 
+  squashed: true
+  url: http://github.com/caolan/nodeunit.git
+  branch: master
+  type: git
+  revision: 3437a428ef736fbcdae66c92a7a3bb0806f1a2af
+  remote: braid/lib/nodeunit
+lib/express/lib/support/multipart: 
+  squashed: true
+  url: git://github.com/isaacs/multipart-js.git
+  branch: master
+  type: git
+  revision: 0b77a68582a9a533c4c57bd01210553f6d881868
+  remote: braid/lib/express/lib/support/multipart
+lib/express/lib/support/class: 
+  squashed: true
+  url: git://github.com/visionmedia/class.js.git
+  branch: master
+  type: git
+  revision: 6fa0d584c18bfab7aa707db226245f9eff85d1b6
+  remote: braid/lib/express/lib/support/class
+lib/express: 
+  squashed: true
+  branch: master
+  url: git://github.com/visionmedia/express.git
+  type: git
+  revision: 82b6ff0c284a10894f5d87f5670430d799b14801
+  remote: braid/lib/express
 public/javascripts/socket.io: 
-  branch: master
-  remote: braid/public/javascripts/socket.io
-  revision: 8a34dc75986c3c28da1dd21448e770dc5b54d44e
   squashed: true
-  type: git
   url: http://github.com/LearnBoost/Socket.IO.git
-public/javascripts/socket.io/lib/vendor/web-socket-js: 
   branch: master
-  remote: braid/public/javascripts/socket.io/lib/vendor/web-socket-js
-  revision: e5c19418fd4e70f28d36c694e6e45e750abe6e76
-  squashed: true
   type: git
+  revision: 8a34dc75986c3c28da1dd21448e770dc5b54d44e
+  remote: braid/public/javascripts/socket.io
+lib/express/lib/support/haml: 
+  squashed: true
+  url: git://github.com/visionmedia/haml.js.git
+  branch: master
+  type: git
+  revision: 0d4880294b6a2bd9b998ce2fbb521fc9a41290a4
+  remote: braid/lib/express/lib/support/haml
+public/javascripts/socket.io/lib/vendor/web-socket-js: 
+  squashed: true
   url: git://github.com/gimite/web-socket-js.git
+  branch: master
+  type: git
+  revision: e5c19418fd4e70f28d36c694e6e45e750abe6e76
+  remote: braid/public/javascripts/socket.io/lib/vendor/web-socket-js
+lib/node-mongodb-native: 
+  squashed: true
+  url: http://github.com/christkv/node-mongodb-native.git
+  branch: master
+  type: git
+  revision: f7671cd0b5b3a849fc542723e9817a9fa2c1b31a
+  remote: braid/lib/node-mongodb-native
+lib/express/lib/support/sass: 
+  squashed: true
+  url: git://github.com/visionmedia/sass.js.git
+  branch: master
+  type: git
+  revision: 738177239c6b55521a1b0cb12aadccb794eb1609
+  remote: braid/lib/express/lib/support/sass
