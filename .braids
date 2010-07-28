@@ -13,6 +13,13 @@ lib/socket.io:
   type: git
   revision: 71d80181fa83eec8b647f198bb473ebee38f8df4
   remote: braid/lib/socket.io
+lib/connect: 
+  squashed: true
+  url: http://github.com/senchalabs/connect.git
+  branch: master
+  type: git
+  revision: fadf5db5d3ae782ec0ee7c0bee2876433cceb68e
+  remote: braid/lib/connect
 lib/socket.io/lib/vendor/js-oo: 
   squashed: true
   url: git://github.com/visionmedia/js-oo.git
