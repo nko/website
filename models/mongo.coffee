@@ -24,7 +24,7 @@ class Mongo
     [@user, @password] = uri.auth.split(':') if uri.auth?
 exports.Mongo = Mongo
 
-_.extend Mongo, {
+_.extend Mongo,
   db: (new Mongo()).db
 
   bless: (klass) ->
@@ -52,7 +52,34 @@ _.extend Mongo, {
     else
       fn null, unpacked
 
-  InstanceMethods: {
+  ClassMethods:
+    firstOrCreate: (query, fn) ->
+      @first query, (error, item) =>
+        return fn error if error?
+        return fn null, item if item?
+        created = new @prototype.serializer.klass(query)
+        fn null, created
+
+    first: (query, fn) ->
+      [query, fn] = [null, query] unless fn?
+      @prototype.collection (error, collection) ->
+        return fn error if error?
+        collection.findOne Mongo.queryify(query), (error, item) ->
+          return fn error if error?
+          Mongo.instantiate item, fn
+
+    all: (query, fn) ->
+      [query, fn] = [null, query] unless fn?
+      @prototype.collection (error, collection) ->
+        return fn error if error?
+        collection.find Mongo.queryify(query), (error, cursor) ->
+          return fn error if error?
+          cursor.toArray (error, array) ->
+            return fn error if error?
+            # TODO call beforeInstantiate on these?
+            fn null, Serializer.unpack array
+
+  InstanceMethods:
     collection: (fn) ->
       Mongo.db.collection @serializer.name, fn
 
@@ -82,36 +109,6 @@ _.extend Mongo, {
       @collection (error, collection) =>
         return fn error if error?
         collection.remove Mongo.queryify(@id()), fn
-  }
-
-  ClassMethods: {
-    firstOrCreate: (query, fn) ->
-      @first query, (error, item) =>
-        return fn error if error?
-        return fn null, item if item?
-        created = new @prototype.serializer.klass(query)
-        fn null, created
-
-    first: (query, fn) ->
-      [query, fn] = [null, query] unless fn?
-      @prototype.collection (error, collection) ->
-        return fn error if error?
-        collection.findOne Mongo.queryify(query), (error, item) ->
-          return fn error if error?
-          Mongo.instantiate item, fn
-
-    all: (query, fn) ->
-      [query, fn] = [null, query] unless fn?
-      @prototype.collection (error, collection) ->
-        return fn error if error?
-        collection.find Mongo.queryify(query), (error, cursor) ->
-          return fn error if error?
-          cursor.toArray (error, array) ->
-            return fn error if error?
-            # TODO call beforeInstantiate on these?
-            fn null, Serializer.unpack array
-  }
-}
 
 class Serializer
   constructor: (klass, name, options) ->
