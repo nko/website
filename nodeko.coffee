@@ -11,40 +11,49 @@ app = express.createServer(
   connect.staticProvider(pub)
 )
 
-app.configure ->
-  app.enable 'show exceptions'
+app.use connect.logger()
+app.use connect.methodOverride()
+app.use connect.bodyDecoder()
+app.use connect.cookieDecoder()
 
-  app.use connect.logger()
-  app.use connect.methodOverride()
-  app.use connect.cookieDecoder()
+app.enable 'show exceptions'
 
-get = (path, fn) ->
-  app.get path, (req, res, next) =>
-    Person.firstByAuthKey req.cookies.authkey, (person) =>
-      sys.puts sys.inspect req
-      sys.puts sys.inspect res
-      sys.puts sys.inspect req.cookies
-      sys.puts sys.inspect person
-      ctx = {
-        sys: sys
-        req: req
-        res: res
-        next: next
-        redirect: __bind(res.redirect, res)
-        render: (file, opts) ->
-          opts ||= {}
-          opts.locals ||= {}
-          opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
-          opts.locals.ctx = ctx
-          res.render file, opts
-        currentPerson: person,
-        redirectToTeam: (person, alternatePath) ->
-          Team.first { 'members._id': person._id }, (error, team) =>
-            if team?
-              @redirect '/teams/' + team.id()
-            else
-              @redirect (alternatePath or '/')}
-      __bind(fn, ctx)()
+request = (type) ->
+  (path, fn) ->
+    app[type] path, (req, res, next) =>
+      Person.firstByAuthKey req.cookies.authkey, (person) =>
+
+        if type == 'post'
+          sys.puts "------\nreq:\n#{sys.inspect req}\n"
+          sys.puts "------\nreq.body:\n#{sys.inspect req.body}\n"
+          sys.puts "------\nres:\n#{sys.inspect res}\n"
+          sys.puts "------\nnext:\n#{sys.inspect next}\n"
+          sys.puts "------\nreq.cookies:\n#{sys.inspect req.cookies}\n"
+
+        ctx = {
+          sys: sys
+          req: req
+          res: res
+          next: next
+          redirect: __bind(res.redirect, res),
+          cookie: (key, value) ->
+            res.header("Set-Cookie: #{key}=#{value}")
+          render: (file, opts) ->
+            opts ||= {}
+            opts.locals ||= {}
+            opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
+            opts.locals.ctx = ctx
+            res.render file, opts
+          currentPerson: person,
+          redirectToTeam: (person, alternatePath) ->
+            Team.first { 'members._id': person._id }, (error, team) =>
+              if team?
+                @redirect '/teams/' + team.id()
+              else
+                @redirect (alternatePath or '/')}
+        __bind(fn, ctx)()
+get = request 'get'
+post = request 'post'
 
 get /.*/, ->
   [host, path] = [@req.header('host'), @req.url]
@@ -90,17 +99,18 @@ get '/teams/new', ->
     else
       @team = new Team {}, =>
         @render 'teams/new.html.haml'
-# # # 
-# # # # create team
-# # # app.post '/teams', ->
-# # #   @team: new Team @params.post, =>
-# # #     @team.save (errors, res) =>
-# # #       if errors?
-# # #         @errors: errors
-# # #         @render 'teams/new.html.haml'
-# # #       else
-# # #         @cookie 'teamAuthKey', @team.authKey()
-# # #         @redirect '/teams/' + @team.id()
+
+# create team
+post '/teams', ->
+  return @redirect '/teams'
+  @team = new Team @params.post, =>
+    @team.save (errors, res) =>
+      if errors?
+        @errors = errors
+        @render 'teams/new.html.haml'
+      else
+        @cookie 'teamauthkey', @team.authKey()
+        @redirect '/teams/' + @team.id()
 # # # 
 # # # # show team
 # # # get '/teams/:id', ->

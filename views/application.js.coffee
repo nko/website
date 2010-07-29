@@ -80,7 +80,7 @@ $ ->
 
       $('#attending_count').slideDown('fast').find('input[type=text]').val(size).select()
     else
-      $('#attending_count').find('input[type=text]').val(0).slideUp('fast')
+      $('#attending_count').slideUp('fast').find('input[type=text]').val(0)
 
   if $('.body.teams-show').length > 0
     getAttendingCount = ->
