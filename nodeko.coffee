@@ -308,4 +308,7 @@ get '/teams/:id', ->
 # # # # }
 # # # 
 
+get '/*', ->
+  @render "#{@req.params[0]}.html.haml"
+
 server = app.listen parseInt(process.env.PORT || 8000), null
