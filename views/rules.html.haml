@@ -1,6 +1,4 @@
-%h2.ribbon &lsquo;Ze Rules
-%p
-  different concerns: non-web fringe browsers
+%h2.ribbon Rules
 
 %h3 Node.js
 %p
@@ -28,44 +26,103 @@
 %h3 Teams and Contestants
 %p
   Teams should be comprised of between one and four individuals. No more than
-  four people are allowed on a team. To be eligible, teams must register at
-  least 1 week prior to the start of the competition (space subject to
-  availability). No age restrictions and we won't make fun of you if you're
-  left-handed (HAHA! UR LEFT-HANDED! LOLZ). Also, don't worry if you work for a
-  sponsor: they won't be able to influence the judging process. Moreover,
-  don't worry if you know a judge either: we'll prevent judges from voting on a
-  team they know personally and they've committed to stay impartial.
+  four people are allowed on a team (and no less than one). To be eligible,
+  teams must register at least 1 week prior to the start of the competition
+  (space subject to availability). No age restrictions and we won't make fun of
+  you if you're left-handed (HAHA! UR LEFT-HANDED! LOLZ). Also, don't worry if
+  you work for a sponsor: they won't be able to influence the judging process.
+  Moreover, don't worry if you know a judge either: we'll prevent judges from
+  voting on a team they know personally and they've committed to stay
+  impartial.
 
 %h3 Source Control
 %p
-  free git repo hosted by github. you should push regularly to show progress.
-  we'll watch to make sure people don't cheat (don't think you can develop
-  everything ahead of time and push it all in at the end). we'll send access
-  info before the competition starts. more details at the end of competition.
+  Source code will be hosted in a shiny free git repository provided by
+  != ' <a href="http://github.com">GitHub</a>. '
+  Your team should push regularly to show progress. We'll be watching to make
+  sure people don't cheat (don't think you can develop everything ahead of time
+  and push it all at the end; we know lots of git tricks too). We'll send
+  GitHub access information before the competition starts, so make sure you've
+  signed up for a free GitHub account and provided us with your GitHub
+  username.
 
 %h3 Deployment
 %p
-  free, private vps provided by sponsors. joyent vs. heroku. joyent: need to setup yourself (solaris). heroku: easier. early access to play? access info will be given with github info. will remain up until winners are announced. during the judging, we need ssh access via keys to make sure there is no cheating, including comparing deployed code with git repo. you can restart processes, free up disk space, general sysadmin stuff, but code changes are forbidden.
-
-%h3 Third Party Love
+  %a{ href: 'http://www.joyent.com' } Joyent
+  and
+  %a{ href: 'http://heroku.com' } Heroku
+  will provide free, private instances to deploy your code
+  to. Which one you choose is up to you (kinda like Pokémon): Heroku is crazy
+  fast and easy to get started with, but has some limitations (non-writable
+  disk; 30 second request/response timeout); Joyent provides a full VPS, so you
+  will be able to set the machine up however you want, but also note that
+  Joyent only provides Solaris (ZFS!). Expect access information along with
+  GitHub info. You cannot deploy to your own server no matter how awesome it is.
 %p
-  libraries (that are public, free) are allowed and encouraged. list all libraries that you use on your profile page? stock photos, free icon sets are allowed. paying for something that is not generally available to everyone is bad. developing a library before the competition that provides the general functionality of your project is bad. developing a library that is publicly available and provides a general purpose publicly usable function can be done before the competition begins.
+  Entries will remain up until winners are announced. During
+  judging, we will need access via an SSH key to make sure there is no
+  cheating, including comparing deployed code with that in the git repo. Code
+  changes after the deadline are forbidden. During judging, you are allowed to
+  restart processes, free up disk space, and other general sysadmin tasks,
+  including playing lots of StarCraft 2.
+
+%h3 Web Application
+%p
+  Entries should be a web applications: it's hard for judges (especially
+  the general public) to fairly evaluate entries that require compilation or
+  setup. If you want to submit a non-web app, you're welcome to, but you
+  aren't likely to get judged fairly.
+%p
+  If an app is not a website, but some library, utility, or desktop program,
+  then it must be deployed to the npm registry.
+%p
+  If you do decide to submit something that isn't immediately accessible
+  via the web, then we encourage you to think of a clever way to share it as a
+  website. For example via
+  != ' <a href="http://guacamole.sourceforge.net/">VNC</a>.'
+
+%h3 Third-Party Love
+%p
+  Libraries, plugins, and modules that are public and freely available are
+  allowed and encouraged. Please list all libraries that you use on your team's
+  profile page to give credit where it's due. Stock photos and free icon sets
+  are allowed. Paying for something that is not generally available to everyone
+  is not allowed and not nice.
+%p
+  Developing a library in secret before the competition that provides the same
+  general functionality of your project will likely get you disqualified. On
+  the other hand, developing a library that is publicly available and provides
+  a general-purpose, publicly usable function can be done before the
+  competition begins.
 
 %h3 Web Services
 %p
-  we encourage use of third party web service apis like twitter, flickr, google, yahoo pipes. mashups are cool. make sure to update your profile with what you use.
+  We encourage use of third-party web services and their APIs, (e.g. Twitter,
+  Flickr, Google, Yahoo! pipes, OpenID). Everyone loves mashups. Again, make
+  sure to update your team profile with what services you use.
 
 %h3 Ownership and Open Source
 %p
-  the code is yours. it'd be cool if you open sourced it, but it's up to you. note: we will have access to your code during the competition to audit for cheating, but we won't steal anything.
+  The code you write is yours. If you intend to share it after the competition,
+  you can pick whatever license you love. We encourage contestants to open
+  source their code, but it's totally up to you.
+%p
+  Note however, we will have access to your GitHub repository during the
+  competition to audit for cheating, but we won't steal any of your ideas or
+  code. Stealing will get us disqualified.
 
 %h3 Judging
 %p
-  judging will be split between experts and the public. please refer to the judging page for full details.
+  Winners will be picked by judges. Judging duties will be split 50/50 between
+  a group of industry experts and the general public. More details will be
+  posted to the
+  %a{ href: '/judging' } judging page
+  soon.
 
 %h3 Miscellany
 %p
-  non-web
-  require browsers
-  anything else goes, but be mindful of your audience and how they will judge; like all good products.
-  don't break laws.
+  Don't break any laws. Don't harm any animals (especially
+  != ' <a href="http://www.sibfox.com">domesticated foxes</a>). '
+  Also, you might want to read through the
+  %a{ href: '/faq' } FAQ
+  for some specific, more nuanced issues.
