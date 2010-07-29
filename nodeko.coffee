@@ -18,22 +18,39 @@ app.configure ->
   app.use connect.methodOverride()
   app.use connect.cookieDecoder()
 
-app.get /.*/, (req, res, next) ->
-  [host, path] = [req.header('host'), req.url.href]
+get = (path, fn) ->
+  app.get path, (req, res, next) =>
+    ctx = {
+      sys: sys
+      req: req
+      res: res
+      next: next
+      redirect: res.redirect
+      render: (file, opts) ->
+        opts ||= {}
+        opts.locals ||= {}
+        opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
+        opts.locals.ctx = ctx
+        res.render file, opts}
+    __bind(fn, ctx)()
+
+get /.*/, ->
+  [host, path] = [@req.header('host'), @req.url]
   if host == 'www.nodeknockout.com' or host == 'nodeknockout.heroku.com'
-    res.redirect 'http://nodeknockout.com' + path, 301
+    @redirect 'http://nodeknockout.com' + path, 301
   else
-    next()
+    @next()
 
-app.get '/', (req, res, next) ->
+get '/', ->
   Team.all (error, teams) =>
-    res.render 'index.html.haml'
+    @spotsLeft = 222 - teams.length
+    @render 'index.html.haml', { locals: { sys: sys } }
 
-app.get '/*.js', (req, res, next) ->
+get '/*.js', ->
   try
-    res.render "#{req.params[0]}.js.coffee", layout: false
+    @render "#{req.params[0]}.js.coffee", { layout: false }
   catch e
-    next()
+    @next()
 
 # # # app.get '/register', ->
 # # #   if @currentPerson?

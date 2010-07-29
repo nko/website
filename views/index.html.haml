@@ -12,15 +12,15 @@
   Only
   %strong 222
   team spots are available. Don&rsquo;t procrastinate.
-- if (this.spotsLeft > 0)
+- if (ctx.spotsLeft > 0)
   %p.footnote
     %a.large.button{ href: '/teams/new' }
       Register now!
     %br
     Before it&rsquo;s too late:
-    %strong.left= this.spotsLeft
+    %strong.left= ctx.spotsLeft
     spots left.
-- if (this.spotsLeft <= 0)
+- if (ctx.spotsLeft <= 0)
   %p.footnote
     %span.large Sorry, Knockout&rsquo;s full!
     %br

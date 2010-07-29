@@ -38,7 +38,8 @@
           %a.twitter{ href: 'http://twitter.com/node_knockout' }
             .say!= 'Follow us<br/> on Twitter!'
             %img{ src: '/images/bird.png' }
-        .body{ 'class': 'body' }!= body
+        .body{ 'class': 'body ' + view }!= body
+        %pre= sys.inspect(locals)
         %footer.ribbon.blue
           email
           %a{ href: 'mailto:all@nodeknockout.com' } all@nodeknockout.com
