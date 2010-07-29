@@ -39,7 +39,7 @@
             .say!= 'Follow us<br/> on Twitter!'
             %img{ src: '/images/bird.png' }
         .body{ 'class': 'body ' + view }!= body
-        %pre= sys.inspect(locals)
+        %pre= ctx.sys.inspect(locals)
         %footer.ribbon.blue
           email
           %a{ href: 'mailto:all@nodeknockout.com' } all@nodeknockout.com

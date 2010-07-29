@@ -1,20 +1,20 @@
 %h2.ribbon
   Teams
 %p
-  - if (this.yourTeams.length === 1)
+  - if (ctx.yourTeams.length === 1)
     Your team:
-    %a{ href: '/teams/' + this.yourTeams[0].id() }= this.yourTeams[0].name
-  - if (this.yourTeams.length > 1)
+    %a{ href: '/teams/' + ctx.yourTeams[0].id() }= ctx.yourTeams[0].name
+  - if (ctx.yourTeams.length > 1)
     Your teams:
-    - each team in this.yourTeams
+    - each team in ctx.yourTeams
       %a{ href: '/teams/' + team.id() }= team.name
 %h3
   All Teams
-  = ' (' + this.teams.length + ')'
+  = ' (' + ctx.teams.length + ')'
 %ol
-  - each team in this.teams
+  - each team in ctx.teams
     %li
       %a{ href: '/teams/' + team.id() }= team.name
-- if (this.teams.length < 200)
+- if (ctx.teams.length < 200)
   %p
     %a.button{ href: '/teams/new' } Register Now!

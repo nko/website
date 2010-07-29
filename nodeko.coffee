@@ -20,19 +20,30 @@ app.configure ->
 
 get = (path, fn) ->
   app.get path, (req, res, next) =>
-    ctx = {
-      sys: sys
-      req: req
-      res: res
-      next: next
-      redirect: res.redirect
-      render: (file, opts) ->
-        opts ||= {}
-        opts.locals ||= {}
-        opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
-        opts.locals.ctx = ctx
-        res.render file, opts}
-    __bind(fn, ctx)()
+    Person.firstByAuthKey req.cookies.authkey, (person) =>
+      sys.puts sys.inspect req.cookies
+      sys.puts req.cookies.authkey
+      sys.puts sys.inspect person
+      ctx = {
+        sys: sys
+        req: req
+        res: res
+        next: next
+        redirect: __bind(res.redirect, res)
+        render: (file, opts) ->
+          opts ||= {}
+          opts.locals ||= {}
+          opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
+          opts.locals.ctx = ctx
+          res.render file, opts
+        currentPerson: person,
+        redirectToTeam: (person, alternatePath) ->
+          Team.first { 'members._id': person._id }, (error, team) =>
+            if team?
+              @redirect '/teams/' + team.id()
+            else
+              @redirect (alternatePath or '/')}
+      __bind(fn, ctx)()
 
 get /.*/, ->
   [host, path] = [@req.header('host'), @req.url]
@@ -44,7 +55,7 @@ get /.*/, ->
 get '/', ->
   Team.all (error, teams) =>
     @spotsLeft = 222 - teams.length
-    @render 'index.html.haml', { locals: { sys: sys } }
+    @render 'index.html.haml'
 
 get '/*.js', ->
   try
@@ -52,24 +63,23 @@ get '/*.js', ->
   catch e
     @next()
 
-# get '/register', ->
-#   if @currentPerson?
-#     @redirectToTeam @currentPerson, '/teams/new'
-#   else
-#     @redirect '/teams/new'
+get '/register', ->
+  if @currentPerson?
+    @redirectToTeam @currentPerson, '/teams/new'
+  else
+    @redirect '/teams/new'
 
-# # # 
-# # # # list teams
-# # # get '/teams', ->
-# # #   Team.all (error, teams) =>
-# # #     @teams: teams
-# # #     @yourTeams: if @currentPerson?
-# # #       _.select teams, (team) =>
-# # #         # TODO this is gross
-# # #         _ids: _.pluck(team.members, '_id')
-# # #         _.include _.pluck(_ids, 'id'), @currentPerson._id.id
-# # #     else []
-# # #     @render 'teams/index.html.haml'
+# list teams
+get '/teams', ->
+  Team.all (error, teams) =>
+    @teams = teams
+    @yourTeams = if @currentPerson?
+      _.select teams, (team) =>
+        # TODO this is gross
+        _ids = _.pluck(team.members, '_id')
+        _.include _.pluck(_ids, 'id'), @currentPerson._id.id
+    else []
+    @render 'teams/index.html.haml'
 # # # 
 # # # # new team
 # # # get '/teams/new', ->
