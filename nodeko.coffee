@@ -23,12 +23,11 @@ request = (type) ->
     app[type] path, (req, res, next) =>
       Person.firstByAuthKey req.cookies.authkey, (person) =>
 
-        if type == 'post'
-          sys.puts "------\nreq:\n#{sys.inspect req}\n"
-          sys.puts "------\nreq.body:\n#{sys.inspect req.body}\n"
-          sys.puts "------\nres:\n#{sys.inspect res}\n"
-          sys.puts "------\nnext:\n#{sys.inspect next}\n"
-          sys.puts "------\nreq.cookies:\n#{sys.inspect req.cookies}\n"
+        sys.puts "------\nreq:\n#{sys.inspect req}\n"
+        sys.puts "------\nreq.body:\n#{sys.inspect req.body}\n"
+        sys.puts "------\nres:\n#{sys.inspect res}\n"
+        sys.puts "------\nnext:\n#{sys.inspect next}\n"
+        sys.puts "------\nreq.cookies:\n#{sys.inspect req.cookies}\n"
 
         ctx = {
           sys: sys
@@ -37,7 +36,7 @@ request = (type) ->
           next: next
           redirect: __bind(res.redirect, res),
           cookie: (key, value) ->
-            res.header("Set-Cookie: #{key}=#{value}")
+            res.header('Set-Cookie', "#{key}=#{value}")
           render: (file, opts) ->
             opts ||= {}
             opts.locals ||= {}
@@ -50,7 +49,10 @@ request = (type) ->
               if team?
                 @redirect '/teams/' + team.id()
               else
-                @redirect (alternatePath or '/')}
+                @redirect (alternatePath or '/')
+          canEditTeam: (team) ->
+            req.cookies.teamauthkey is team.authKey() or
+              team.hasMember(@currentPerson)}
         __bind(fn, ctx)()
 get = request 'get'
 post = request 'post'
@@ -110,20 +112,20 @@ post '/teams', ->
       else
         @cookie 'teamauthkey', @team.authKey()
         @redirect '/teams/' + @team.id()
-# # # 
-# # # # show team
-# # # get '/teams/:id', ->
-# # #   Team.first @param('id'), (error, team) =>
-# # #     if team?
-# # #       @team: team
-# # #       people: team.members or []
-# # #       @members: _.select people, (person) -> person.name
-# # #       @invites: _.without people, @members...
-# # #       @editAllowed: @canEditTeam team
-# # #       @render 'teams/show.html.haml'
-# # #     else
-# # #       # TODO make this a 404
-# # #       @redirect '/'
+
+# show team
+get '/teams/:id', ->
+  Team.first @req.param('id'), (error, team) =>
+    if team?
+      @team = team
+      people = team.members or []
+      @members = _.select people, (person) -> person.name
+      @invites = _.without people, @members...
+      @editAllowed = @canEditTeam team
+      @render 'teams/show.html.haml'
+    else
+      # TODO make this a 404
+      @redirect '/'
 # # # 
 # # # # edit team
 # # # get '/teams/:id/edit', ->

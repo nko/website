@@ -91,8 +91,8 @@ class Person
         You (or somebody like you) reset the password for this email address.
 
         Here are your new credentials:
-        email: $@email
-        password: $@password
+        email: #{@email}
+        password: #{@password}
 
         Thanks!
         The Node.js Knockout Organizers
@@ -110,14 +110,14 @@ class Person
     message = """
       Hi,
 
-      You've been invited to the $team.name Node.js Knockout team!
+      You've been invited to the #{team.name} Node.js Knockout team!
 
       Here are your credentials:
-      email: $@email
-      ${if @password then 'password: ' + @password else 'and whatever password you already set'}
+      email: #{@email}
+      #{if @password then 'password: ' + @password else 'and whatever password you already set'}
 
       You still need to complete your registration.
-      Please sign in at: http://nodeknockout.com/login?email=$@email&password=$@password to do so.
+      Please sign in at: http://nodeknockout.com/login?email=#{@email}&password=#{@password} to do so.
 
 
       Thanks!

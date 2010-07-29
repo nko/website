@@ -1,22 +1,22 @@
-%h1.ribbon= this.team.name
+%h1.ribbon= ctx.team.name
 
-- if (!this.editAllowed)
+- if (!ctx.editAllowed)
   %p.note
     Your looking at the
     %a{ href: '/' } Node.js Knockout
     team profile for
-    != ' <a href="/teams/' + this.team.id() + '">' + this.team.name + '</a>.'
+    != ' <a href="/teams/' + ctx.team.id() + '">' + ctx.team.name + '</a>.'
   %p
     %a{ href: '/' } Find out more.
 
-- if (this.editAllowed)
-  - if (this.currentPerson)
-    != this.partial('teams/attending.html.haml')
+- if (ctx.editAllowed)
+  - if (ctx.currentPerson)
+    != ctx.partial('teams/attending.html.haml')
   
-  - if (!this.currentPerson)
+  - if (!ctx.currentPerson)
     %p.note
       Nice work! Your team,
-      != ' <a href="/teams/' + this.team.id() + '">' + this.team.name + '</a>, '
+      != ' <a href="/teams/' + ctx.team.id() + '">' + ctx.team.name + '</a>, '
       is officially registered for Node.js Knockout.
     
     %p.note
@@ -27,30 +27,30 @@
 
 %h2 Team Members
   %ul#members
-    - each member in this.members
+    - each member in ctx.members
       %li
         - if (member.link)
           %a{ href: member.link }= member.name
         - if (!member.link)
           = member.name
-        - if (this.currentPerson && member.id() === this.currentPerson.id())
+        - if (ctx.currentPerson && member.id() === ctx.currentPerson.id())
           &nbsp;&ndash;
           %a{ href: '/people/' + member.id() + '/edit' } that&rsquo;s you!
-    - if (this.invites.length && this.editAllowed)
-      - each invite in this.invites
+    - if (ctx.invites.length && ctx.editAllowed)
+      - each invite in ctx.invites
         %li
           %a{ href: 'mailto:' + invite.email }= invite.email
           invited
           &nbsp;&ndash;&nbsp;
-          %a.resend{ href: '/teams/' + this.team.id() + '/invite/' + invite.id() } reinvite
+          %a.resend{ href: '/teams/' + ctx.team.id() + '/invite/' + invite.id() } reinvite
 
-- if (this.invites.length && !this.editAllowed)
+- if (ctx.invites.length && !ctx.editAllowed)
   %p
-    = this.invites.length + ' '
+    = ctx.invites.length + ' '
     outstanding
-    = this.invites.length === 1 ? ' invitation.' : ' invitations.'
+    = ctx.invites.length === 1 ? ' invitation.' : ' invitations.'
 
-- if (this.editAllowed)
+- if (ctx.editAllowed)
   %p
-    %a.button{ href: '/teams/' + this.team.id() + '/edit' } Edit
-    %a.delete.button{ href: '/teams/' + this.team.id() + '?_method=DELETE' } Delete
+    %a.button{ href: '/teams/' + ctx.team.id() + '/edit' } Edit
+    %a.delete.button{ href: '/teams/' + ctx.team.id() + '?_method=DELETE' } Delete
