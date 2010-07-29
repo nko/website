@@ -37,7 +37,7 @@ get = (path, fn) ->
 get /.*/, ->
   [host, path] = [@req.header('host'), @req.url]
   if host == 'www.nodeknockout.com' or host == 'nodeknockout.heroku.com'
-    @redirect 'http://nodeknockout.com' + path, 301
+    @redirect "http://nodeknockout.com#{path}", 301
   else
     @next()
 
@@ -52,14 +52,15 @@ get '/*.js', ->
   catch e
     @next()
 
-# # # app.get '/register', ->
-# # #   if @currentPerson?
-# # #     @redirectToTeam @currentPerson, '/teams/new'
-# # #   else
-# # #     @redirect '/teams/new'
+# get '/register', ->
+#   if @currentPerson?
+#     @redirectToTeam @currentPerson, '/teams/new'
+#   else
+#     @redirect '/teams/new'
+
 # # # 
 # # # # list teams
-# # # app.get '/teams', ->
+# # # get '/teams', ->
 # # #   Team.all (error, teams) =>
 # # #     @teams: teams
 # # #     @yourTeams: if @currentPerson?
@@ -71,7 +72,7 @@ get '/*.js', ->
 # # #     @render 'teams/index.html.haml'
 # # # 
 # # # # new team
-# # # app.get '/teams/new', ->
+# # # get '/teams/new', ->
 # # #   Team.all (error, teams) =>
 # # #     if teams.length >= 222
 # # #       @redirect '/'
@@ -91,7 +92,7 @@ get '/*.js', ->
 # # #         @redirect '/teams/' + @team.id()
 # # # 
 # # # # show team
-# # # app.get '/teams/:id', ->
+# # # get '/teams/:id', ->
 # # #   Team.first @param('id'), (error, team) =>
 # # #     if team?
 # # #       @team: team
@@ -105,7 +106,7 @@ get '/*.js', ->
 # # #       @redirect '/'
 # # # 
 # # # # edit team
-# # # app.get '/teams/:id/edit', ->
+# # # get '/teams/:id/edit', ->
 # # #   Team.first @param('id'), (error, team) =>
 # # #     @ensurePermitted team, =>
 # # #       @team: team
@@ -138,7 +139,7 @@ get '/*.js', ->
 # # #         @redirect '/'
 # # # 
 # # # # resend invitation
-# # # app.get '/teams/:teamId/invite/:personId', ->
+# # # get '/teams/:teamId/invite/:personId', ->
 # # #   Team.first @param('teamId'), (error, team) =>
 # # #     @ensurePermitted team, =>
 # # #       Person.first @param('personId'), (error, person) =>
@@ -150,7 +151,7 @@ get '/*.js', ->
 # # #             @redirect '/teams/' + team.id()
 # # # 
 # # # # edit person
-# # # app.get '/people/:id/edit', ->
+# # # get '/people/:id/edit', ->
 # # #   Person.first @param('id'), (error, person) =>
 # # #     @ensurePermitted person, =>
 # # #       @person: person
@@ -172,7 +173,7 @@ get '/*.js', ->
 # # #         @redirectToTeam person
 # # # 
 # # # # sign in
-# # # app.get '/login', ->
+# # # get '/login', ->
 # # #   @person: new Person()
 # # #   @render 'login.html.haml'
 # # # 
@@ -195,7 +196,7 @@ get '/*.js', ->
 # # #       @person: new Person(@params.post)
 # # #       @render 'login.html.haml'
 # # # 
-# # # app.get '/logout', ->
+# # # get '/logout', ->
 # # #   @redirect '/' unless @currentPerson?
 # # #   @logout =>
 # # #     @redirect '/'
@@ -210,21 +211,21 @@ get '/*.js', ->
 # # #       person.resetPassword =>
 # # #         @respond 200, 'OK'
 # # # 
-# # # app.get '/*.js', (file) ->
+# # # get '/*.js', (file) ->
 # # #   try
 # # #     @render "${file}.js.coffee", { layout: false }
 # # #   catch e
 # # #     @pass "/${file}.js"
 # # # 
 # # # 
-# # # app.get '/*', (file) ->
+# # # get '/*', (file) ->
 # # #   try
 # # #     @render "${file}.html.haml"
 # # #   catch e
 # # #     throw e if e.errno != 2
 # # #     @pass "/${file}"
 # # # 
-# # # app.get '/*', (file) ->
+# # # get '/*', (file) ->
 # # #   @pass "/public/${file}"
 # # # 
 # # # # app.configure ->

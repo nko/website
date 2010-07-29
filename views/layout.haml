@@ -55,7 +55,7 @@
       %aside#pullout
         #current_person
           - if (!this.currentPerson)
-            %a{ href: '/login?return_to='} Sign in
+            %a{ href: '/login?return_to=' + ctx.req.url } Sign in
             %span.vr |
             %a{ href: '/teams/new' } Register
           - if (this.currentPerson)
