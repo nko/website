@@ -1,4 +1,5 @@
 Mongo = require('./mongo').Mongo
+http = require('./http')
 sys = require 'sys'
 crypto = require 'crypto'
 require '../public/javascripts/Math.uuid'
