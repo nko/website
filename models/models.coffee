@@ -1,9 +1,7 @@
 Mongo = require('./mongo').Mongo
-# http = require 'express/http'
 sys = require 'sys'
 crypto = require 'crypto'
 require '../public/javascripts/Math.uuid'
-
 nko = {}
 
 md5 = (str) ->

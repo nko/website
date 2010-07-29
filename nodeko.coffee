@@ -102,8 +102,7 @@ get '/teams/new', ->
 
 # create team
 post '/teams', ->
-  return @redirect '/teams'
-  @team = new Team @params.post, =>
+  @team = new Team @req.body, =>
     @team.save (errors, res) =>
       if errors?
         @errors = errors
