@@ -21,8 +21,9 @@ app.configure ->
 get = (path, fn) ->
   app.get path, (req, res, next) =>
     Person.firstByAuthKey req.cookies.authkey, (person) =>
+      sys.puts sys.inspect req
+      sys.puts sys.inspect res
       sys.puts sys.inspect req.cookies
-      sys.puts req.cookies.authkey
       sys.puts sys.inspect person
       ctx = {
         sys: sys
@@ -59,7 +60,7 @@ get '/', ->
 
 get '/*.js', ->
   try
-    @render "#{req.params[0]}.js.coffee", { layout: false }
+    @render "#{@req.params[0]}.js.coffee", { layout: false }
   catch e
     @next()
 
@@ -80,15 +81,15 @@ get '/teams', ->
         _.include _.pluck(_ids, 'id'), @currentPerson._id.id
     else []
     @render 'teams/index.html.haml'
-# # # 
-# # # # new team
-# # # get '/teams/new', ->
-# # #   Team.all (error, teams) =>
-# # #     if teams.length >= 222
-# # #       @redirect '/'
-# # #     else
-# # #       @team: new Team {}, =>
-# # #         @render 'teams/new.html.haml'
+
+# new team
+get '/teams/new', ->
+  Team.all (error, teams) =>
+    if teams.length >= 222
+      @redirect '/'
+    else
+      @team = new Team {}, =>
+        @render 'teams/new.html.haml'
 # # # 
 # # # # create team
 # # # app.post '/teams', ->

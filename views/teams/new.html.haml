@@ -4,9 +4,9 @@
   Not sure? No worries! You can update these
   details after registration too.
 
-!= this.partial("errors.html.haml")
+!= partial("errors.html.haml", { locals: { ctx: ctx } })
 
 %form{ method: 'POST', action: '/teams' }
-  != this.partial('teams/form.html.haml')
+  != partial('teams/form.html.haml', { locals: { ctx: ctx } })
   %p
     %input.button{ type: 'submit', value: 'Register!' }

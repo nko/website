@@ -316,24 +316,24 @@ aside#pullout #sponsors img {
   display: none;
   font-size: small;}
 
-.body.teams_new ol, .body._teams__edit ol {
+.body.teams-new ol, .body.teams-edit ol {
   list-style-type: none;
   padding-left: 0px;
   margin-left: 0px;}
 
-.body.teams_new input[type=checkbox], .body._teams__edit input[type=checkbox], .body._teams_ input[type=checkbox] {
+.body.teams-new input[type=checkbox], .body.teams-edit input[type=checkbox], .body._teams_ input[type=checkbox] {
   font-size: x-large;}
 
-.body.teams_new #attending_input, .body._teams__edit #attending_input, .body._teams_ #attending_input {
+.body.teams-new #attending_input, .body.teams-edit #attending_input, .body._teams_ #attending_input {
   margin-top: 1em;
   margin-bottom: 0.5em;}
 
-.body.teams_new #attending_count, .body._teams__edit #attending_count, .body._teams_ #attending_count {
+.body.teams-new #attending_count, .body.teams-edit #attending_count, .body._teams_ #attending_count {
   display: none;
   margin-left: 2em;
   margin-bottom: 0.5em;}
 
-.body.teams_new #attending_count input[type=text], .body._teams__edit #attending_count input[type=text], .body._teams_ #attending_count input[type=text] {
+.body.teams-new #attending_count input[type=text], .body.teams-edit #attending_count input[type=text], .body._teams_ #attending_count input[type=text] {
   font-size: medium;
   width: 2em;
   margin: 0px;}

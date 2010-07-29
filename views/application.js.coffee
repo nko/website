@@ -82,7 +82,7 @@ $ ->
     else
       $('#attending_count').find('input[type=text]').val(0).slideUp('fast')
 
-  if $('.body._teams_').length > 0
+  if $('.body.teams-show').length > 0
     getAttendingCount = ->
       if $('#attending').is(':checked')
         parseInt($('#attending_count').find('input[type=text]').val()) or 0
@@ -128,7 +128,7 @@ $ ->
   , ->
     $(this).find('.localtime').remove()
 
-  $('.body._judging img').each ->
+  $('.body.judging-index img').each ->
     r = 'rotate(' + new String(Math.random()*6-3) + 'deg)'
     $(this)
       .css('-webkit-transform', r)

@@ -8,7 +8,7 @@
     %span.error Save failed!
   
   #attending_input
-    %input{ type: 'checkbox', name: 'attending', id: 'attending', checked: 'team' in this && this.team.joyent_count }
+    %input{ type: 'checkbox', name: 'attending', id: 'attending', checked: 'team' in ctx && ctx.team.joyent_count }
     %label{ 'for': 'attending' }
       != '<b>Yes</b>, '
       our team wants to hack at the
@@ -17,7 +17,7 @@
   
   #attending_count
     How many people on your team will be attending?
-    %input{ type: 'text', size: 2, name: 'joyent_count', id: 'joyent_count', value: 'team' in this && this.team.joyent_count }
+    %input{ type: 'text', size: 2, name: 'joyent_count', id: 'joyent_count', value: 'team' in ctx && ctx.team.joyent_count }
   
   .note
     Participants can compete from anywhere virtually.
