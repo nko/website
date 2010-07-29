@@ -29,9 +29,11 @@ app.get '/', (req, res, next) ->
   Team.all (error, teams) =>
     res.render 'index.html.haml'
 
-app.get '/*.css', (req, res, next) ->
-  res.render "#{req.params[0]}.sass", 'Content-Type': 'application/css'
-
+app.get '/*.js', (req, res, next) ->
+  try
+    res.render "#{req.params[0]}.js.coffee", layout: false
+  catch e
+    next()
 
 # # # app.get '/register', ->
 # # #   if @currentPerson?
