@@ -5,7 +5,11 @@ express = require 'express'
 models = require './models/models'
 [Team, Person] = [models.Team, models.Person]
 
-app = express.createServer()
+pub = __dirname + '/public';
+app = express.createServer(
+  connect.compiler({ src: pub, enable: ['sass'] }),
+  connect.staticProvider(pub)
+)
 
 app.configure ->
   app.enable 'show exceptions'
@@ -24,6 +28,10 @@ app.get /.*/, (req, res, next) ->
 app.get '/', (req, res, next) ->
   Team.all (error, teams) =>
     res.render 'index.html.haml'
+
+app.get '/*.css', (req, res, next) ->
+  res.render "#{req.params[0]}.sass", 'Content-Type': 'application/css'
+
 
 # # # app.get '/register', ->
 # # #   if @currentPerson?
@@ -189,8 +197,6 @@ app.get '/', (req, res, next) ->
 # # #   catch e
 # # #     @pass "/${file}.js"
 # # # 
-# # # app.get '/*.css', (file) ->
-# # #   @render "${file}.css.sass", { layout: false }
 # # # 
 # # # app.get '/*', (file) ->
 # # #   try
