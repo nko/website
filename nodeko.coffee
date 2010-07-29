@@ -52,7 +52,20 @@ request = (type) ->
                 @redirect (alternatePath or '/')
           canEditTeam: (team) ->
             req.cookies.teamauthkey is team.authKey() or
-              team.hasMember(@currentPerson)}
+              team.hasMember(@currentPerson)
+          ensurePermitted: (other, fn) ->
+            permitted = if other.hasMember?
+              @canEditTeam other
+            else
+              @currentPerson? and (other.id() is @currentPerson.id())
+            if permitted then fn()
+            else
+              unless @currentPerson?
+                @redirectToLogin()
+              else
+                # TODO flash "Oops! You don't have permissions to see that. Try logging in as somebody else."
+                @logout =>
+                  @redirectToLogin()}
         __bind(fn, ctx)()
 get = request 'get'
 post = request 'post'
@@ -126,14 +139,14 @@ get '/teams/:id', ->
     else
       # TODO make this a 404
       @redirect '/'
-# # # 
-# # # # edit team
-# # # get '/teams/:id/edit', ->
-# # #   Team.first @param('id'), (error, team) =>
-# # #     @ensurePermitted team, =>
-# # #       @team: team
-# # #       @render 'teams/edit.html.haml'
-# # # 
+
+# edit team
+get '/teams/:id/edit', ->
+  Team.first @req.param('id'), (error, team) =>
+    @ensurePermitted team, =>
+      @team = team
+      @render 'teams/edit.html.haml'
+
 # # # # update team
 # # # app.put '/teams/:id', ->
 # # #   Team.first @param('id'), (error, team) =>
