@@ -98,7 +98,7 @@ $ ->
         $.ajax(
           type: 'PUT'
           url: window.location.pathname
-          data: { joyent_count: ac },
+          data: { joyent_count: ac }
           error: (xhr, status, err) ->
             $('#attending_form .saving').hide()
             $('#attending_form .error').show().delay('slow').fadeOut()

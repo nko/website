@@ -161,9 +161,15 @@ put '/teams/:id', ->
           if errors?
             @errors = errors
             @team = team
-            @render 'teams/edit.html.haml'
+            if @req.xhr
+              @res.send 'ERROR', 500
+            else
+              @render 'teams/edit.html.haml'
           else
-            @redirect '/teams/' + team.id()
+            if @req.xhr
+              @res.send 'OK', 200
+            else
+              @redirect '/teams/' + team.id()
       # TODO shouldn't need this
       if @req.body.emails
         team.setMembers @req.body.emails, save
