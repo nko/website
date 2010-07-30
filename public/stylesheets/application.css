@@ -276,7 +276,9 @@ aside#pullout #sponsors p.joyent {
 aside#pullout #sponsors p.heroku {
   margin-bottom: 16px;}
 aside#pullout #sponsors p.github {
-  margin-bottom: 25px;}
+  margin-bottom: 2px;}
+aside#pullout #sponsors p.sencha {
+  margin-bottom: 10px;}
 aside#pullout #sponsors p.medium {
   margin-bottom: 18px;}
 aside#pullout #sponsors p.oasis_digital {
@@ -341,7 +343,7 @@ aside#pullout #sponsors img {
   width: 2em;
   margin: 0px;}
 
-.body._people__edit h2 {
+.body.people-edit h2 {
   margin-top: 1.5em;
   border-bottom: solid 1px hsla(0, 0%, 0%, 0.2);}
 
