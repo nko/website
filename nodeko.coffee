@@ -43,7 +43,9 @@ request = (type) ->
             opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
             opts.locals.ctx = ctx
             res.render file, opts
-          currentPerson: person,
+          currentPerson: person
+          setCurrentPerson: (person, options) ->
+            @cookie 'authkey', person?.authKey(), options
           redirectToTeam: (person, alternatePath) ->
             Team.first { 'members._id': person._id }, (error, team) =>
               if team?
@@ -211,6 +213,24 @@ post '/reset_password', ->
       person.resetPassword =>
         @res.send 'OK', 200
 
+post '/login', ->
+  Person.login @req.body, (error, person) =>
+    if person?
+      if @req.param 'remember'
+        d = new Date()
+        d.setTime(d.getTime() + 1000 * 60 * 60 * 24 * 180)
+        options = { expires: d }
+      @setCurrentPerson person, options
+      if person.name
+        if returnTo = @req.param('return_to')
+          @redirect returnTo
+        else @redirectToTeam person
+      else
+        @redirect '/people/' + person.id() + '/edit'
+    else
+      @errors = error
+      @person = new Person(@req.body)
+      @render 'login.html.haml'
 
 # # # # update person
 # # # app.put '/people/:id', ->
@@ -226,26 +246,6 @@ post '/reset_password', ->
 # # #       person.update attributes
 # # #       person.save (error, resp) =>
 # # #         @redirectToTeam person
-# # # 
-# # # 
-# # # app.post '/login', ->
-# # #   Person.login @req.params.post, (error, person) =>
-# # #     if person?
-# # #       if @req.param 'remember'
-# # #         d: new Date()
-# # #         d.setTime(d.getTime() + 1000 * 60 * 60 * 24 * 180)
-# # #         options: { expires: d }
-# # #       @setCurrentPerson person, options
-# # #       if person.name
-# # #         if returnTo: @req.param('return_to')
-# # #           @redirect returnTo
-# # #         else @redirectToTeam person
-# # #       else
-# # #         @redirect '/people/' + person.id() + '/edit'
-# # #     else
-# # #       @errors: error
-# # #       @person: new Person(@req.params.post)
-# # #       @render 'login.html.haml'
 # # # 
 # # # get '/logout', ->
 # # #   @redirect '/' unless @currentPerson?
