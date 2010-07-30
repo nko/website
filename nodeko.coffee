@@ -22,15 +22,6 @@ request = (type) ->
   (path, fn) ->
     app[type] path, (req, res, next) =>
       Person.firstByAuthKey req.cookies.authkey, (error, person) =>
-
-        sys.puts "------\nreq:\n#{sys.inspect req}\n"
-        sys.puts "------\nreq.body:\n#{sys.inspect req.body}\n"
-        sys.puts "------\nres:\n#{sys.inspect res}\n"
-        sys.puts "------\nnext:\n#{sys.inspect next}\n"
-        sys.puts "------\nreq.cookies:\n#{sys.inspect req.cookies}\n"
-        sys.puts "------\nauthkey:\n#{sys.inspect req.cookies.authkey}\n"
-        sys.puts "------\nperson:\n#{sys.inspect person}\n"
-
         ctx = {
           sys: sys
           req: req
@@ -258,76 +249,11 @@ put '/people/:id', ->
       person.save (error, resp) =>
         @redirectToTeam person
 
-# get '/*', (file) ->
-#   try
-#     @render "${file}.html.haml"
-#   catch e
-#     throw e if e.errno != 2
-#     @next()
-
-# # # 
-# # # get '/*', (file) ->
-# # #   @pass "/public/${file}"
-# # # 
-# # # # app.configure ->
-# # # #   CurrentPerson: Plugin.extend {
-# # # #     extend: {
-# # # #       init: ->
-# # # #         Request.include {
-# # # #           setCurrentPerson: (person, options) ->
-# # # #             @cookie 'authKey', person?.authKey(), options
-# # # #           getCurrentPerson: (fn) ->
-# # # #             Person.firstByAuthKey @cookie('authKey'), fn
-# # # #         }
-# # # #     }
-# # # # 
-# # # #     'on': {
-# # # #       request: (event, fn) ->
-# # # #         event.request.getCurrentPerson (error, person) ->
-# # # #           event.request.currentPerson: person
-# # # #           fn()
-# # # #         true # wait for async completion
-# # # #     }
-# # # #   }
-# # # #   use CurrentPerson
-# # # # 
-# # # # Request.include {
-# # # #   redirectToTeam: (person, alternatePath) ->
-# # # #     Team.first { 'members._id': person._id }, (error, team) =>
-# # # #       if team?
-# # # #         @redirect '/teams/' + team.id()
-# # # #       else
-# # # #         @redirect (alternatePath or '/')
-# # # # 
-# # # #   redirectToLogin: ->
-# # # #     @redirect "/login?return_to=$@url.href"
-# # # # 
-# # # #   logout: (fn) ->
-# # # #     @currentPerson.logout (error, resp) =>
-# # # #       @setCurrentPerson null
-# # # #       fn()
-# # # # 
-# # # #   ensurePermitted: (other, fn) ->
-# # # #     permitted: if other.hasMember?
-# # # #       @canEditTeam other
-# # # #     else
-# # # #       @currentPerson? and (other.id() is @currentPerson.id())
-# # # #     if permitted then fn()
-# # # #     else
-# # # #       unless @currentPerson?
-# # # #         @redirectToLogin()
-# # # #       else
-# # # #         # TODO flash "Oops! You don't have permissions to see that. Try logging in as somebody else."
-# # # #         @logout =>
-# # # #           @redirectToLogin()
-# # # # 
-# # # #   canEditTeam: (team) ->
-# # # #     @cookie('teamAuthKey') is team.authKey() or
-# # # #       team.hasMember(@currentPerson)
-# # # # }
-# # # 
-
 get '/*', ->
-  @render "#{@req.params[0]}.html.haml"
+  try
+    @render "#{@req.params[0]}.html.haml"
+  catch e
+    throw e if e.errno != 2
+    @next()
 
 server = app.listen parseInt(process.env.PORT || 8000), null
