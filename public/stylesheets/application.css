@@ -294,7 +294,7 @@ aside#pullout #sponsors p.thoughtbot {
 aside#pullout #sponsors p.jsconf {
   margin-bottom: -10px;}
 aside#pullout #sponsors p.braintree {
-  margin-bottom: 25px;}
+  margin-bottom: 0px;}
 aside#pullout #sponsors p.npm {
   margin-bottom: 1.5em;}
 aside#pullout #sponsors img {
@@ -341,7 +341,7 @@ aside#pullout #sponsors img {
   width: 2em;
   margin: 0px;}
 
-.body._people__edit h2 {
+.body.people-edit h2 {
   margin-top: 1.5em;
   border-bottom: solid 1px hsla(0, 0%, 0%, 0.2);}
 
