@@ -177,30 +177,30 @@ del '/teams/:id', ->
       team.remove (error, result) =>
         @redirect '/'
 
-# # # # resend invitation
-# # # get '/teams/:teamId/invite/:personId', ->
-# # #   Team.first @param('teamId'), (error, team) =>
-# # #     @ensurePermitted team, =>
-# # #       Person.first @param('personId'), (error, person) =>
-# # #         person.inviteTo team, =>
-# # #           if @isXHR
-# # #             @respond 200, 'OK'
-# # #           else
-# # #             # TODO flash "Sent a new invitation to $@person.email"
-# # #             @redirect '/teams/' + team.id()
-# # # 
+# resend invitation
+get '/teams/:teamId/invite/:personId', ->
+  Team.first @req.param('teamId'), (error, team) =>
+    @ensurePermitted team, =>
+      Person.first @req.param('personId'), (error, person) =>
+        person.inviteTo team, =>
+          if @req.xhr
+            @res.send 'OK', 200
+          else
+            # TODO flash "Sent a new invitation to $@person.email"
+            @redirect '/teams/' + team.id()
+
 # # # # edit person
 # # # get '/people/:id/edit', ->
-# # #   Person.first @param('id'), (error, person) =>
+# # #   Person.first @req.param('id'), (error, person) =>
 # # #     @ensurePermitted person, =>
 # # #       @person: person
 # # #       @render 'people/edit.html.haml'
 # # # 
 # # # # update person
 # # # app.put '/people/:id', ->
-# # #   Person.first @param('id'), (error, person) =>
+# # #   Person.first @req.param('id'), (error, person) =>
 # # #     @ensurePermitted person, =>
-# # #       attributes: @params.post
+# # #       attributes: @req.params.post
 # # # 
 # # #       # TODO this shouldn't be necessary
 # # #       person.setPassword attributes.password if attributes.password
@@ -217,22 +217,22 @@ del '/teams/:id', ->
 # # #   @render 'login.html.haml'
 # # # 
 # # # app.post '/login', ->
-# # #   Person.login @params.post, (error, person) =>
+# # #   Person.login @req.params.post, (error, person) =>
 # # #     if person?
-# # #       if @param 'remember'
+# # #       if @req.param 'remember'
 # # #         d: new Date()
 # # #         d.setTime(d.getTime() + 1000 * 60 * 60 * 24 * 180)
 # # #         options: { expires: d }
 # # #       @setCurrentPerson person, options
 # # #       if person.name
-# # #         if returnTo: @param('return_to')
+# # #         if returnTo: @req.param('return_to')
 # # #           @redirect returnTo
 # # #         else @redirectToTeam person
 # # #       else
 # # #         @redirect '/people/' + person.id() + '/edit'
 # # #     else
 # # #       @errors: error
-# # #       @person: new Person(@params.post)
+# # #       @person: new Person(@req.params.post)
 # # #       @render 'login.html.haml'
 # # # 
 # # # get '/logout', ->
@@ -242,7 +242,7 @@ del '/teams/:id', ->
 # # # 
 # # # # reset password
 # # # app.post '/reset_password', ->
-# # #   Person.first { email: @param('email') }, (error, person) =>
+# # #   Person.first { email: @req.param('email') }, (error, person) =>
 # # #     # TODO assumes xhr
 # # #     unless person?
 # # #       @respond 404, 'Email not found'
