@@ -276,7 +276,7 @@ aside#pullout #sponsors p.joyent {
 aside#pullout #sponsors p.heroku {
   margin-bottom: 16px;}
 aside#pullout #sponsors p.github {
-  margin-bottom: 2px;}
+  margin-bottom: 0px;}
 aside#pullout #sponsors p.sencha {
   margin-bottom: 10px;}
 aside#pullout #sponsors p.medium {
@@ -286,7 +286,7 @@ aside#pullout #sponsors p.oasis_digital {
 aside#pullout #sponsors p.envato {
   margin-bottom: 22px;}
 aside#pullout #sponsors p.couchdb {
-  margin-bottom: 6px;}
+  margin-bottom: 10px;}
 aside#pullout #sponsors p.mongodb {
   margin-bottom: 8px;}
 aside#pullout #sponsors p.mongohq {
