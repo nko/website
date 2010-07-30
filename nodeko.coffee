@@ -72,6 +72,7 @@ request = (type) ->
 get = request 'get'
 post = request 'post'
 put = request 'put'
+del = request 'del'
 
 get /.*/, ->
   [host, path] = [@req.header('host'), @req.url]
@@ -168,14 +169,14 @@ put '/teams/:id', ->
       if @req.body.emails
         team.setMembers @req.body.emails, save
       else save()
-# # # 
-# # # # delete team
-# # # app.del '/teams/:id', -> # delete not working
-# # #   Team.first @param('id'), (error, team) =>
-# # #     @ensurePermitted team, =>
-# # #       team.remove (error, result) =>
-# # #         @redirect '/'
-# # # 
+
+# delete team
+del '/teams/:id', ->
+  Team.first @req.param('id'), (error, team) =>
+    @ensurePermitted team, =>
+      team.remove (error, result) =>
+        @redirect '/'
+
 # # # # resend invitation
 # # # get '/teams/:teamId/invite/:personId', ->
 # # #   Team.first @param('teamId'), (error, team) =>

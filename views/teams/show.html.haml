@@ -51,6 +51,7 @@
     = ctx.invites.length === 1 ? ' invitation.' : ' invitations.'
 
 - if (ctx.editAllowed)
-  %p
+  %form{ method: 'POST', action: '/teams/' + ctx.team.id() }#delete
     %a.button{ href: '/teams/' + ctx.team.id() + '/edit' } Edit
-    %a.delete.button{ href: '/teams/' + ctx.team.id() + '?_method=DELETE' } Delete
+    %input{ type: 'hidden', name: '_method', value: 'delete' }
+    %input.button{ type: 'submit', value: 'Delete' }
