@@ -7,7 +7,7 @@
   %p
     %label{ for: 'email' } Email
     %br
-    %input{ type: 'email', name: 'email', id: 'email', value: ctx.person.email || ctx.req.param('email'), autofocus: true }
+    %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.person.email || ctx.req.param('email'), autofocus: true }
   %p
     %label{ for: 'password' } Password
     %br

@@ -15,7 +15,7 @@
   %h3
     %label{ for: 'email' } Email
   .note We don&rsquo;t spam.  Only visible to team members.
-  %input{ type: 'email', name: 'email', id: 'email', value: ctx.person.email }
+  %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.person.email }
   
   %h3
     %label{ for: 'password' } Password

@@ -6,7 +6,7 @@ MongoServer = require('../lib/node-mongodb-native/lib/mongodb/connection').Serve
 MongoId = require('../lib/node-mongodb-native/lib/mongodb/bson/bson').ObjectID
 
 class Mongo
-  localUrl: 'http://localhost:27017/nodeko'
+  localUrl: 'http://localhost:27017/nodeknockout'
   constructor: ->
     @parseUrl process.env['MONGOHQ_URL'] or @localUrl
     @server = new MongoServer @host, @port

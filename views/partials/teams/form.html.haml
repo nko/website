@@ -8,7 +8,7 @@
 %ol#members
   - for (var i = 1; i < 5; i++)
     %li
-      %input{ type: 'email', placeholder: 'member' + i + '@team.com', name: 'emails[]', value: ctx.team.emails()[i - 1] }
+      %input.email{ type: 'text', placeholder: 'member' + i + '@team.com', name: 'emails[]', value: ctx.team.emails()[i - 1] }
 %p Each team member will receive an e-mail with a password.
 
 != partial('teams/attending.html.haml', { locals: { ctx: ctx } })

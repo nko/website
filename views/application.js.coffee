@@ -28,7 +28,7 @@ $ ->
 
   $('form.reset_password').submit ->
     form = $ this
-    email = form.find('input[type=email]').val()
+    email = form.find('input.email').val()
     $.ajax(
       type: form.attr('method')
       url: form.attr('action')
@@ -50,16 +50,17 @@ $ ->
     highlightError = (selector, message, fn) ->
       invalid = form.find(selector).filter fn
       if invalid.length
-        errors.append "<li>$message</li>"
+        errors.append "<li>#{message}</li>"
         invalid.addClass 'error'
+        invalid.blur()
         hasError = true
 
-    highlightError 'input[type=email]', 'Invalid email address',->
+    highlightError 'input.email', 'Invalid email address',->
       val = $(this).val()
       val and not /^[a-zA-Z0-9+._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test val
 
     highlightError 'input[name=name]', 'Name is required', -> !$(this).val()
-    highlightError 'input[type=email]:first', 'Email is required', -> !$(this).val()
+    highlightError 'input.email:first', 'Email is required', -> !$(this).val()
     highlightError 'input[type=password]:visible', 'Password required', -> !$(this).val()
     highlightError 'input.url', 'Invalid link', ->
       val: $(this).val()
