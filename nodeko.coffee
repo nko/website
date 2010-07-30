@@ -12,8 +12,8 @@ app = express.createServer(
 )
 
 app.use connect.logger()
-app.use connect.methodOverride()
 app.use connect.bodyDecoder()
+app.use connect.methodOverride()
 app.use connect.cookieDecoder()
 
 app.enable 'show exceptions'
