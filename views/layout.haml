@@ -57,15 +57,15 @@
           %a{ href: 'http://www.fortnightlabs.com/' } fortnight labs
       %aside#pullout
         #current_person
-          - if (!this.currentPerson)
+          - if (!ctx.currentPerson)
             %a{ href: '/login?return_to=' + ctx.req.url } Sign in
             %span.vr |
             %a{ href: '/teams/new' } Register
-          - if (this.currentPerson)
+          - if (ctx.currentPerson)
             %a{ href: 'http://gravatar.com' }
-              %img{ src: 'http://www.gravatar.com/avatar/' + this.currentPerson.emailHash + '?s=40&d=monsterid' }
+              %img{ src: 'http://www.gravatar.com/avatar/' + ctx.currentPerson.emailHash + '?s=40&d=monsterid' }
             .info
-              %a{ href: '/people/' + this.currentPerson.id() + '/edit' }= this.currentPerson.name || this.currentPerson.email
+              %a{ href: '/people/' + ctx.currentPerson.id() + '/edit' }= ctx.currentPerson.name || ctx.currentPerson.email
               %br
               %a{ href: '/logout' } Sign out
         #sponsors
@@ -116,16 +116,6 @@
     %script{ src: '/javascripts/pretty_date.js', type: 'text/javascript' }
     %script{ src: '/application.js', type: 'text/javascript' }
     :javascript
-      var
-        addthis_desc = "Just registered for http://nodeknockout.com/. 48hrs, node.js, prizes and glory. It's on!",
-        addthis_config = { ui_click: true },
-        addthis_share = {
-          url: 'http://www.nodeknockout.com',
-          title: 'Node.js Knockout',
-          templates: { twitter: addthis_desc },
-          description: addthis_desc
-        };
-      
       $(function() {
         $('a').mousedown(function() {
           var href = this.href;

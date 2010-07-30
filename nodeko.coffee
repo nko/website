@@ -21,13 +21,15 @@ app.enable 'show exceptions'
 request = (type) ->
   (path, fn) ->
     app[type] path, (req, res, next) =>
-      Person.firstByAuthKey req.cookies.authkey, (person) =>
+      Person.firstByAuthKey req.cookies.authkey, (error, person) =>
 
         sys.puts "------\nreq:\n#{sys.inspect req}\n"
         sys.puts "------\nreq.body:\n#{sys.inspect req.body}\n"
         sys.puts "------\nres:\n#{sys.inspect res}\n"
         sys.puts "------\nnext:\n#{sys.inspect next}\n"
         sys.puts "------\nreq.cookies:\n#{sys.inspect req.cookies}\n"
+        sys.puts "------\nauthkey:\n#{sys.inspect req.cookies.authkey}\n"
+        sys.puts "------\nperson:\n#{sys.inspect person}\n"
 
         ctx = {
           sys: sys
@@ -54,6 +56,10 @@ request = (type) ->
                 @redirect (alternatePath or '/')
           redirectToLogin: ->
             @redirect "/login?return_to=#{@req.url}"
+          logout: (fn) ->
+            @currentPerson.logout (error, resp) =>
+              @setCurrentPerson null
+              fn()
           canEditTeam: (team) ->
             req.cookies.teamauthkey is team.authKey() or
               team.hasMember(@currentPerson)
@@ -191,27 +197,10 @@ get '/teams/:teamId/invite/:personId', ->
             # TODO flash "Sent a new invitation to $@person.email"
             @redirect '/teams/' + team.id()
 
-# edit person
-get '/people/:id/edit', ->
-  Person.first @req.param('id'), (error, person) =>
-    @ensurePermitted person, =>
-      @person = person
-      @render 'people/edit.html.haml'
-
 # sign in
 get '/login', ->
   @person = new Person()
   @render 'login.html.haml'
-
-# reset password
-post '/reset_password', ->
-  Person.first { email: @req.param('email') }, (error, person) =>
-    # TODO assumes xhr
-    unless person?
-      @res.send 'Email not found', 404
-    else
-      person.resetPassword =>
-        @res.send 'OK', 200
 
 post '/login', ->
   Person.login @req.body, (error, person) =>
@@ -232,39 +221,50 @@ post '/login', ->
       @person = new Person(@req.body)
       @render 'login.html.haml'
 
-# # # # update person
-# # # app.put '/people/:id', ->
-# # #   Person.first @req.param('id'), (error, person) =>
-# # #     @ensurePermitted person, =>
-# # #       attributes: @req.params.post
-# # # 
-# # #       # TODO this shouldn't be necessary
-# # #       person.setPassword attributes.password if attributes.password
-# # #       delete attributes.password
-# # # 
-# # #       attributes.link: '' unless /^https?:\/\/.+\./.test attributes.link
-# # #       person.update attributes
-# # #       person.save (error, resp) =>
-# # #         @redirectToTeam person
-# # # 
-# # # get '/logout', ->
-# # #   @redirect '/' unless @currentPerson?
-# # #   @logout =>
-# # #     @redirect '/'
-# # # 
-# # # get '/*.js', (file) ->
-# # #   try
-# # #     @render "${file}.js.coffee", { layout: false }
-# # #   catch e
-# # #     @pass "/${file}.js"
-# # # 
-# # # 
-# # # get '/*', (file) ->
-# # #   try
-# # #     @render "${file}.html.haml"
-# # #   catch e
-# # #     throw e if e.errno != 2
-# # #     @pass "/${file}"
+get '/logout', ->
+  @redirect '/' unless @currentPerson?
+  @logout =>
+    @redirect '/'
+
+# reset password
+post '/reset_password', ->
+  Person.first { email: @req.param('email') }, (error, person) =>
+    # TODO assumes xhr
+    unless person?
+      @res.send 'Email not found', 404
+    else
+      person.resetPassword =>
+        @res.send 'OK', 200
+
+# edit person
+get '/people/:id/edit', ->
+  Person.first @req.param('id'), (error, person) =>
+    @ensurePermitted person, =>
+      @person = person
+      @render 'people/edit.html.haml'
+
+# update person
+put '/people/:id', ->
+  Person.first @req.param('id'), (error, person) =>
+    @ensurePermitted person, =>
+      attributes = @req.body
+
+      # TODO this shouldn't be necessary
+      person.setPassword attributes.password if attributes.password
+      delete attributes.password
+
+      attributes.link = '' unless /^https?:\/\/.+\./.test attributes.link
+      person.update attributes
+      person.save (error, resp) =>
+        @redirectToTeam person
+
+# get '/*', (file) ->
+#   try
+#     @render "${file}.html.haml"
+#   catch e
+#     throw e if e.errno != 2
+#     @next()
+
 # # # 
 # # # get '/*', (file) ->
 # # #   @pass "/public/${file}"

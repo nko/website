@@ -11,7 +11,7 @@
 
 - if (ctx.editAllowed)
   - if (ctx.currentPerson)
-    != ctx.partial('teams/attending.html.haml')
+    != partial('teams/attending.html.haml', { locals: { ctx: ctx } })
   
   - if (!ctx.currentPerson)
     %p.note

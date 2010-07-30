@@ -1,20 +1,21 @@
 %h1.ribbon
-  - if (this.person.name)
+  - if (ctx.person.name)
     Edit Profile
-  - if (!this.person.name)
+  - if (!ctx.person.name)
     Finish your registration
 
-!= this.partial("errors.html.haml")
+!= partial("errors.html.haml", { locals: { ctx: ctx } })
 
-%form{ method: 'POST', action: '/people/' + this.person.id() + '?_method=PUT' }
+%form{ method: 'POST', action: '/people/' + ctx.person.id() }
+  %input{ type: 'hidden', name: '_method', value: 'put' }
   %h3
     %label{ for: 'name' } Name / Handle
-  %input{ type: 'text', name: 'name', id: 'name', value: this.person.name, autofocus: true }
+  %input{ type: 'text', name: 'name', id: 'name', value: ctx.person.name, autofocus: true }
   
   %h3
     %label{ for: 'email' } Email
   .note We don&rsquo;t spam.  Only visible to team members.
-  %input{ type: 'email', name: 'email', id: 'email', value: this.person.email }
+  %input{ type: 'email', name: 'email', id: 'email', value: ctx.person.email }
   
   %h3
     %label{ for: 'password' } Password
@@ -29,7 +30,7 @@
   %h3
     %label{ for: 'link' } Link
     .note Let other participants know who you are.
-  %input.url{ type: 'text', name: 'link', id: 'link', value: this.person.link || 'http://' }
+  %input.url{ type: 'text', name: 'link', id: 'link', value: ctx.person.link || 'http://' }
   
   %h3
     %label{ for: 'github' } GitHub username
@@ -37,7 +38,7 @@
       During the contest, code must be pushed to
       %a{ href: 'http://github.com' } GitHub
       to help us proctor.
-  %input{ type: 'text', name: 'github', id: 'github', value: this.person.github }
+  %input{ type: 'text', name: 'github', id: 'github', value: ctx.person.github }
   
   %h2 Deployment
   %p
@@ -50,10 +51,10 @@
     usernames to facilitate setup later.
   %h3
     %label{ for: 'joyent' } Joyent username
-  %input{ type: 'text', name: 'joyent', id: 'joyent', value: this.person.joyent }
+  %input{ type: 'text', name: 'joyent', id: 'joyent', value: ctx.person.joyent }
   %h3
     %label{ for: 'heroku' } Heroku username
-  %input{ type: 'text', name: 'heroku', id: 'heroku', value: this.person.heroku }
+  %input{ type: 'text', name: 'heroku', id: 'heroku', value: ctx.person.heroku }
   
   %p
     %input.button{ type: 'submit', value: 'Save' }
