@@ -345,7 +345,7 @@ aside#pullout #sponsors img {
   margin-top: 1.5em;
   border-bottom: solid 1px hsla(0, 0%, 0%, 0.2);}
 
-.body._judging img {
+.body.judging img {
   float: left;
   margin-top: -1em;
   margin-bottom: 2em;
@@ -355,14 +355,14 @@ aside#pullout #sponsors img {
   -webkit-box-shadow: 0px 0px 5px hsla(0, 0%, 0%, 0.3);
   -moz-box-shadow: 0px 0px 5px hsla(0, 0%, 0%, 0.3);
   width: 120px;}
-.body._judging h3 {
+.body.judging h3 {
   margin-left: 140px;
   clear: left;}
-.body._judging h3 a {
+.body.judging h3 a {
   font-weight: normal;}
-.body._judging p {
+.body.judging p {
   margin-left: 140px;}
-.body._judging p.description {
+.body.judging p.description {
   margin-left: 0px;}
 
 #map .iframe {
