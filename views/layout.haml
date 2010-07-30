@@ -41,7 +41,7 @@
           %a.twitter{ href: 'http://twitter.com/node_knockout' }
             .say!= 'Follow us<br/> on Twitter!'
             %img{ src: '/images/bird.png' }
-        .body{ 'class': 'body ' + view }!= body
+        %div{ 'class': 'body ' + view }!= body
         %pre= ctx.sys.inspect(locals)
         %footer.ribbon.blue
           email
