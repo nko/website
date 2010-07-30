@@ -2,7 +2,8 @@
 
 != partial("errors.html.haml", { locals: { ctx: ctx } })
 
-%form{ method: 'POST', action: '/teams/' + ctx.team.id() + '?_method=PUT' }
+%form{ method: 'POST', action: '/teams/' + ctx.team.id() }
+  %input{ type: 'hidden', name: '_method', value: 'put' }
   != partial('teams/form.html.haml', { locals: { ctx: ctx } })
   %p
     %input.button{ type: 'submit', value: 'Save' }

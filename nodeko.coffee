@@ -50,6 +50,8 @@ request = (type) ->
                 @redirect '/teams/' + team.id()
               else
                 @redirect (alternatePath or '/')
+          redirectToLogin: ->
+            @redirect "/login?return_to=#{@req.url}"
           canEditTeam: (team) ->
             req.cookies.teamauthkey is team.authKey() or
               team.hasMember(@currentPerson)
@@ -69,6 +71,7 @@ request = (type) ->
         __bind(fn, ctx)()
 get = request 'get'
 post = request 'post'
+put = request 'put'
 
 get /.*/, ->
   [host, path] = [@req.header('host'), @req.url]
@@ -147,24 +150,24 @@ get '/teams/:id/edit', ->
       @team = team
       @render 'teams/edit.html.haml'
 
-# # # # update team
-# # # app.put '/teams/:id', ->
-# # #   Team.first @param('id'), (error, team) =>
-# # #     @ensurePermitted team, =>
-# # #       team.joyent_count: or 0
-# # #       team.update @params.post
-# # #       save: =>
-# # #         team.save (errors, result) =>
-# # #           if errors?
-# # #             @errors: errors
-# # #             @team: team
-# # #             @render 'teams/edit.html.haml'
-# # #           else
-# # #             @redirect '/teams/' + team.id()
-# # #       # TODO shouldn't need this
-# # #       if @params.post.emails
-# # #         team.setMembers @params.post.emails, save
-# # #       else save()
+# update team
+put '/teams/:id', ->
+  Team.first @req.param('id'), (error, team) =>
+    @ensurePermitted team, =>
+      team.joyent_count ||= 0
+      team.update @req.body
+      save = =>
+        team.save (errors, result) =>
+          if errors?
+            @errors = errors
+            @team = team
+            @render 'teams/edit.html.haml'
+          else
+            @redirect '/teams/' + team.id()
+      # TODO shouldn't need this
+      if @req.body.emails
+        team.setMembers @req.body.emails, save
+      else save()
 # # # 
 # # # # delete team
 # # # app.del '/teams/:id', -> # delete not working
