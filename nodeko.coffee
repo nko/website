@@ -189,13 +189,29 @@ get '/teams/:teamId/invite/:personId', ->
             # TODO flash "Sent a new invitation to $@person.email"
             @redirect '/teams/' + team.id()
 
-# # # # edit person
-# # # get '/people/:id/edit', ->
-# # #   Person.first @req.param('id'), (error, person) =>
-# # #     @ensurePermitted person, =>
-# # #       @person: person
-# # #       @render 'people/edit.html.haml'
-# # # 
+# edit person
+get '/people/:id/edit', ->
+  Person.first @req.param('id'), (error, person) =>
+    @ensurePermitted person, =>
+      @person = person
+      @render 'people/edit.html.haml'
+
+# sign in
+get '/login', ->
+  @person = new Person()
+  @render 'login.html.haml'
+
+# reset password
+post '/reset_password', ->
+  Person.first { email: @req.param('email') }, (error, person) =>
+    # TODO assumes xhr
+    unless person?
+      @res.send 'Email not found', 404
+    else
+      person.resetPassword =>
+        @res.send 'OK', 200
+
+
 # # # # update person
 # # # app.put '/people/:id', ->
 # # #   Person.first @req.param('id'), (error, person) =>
@@ -211,10 +227,6 @@ get '/teams/:teamId/invite/:personId', ->
 # # #       person.save (error, resp) =>
 # # #         @redirectToTeam person
 # # # 
-# # # # sign in
-# # # get '/login', ->
-# # #   @person: new Person()
-# # #   @render 'login.html.haml'
 # # # 
 # # # app.post '/login', ->
 # # #   Person.login @req.params.post, (error, person) =>
@@ -239,16 +251,6 @@ get '/teams/:teamId/invite/:personId', ->
 # # #   @redirect '/' unless @currentPerson?
 # # #   @logout =>
 # # #     @redirect '/'
-# # # 
-# # # # reset password
-# # # app.post '/reset_password', ->
-# # #   Person.first { email: @req.param('email') }, (error, person) =>
-# # #     # TODO assumes xhr
-# # #     unless person?
-# # #       @respond 404, 'Email not found'
-# # #     else
-# # #       person.resetPassword =>
-# # #         @respond 200, 'OK'
 # # # 
 # # # get '/*.js', (file) ->
 # # #   try

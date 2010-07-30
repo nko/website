@@ -1,17 +1,17 @@
 %h1.ribbon Sign in
 
-!= this.partial('errors.html.haml')
+!= partial('errors.html.haml', { locals: { ctx: ctx } })
 
 %form{ method: 'POST', action: 'login' }
-  %input{ type: 'hidden', name: 'return_to', value: this.param('return_to') }
+  %input{ type: 'hidden', name: 'return_to', value: ctx.req.param('return_to') }
   %p
     %label{ for: 'email' } Email
     %br
-    %input{ type: 'email', name: 'email', id: 'email', value: this.person.email || this.param('email'), autofocus: true }
+    %input{ type: 'email', name: 'email', id: 'email', value: ctx.person.email || ctx.req.param('email'), autofocus: true }
   %p
     %label{ for: 'password' } Password
     %br
-    %input{ type: 'password', name: 'password', id: 'password', value: this.param('password') }
+    %input{ type: 'password', name: 'password', id: 'password', value: ctx.req.param('password') }
   %p
     %input{ type: 'checkbox', name: 'remember', id: 'remember', checked: true }
     %label{ for: 'remember' } Stay logged in

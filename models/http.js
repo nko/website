@@ -7,12 +7,13 @@
 
 var http = require('http'),
     parse = require('url').parse,
-    queryString = require('querystring')
+    queryString = require('querystring'),
+    sys = require('sys')
 
 function merge(a, b) {
   var ret = {};
   for (var k in a) ret[k] = a[k];
-  for (var k in a) ret[k] = b[k];
+  for (var k in b) ret[k] = b[k];
   return ret;
 }
     
