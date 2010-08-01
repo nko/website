@@ -28,8 +28,13 @@ request = (type) ->
           res: res
           next: next
           redirect: __bind(res.redirect, res),
-          cookie: (key, value) ->
-            res.header('Set-Cookie', "#{key}=#{value}")
+          cookie: (key, value, options) ->
+            value ||= ''
+            options ||= {}
+            cookie = "#{key}=#{value}"
+            for k, v of options
+              cookie += "; #{k}=#{v}"
+            res.header('Set-Cookie', cookie)
           render: (file, opts) ->
             opts ||= {}
             opts.locals ||= {}
@@ -38,7 +43,7 @@ request = (type) ->
             res.render file, opts
           currentPerson: person
           setCurrentPerson: (person, options) ->
-            @cookie 'authkey', person?.authKey(), options
+            @cookie 'authKey', person?.authKey(), options
           redirectToTeam: (person, alternatePath) ->
             Team.first { 'members._id': person._id }, (error, team) =>
               if team?
@@ -126,7 +131,7 @@ post '/teams', ->
         @errors = errors
         @render 'teams/new.html.haml'
       else
-        @cookie 'teamauthkey', @team.authKey()
+        @cookie 'teamAuthKey', @team.authKey()
         @redirect '/teams/' + @team.id()
 
 # show team
