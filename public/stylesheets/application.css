@@ -298,7 +298,9 @@ aside#pullout #sponsors p.braintree {
 aside#pullout #sponsors p.jsconf {
   margin-bottom: -10px;}
 aside#pullout #sponsors p.redis_to_go {
-  margin-bottom: 10px;}
+  margin-bottom: 12px;}
+aside#pullout #sponsors p.upload_juicer {
+  margin-bottom: 8px;}
 aside#pullout #sponsors p.npm {
   margin-bottom: 1.5em;}
 aside#pullout #sponsors img {
