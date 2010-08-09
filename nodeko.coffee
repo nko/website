@@ -97,10 +97,15 @@ get '/*.js', ->
     @next()
 
 get '/register', ->
-  if @currentPerson?
-    @redirectToTeam @currentPerson, '/teams/new'
-  else
-    @redirect '/teams/new'
+  Team.all (error, teams) =>
+    altPath = if teams.length >= 222
+      "/login?return_to=#{@req.url}"
+    else
+      'teams/new'
+    if @currentPerson?
+      @redirectToTeam @currentPerson, '/teams/new'
+    else
+      @redirect altPath
 
 # list teams
 get '/teams', ->
