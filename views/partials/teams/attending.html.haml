@@ -1,3 +1,4 @@
+- joyentFull = !(ctx.joyentTotal < 80 || "joyent_count" in ctx.team && parseInt(ctx.team.joyent_count) > 0)
 #attending_form
   %h3
     Coming to Knockout HQ?
@@ -6,19 +7,20 @@
       Saving&hellip;
     %span.saved Saved
     %span.error Save failed!
-  
+    - if (joyentFull)
+      %span.joyent_full
+        &mdash;
+        Sorry, Joyent&rsquo;s full!
   #attending_input
-    %input{ type: 'checkbox', name: 'attending', id: 'attending', checked: 'team' in ctx && parseInt(ctx.team.joyent_count) }
+    %input{ type: 'checkbox', name: 'attending', id: 'attending', checked: 'team' in ctx && parseInt(ctx.team.joyent_count), disabled: joyentFull }
     %label{ 'for': 'attending' }
       != '<b>Yes</b>, '
       our team wants to hack at the
       != ' <a href="http://nodeknockout.posterous.com/get-ready-for-the-nodejs-knockout-at-joyents">Knockout HQ</a> '
       != ' <span class="more_info">(<a href="/locations">more information</a>)</span>.'
-  
   #attending_count
     How many people on your team will be attending?
     %input{ type: 'text', size: 2, name: 'joyent_count', id: 'joyent_count', value: 'team' in ctx && ctx.team.joyent_count }
-  
   .note
     Participants can compete from anywhere virtually.
     Interested teams are encouraged to compete

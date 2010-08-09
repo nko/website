@@ -1,20 +1,27 @@
 %h2.ribbon
   Teams
-%p
-  - if (ctx.yourTeams.length === 1)
-    Your team:
-    %a{ href: '/teams/' + ctx.yourTeams[0].id() }= ctx.yourTeams[0].name
-  - if (ctx.yourTeams.length > 1)
-    Your teams:
-    - each team in ctx.yourTeams
-      %a{ href: '/teams/' + team.id() }= team.name
+- if ('yourTeams' in ctx)
+  %p
+    - if (ctx.yourTeams.length === 1)
+      Your team:
+      %a{ href: '/teams/' + ctx.yourTeams[0].id() }= ctx.yourTeams[0].name
+    - if (ctx.yourTeams.length > 1)
+      Your teams:
+      - each team in ctx.yourTeams
+        %a{ href: '/teams/' + team.id() }= team.name
 %h3
-  All Teams
-  = ' (' + ctx.teams.length + ')'
+  - if (!('joyentTotal' in ctx))
+    All Teams
+    = ' (' + ctx.teams.length + ')'
+  - if ('joyentTotal' in ctx)
+    Attending Teams
+    = ' (' + ctx.teams.length + ' teams, '+ ctx.joyentTotal + ' people)'
 %ol
   - each team in ctx.teams
     %li
       %a{ href: '/teams/' + team.id() }= team.name
-- if (ctx.teams.length < 200)
+      - if ('joyentTotal' in ctx)
+        = ' (' + team.joyent_count + ')'
+- if (ctx.teams.length < 200 && !('joyentTotal' in ctx))
   %p
     %a.button{ href: '/teams/new' } Register Now!

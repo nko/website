@@ -66,6 +66,13 @@ class Team
         @members.push member
         member.inviteTo this, ->
           fn() if --threads is 0
+
+_.extend Team, {
+  joyentTotal: (teams) ->
+    _.reduce _.pluck(teams, 'joyent_count'), 0, (memo, num) ->
+      memo + (parseInt(num) || 0)
+}
+
 nko.Team = Team
 
 class Person

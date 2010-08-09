@@ -324,6 +324,9 @@ aside#pullout #sponsors img {
 #attending_form h3 span {
   display: none;
   font-size: small;}
+#attending_form h3 span.joyent_full {
+  display: inline;
+  color: hsl(359, 100%, 33%);}
 
 .body.teams-new ol, .body.teams-edit ol {
   list-style-type: none;
