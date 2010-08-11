@@ -3,6 +3,7 @@
   %head
     %title node.js knockout
     %meta{ charset: 'utf-8' }
+    %meta{ 'http-equiv': "X-UA-Compatible", content: "IE=EmulateIE7" }
     %link{ rel: 'stylesheet', type: 'text/css', href: '/stylesheets/application.css' }
     :javascript
       var _gaq = _gaq || [];
@@ -13,6 +14,10 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
+    <!--[if lt IE 9]>
+      %script{ src: "http://html5shiv.googlecode.com/svn/trunk/html5.js" }
+      %link{ rel: 'stylesheet', type: 'text/css', href: '/stylesheets/ie.css' }
+    <![endif]-->
   %body
     #content
       #page
