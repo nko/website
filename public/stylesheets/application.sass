@@ -1,9 +1,9 @@
 // http://kuler.adobe.com/#themeID/337112
-!black = #142229
-!light_green = #BBDB70
-!light_blue = #7e9699
-!white = #F6FFEF
-!red = #A80003
+$black: #142229
+$light_green: #BBDB70
+$light_blue: #7e9699
+$white: #F6FFEF
+$red: #A80003
 
 pre
   :width 70ex
@@ -15,13 +15,13 @@ body
   :margin 0
   :text-align center
   :min-height 800px
-  :background-color !black
+  :background-color $black
   :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.3)), to(transparent))
   :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 100%, 0.3), transparent)
   :text-rendering optimizelegibility
 
 a:link, a:visited
-  :color !light_blue
+  :color $light_blue
 a img
   :border none
 
@@ -50,7 +50,7 @@ input[type=password], input[type=email], input[type=text]
 input.error
   :-webkit-box-shadow 0px 0px 10px hsla(359, 100%, 33%, 0.8)
   :-moz-box-shadow 0px 0px 10px hsla(359, 100%, 33%, 0.8)
-  :border-color !red
+  :border-color $red
 
 .ribbon, .localtime
   :display inline-block
@@ -58,18 +58,18 @@ input.error
   :border solid 1px hsla(0, 0%, 0%, 0.1)
   :margin-left -25px
   :padding 5px 25px
-  :color !white
+  :color $white
   :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
   :-webkit-box-shadow 0px 2px 5px hsla(0, 0%, 0%, 0.1)
   :-moz-box-shadow 0px 2px 5px hsla(0, 0%, 0%, 0.1)
 .blue
-  :background-color !light_blue
+  :background-color $light_blue
   :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.2)), to(hsla(0, 0%, 100%, 0.0)))
   :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 100%, 0.2), hsla(0, 0%, 100%, 0))
   :border-color hsla(0, 0%, 0%, 0.15)
   :color #ccc
   a
-    :color !white
+    :color $white
     :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
     :text-decoration none
     &:hover
@@ -88,12 +88,12 @@ form#delete
 #page
   :width 70ex
   :text-align left
-  :background !white url('/images/noise.png')
+  :background $white url('/images/noise.png')
   :border solid 1px hsla(0, 0%, 0%, 0.5)
   :padding 1em 20px
   :-webkit-box-shadow 1px 1px 10px hsla(0, 0%, 0%, 0.2)
   :-moz-box-shadow 1px 1px 10px hsla(0, 0%, 0%, 0.2)
-  :color !black
+  :color $black
   :text-shadow 0px 1px 0px hsla(0, 0%, 100%, 0.9)
   header h1#logo
     :text-align center
@@ -164,19 +164,19 @@ form#delete
       :margin-top 0.5ex
   ul#errors
     li
-      :color !red
+      :color $red
       :font-weight bold
       :line-height 150%
   time
     :position relative
     :overflow visible
-    :border-bottom 1px dotted !black
+    :border-bottom 1px dotted $black
     .localtime
       :position absolute
       :top -4em
       :right 0px
       :white-space nowrap
-      :color !white
+      :color $white
       div
         :font-size small
   p, .body ul
@@ -189,12 +189,12 @@ form#delete
     :padding 15px
     :font-size x-large
     :font-weight bold
-    :color !red
+    :color $red
   .button
     &.large
       :padding 15px
       :font-size x-large
-      :background-color !red
+      :background-color $red
       :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.5)), to(hsla(0, 0%, 100%, 0)))
       :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 100%, 0.5), hsla(0, 0%, 100%, 0))
       :border-color hsla(0, 0%, 0%, 0.15)
@@ -208,9 +208,9 @@ form#delete
     :text-decoration none
     :-webkit-box-shadow 1px 1px 5px hsla(0, 0%, 0%, 0.1)
     :-moz-box-shadow 1px 1px 5px hsla(0, 0%, 0%, 0.1)
-    :background-color !light_blue
-    :border solid 1px !light_blue
-    :color !white
+    :background-color $light_blue
+    :border solid 1px $light_blue
+    :color $white
     :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
     :-webkit-border-radius 3px
     :-moz-border-radius 3px
@@ -224,7 +224,7 @@ form#delete
       :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.2)), to(hsla(0, 0%, 100%, 0.3)))
       :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 100%, 0.2), hsla(0, 0%, 100%, 0.3))
   .left
-    :color !red
+    :color $red
   .hidden
     :display none
   footer
@@ -333,7 +333,7 @@ aside#pullout
       :font-size small
     span.joyent_full
       :display inline
-      :color !red
+      :color $red
 
 .body.teams-new ol, .body.teams-edit ol
   :list-style-type none
