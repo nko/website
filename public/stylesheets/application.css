@@ -7,7 +7,7 @@ body {
   padding: 0;
   margin: 0;
   text-align: center;
-  min-height: 800px;
+  min-height: 100%;
   background-color: #142229;
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.3)), to(transparent));
   background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.3), transparent);
@@ -262,8 +262,7 @@ aside#pullout {
       color: #999999 !important;
       font-size: small; }
   aside#pullout #sponsors {
-    position: absolute;
-    top: 142px; }
+    margin-top: 4em; }
     aside#pullout #sponsors a {
       color: #a7c7cb !important; }
     aside#pullout #sponsors h2 .container {
