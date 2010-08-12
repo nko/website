@@ -37,24 +37,9 @@
     .note
       During the contest, code must be pushed to
       %a{ href: 'http://github.com' } GitHub
-      to help us proctor.
+      to help us proctor. We'll set everything up, but need your GitHub
+      username to do it.
   %input{ type: 'text', name: 'github', id: 'github', value: ctx.person.github }
-  
-  %h2 Deployment
-  %p
-    Entries can be deployed to either
-    %a{ href: 'http://www.joyent.com/?utm_source=web&utm_medium=sponsorship&utm_campaign=nodeknockout' } Joyent
-    or
-    != ' <a href="http://heroku.com">Heroku</a>. '
-    Both services have donated virtual servers to be used by contestants during
-    the competition. If you already have accounts, please provide your
-    usernames to facilitate setup later.
-  %h3
-    %label{ for: 'joyent' } Joyent username
-  %input{ type: 'text', name: 'joyent', id: 'joyent', value: ctx.person.joyent }
-  %h3
-    %label{ for: 'heroku' } Heroku username
-  %input{ type: 'text', name: 'heroku', id: 'heroku', value: ctx.person.heroku }
   
   %p
     %input.button{ type: 'submit', value: 'Save' }
