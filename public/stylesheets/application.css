@@ -8,9 +8,9 @@ body {
   margin: 0;
   text-align: center;
   min-height: 100%;
-  background-color: #142229;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.3)), to(transparent));
-  background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.3), transparent);
+  background-color: #25404d;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(128, 128, 128, 0.5)), to(rgba(0, 0, 0, 0.8)));
+  background-image: -moz-linear-gradient(-90deg, rgba(128, 128, 128, 0.5), rgba(0, 0, 0, 0.8));
   text-rendering: optimizelegibility; }
 
 a:link, a:visited {
