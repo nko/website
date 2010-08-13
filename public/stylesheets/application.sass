@@ -87,6 +87,39 @@ input.error
     :margin 1ex
     :color hsla(0, 0%, 0%, 0.15)
 
+.button
+  &.important
+    :background-color $red
+    +gradient(hsla(0, 0%, 100%, 0.5), hsla(0, 0%, 100%, 0))
+    :border-color hsla(0, 0%, 0%, 0.15)
+    &:hover
+      +shadow(0px, 0px, 8px, hsla(359, 100%, 50%, 0.6))
+  &.disabled
+    :text-decoration line-through
+    :background-color #ccc
+    :color #999 !important
+    :text-shadow 0px -1px 0px hsla(0, 0%, 100%, 0.5)
+    :background-image none
+    &:hover
+      :background-image none
+  :display inline-block
+  :margin-bottom 0.5ex
+  :font-size large
+  :padding 5px 10px
+  :text-decoration none
+  +shadow(1px, 1px, 5px)
+  :background-color $light_blue
+  :border solid 1px hsla(0, 0%, 0%, 0.1)
+  :color $white !important
+  :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
+  +rounded
+  +gradient(hsla(0, 0%, 100%, 0.35), hsla(0, 0%, 100%, 0))
+  :-webkit-transition -webkit-box-shadow 150ms linear
+  &:hover
+    +shadow(0px, 0px, 5px, hsla(0, 0%, 0%, 0.5))
+  &:active
+    +gradient(hsla(0, 0%, 100%, 0.2), hsla(0, 0%, 100%, 0.3))
+
 .more_info
   :font-size small
   :color hsla(0, 0%, 0%, 0.4)
@@ -166,32 +199,6 @@ form#delete
     :font-size x-large
     :font-weight bold
     :color $red
-  .button
-    &.large
-      :padding 15px
-      :font-size x-large
-      :background-color $red
-      +gradient(hsla(0, 0%, 100%, 0.5), hsla(0, 0%, 100%, 0))
-      :border-color hsla(0, 0%, 0%, 0.15)
-      &:hover
-        +shadow(0px, 0px, 8px, hsla(359, 100%, 50%, 0.6))
-    :display inline-block
-    :margin-bottom 0.5ex
-    :font-size large
-    :padding 2px 10px
-    :text-decoration none
-    +shadow(1px, 1px, 5px)
-    :background-color $light_blue
-    :border solid 1px $light_blue
-    :color $white
-    :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
-    +rounded
-    +gradient(hsla(0, 0%, 100%, 0.35), hsla(0, 0%, 100%, 0))
-    :-webkit-transition -webkit-box-shadow 150ms linear
-    &:hover
-      +shadow(0px, 0px, 5px, hsla(0, 0%, 0%, 0.5))
-    &:active
-      +gradient(hsla(0, 0%, 100%, 0.2), hsla(0, 0%, 100%, 0.3))
   .hidden
     :display none
   footer
@@ -207,7 +214,7 @@ aside#pullout
   :font-size small
   :padding-left 10px
   a
-    :color #a7c7cb !important
+    :color #a7c7cb
   #current_person
     :display table
     :border-spacing 10px
@@ -221,7 +228,9 @@ aside#pullout
     :-webkit-box-reflect below 2px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.6, transparent), to(hsla(0, 0%, 100%, 0.6)))
     .vr
       :color hsla(0, 0%, 0%, 0.1)
-      :margin 1ex
+      :margin 0px 0.5ex
+    .button
+      :margin-left 1ex
     img, .info
       :display table-cell
       :vertical-align middle
@@ -234,8 +243,17 @@ aside#pullout
     a[href$=logout]
       :color #999 !important
       :font-size small
+  .spots_left
+    :color $white
+    :margin-top 0.5em
+    .help
+      :line-height 125%
+      :font-size x-small
+      :color #999
+      p
+        :margin 0.5em 0px
   #sponsors
-    :margin-top 4em
+    :margin-top 3em
     a
       :color #a7c7cb !important
     h2 .container

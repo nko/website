@@ -1,33 +1,3 @@
-%h2.ribbon What
-%p
-  %br
-  We
-  %span.heart &hearts;
-  != ' <a href="http://nodejs.org">node.js</a>. '
-  We
-  %span.heart &hearts;
-  != ' <a href="http://railsrumble.com">Rails Rumble</a>. '
-  Combining the two, we got:
-  != ' <strong>Node.js Knockout &mdash; a 48-hour node.js coding contest</strong>. '
-  Only
-  %strong 222
-  team spots are available. Don&rsquo;t procrastinate.
-- if (ctx.spotsLeft > 0)
-  %p.footnote
-    %a.large.button{ href: '/teams/new' }
-      Register now!
-    %br
-    Before it&rsquo;s too late:
-    %strong.left= ctx.spotsLeft
-    spots left.
-- if (ctx.spotsLeft <= 0)
-  %p.footnote
-    %span.large Sorry, Knockout&rsquo;s full!
-    %br
-    You can still
-    %a{ href: 'http://twitter.com/?status=Shoot.+%40node_knockout+is+full.+Any+teams+have+space%3F' } request to join a team
-    or
-    != ' <a href="mailto:all@nodeknockout.com?subject=Interested in Judging Node.js Knockout">be a judge</a>.'
 %h2.ribbon When
 %h3#date
   August 28 &ndash; 29, 2010
@@ -39,7 +9,7 @@
   != ' <time datetime="2010-08-30T00:00:00Z">Monday, August 30, 0:00am GMT</time>. '
 %h2.ribbon How
 %p
-  The contest format will be similar to
+  The contest format is similar to
   != ' <a href="http://railsrumble.com">Rails Rumble</a>:'
 %ul
   %li Build any web project you can imagine;
@@ -48,10 +18,11 @@
   %li Using node.js and whatever else you want;
 %p
   To amaze and delight your audience and expert judges, and to earn prizes
-  and glory! More details are coming soon about rules, judging, and prizes.
+  and glory! Check out the
+  != ' <a href="/rules">full rules</a>.'
 %h2.ribbon Where
 %p
-  Contestants may compete &lsquo;virtually&rsquo; from anywhere in the world, but
+  Contestants may compete &ldquo;virtually&rdquo; from anywhere in the world, but
   %a{ href: 'http://www.joyent.com/?utm_source=web&utm_medium=sponsorship&utm_campaign=nodeknockout' } Joyent
   will be hosting
   %a{ href: "http://nodeknockout.posterous.com/get-ready-for-the-nodejs-knockout-at-joyents"} Knockout HQ
@@ -59,7 +30,7 @@
 %p
   There are also
   %a{ href: '/locations' } a handful of other locations
-  where people who choose to can compete in-person.
+  where people can optionally compete in person.
 %p
   All code must be stored on
   != ' <a href="http://github.com">GitHub</a>, '
@@ -81,11 +52,19 @@
   %a{ href: 'http://wargamez.mape.me/' } look
   %a{ href: 'http://www.lazeroids.com/' } like
   traditional websites.
+%h2.ribbon What
+%p
+  We
+  %span.heart &hearts;
+  != ' <a href="http://nodejs.org">node.js</a>. '
+  We
+  %span.heart &hearts;
+  != ' <a href="http://railsrumble.com">Rails Rumble</a>. '
+  Combining the two, we got:
+  != ' <strong>Node.js Knockout &mdash; a 48-hour node.js coding contest</strong>. '
 %h2.ribbon How can I help?
 %p
-  For now, spread the word.
-  != ' <a href="/teams/new">Recruit your friends for a team</a>. '
-  Start thinking of ideas.
+  Spread the word. Start thinking of ideas.
 %p
   If you're interested in sponsoring, judging, or helping out in some
   other way, definitely
