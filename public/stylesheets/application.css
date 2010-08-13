@@ -141,32 +141,10 @@ form#delete {
     min-height: 550px; }
   #page h2, #page h3 {
     margin-bottom: 0px; }
-  #page .heart {
-    color: #da6a6c; }
-  #page #date {
-    text-align: center;
-    font-size: x-large;
-    font-weight: normal; }
-    #page #date .about {
-      font-size: small;
-      line-height: 150%;
-      margin-top: 0.5ex; }
   #page ul#errors li {
     color: #a80003;
     font-weight: bold;
     line-height: 150%; }
-  #page time {
-    position: relative;
-    overflow: visible;
-    border-bottom: 1px dotted #142229; }
-    #page time .localtime {
-      position: absolute;
-      top: -4em;
-      right: 0px;
-      white-space: nowrap;
-      color: #f6ffef; }
-      #page time .localtime div {
-        font-size: small; }
   #page p, #page .body ul {
     line-height: 150%; }
   #page p.footnote {
@@ -211,8 +189,6 @@ form#delete {
     #page .button:active {
       background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.2)), to(rgba(255, 255, 255, 0.3)));
       background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3)); }
-  #page .left {
-    color: #a80003; }
   #page .hidden {
     display: none; }
   #page footer {
@@ -322,6 +298,31 @@ aside#pullout {
       display: inline;
       color: #a80003; }
 
+.body.index .heart {
+  color: #da6a6c; }
+.body.index #date {
+  text-align: center;
+  font-size: x-large;
+  font-weight: normal; }
+  .body.index #date .about {
+    font-size: small;
+    line-height: 150%;
+    margin-top: 0.5ex; }
+.body.index time {
+  position: relative;
+  overflow: visible;
+  border-bottom: 1px dotted #142229; }
+  .body.index time .localtime {
+    position: absolute;
+    top: -4em;
+    right: 0px;
+    white-space: nowrap;
+    color: #f6ffef; }
+    .body.index time .localtime div {
+      font-size: small; }
+.body.index .left {
+  color: #a80003; }
+
 .body.teams-new ol, .body.teams-edit ol {
   list-style-type: none;
   padding-left: 0px;
@@ -365,14 +366,19 @@ aside#pullout {
 .body.judging p.description {
   margin-left: 0px; }
 
-#map .iframe {
-  margin: auto;
-  width: 560px;
-  height: 500px; }
-
-.map {
+.body.locations #map iframe, .body.locations .map {
+  padding: 5px;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
+.body.locations h3 {
+  clear: left;
+  padding-top: 1em; }
+.body.locations .map {
   float: left;
-  margin-right: 5px; }
+  margin-right: 10px;
+  width: 180px;
+  height: 140px; }
 
 .clear {
   clear: both; }
