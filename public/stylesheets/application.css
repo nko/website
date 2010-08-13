@@ -119,7 +119,6 @@ form#delete {
       margin: 1ex;
       color: rgba(100, 100, 100, 0.3); }
     #page nav a.twitter .say {
-      display: none;
       font-size: x-small;
       position: absolute;
       top: -60px;
