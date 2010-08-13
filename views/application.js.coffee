@@ -108,7 +108,17 @@ $ ->
   if $('time').length > 0
     [y, m, d, h, i, s] = $('time').attr('datetime').split(/[-:TZ]/)...
     ms = Date.UTC y, m-1, d, h, i, s
-    $('#date .about').html(prettyDate(new Date(ms)))
+    countdown = $('#date .about')
+    tick = ->
+      diff = (ms - new Date().getTime()) / 1000
+      weeks = Math.floor diff / 604800
+      days = Math.floor diff % 604800 / 86400
+      hours = Math.floor diff % 86400 / 3600
+      minutes = Math.floor diff % 3600 / 60
+      secs = Math.floor diff % 60
+      countdown.html weeks + ' weeks ' + days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
+      setTimeout tick, 1000
+    tick()
 
   $('time').hover ->
     $this = $(this)
@@ -118,7 +128,6 @@ $ ->
     $('<div class="localtime blue">')
       .html("
         #{dt.strftime('%a %b %d, %I%P %Z').replace(/\b0/,'')}
-        <div>#{prettyDate(dt)}</div>
         ")
       .appendTo($this)
   , ->

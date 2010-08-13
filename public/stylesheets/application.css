@@ -323,7 +323,6 @@ aside#pullout {
   font-weight: normal; }
   .body.index #date .about {
     font-size: small;
-    line-height: 150%;
     margin-top: 0.5ex; }
 .body.index time {
   position: relative;
@@ -332,8 +331,8 @@ aside#pullout {
   .body.index time .localtime {
     text-align: center;
     position: absolute;
-    top: -4em;
-    right: 0px;
+    top: -2.5em;
+    left: 5ex;
     white-space: nowrap;
     color: #f6ffef;
     background-color: rgba(126, 151, 154, 0.95);
