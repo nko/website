@@ -11,17 +11,36 @@
         %a{ href: '/teams/' + team.id() }= team.name
 %h3
   - if (!('joyentTotal' in ctx))
-    All Teams
+    Verified Teams
     = ' (' + ctx.teams.length + ')'
   - if ('joyentTotal' in ctx)
     Attending Teams
     = ' (' + ctx.teams.length + ' teams, '+ ctx.joyentTotal + ' people)'
-%ol
+%ul.teams
   - each team in ctx.teams
     %li
       %a{ href: '/teams/' + team.id() }= team.name
       - if ('joyentTotal' in ctx)
         = ' (' + team.joyent_count + ')'
-- if (ctx.teams.length < 200 && !('joyentTotal' in ctx))
-  %p
-    %a.button{ href: '/teams/new' } Register Now!
+      %ul.members
+        - each member in team.members
+          - if (member.name !== '')
+            %li
+              - if (member.link)
+                %a{ href: member.link }= member.name
+              - if (!member.link)
+                = member.name
+        - if (team.invited.length > 0)
+          %li.invited
+            = pluralize(team.invited.length, 'outstanding invite')
+
+- if ('unverifiedTeams' in ctx)
+  %h3
+    Pending Teams
+    = ' (' + ctx.unverifiedTeams.length + ')'
+  %ul
+    - each team in ctx.unverifiedTeams
+      %li
+        %a{ href: '/teams/' + team.id() }= team.name
+        %span.invited
+          = pluralize(team.invited.length, ' oustanding invite')

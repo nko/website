@@ -46,6 +46,7 @@ class Team
     query = { _id: { $in: _.pluck @members, '_id' }}
     Person.all query, (error, members) =>
       @members = members
+      @invited = _.select @members, (m) -> m.name == ''
       fn()
 
   setMembers: (emails, fn) ->

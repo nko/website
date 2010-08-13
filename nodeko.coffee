@@ -110,7 +110,12 @@ get '/register', ->
 # list teams
 get '/teams', ->
   Team.all (error, teams) =>
-    @teams = teams
+    [@teams, @unverifiedTeams] = [[], []]
+    for team in teams
+      if team.members.length == team.invited.length
+        @unverifiedTeams.push team
+      else
+        @teams.push team
     @yourTeams = if @currentPerson?
       _.select teams, (team) =>
         # TODO this is gross
@@ -285,5 +290,13 @@ get '/*', ->
   catch e
     throw e if e.errno != 2
     @next()
+
+app.helpers {
+  pluralize: (n, str) ->
+    if n == 1
+      n + ' ' + str
+    else
+      n + ' ' + str + 's'
+}
 
 server = app.listen parseInt(process.env.PORT || 8000), null

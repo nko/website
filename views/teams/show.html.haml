@@ -6,8 +6,6 @@
     %a{ href: '/' } Node.js Knockout
     team profile for
     != ' <a href="/teams/' + ctx.team.id() + '">' + ctx.team.name + '</a>.'
-  %p
-    %a{ href: '/' } Find out more.
 
 - if (ctx.editAllowed)
   - if (ctx.currentPerson)
@@ -46,9 +44,7 @@
 
 - if (ctx.invites.length && !ctx.editAllowed)
   %p
-    = ctx.invites.length + ' '
-    outstanding
-    = ctx.invites.length === 1 ? ' invitation.' : ' invitations.'
+    = pluralize(ctx.invites.length, 'outstanding invitation')
 
 - if (ctx.editAllowed)
   %form{ method: 'POST', action: '/teams/' + ctx.team.id() }#delete

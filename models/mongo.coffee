@@ -76,8 +76,12 @@ _.extend Mongo,
           return fn error if error?
           cursor.toArray (error, array) ->
             return fn error if error?
-            # TODO call beforeInstantiate on these?
-            fn null, Serializer.unpack array
+            teams = []
+            for team in array
+              Mongo.instantiate team, (error, unpacked) =>
+                return fn error if error?
+                teams.push unpacked
+                fn null, teams  if teams.length == array.length
 
   InstanceMethods:
     collection: (fn) ->
