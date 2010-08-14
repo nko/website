@@ -50,15 +50,16 @@ $ ->
         invalid.blur()
         hasError = true
 
-    highlightError 'input.email', 'Invalid email address',->
+    highlightError 'input.email', 'Invalid email address', ->
       val = $(this).val()
       val and not /^[a-zA-Z0-9+._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test val
 
     highlightError 'input[name=name]', 'Name is required', -> !$(this).val()
+    highlightError 'input#github', 'GitHub username is required', -> !$(this).val()
     highlightError 'input.email:first', 'Email is required', -> !$(this).val()
     highlightError 'input[type=password]:visible', 'Password required', -> !$(this).val()
     highlightError 'input.url', 'Invalid link', ->
-      val: $(this).val()
+      val = $(this).val()
       val and val isnt @defaultValue and not /^https?:\/\/.*\./.test val
 
     unless hasError
