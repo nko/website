@@ -116,7 +116,7 @@ $ ->
       hours = Math.floor diff % 86400 / 3600
       minutes = Math.floor diff % 3600 / 60
       secs = Math.floor diff % 60
-      countdown.html weeks + ' weeks ' + days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
+      countdown.html weeks + ' week ' + days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
       setTimeout tick, 1000
     tick()
 
