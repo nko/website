@@ -22,57 +22,59 @@ request = (type) ->
   (path, fn) ->
     app[type] path, (req, res, next) =>
       Person.firstByAuthKey req.cookies.authkey, (error, person) =>
-        ctx = {
-          sys: sys
-          req: req
-          res: res
-          next: next
-          redirect: __bind(res.redirect, res),
-          cookie: (key, value, options) ->
-            value ||= ''
-            options ||= {}
-            cookie = "#{key}=#{value}"
-            for k, v of options
-              cookie += "; #{k}=#{v}"
-            res.header('Set-Cookie', cookie)
-          render: (file, opts) ->
-            opts ||= {}
-            opts.locals ||= {}
-            opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
-            opts.locals.ctx = ctx
-            res.render file, opts
-          currentPerson: person
-          setCurrentPerson: (person, options) ->
-            @cookie 'authKey', person?.authKey(), options
-          redirectToTeam: (person, alternatePath) ->
-            Team.first { 'members._id': person._id }, (error, team) =>
-              if team?
-                @redirect '/teams/' + team.id()
+        Team.count (error, teamCount) =>
+          ctx = {
+            sys: sys
+            req: req
+            res: res
+            next: next
+            redirect: __bind(res.redirect, res),
+            cookie: (key, value, options) ->
+              value ||= ''
+              options ||= {}
+              cookie = "#{key}=#{value}"
+              for k, v of options
+                cookie += "; #{k}=#{v}"
+              res.header('Set-Cookie', cookie)
+            render: (file, opts) ->
+              opts ||= {}
+              opts.locals ||= {}
+              opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
+              opts.locals.ctx = ctx
+              res.render file, opts
+            currentPerson: person
+            teamsLeft: 222 - teamCount
+            setCurrentPerson: (person, options) ->
+              @cookie 'authKey', person?.authKey(), options
+            redirectToTeam: (person, alternatePath) ->
+              Team.first { 'members._id': person._id }, (error, team) =>
+                if team?
+                  @redirect '/teams/' + team.id()
+                else
+                  @redirect (alternatePath or '/')
+            redirectToLogin: ->
+              @redirect "/login?return_to=#{@req.url}"
+            logout: (fn) ->
+              @currentPerson.logout (error, resp) =>
+                @setCurrentPerson null
+                fn()
+            canEditTeam: (team) ->
+              req.cookies.teamauthkey is team.authKey() or
+                team.hasMember(@currentPerson)
+            ensurePermitted: (other, fn) ->
+              permitted = if other.hasMember?
+                @canEditTeam other
               else
-                @redirect (alternatePath or '/')
-          redirectToLogin: ->
-            @redirect "/login?return_to=#{@req.url}"
-          logout: (fn) ->
-            @currentPerson.logout (error, resp) =>
-              @setCurrentPerson null
-              fn()
-          canEditTeam: (team) ->
-            req.cookies.teamauthkey is team.authKey() or
-              team.hasMember(@currentPerson)
-          ensurePermitted: (other, fn) ->
-            permitted = if other.hasMember?
-              @canEditTeam other
-            else
-              @currentPerson? and (other.id() is @currentPerson.id())
-            if permitted then fn()
-            else
-              unless @currentPerson?
-                @redirectToLogin()
+                @currentPerson? and (other.id() is @currentPerson.id())
+              if permitted then fn()
               else
-                # TODO flash "Oops! You don't have permissions to see that. Try logging in as somebody else."
-                @logout =>
-                  @redirectToLogin()}
-        __bind(fn, ctx)()
+                unless @currentPerson?
+                  @redirectToLogin()
+                else
+                  # TODO flash "Oops! You don't have permissions to see that. Try logging in as somebody else."
+                  @logout =>
+                    @redirectToLogin()}
+          __bind(fn, ctx)()
 get = request 'get'
 post = request 'post'
 put = request 'put'
@@ -86,9 +88,7 @@ get /.*/, ->
     @next()
 
 get '/', ->
-  Team.all (error, teams) =>
-    @spotsLeft = 222 - teams.length
-    @render 'index.html.haml'
+  @render 'index.html.haml'
 
 get '/*.js', ->
   try
@@ -97,15 +97,14 @@ get '/*.js', ->
     @next()
 
 get '/register', ->
-  Team.all (error, teams) =>
-    altPath = if teams.length >= 222
-      "/login?return_to=#{@req.url}"
-    else
-      'teams/new'
-    if @currentPerson?
-      @redirectToTeam @currentPerson, '/teams/new'
-    else
-      @redirect altPath
+  altPath = if @teamsLeft <= 0
+    "/login?return_to=#{@req.url}"
+  else
+    'teams/new'
+  if @currentPerson?
+    @redirectToTeam @currentPerson, '/teams/new'
+  else
+    @redirect altPath
 
 # list teams
 get '/teams', ->
@@ -133,10 +132,10 @@ get '/teams/attending', ->
 
 # new team
 get '/teams/new', ->
-  Team.all (error, teams) =>
-    if teams.length >= 222
-      @redirect '/'
-    else
+  if @teamsLeft <= 0
+    @redirect '/'
+  else
+    Team.all (error, teams) =>
       @joyentTotal = Team.joyentTotal teams
       @team = new Team {}, =>
         @render 'teams/new.html.haml'
@@ -155,9 +154,9 @@ post '/teams', ->
 
 # show team
 get '/teams/:id', ->
-  Team.all (error, teams) =>
-    Team.first @req.param('id'), (error, team) =>
-      if team?
+  Team.first @req.param('id'), (error, team) =>
+    if team?
+      Team.all (error, teams) =>
         @joyentTotal = Team.joyentTotal teams
         @team = team
         people = team.members or []
@@ -165,14 +164,14 @@ get '/teams/:id', ->
         @invites = _.without people, @members...
         @editAllowed = @canEditTeam team
         @render 'teams/show.html.haml'
-      else
-        # TODO make this a 404
-        @redirect '/'
+    else
+      # TODO make this a 404
+      @redirect '/'
 
 # edit team
 get '/teams/:id/edit', ->
-  Team.all (error, teams) =>
-    Team.first @req.param('id'), (error, team) =>
+  Team.first @req.param('id'), (error, team) =>
+    Team.all (error, teams) =>
       @ensurePermitted team, =>
         @joyentTotal = Team.joyentTotal teams
         @team = team

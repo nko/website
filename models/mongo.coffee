@@ -53,6 +53,11 @@ _.extend Mongo,
       fn null, unpacked
 
   ClassMethods:
+    count: (query, fn) ->
+      @prototype.collection (error, collection) ->
+        return fn error if error?
+        collection.count query, fn
+
     firstOrCreate: (query, fn) ->
       @first query, (error, item) =>
         return fn error if error?

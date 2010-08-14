@@ -64,10 +64,10 @@
         #current_person
           - if (!ctx.currentPerson)
             %a{ href: '/login?return_to=' + ctx.req.url } Sign in
-            - if (ctx.spotsLeft > 0)
+            - if (ctx.teamsLeft > 0)
               %a.button.important{ href: '/teams/new' }
                 Register
-            - if (ctx.spotsLeft <= 0)
+            - if (ctx.teamsLeft <= 0)
               %a.button.disabled{ href: '/teams/new' }
                 Register
           - if (ctx.currentPerson)
@@ -78,11 +78,12 @@
               %br
               %a{ href: '/logout' } Sign out
         .spots_left
-          - if (ctx.spotsLeft > 0)
-            %strong.left= ctx.spotsLeft
-            = ctx.spotsLeft === 1 ? 'spot ' : 'spots '
-            left
-          - if (ctx.spotsLeft <= 0)
+          - if (ctx.teamsLeft > 0)
+            %a{ href: '/teams/new' }
+              %strong.left= ctx.teamsLeft
+              = ctx.teamsLeft === 1 ? 'spot ' : 'spots '
+              left
+          - if (ctx.teamsLeft <= 0)
             Knockout&rsquo;s full.
             .help
               %p
