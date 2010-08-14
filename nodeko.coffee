@@ -285,6 +285,7 @@ put '/people/:id', ->
       delete attributes.password
 
       attributes.link = '' unless /^https?:\/\/.+\./.test attributes.link
+      person.github ||= ''
       person.update attributes
       person.save (error, resp) =>
         @redirectToTeam person
