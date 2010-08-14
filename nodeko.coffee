@@ -90,6 +90,12 @@ get /.*/, ->
 get '/', ->
   @render 'index.html.haml'
 
+get '/me', ->
+  if @currentPerson?
+    @redirect "/people/#{@currentPerson.id()}/edit"
+  else
+    @redirectToLogin()
+
 get '/*.js', ->
   try
     @render "#{@req.params[0]}.js.coffee", { layout: false }
