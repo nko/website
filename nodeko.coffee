@@ -16,9 +16,14 @@ app.use connect.bodyDecoder()
 app.use connect.methodOverride()
 app.use connect.cookieDecoder()
 
+Hoptoad = require('./lib/hoptoad-notifier/lib/hoptoad-notifier').Hoptoad
+Hoptoad.key = 'b76b10945d476da44a0eac6bfe1aeabd'
+process.on 'uncaughtException', (e) ->
+  Hoptoad.notify e
+
 request = (type) ->
   (path, fn) ->
-    app[type] path, (req, res, next) =>
+    app[type] path, (req, res, next) ->
       Person.firstByAuthKey req.cookies.authkey, (error, person) =>
         Team.count (error, teamCount) =>
           ctx = {
@@ -71,7 +76,11 @@ request = (type) ->
                   # TODO flash "Oops! You don't have permissions to see that. Try logging in as somebody else."
                   @logout =>
                     @redirectToLogin()}
-          __bind(fn, ctx)()
+          try
+            __bind(fn, ctx)()
+          catch e
+            Hoptoad.notify e
+            next e
 get = request 'get'
 post = request 'post'
 put = request 'put'
@@ -323,12 +332,7 @@ app.helpers {
       n + ' ' + str + 's'
 }
 
-Hoptoad = require('./lib/hoptoad-notifier/lib/hoptoad-notifier').Hoptoad;
-Hoptoad.key = 'b76b10945d476da44a0eac6bfe1aeabdk';
-app.error (err, req, res, next) ->
-  Hoptoad.notify(err);
-  next(err)
-
-app.use('/', connect.errorHandler({ dumpExceptions: true, showStack: true }));
+# has to be last
+app.use '/', express.errorHandler({ dumpExceptions: true, showStack: true })
 
 server = app.listen parseInt(process.env.PORT || 8000), null

@@ -151,8 +151,10 @@
     %script{ src: '/javascripts/underscore.min.js', type: 'text/javascript' }
     %script{ src: '/javascripts/strftime.js', type: 'text/javascript' }
     %script{ src: '/application.js', type: 'text/javascript' }
+    %script{ src: 'http://hoptoadapp.com/javascripts/notifier.js', type: 'text/javascript'}
     :javascript
       $(function() {
+        Hoptoad.setKey('b76b10945d476da44a0eac6bfe1aeabd');
         $('a').mousedown(function() {
           var href = this.href;
           try {
