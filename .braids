@@ -22,10 +22,10 @@ lib/socket.io/lib/vendor/js-oo:
   remote: braid/lib/socket.io/lib/vendor/js-oo
 lib/connect: 
   squashed: true
-  branch: master
   url: http://github.com/senchalabs/connect.git
+  branch: master
   type: git
-  revision: fadf5db5d3ae782ec0ee7c0bee2876433cceb68e
+  revision: f4a4c42282089dda665c4c28622a15772b0257fe
   remote: braid/lib/connect
 lib/express/lib/support/ext: 
   squashed: true
@@ -34,6 +34,13 @@ lib/express/lib/support/ext:
   type: git
   revision: 282c20ccb6a6f1ade55a98ce24bf8b68a508b0f6
   remote: braid/lib/express/lib/support/ext
+lib/hoptoad-notifier: 
+  squashed: true
+  url: git://github.com/tristandunn/node-hoptoad-notifier.git
+  branch: master
+  type: git
+  revision: efb5fe4ad8632b3a3de4dbf3a4f9b3d672074c31
+  remote: braid/lib/hoptoad-notifier
 lib/nodeunit: 
   squashed: true
   branch: master
@@ -57,10 +64,10 @@ lib/express/lib/support/multipart:
   remote: braid/lib/express/lib/support/multipart
 lib/express: 
   squashed: true
-  url: git://github.com/visionmedia/express.git
   branch: master
+  url: git://github.com/visionmedia/express.git
   type: git
-  revision: 82b6ff0c284a10894f5d87f5670430d799b14801
+  revision: 77e5d8ea96920f44ab909a0d585e5e27755639ee
   remote: braid/lib/express
 lib/express/lib/support/haml: 
   squashed: true

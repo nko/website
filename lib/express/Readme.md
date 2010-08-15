@@ -39,7 +39,9 @@ git clone, first update the submodules:
   * Environment based configuration
   * Session based flash notifications
   * Built on [Connect](http://github.com/senchalabs/connect)
+  * High test coverage
   * Executable for generating applications quickly
+  * Application level view options
 
 Via Connect:
 
@@ -75,7 +77,7 @@ The following are the major contributors of Express (in no specific order).
     
 The latest release of Express is compatible with node --version:
 
-    v0.1.100
+    v0.1.102
     
 ## License 
 
