@@ -92,6 +92,9 @@ class Person
 
     @calculateHashes()
 
+  admin: ->
+    @confirmed and (@email =~ /\@nodeknockout\.com$/ or @email == 'gerads@gmail.com')
+
   resetPassword: (fn) ->
     @password = @randomPassword()
     @new_password = true

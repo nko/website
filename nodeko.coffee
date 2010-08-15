@@ -62,10 +62,9 @@ request = (type) ->
               req.cookies.teamauthkey is team.authKey() or
                 team.hasMember(@currentPerson)
             ensurePermitted: (other, fn) ->
-              permitted = if other.hasMember?
-                @canEditTeam other
-              else
-                @currentPerson? and (other.id() is @currentPerson.id())
+              permitted = (@currentPerson? and @currentPerson.admin() or
+                other.hasMember? and @canEditTeam(other) or
+                !other.hasMember? and @currentPerson? and other.id() is @currentPerson.id())
               if permitted then fn()
               else
                 unless @currentPerson?

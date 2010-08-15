@@ -92,7 +92,7 @@ _.extend Mongo,
     collection: (fn) ->
       Mongo.db.collection @serializer.name, fn
 
-    id: -> @_id.toHexString()
+    id: -> @_id?.toHexString()
 
     save: (fn) ->
       errors = @validate() if @validate?
