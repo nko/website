@@ -1,0 +1,26 @@
+{ "name"         : "hoptoad-notifier",
+  "version"      : "0.1.0",
+  "description"  : "Reports application exceptions to Hoptoad",
+  "homepage"     : "http://github.com/tristandunn/node-hoptoad-notifier",
+  "author"       : "Tristan Dunn <hello@tristandunn.com>",
+  "contributors" : [
+    "Alex Wolfe <alexkwolfe@gmail.com>"
+  ],
+  "repository" : {
+    "type" : "git",
+    "url"  : "http://github.com/tristandunn/node-hoptoad-notifier.git"
+  },
+  "bugs" : {
+    "web"  : "http://github.com/tristandunn/node-hoptoad-notifier/issues",
+    "mail" : "hello@tristandunn.com"
+  },
+  "main"         : "./lib/hoptoad-notifier",
+  "engines"      : { "node" : ">=0.1.101" },
+  "scripts"      : { "test" : "test/node.js" },
+  "dependencies" : {},
+  "licenses" : [
+    { "type" : "MIT",
+      "url"  : "http://github.com/tristandunn/node-hoptoad-notifier"
+    }
+  ]
+}

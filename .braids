@@ -34,6 +34,13 @@ lib/express/lib/support/ext:
   type: git
   revision: 282c20ccb6a6f1ade55a98ce24bf8b68a508b0f6
   remote: braid/lib/express/lib/support/ext
+lib/hoptoad-notifier: 
+  squashed: true
+  url: git://github.com/tristandunn/node-hoptoad-notifier.git
+  branch: master
+  type: git
+  revision: efb5fe4ad8632b3a3de4dbf3a4f9b3d672074c31
+  remote: braid/lib/hoptoad-notifier
 lib/nodeunit: 
   squashed: true
   branch: master
