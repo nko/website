@@ -90,6 +90,11 @@ class Person
     @new_password = !options?.password?
     @confirmed = options?.confirmed or false
 
+    @type = options?.type # 'Judge', 'Voter', 'Participant'
+
+    @description = options?.description or ''
+    @signature = options?.signature or ''
+
     @calculateHashes()
 
   admin: ->

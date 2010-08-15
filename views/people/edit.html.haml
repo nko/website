@@ -8,35 +8,6 @@
 
 %form{ method: 'POST', action: '/people/' + ctx.person.id() }
   %input{ type: 'hidden', name: '_method', value: 'put' }
-  %h3
-    %label{ for: 'name' } Name / Handle
-  %input{ type: 'text', name: 'name', id: 'name', value: ctx.person.name, autofocus: true }
-  
-  %h3
-    %label{ for: 'github' } GitHub username
-    .note
-      During the contest, code must be pushed to
-      %a{ href: 'http://github.com' } GitHub
-      to help us proctor. We'll set everything up, but need your GitHub
-      username to do it.
-  %input{ type: 'text', name: 'github', id: 'github', value: ctx.person.github }
-  
-  %h3
-    %label{ for: 'email' } Email
-  .note We don&rsquo;t spam.  Only visible to team members.
-  %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.person.email }
-  
-  %h3
-    %label{ for: 'password' } Password
-  %a.reveal{ href: '#' } Click to change
-  .hidden
-    %input{ type: 'password', name: 'password', id: 'password' }
-  
-  %h2 Optional
-  %h3
-    %label{ for: 'link' } Link
-    .note Let other participants know who you are.
-  %input.url{ type: 'text', name: 'link', id: 'link', value: ctx.person.link || 'http://' }
-  
+  != partial('people/form.html.haml', { locals: { ctx: ctx } })
   %p
     %input.button{ type: 'submit', value: 'Save' }

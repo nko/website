@@ -1,0 +1,7 @@
+%h1.ribbon Add a Judge
+
+%form{ method: 'POST', action: '/people' }
+  %input{ type: 'hidden', name: 'type', value: 'Judge' }
+  != partial('people/form.html.haml', { locals: { ctx: ctx } })  
+  %p
+    %input.button{ type: 'submit', value: 'Create Judge' }

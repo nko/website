@@ -266,6 +266,20 @@ post '/reset_password', ->
       person.resetPassword =>
         @res.send 'OK', 200
 
+# new judge
+get '/judges/new', ->
+  @person = new Person({ type: 'Judge' })
+  @ensurePermitted @person, =>
+    @render 'judges/new.html.haml'
+
+# create person
+post '/people', ->
+  @person = new Person @req.body
+  @ensurePermitted @person, =>
+    @person.save (error, res) =>
+      # TODO send confirmation email
+      @redirect '/people/' + @person.id() + '/edit'
+
 # edit person
 get '/people/:id/edit', ->
   Person.first @req.param('id'), (error, person) =>

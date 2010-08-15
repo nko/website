@@ -1,0 +1,49 @@
+%h3
+  %label{ for: 'name' } Name
+%input{ type: 'text', name: 'name', id: 'name', value: ctx.person.name, autofocus: true }
+
+- if (!ctx.person.type || ctx.person.type === 'Participant')
+  %h3
+    %label{ for: 'github' } GitHub username
+    .note
+      During the contest, code must be pushed to
+      %a{ href: 'http://github.com' } GitHub
+      to help us proctor. We'll set everything up, but need your GitHub
+      username to do it.
+  %input{ type: 'text', name: 'github', id: 'github', value: ctx.person.github }
+
+%h3
+  %label{ for: 'email' } Email
+.note
+  We don&rsquo;t spam.
+  - if (!ctx.person.type || ctx.person.type === 'Participant')
+    Only visible to team members.
+  - if (!(!ctx.person.type || ctx.person.type === 'Participant'))
+    Only visible to you.
+%input.email{ type: 'text', name: 'email', id: 'email', value: ctx.person.email }
+
+- if (!ctx.person.password)
+  %h3
+    %label{ for: 'password' } Password
+  %a.reveal{ href: '#' } Click to change
+  .hidden
+    %input{ type: 'password', name: 'password', id: 'password' }
+
+%h2 Optional
+%h3
+  %label{ for: 'link' } Link
+  .note Let other people know who you are.
+%input.url{ type: 'text', name: 'link', id: 'link', value: ctx.person.link || 'http://' }
+
+- if (ctx.person.type === 'Judge')
+  %h3
+    %label{ for: 'signature' } Signature
+    .note A one-liner that is put after every comment.
+  %textarea{ name: 'signature', id: 'signature' }= ctx.person.signature
+  
+  %h3
+    %label{ for: 'link' } Description
+    .note
+      A bio for the
+      != ' <a href="/judging">judges page</a>.'
+  %textarea{ name: 'description', id: 'description', rows: 10 }= ctx.person.description
