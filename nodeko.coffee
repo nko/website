@@ -285,6 +285,10 @@ put '/people/:id', ->
       delete attributes.password
 
       attributes.link = '' unless /^https?:\/\/.+\./.test attributes.link
+
+      person.confimed = false if attributes.email? && attributes.email != person.email
+      delete attributes.confirmed
+
       person.github ||= ''
       person.update attributes
       person.save (error, resp) =>

@@ -85,11 +85,16 @@ class Person
     @github = options?.github or ''
     @heroku = options?.heroku or ''
     @joyent = options?.joyent or ''
+
     @password = options?.password or @randomPassword()
+    @new_password = !options?.password?
+    @confirmed = options?.confirmed or false
+
     @calculateHashes()
 
   resetPassword: (fn) ->
     @password = @randomPassword()
+    @new_password = true
     @calculateHashes()
     @save (error, res) =>
       # TODO get this into a view
@@ -181,6 +186,11 @@ _.extend Person, {
       return fn ['Unknown email'] unless person?
       return fn ['Invalid password'] unless person.passwordHash is md5 credentials.password
       person.token = Math.uuid()
+
+      person.confirmed ?= true # grandfather old people in
+      person.confirmed = true if person.new_password
+      person.new_password = false
+
       person.save (errors, resp) ->
         fn null, person
 
