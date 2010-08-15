@@ -16,8 +16,6 @@ app.use connect.bodyDecoder()
 app.use connect.methodOverride()
 app.use connect.cookieDecoder()
 
-app.enable 'show exceptions'
-
 request = (type) ->
   (path, fn) ->
     app[type] path, (req, res, next) =>
@@ -110,6 +108,9 @@ get '/register', ->
     @redirectToTeam @currentPerson, '/teams/new'
   else
     @redirect altPath
+
+get '/error', ->
+  throw new Error('Foo')
 
 # list teams
 get '/teams', ->
@@ -321,5 +322,13 @@ app.helpers {
     else
       n + ' ' + str + 's'
 }
+
+Hoptoad = require('./lib/hoptoad-notifier/lib/hoptoad-notifier').Hoptoad;
+Hoptoad.key = 'b76b10945d476da44a0eac6bfe1aeabdk';
+app.error (err, req, res, next) ->
+  Hoptoad.notify(err);
+  next(err)
+
+app.use('/', connect.errorHandler({ dumpExceptions: true, showStack: true }));
 
 server = app.listen parseInt(process.env.PORT || 8000), null
