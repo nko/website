@@ -25,63 +25,61 @@ request = (type) ->
   (path, fn) ->
     app[type] path, (req, res, next) ->
       Person.firstByAuthKey req.cookies.authkey, (error, person) =>
-        Team.count (error, teamCount) =>
-          ctx = {
-            sys: sys
-            req: req
-            res: res
-            next: next
-            redirect: __bind(res.redirect, res),
-            cookie: (key, value, options) ->
-              value ||= ''
-              options ||= {}
-              cookie = "#{key}=#{value}"
-              for k, v of options
-                cookie += "; #{k}=#{v}"
-              res.header('Set-Cookie', cookie)
-            render: (file, opts) ->
-              opts ||= {}
-              opts.locals ||= {}
-              opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
-              opts.locals.ctx = ctx
-              res.render file, opts
-            currentPerson: person
-            teamsLeft: 222 - teamCount
-            setCurrentPerson: (person, options) ->
-              @cookie 'authKey', person?.authKey(), options
-            redirectToTeam: (person, alternatePath) ->
-              Team.first { 'members._id': person._id }, (error, team) =>
-                if team?
-                  @redirect '/teams/' + team.id()
-                else
-                  @redirect (alternatePath or '/')
-            redirectToLogin: ->
-              @redirect "/login?return_to=#{@req.url}"
-            logout: (fn) ->
-              @currentPerson.logout (error, resp) =>
-                @setCurrentPerson null
-                fn()
-            canEditTeam: (team) ->
-              req.cookies.teamauthkey is team.authKey() or
-                team.hasMember(@currentPerson)
-            ensurePermitted: (other, fn) ->
-              permitted = (@currentPerson? and @currentPerson.admin() or
-                other.hasMember? and @canEditTeam(other) or
-                !other.hasMember? and @currentPerson? and other.id() is @currentPerson.id())
-              if permitted then fn()
+        ctx = {
+          sys: sys
+          req: req
+          res: res
+          next: next
+          redirect: __bind(res.redirect, res),
+          cookie: (key, value, options) ->
+            value ||= ''
+            options ||= {}
+            cookie = "#{key}=#{value}"
+            for k, v of options
+              cookie += "; #{k}=#{v}"
+            res.header('Set-Cookie', cookie)
+          render: (file, opts) ->
+            opts ||= {}
+            opts.locals ||= {}
+            opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
+            opts.locals.ctx = ctx
+            res.render file, opts
+          currentPerson: person
+          setCurrentPerson: (person, options) ->
+            @cookie 'authKey', person?.authKey(), options
+          redirectToTeam: (person, alternatePath) ->
+            Team.first { 'members._id': person._id }, (error, team) =>
+              if team?
+                @redirect '/teams/' + team.id()
               else
-                unless @currentPerson?
-                  @redirectToLogin()
-                else
-                  # TODO flash "Oops! You don't have permissions to see that. Try logging in as somebody else."
-                  @logout =>
-                    @redirectToLogin()}
-          try
-            __bind(fn, ctx)()
-          catch e
-            e.action = e.url = req.url
-            Hoptoad.notify e
-            next e
+                @redirect (alternatePath or '/')
+          redirectToLogin: ->
+            @redirect "/login?return_to=#{@req.url}"
+          logout: (fn) ->
+            @currentPerson.logout (error, resp) =>
+              @setCurrentPerson null
+              fn()
+          canEditTeam: (team) ->
+            req.cookies.teamauthkey is team.authKey() or
+              team.hasMember(@currentPerson)
+          ensurePermitted: (other, fn) ->
+            permitted = (@currentPerson? and @currentPerson.admin() or
+              other.hasMember? and @canEditTeam(other) or
+              !other.hasMember? and @currentPerson? and other.id() is @currentPerson.id())
+            if permitted then fn()
+            else
+              unless @currentPerson?
+                @redirectToLogin()
+              else
+                # TODO flash "Oops! You don't have permissions to see that. Try logging in as somebody else."
+                @logout =>
+                  @redirectToLogin()}
+        try
+          __bind(fn, ctx)()
+        catch e
+          e.action = e.url = req.url
+          Hoptoad.notify e
+          next e
 get = request 'get'
 post = request 'post'
 put = request 'put'
@@ -110,14 +108,10 @@ get '/*.js', ->
     @next()
 
 get '/register', ->
-  altPath = if @teamsLeft <= 0
-    "/login?return_to=#{@req.url}"
-  else
-    'teams/new'
   if @currentPerson?
-    @redirectToTeam @currentPerson, '/teams/new'
+    @redirectToTeam @currentPerson, '/'
   else
-    @redirect altPath
+    @redirect "/login?return_to=#{@req.url}"
 
 get '/error', ->
   throw new Error('Foo')
@@ -148,7 +142,7 @@ get '/teams/attending', ->
 
 # new team
 get '/teams/new', ->
-  if @teamsLeft <= 0
+  unless @currentPerson? and @currentPerson.admin()
     @redirect '/'
   else
     Team.all (error, teams) =>
@@ -158,15 +152,18 @@ get '/teams/new', ->
 
 # create team
 post '/teams', ->
-  @req.body.joyent_count = parseInt(@req.body.joyent_count) || 0
-  @team = new Team @req.body, =>
-    @team.save (errors, res) =>
-      if errors?
-        @errors = errors
-        @render 'teams/new.html.haml'
-      else
-        @cookie 'teamAuthKey', @team.authKey()
-        @redirect '/teams/' + @team.id()
+  unless @currentPerson? and @currentPerson.admin()
+    @redirect '/'
+  else
+    @req.body.joyent_count = parseInt(@req.body.joyent_count) || 0
+    @team = new Team @req.body, =>
+      @team.save (errors, res) =>
+        if errors?
+          @errors = errors
+          @render 'teams/new.html.haml'
+        else
+          @cookie 'teamAuthKey', @team.authKey()
+          @redirect '/teams/' + @team.id()
 
 # show team
 get '/teams/:id', ->

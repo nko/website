@@ -244,15 +244,19 @@ aside#pullout {
     aside#pullout #current_person a[href$=logout] {
       color: #999999 !important;
       font-size: small; }
+    aside#pullout #current_person #signin {
+      display: block;
+      text-align: center; }
   aside#pullout .spots_left {
     color: #f6ffef;
-    margin-top: 0.5em; }
-    aside#pullout .spots_left .help {
-      line-height: 125%;
-      font-size: x-small;
-      color: #999999; }
-      aside#pullout .spots_left .help p {
-        margin: 0.5em 0px; }
+    margin-top: 0.5em;
+    font-size: small;
+    text-align: center; }
+    aside#pullout .spots_left a {
+      color: #f6ffef;
+      text-decoration: none; }
+      aside#pullout .spots_left a:hover {
+        text-decoration: underline; }
   aside#pullout #sponsors {
     margin-top: 3em; }
     aside#pullout #sponsors a {

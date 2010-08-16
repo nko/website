@@ -246,15 +246,19 @@ aside#pullout
     a[href$=logout]
       :color #999 !important
       :font-size small
+    #signin
+      :display block
+      :text-align center
   .spots_left
     :color $white
     :margin-top 0.5em
-    .help
-      :line-height 125%
-      :font-size x-small
-      :color #999
-      p
-        :margin 0.5em 0px
+    :font-size small
+    :text-align center
+    a
+      :color $white
+      :text-decoration none
+      &:hover
+        :text-decoration underline
   #sponsors
     :margin-top 3em
     a

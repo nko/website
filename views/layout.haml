@@ -63,13 +63,9 @@
       %aside#pullout
         #current_person
           - if (!ctx.currentPerson)
-            %a{ href: '/login?return_to=' + ctx.req.url } Sign in
-            - if (ctx.teamsLeft > 0)
-              %a.button.important{ href: '/teams/new' }
-                Register
-            - if (ctx.teamsLeft <= 0)
-              %a.button.disabled{ href: '/teams/new' }
-                Register
+            %a#signin{ href: '/login?return_to=' + ctx.req.url } Sign in
+            .spots_left
+              != '(<a href="http://nodeknockout.posterous.com/registration-is-closed">registration is closed</a>)'
           - if (ctx.currentPerson)
             %a{ href: 'http://gravatar.com' }
               %img{ src: 'http://www.gravatar.com/avatar/' + ctx.currentPerson.emailHash + '?s=40&d=monsterid' }
@@ -77,25 +73,6 @@
               %a{ href: '/people/' + ctx.currentPerson.id() + '/edit' }= ctx.currentPerson.name || ctx.currentPerson.email
               %br
               %a{ href: '/logout' } Sign out
-        .spots_left
-          - if (ctx.teamsLeft > 0)
-            %a{ href: '/teams/new' }
-              %strong.left= ctx.teamsLeft
-              = ctx.teamsLeft === 1 ? 'spot ' : 'spots '
-              left
-          - if (ctx.teamsLeft <= 0)
-            Knockout&rsquo;s full.
-            .help
-              %p
-                %a{ href: 'http://twitter.com/?status=Shoot.+%40node_knockout+is+full.+Any+teams+have+space%3F' } Request to join a team
-                or
-                != ' <a href="mailto:all@nodeknockout.com?subject=Interested in Judging Node.js Knockout">Be a judge</a>'
-              %p
-                Spots may open up again if
-                %br
-                a team realizes it can&rsquo;t make it
-                %br
-                and unregisters.
         #sponsors
           %p.joyent
             %a{ href: 'http://www.joyent.com/?utm_source=web&utm_medium=sponsorship&utm_campaign=nodeknockout' }
