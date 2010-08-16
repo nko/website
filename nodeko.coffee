@@ -79,6 +79,7 @@ request = (type) ->
           try
             __bind(fn, ctx)()
           catch e
+            e.action = e.url = req.url
             Hoptoad.notify e
             next e
 get = request 'get'
