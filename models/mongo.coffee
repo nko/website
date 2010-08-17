@@ -53,31 +53,50 @@ _.extend Mongo,
       fn null, unpacked
 
   ClassMethods:
-    count: (query, fn) ->
+    count: (query, options, fn) ->
+      unless fn?
+        fn = options
+        options = {}
+      unless fn?
+        fn = query
+        query = null
       @prototype.collection (error, collection) ->
         return fn error if error?
-        collection.count query, fn
+        collection.count query, options, fn
 
-    firstOrCreate: (query, fn) ->
-      @first query, (error, item) =>
+    firstOrCreate: (query, options, fn) ->
+      unless fn?
+        fn = options
+        options = {}
+      @first query, options, (error, item) =>
         return fn error if error?
         return fn null, item if item?
         created = new @prototype.serializer.klass(query)
         fn null, created
 
-    first: (query, fn) ->
-      [query, fn] = [null, query] unless fn?
+    first: (query, options, fn) ->
+      unless fn?
+        fn = options
+        options = {}
+      unless fn?
+        fn = query
+        query = null
       @prototype.collection (error, collection) ->
         return fn error if error?
-        collection.findOne Mongo.queryify(query), (error, item) ->
+        collection.findOne Mongo.queryify(query), options, (error, item) ->
           return fn error if error?
           Mongo.instantiate item, fn
 
-    all: (query, fn) ->
-      [query, fn] = [null, query] unless fn?
+    all: (query, options, fn) ->
+      unless fn?
+        fn = options
+        options = {}
+      unless fn?
+        fn = query
+        query = null
       @prototype.collection (error, collection) ->
         return fn error if error?
-        collection.find Mongo.queryify(query), (error, cursor) ->
+        collection.find Mongo.queryify(query), options, (error, cursor) ->
           return fn error if error?
           cursor.toArray (error, array) ->
             return fn error if error?

@@ -281,7 +281,7 @@ get '/judges/new', ->
     @render 'judges/new.html.haml'
 
 get '/judges|/judging', ->
-  Person.all { type: 'Judge' }, (error, judges) =>
+  Person.all { type: 'Judge' }, {sort: [['name', 1]]}, (error, judges) =>
     @judges = judges
     @render 'judges/index.html.jade', { layout: 'layout.haml' }
 
