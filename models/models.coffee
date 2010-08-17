@@ -98,7 +98,7 @@ class Person
     @calculateHashes()
 
   admin: ->
-    @confirmed and (@email =~ /\@nodeknockout\.com$/ or @email == 'gerads@gmail.com')
+    @confirmed and (@email.search(/\@nodeknockout\.com$/) != -1 or @email == 'gerads@gmail.com')
 
   resetPassword: (fn) ->
     @password = @randomPassword()
