@@ -280,6 +280,11 @@ get '/judges/new', ->
   @ensurePermitted @person, =>
     @render 'judges/new.html.haml'
 
+get '/judges|/judging', ->
+  Person.all { type: 'Judge' }, (error, judges) =>
+    @judges = judges
+    @render 'judges/index.html.jade', { layout: 'layout.haml' }
+
 # create person
 post '/people', ->
   @person = new Person @req.body
@@ -322,12 +327,16 @@ get '/*', ->
     throw e if e.errno != 2
     @next()
 
+markdown = require 'markdown'
 app.helpers {
   pluralize: (n, str) ->
     if n == 1
       n + ' ' + str
     else
       n + ' ' + str + 's'
+
+  markdown: (s) ->
+    markdown.toHTML s
 }
 
 # has to be last

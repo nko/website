@@ -384,25 +384,24 @@ aside#pullout {
   margin-top: 1.5em;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2); }
 
-.body.judging img {
-  float: left;
-  margin-top: -1em;
-  margin-bottom: 2em;
-  padding: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-  width: 120px; }
-.body.judging h3 {
-  margin-left: 140px;
+.body.judging .judge, .body.judges-index .judge {
   clear: left; }
-  .body.judging h3 a {
-    font-weight: normal; }
-.body.judging p {
-  margin-left: 140px; }
-.body.judging p.description {
-  margin-left: 0px; }
+  .body.judging .judge img, .body.judges-index .judge img {
+    float: left;
+    margin-top: -1em;
+    margin-bottom: 2em;
+    padding: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    width: 120px; }
+  .body.judging .judge h3, .body.judges-index .judge h3 {
+    margin-left: 140px; }
+    .body.judging .judge h3 a, .body.judges-index .judge h3 a {
+      font-weight: normal; }
+  .body.judging .judge p, .body.judges-index .judge p {
+    margin-left: 140px; }
 
 .body.locations #map iframe, .body.locations .map {
   padding: 5px;

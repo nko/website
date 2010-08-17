@@ -134,7 +134,7 @@ $ ->
   , ->
     $(this).find('.localtime').remove()
 
-  $('.body.judging img').each ->
+  $('.judge img').each ->
     r = 'rotate(' + new String(Math.random()*6-3) + 'deg)'
     $(this)
       .css('-webkit-transform', r)
