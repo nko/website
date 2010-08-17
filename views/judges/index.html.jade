@@ -15,5 +15,8 @@ h2.ribbon Judges
         - if (judge.signature)
           |  &mdash;
           != judge.signature
+        - if (ctx.currentPerson && ctx.currentPerson.admin())
+          | 
+          a( href: '/people/' + judge.id() + '/edit' ) Edit
       img( src: '/images/judges/' + judge.name.replace(/\W+/g, '_') + '.jpg' )
       != judge.description
