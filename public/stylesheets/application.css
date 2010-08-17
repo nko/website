@@ -248,12 +248,12 @@ aside#pullout {
       display: block;
       text-align: center; }
   aside#pullout .spots_left {
-    color: #f6ffef;
+    color: #999999;
     margin-top: 0.5em;
     font-size: small;
     text-align: center; }
     aside#pullout .spots_left a {
-      color: #f6ffef;
+      color: #999999;
       text-decoration: none; }
       aside#pullout .spots_left a:hover {
         text-decoration: underline; }
