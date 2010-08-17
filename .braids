@@ -62,6 +62,13 @@ lib/express/support/jade:
   squashed: true
   type: git
   url: git://github.com/visionmedia/jade.git
+lib/express/support/jade/support/markdown: 
+  branch: master
+  remote: braid/lib/express/support/jade/support/markdown
+  revision: 805b0a69e1b357dcf2c4d54486dbcd7d6ac3d427
+  squashed: true
+  type: git
+  url: http://github.com/evilstreak/markdown-js.git
 lib/hoptoad-notifier: 
   branch: master
   remote: braid/lib/hoptoad-notifier
