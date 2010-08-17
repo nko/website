@@ -22,12 +22,11 @@
     Only visible to you.
 %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.person.email }
 
-- if (!ctx.person.password)
-  %h3
-    %label{ for: 'password' } Password
-  %a.reveal{ href: '#' } Click to change
-  .hidden
-    %input{ type: 'password', name: 'password', id: 'password' }
+%h3
+  %label{ for: 'password' } Password
+%a.reveal{ href: '#' } Click to change
+.hidden
+  %input{ type: 'password', name: 'password', id: 'password' }
 
 %h2 Optional
 %h3
