@@ -312,8 +312,8 @@ put '/people/:id', ->
 
       attributes.link = '' unless /^https?:\/\/.+\./.test attributes.link
 
-      person.confimed = false if attributes.email? && attributes.email != person.email
-      delete attributes.confirmed
+      if attributes.email? && attributes.email != person.email
+        person.confirmed = attributes.confimed = false
 
       person.github ||= ''
       person.update attributes
