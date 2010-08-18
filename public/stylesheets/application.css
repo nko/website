@@ -269,6 +269,8 @@ aside#pullout {
     aside#pullout #sponsors p.heroku {
       margin-bottom: 16px; }
     aside#pullout #sponsors p.github {
+      margin-bottom: 18px; }
+    aside#pullout #sponsors p.palm {
       margin-bottom: 0px; }
     aside#pullout #sponsors p.sencha {
       margin-bottom: 10px; }
