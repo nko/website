@@ -190,7 +190,7 @@ class Person
 
 _.extend Person, {
   login: (credentials, fn) ->
-    @first { email: credentials.email }, (error, person) ->
+    @first { email: /^#{credentials.email}$/i }, (error, person) ->
       return fn ['Unknown email'] unless person?
       return fn ['Invalid password'] unless person.passwordHash is md5 credentials.password
       person.token = Math.uuid()
