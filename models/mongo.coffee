@@ -17,6 +17,7 @@ class Mongo
     else @db.open -> # no callback
 
   parseUrl: (urlString)->
+    sys.log "Connecting to MongoDB at #{urlString}"
     uri = url.parse urlString
     @host = uri.hostname
     @port = parseInt(uri.port)
