@@ -237,7 +237,7 @@ get '/teams/:teamId/invite/:personId', ->
 
 # new vote
 get '/votes/new', ->
-  @vote = new Vote()
+  # @vote = new Vote()
   @render 'votes/new.html.jade', { layout: 'layout.haml' }
 
 # create vote
