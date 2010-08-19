@@ -366,7 +366,8 @@ aside#pullout {
 .body.teams-new ol, .body.teams-edit ol {
   list-style-type: none;
   padding-left: 0px;
-  margin-left: 0px; }
+  margin-left: 0px;
+  margin-top: 0px; }
 
 .body.teams-new input[type=checkbox], .body.teams-edit input[type=checkbox], .body.teams-show input[type=checkbox] {
   font-size: x-large; }
