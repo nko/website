@@ -213,6 +213,28 @@ _.extend Person, {
 
 nko.Person = Person
 
+class Vote
+  constructor: (options) ->
+    @person = options?.person
+    @team = options?.team
+
+    @usefulness = options?.usefulness
+    @appearance = options?.appearance
+    @innovation = options?.innovation
+    @completeness = options?.completeness
+
+    @comment = options?.comment
+
+    @ip_address = options?.ip_address
+    @user_agent = options?.user_agent
+    @referer = option?.referer
+
+    @requestAt = options?.requestAt
+    @renderAt = options?.renderAt
+    @responseAt = options?.responseAt
+
+    @createdAt = @updatedAt = new Date()
+
 Mongo.blessAll nko
 
 _.extend exports, nko
