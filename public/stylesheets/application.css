@@ -424,6 +424,9 @@ aside#pullout {
     cursor: pointer; }
     .body.votes-new .stars .star .filled {
       display: none; }
+.body.votes-new .email {
+  font-size: small;
+  width: 34em; }
 
 .clear {
   clear: both; }
