@@ -50,7 +50,7 @@ request = (type) ->
           redirectToTeam: (person, alternatePath) ->
             Team.first { 'members._id': person._id }, (error, team) =>
               if team?
-                @redirect '/teams/' + team.id()
+                @redirect '/teams/' + team.toParam()
               else
                 @redirect (alternatePath or '/')
           redirectToLogin: ->
@@ -98,7 +98,7 @@ get '/', ->
 
 get '/me', ->
   if @currentPerson?
-    @redirect "/people/#{@currentPerson.id()}/edit"
+    @redirect "/people/#{@currentPerson.toParam()}/edit"
   else
     @redirectToLogin()
 
@@ -164,7 +164,7 @@ post '/teams', ->
           @render 'teams/new.html.haml'
         else
           @cookie 'teamAuthKey', @team.authKey()
-          @redirect '/teams/' + @team.id()
+          @redirect '/teams/' + @team.toParam()
 
 # show team
 get '/teams/:id', ->
@@ -211,7 +211,7 @@ put '/teams/:id', ->
             if @req.xhr
               @res.send 'OK', 200
             else
-              @redirect '/teams/' + team.id()
+              @redirect '/teams/' + team.toParam()
       # TODO shouldn't need this
       if @req.body.emails
         team.setMembers @req.body.emails, save
@@ -234,7 +234,7 @@ get '/teams/:teamId/invite/:personId', ->
             @res.send 'OK', 200
           else
             # TODO flash "Sent a new invitation to $@person.email"
-            @redirect '/teams/' + team.id()
+            @redirect '/teams/' + team.toParam()
 
 # sign in
 get '/login', ->
@@ -254,7 +254,7 @@ post '/login', ->
           @redirect returnTo
         else @redirectToTeam person
       else
-        @redirect '/people/' + person.id() + '/edit'
+        @redirect '/people/' + person.toParam() + '/edit'
     else
       @errors = error
       @person = new Person(@req.body)
@@ -292,7 +292,7 @@ post '/people', ->
   @ensurePermitted @person, =>
     @person.save (error, res) =>
       # TODO send confirmation email
-      @redirect '/people/' + @person.id() + '/edit'
+      @redirect '/people/' + @person.toParam() + '/edit'
 
 # edit person
 get '/people/:id/edit', ->
