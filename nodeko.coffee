@@ -167,7 +167,7 @@ post '/teams', ->
 
 # show team
 get '/teams/:id', ->
-  Team.first @req.param('id'), (error, team) =>
+  Team.fromParam @req.param('id'), (error, team) =>
     if team?
       Team.all (error, teams) =>
         @joyentTotal = Team.joyentTotal teams
@@ -183,7 +183,7 @@ get '/teams/:id', ->
 
 # edit team
 get '/teams/:id/edit', ->
-  Team.first @req.param('id'), (error, team) =>
+  Team.fromParam @req.param('id'), (error, team) =>
     Team.all (error, teams) =>
       @ensurePermitted team, =>
         @joyentTotal = Team.joyentTotal teams
@@ -192,7 +192,7 @@ get '/teams/:id/edit', ->
 
 # update team
 put '/teams/:id', ->
-  Team.first @req.param('id'), (error, team) =>
+  Team.fromParam @req.param('id'), (error, team) =>
     @ensurePermitted team, =>
       team.joyent_count ||= 0
       @req.body.joyent_count = parseInt(@req.body.joyent_count) || 0
@@ -218,16 +218,16 @@ put '/teams/:id', ->
 
 # delete team
 del '/teams/:id', ->
-  Team.first @req.param('id'), (error, team) =>
+  Team.fromParam @req.param('id'), (error, team) =>
     @ensurePermitted team, =>
       team.remove (error, result) =>
         @redirect '/'
 
 # resend invitation
 get '/teams/:teamId/invite/:personId', ->
-  Team.first @req.param('teamId'), (error, team) =>
+  Team.fromParam @req.param('teamId'), (error, team) =>
     @ensurePermitted team, =>
-      Person.first @req.param('personId'), (error, person) =>
+      Person.fromParam @req.param('personId'), (error, person) =>
         person.inviteTo team, =>
           if @req.xhr
             @res.send 'OK', 200
@@ -295,14 +295,14 @@ post '/people', ->
 
 # edit person
 get '/people/:id/edit', ->
-  Person.first @req.param('id'), (error, person) =>
+  Person.fromParam @req.param('id'), (error, person) =>
     @ensurePermitted person, =>
       @person = person
       @render 'people/edit.html.haml'
 
 # update person
 put '/people/:id', ->
-  Person.first @req.param('id'), (error, person) =>
+  Person.fromParam @req.param('id'), (error, person) =>
     @ensurePermitted person, =>
       attributes = @req.body
 

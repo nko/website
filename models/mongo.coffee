@@ -87,6 +87,8 @@ _.extend Mongo,
           return fn error if error?
           Mongo.instantiate item, fn
 
+    fromParam: (id, options, fn) -> @first(id, options, fn)
+
     all: (query, options, fn) ->
       unless fn?
         fn = options
