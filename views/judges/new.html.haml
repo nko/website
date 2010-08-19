@@ -1,5 +1,7 @@
 %h1.ribbon Add a Judge
 
+!= partial("errors.html.haml", { locals: { ctx: ctx } })
+
 %form{ method: 'POST', action: '/people' }
   %input{ type: 'hidden', name: 'type', value: 'Judge' }
   != partial('people/form.html.haml', { locals: { ctx: ctx } })  
