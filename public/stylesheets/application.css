@@ -279,7 +279,9 @@ aside#pullout {
     aside#pullout #sponsors p.oasis_digital {
       margin-bottom: 24px; }
     aside#pullout #sponsors p.envato {
-      margin-bottom: 22px; }
+      margin-bottom: 24px; }
+    aside#pullout #sponsors p.yahoo {
+      margin-bottom: 18px; }
     aside#pullout #sponsors p.couchdb {
       margin-bottom: 10px; }
     aside#pullout #sponsors p.mongodb {
