@@ -36,11 +36,12 @@ class Team
     errors.concat _.compact _.flatten [member.validate() for member in @members]
 
   beforeSave: (fn) ->
-    threads = @members.length
-    return fn() unless threads
-    for member in @members
-      member.save (error, res) ->
-        fn() if --threads is 0
+    @generateSlug =>
+      threads = @members.length
+      return fn() unless threads
+      for member in @members
+        member.save (error, res) ->
+          fn() if --threads is 0
 
   beforeInstantiate: (fn) ->
     query = { _id: { $in: _.pluck @members, '_id' }}
@@ -67,6 +68,14 @@ class Team
         @members.push member
         member.inviteTo this, ->
           fn() if --threads is 0
+
+  generateSlug: (fn, attempt) ->
+    @slug = attempt || @name.toLowerCase().replace(/\W+/g, '-')
+    Team.fromParam @slug, (error, existing) =>
+      if !existing? or existing.id() == @id()
+        fn()  # no conflicts
+      else
+        @generateSlug fn, @slug + '-'  # try with another -
 
 _.extend Team, {
   joyentTotal: (teams) ->
@@ -214,5 +223,10 @@ _.extend Person, {
 nko.Person = Person
 
 Mongo.blessAll nko
+
+Team.prototype.toParam = -> @slug
+
+Team.fromParam = (id, options, fn) ->
+  @first { slug: id }, options, fn
 
 _.extend exports, nko
