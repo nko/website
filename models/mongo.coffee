@@ -172,6 +172,7 @@ class Serializer
     for k, v of data when k isnt 'serializer'
       unpacked[k] = Serializer.unpack v
     unpacked
+exports.Serializer = Serializer
 
 _.extend Serializer, {
   instances: {}

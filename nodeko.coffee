@@ -3,7 +3,7 @@ connect = require 'connect'
 express = require 'express'
 
 models = require './models/models'
-[Team, Person] = [models.Team, models.Person]
+[Team, Person, Vote] = [models.Team, models.Person, models.Vote]
 
 pub = __dirname + '/public';
 app = express.createServer(
@@ -237,7 +237,23 @@ get '/teams/:teamId/invite/:personId', ->
 
 # new vote
 get '/votes/new', ->
+  @vote = new Vote()
   @render 'votes/new.html.jade', { layout: 'layout.haml' }
+
+# create vote
+post '/votes', ->
+  @vote = new Vote @req.body
+  @vote.save (errors, res) =>
+    if errors?
+      @errors = errors
+      @render 'votes/new.html.haml'
+    else
+      @redirect '/votes.json'
+
+Serializer = require('./models/mongo').Serializer
+get '/votes.json', ->
+  Vote.all {}, {sort: [['modifiedAt', 1]]}, (error, votes) =>
+    @res.send JSON.stringify Serializer.pack(votes)
 
 # sign in
 get '/login', ->

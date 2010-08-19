@@ -1,4 +1,7 @@
 h1.ribbon Cast Your Vote
+
+!= partial("errors.html.haml", { locals: { ctx: ctx } })
+
 form( method: 'POST', action: '/votes' )
   table
     - each dimension in ['Usefulness', 'Appearance', 'Innovation', 'Completeness']
