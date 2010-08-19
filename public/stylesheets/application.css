@@ -180,6 +180,16 @@ form#delete {
       height: 28px; }
   #page .body {
     min-height: 550px; }
+    #page .body h1 {
+      display: inline-block;
+      background-color: rgba(187, 219, 112, 0.8);
+      border: solid 1px rgba(0, 0, 0, 0.1);
+      margin-left: -25px;
+      padding: 5px 25px;
+      color: #f6ffef;
+      text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.15);
+      -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); }
   #page h2, #page h3 {
     margin-bottom: 0px; }
   #page ul#errors li {

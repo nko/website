@@ -1,5 +1,4 @@
-%h2.ribbon
-  Teams
+%h1 Teams
 - if ('yourTeams' in ctx)
   %p
     - if (ctx.yourTeams.length === 1)
@@ -9,7 +8,7 @@
       Your teams:
       - each team in ctx.yourTeams
         %a{ href: '/teams/' + team.toParam() }= team.name
-%h3
+%h2
   - if (!('joyentTotal' in ctx))
     Verified Teams
     = ' (' + ctx.teams.length + ')'
@@ -35,7 +34,7 @@
             = pluralize(team.invited.length, 'outstanding invite')
 
 - if ('unverifiedTeams' in ctx)
-  %h3
+  %h2
     Pending Teams
     = ' (' + ctx.unverifiedTeams.length + ')'
   %ul
