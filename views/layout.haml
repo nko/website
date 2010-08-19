@@ -70,7 +70,7 @@
             %a{ href: 'http://gravatar.com' }
               %img{ src: 'http://www.gravatar.com/avatar/' + ctx.currentPerson.emailHash + '?s=40&d=monsterid' }
             .info
-              %a{ href: '/people/' + ctx.currentPerson.id() + '/edit' }= ctx.currentPerson.name || ctx.currentPerson.email
+              %a{ href: '/people/' + ctx.currentPerson.toParam() + '/edit' }= ctx.currentPerson.name || ctx.currentPerson.email
               %br
               %a{ href: '/logout' } Sign out
         - if (!ctx.currentPerson)
@@ -101,6 +101,9 @@
           %p.envato
             %a{ href: 'http://envato.com' }
               %img{ src: '/images/sponsors/envato.png' }
+          %p.yahoo
+            %a{ href: 'http://developer.yahoo.com' }
+              %img{ src: '/images/sponsors/yahoo.png' }
           %p.couchdb
             %a{ href: 'http://www.couch.io' }
               %img{ src: '/images/sponsors/couchdb.png' }

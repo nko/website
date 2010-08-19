@@ -17,6 +17,7 @@ class Mongo
     else @db.open -> # no callback
 
   parseUrl: (urlString)->
+    sys.log "Connecting to MongoDB at #{urlString}"
     uri = url.parse urlString
     @host = uri.hostname
     @port = parseInt(uri.port)
@@ -87,6 +88,8 @@ _.extend Mongo,
           return fn error if error?
           Mongo.instantiate item, fn
 
+    fromParam: (id, options, fn) -> @first(id, options, fn)
+
     all: (query, options, fn) ->
       unless fn?
         fn = options
@@ -112,6 +115,8 @@ _.extend Mongo,
       Mongo.db.collection @serializer.name, fn
 
     id: -> @_id?.toHexString()
+
+    toParam: -> @id()
 
     save: (fn) ->
       errors = @validate() if @validate?
