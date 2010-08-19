@@ -61,7 +61,8 @@ request = (type) ->
               fn()
           canEditTeam: (team) ->
             req.cookies.teamauthkey is team.authKey() or
-              team.hasMember(@currentPerson)
+              team.hasMember(@currentPerson) or
+              (@currentPerson? and @currentPerson.admin())
           ensurePermitted: (other, fn) ->
             permitted = (@currentPerson? and @currentPerson.admin() or
               other.hasMember? and @canEditTeam(other) or
