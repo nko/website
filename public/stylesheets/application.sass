@@ -148,8 +148,8 @@ form#delete
     :font-size medium
     :padding 12px 0px 10px
     :background-color rgba(126, 150, 153, 0.15)
-    :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 0%, 0.1)), color-stop(0.15, transparent))
-    :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.1), transparent 10%)
+    :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 0%, 0.07)), color-stop(0.15, transparent))
+    :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.07), transparent 10%)
     +shadow(0px, 2px, 3px)
     +rounded
     ul
@@ -184,6 +184,8 @@ form#delete
         :height 28px
   .body
     :min-height 550px
+    h1
+      +ribbon
   h2, h3
     :margin-bottom 0px
   ul#errors
@@ -283,7 +285,9 @@ aside#pullout
     p.oasis_digital
       :margin-bottom 24px
     p.envato
-      :margin-bottom 22px
+      :margin-bottom 24px
+    p.yahoo
+      :margin-bottom 18px
     p.couchdb
       :margin-bottom 10px
     p.mongodb
@@ -358,6 +362,7 @@ aside#pullout
     :list-style-type none
     :padding-left 0px
     :margin-left 0px
+    :margin-top 0px
 .body.teams-new, .body.teams-edit, .body.teams-show
   input[type=checkbox]
     :font-size x-large

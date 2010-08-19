@@ -50,7 +50,7 @@ request = (type) ->
           redirectToTeam: (person, alternatePath) ->
             Team.first { 'members._id': person._id }, (error, team) =>
               if team?
-                @redirect '/teams/' + team.id()
+                @redirect '/teams/' + team.toParam()
               else
                 @redirect (alternatePath or '/')
           redirectToLogin: ->
@@ -61,7 +61,8 @@ request = (type) ->
               fn()
           canEditTeam: (team) ->
             req.cookies.teamauthkey is team.authKey() or
-              team.hasMember(@currentPerson)
+              team.hasMember(@currentPerson) or
+              (@currentPerson? and @currentPerson.admin())
           ensurePermitted: (other, fn) ->
             permitted = (@currentPerson? and @currentPerson.admin() or
               other.hasMember? and @canEditTeam(other) or
@@ -97,7 +98,7 @@ get '/', ->
 
 get '/me', ->
   if @currentPerson?
-    @redirect "/people/#{@currentPerson.id()}/edit"
+    @redirect "/people/#{@currentPerson.toParam()}/edit"
   else
     @redirectToLogin()
 
@@ -163,11 +164,11 @@ post '/teams', ->
           @render 'teams/new.html.haml'
         else
           @cookie 'teamAuthKey', @team.authKey()
-          @redirect '/teams/' + @team.id()
+          @redirect '/teams/' + @team.toParam()
 
 # show team
 get '/teams/:id', ->
-  Team.first @req.param('id'), (error, team) =>
+  Team.fromParam @req.param('id'), (error, team) =>
     if team?
       Team.all (error, teams) =>
         @joyentTotal = Team.joyentTotal teams
@@ -183,7 +184,7 @@ get '/teams/:id', ->
 
 # edit team
 get '/teams/:id/edit', ->
-  Team.first @req.param('id'), (error, team) =>
+  Team.fromParam @req.param('id'), (error, team) =>
     Team.all (error, teams) =>
       @ensurePermitted team, =>
         @joyentTotal = Team.joyentTotal teams
@@ -192,7 +193,7 @@ get '/teams/:id/edit', ->
 
 # update team
 put '/teams/:id', ->
-  Team.first @req.param('id'), (error, team) =>
+  Team.fromParam @req.param('id'), (error, team) =>
     @ensurePermitted team, =>
       team.joyent_count ||= 0
       @req.body.joyent_count = parseInt(@req.body.joyent_count) || 0
@@ -210,7 +211,7 @@ put '/teams/:id', ->
             if @req.xhr
               @res.send 'OK', 200
             else
-              @redirect '/teams/' + team.id()
+              @redirect '/teams/' + team.toParam()
       # TODO shouldn't need this
       if @req.body.emails
         team.setMembers @req.body.emails, save
@@ -218,22 +219,22 @@ put '/teams/:id', ->
 
 # delete team
 del '/teams/:id', ->
-  Team.first @req.param('id'), (error, team) =>
+  Team.fromParam @req.param('id'), (error, team) =>
     @ensurePermitted team, =>
       team.remove (error, result) =>
         @redirect '/'
 
 # resend invitation
 get '/teams/:teamId/invite/:personId', ->
-  Team.first @req.param('teamId'), (error, team) =>
+  Team.fromParam @req.param('teamId'), (error, team) =>
     @ensurePermitted team, =>
-      Person.first @req.param('personId'), (error, person) =>
+      Person.fromParam @req.param('personId'), (error, person) =>
         person.inviteTo team, =>
           if @req.xhr
             @res.send 'OK', 200
           else
             # TODO flash "Sent a new invitation to $@person.email"
-            @redirect '/teams/' + team.id()
+            @redirect '/teams/' + team.toParam()
 
 # new vote
 get '/votes/new', ->
@@ -273,7 +274,7 @@ post '/login', ->
           @redirect returnTo
         else @redirectToTeam person
       else
-        @redirect '/people/' + person.id() + '/edit'
+        @redirect '/people/' + person.toParam() + '/edit'
     else
       @errors = error
       @person = new Person(@req.body)
@@ -311,18 +312,18 @@ post '/people', ->
   @ensurePermitted @person, =>
     @person.save (error, res) =>
       # TODO send confirmation email
-      @redirect '/people/' + @person.id() + '/edit'
+      @redirect '/people/' + @person.toParam() + '/edit'
 
 # edit person
 get '/people/:id/edit', ->
-  Person.first @req.param('id'), (error, person) =>
+  Person.fromParam @req.param('id'), (error, person) =>
     @ensurePermitted person, =>
       @person = person
       @render 'people/edit.html.haml'
 
 # update person
 put '/people/:id', ->
-  Person.first @req.param('id'), (error, person) =>
+  Person.fromParam @req.param('id'), (error, person) =>
     @ensurePermitted person, =>
       attributes = @req.body
 

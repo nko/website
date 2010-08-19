@@ -1,11 +1,11 @@
-%h1.ribbon= ctx.team.name
+%h1= ctx.team.name
 
 - if (!ctx.editAllowed)
   %p.note
     You&rsquo;re looking at the
     %a{ href: '/' } Node.js Knockout
     team profile for
-    != ' <a href="/teams/' + ctx.team.id() + '">' + ctx.team.name + '</a>.'
+    != ' <a href="/teams/' + ctx.team.toParam() + '">' + ctx.team.name + '</a>.'
 
 - if (ctx.editAllowed)
   - if (ctx.currentPerson)
@@ -14,7 +14,7 @@
   - if (!ctx.currentPerson)
     %p.note
       Nice work! Your team,
-      != ' <a href="/teams/' + ctx.team.id() + '">' + ctx.team.name + '</a>, '
+      != ' <a href="/teams/' + ctx.team.toParam() + '">' + ctx.team.name + '</a>, '
       is officially registered for Node.js Knockout.
     
     %p.note
@@ -33,21 +33,21 @@
           = member.name
         - if (ctx.currentPerson && member.id() === ctx.currentPerson.id())
           &nbsp;&ndash;
-          %a{ href: '/people/' + member.id() + '/edit' } that&rsquo;s you!
+          %a{ href: '/people/' + member.toParam() + '/edit' } that&rsquo;s you!
     - if (ctx.invites.length && ctx.editAllowed)
       - each invite in ctx.invites
         %li
           %a{ href: 'mailto:' + invite.email }= invite.email
           invited
           &nbsp;&ndash;&nbsp;
-          %a.resend{ href: '/teams/' + ctx.team.id() + '/invite/' + invite.id() } reinvite
+          %a.resend{ href: '/teams/' + ctx.team.toParam() + '/invite/' + invite.toParam() } reinvite
 
 - if (ctx.invites.length && !ctx.editAllowed)
   %p
     = pluralize(ctx.invites.length, 'outstanding invitation')
 
 - if (ctx.editAllowed)
-  %form{ method: 'POST', action: '/teams/' + ctx.team.id() }#delete
-    %a.button{ href: '/teams/' + ctx.team.id() + '/edit' } Edit
+  %form{ method: 'POST', action: '/teams/' + ctx.team.toParam() }#delete
+    %a.button{ href: '/teams/' + ctx.team.toParam() + '/edit' } Edit
     %input{ type: 'hidden', name: '_method', value: 'delete' }
-    %input.button{ type: 'submit', value: 'Delete' }
+    %input.button{ type: 'submit', value: 'Delete', onclick: "return confirm('Are you sure you want to delete this team?');" }

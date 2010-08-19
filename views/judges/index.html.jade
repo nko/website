@@ -50,8 +50,8 @@ h2#scoring.ribbon Judging & Scoring
   | 
   | Entries will be judged on a 1-5 scale across 4 dimensions:
   | 
-  | - **Usefulness** - How useful is the service provided?
-  | - **Appearance** - How good does it look?
+  | - **Usefulness** - How useful is the functionality provided?
+  | - **Design** - How good does it look and feel to use?
   | - **Innovation** - How original is the idea and execution?
   | - **Completeness** - How "fully baked" is the site? Are there bugs or dead ends?
   | 
@@ -64,7 +64,7 @@ h2#scoring.ribbon Judging & Scoring
   | public vote count.
   | 
   | The overall score will be the average of all 5 components
-  | (usefulness, appearance, innovation, completeness and popularity).
+  | (usefulness, design, innovation, completeness and popularity).
   | 
   | ### Prizes
   | 
@@ -73,7 +73,7 @@ h2#scoring.ribbon Judging & Scoring
   | - **Overall** - the best overall score
   | - **Solo** - the best overall score for a one-person team
   | - **Usefulness** - the highest usefulness score
-  | - **Appearance** - the highest appearance score
+  | - **Design** - the highest design score
   | - **Innovation** - the highest innovation score
   | - **Completeness** - the highest completeness score
   | - **Popularity** - the entry with the most public votes
@@ -120,6 +120,6 @@ h2#judges.ribbon Expert Judges
           != judge.signature
         - if (ctx.currentPerson && ctx.currentPerson.admin())
           | 
-          a( href: '/people/' + judge.id() + '/edit' ) Edit
+          a( href: '/people/' + judge.toParam() + '/edit' ) Edit
       img( src: '/images/judges/' + judge.name.replace(/\W+/g, '_') + '.jpg' )
       != judge.description

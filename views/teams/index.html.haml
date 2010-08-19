@@ -1,15 +1,14 @@
-%h2.ribbon
-  Teams
+%h1 Teams
 - if ('yourTeams' in ctx)
   %p
     - if (ctx.yourTeams.length === 1)
       Your team:
-      %a{ href: '/teams/' + ctx.yourTeams[0].id() }= ctx.yourTeams[0].name
+      %a{ href: '/teams/' + ctx.yourTeams[0].toParam() }= ctx.yourTeams[0].name
     - if (ctx.yourTeams.length > 1)
       Your teams:
       - each team in ctx.yourTeams
-        %a{ href: '/teams/' + team.id() }= team.name
-%h3
+        %a{ href: '/teams/' + team.toParam() }= team.name
+%h2
   - if (!('joyentTotal' in ctx))
     Verified Teams
     = ' (' + ctx.teams.length + ')'
@@ -19,7 +18,7 @@
 %ul.teams
   - each team in ctx.teams
     %li
-      %a{ href: '/teams/' + team.id() }= team.name
+      %a{ href: '/teams/' + team.toParam() }= team.name
       - if ('joyentTotal' in ctx)
         = ' (' + team.joyent_count + ')'
       %ul.members
@@ -35,12 +34,12 @@
             = pluralize(team.invited.length, 'outstanding invite')
 
 - if ('unverifiedTeams' in ctx)
-  %h3
+  %h2
     Pending Teams
     = ' (' + ctx.unverifiedTeams.length + ')'
   %ul
     - each team in ctx.unverifiedTeams
       %li
-        %a{ href: '/teams/' + team.id() }= team.name
+        %a{ href: '/teams/' + team.toParam() }= team.name
         %span.invited
           = pluralize(team.invited.length, ' oustanding invite')

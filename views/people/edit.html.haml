@@ -1,4 +1,4 @@
-%h1.ribbon
+%h1
   - if (ctx.person.name)
     Edit Profile
   - if (!ctx.person.name)
@@ -6,7 +6,7 @@
 
 != partial("errors.html.haml", { locals: { ctx: ctx } })
 
-%form{ method: 'POST', action: '/people/' + ctx.person.id() }
+%form{ method: 'POST', action: '/people/' + ctx.person.toParam() }
   %input{ type: 'hidden', name: '_method', value: 'put' }
   != partial('people/form.html.haml', { locals: { ctx: ctx } })
   %p
