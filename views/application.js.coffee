@@ -140,13 +140,24 @@ $ ->
       .css('-webkit-transform', r)
       .css('-moz-transform', r)
 
-  highlightStars = (elem, score) ->
-    score ?= elem.attr('data-value')
-    elem.parent().children().each (i, star) ->
-      $star = $(star)
-      fill = $star.attr('data-value') <= score
-      $star.find('.filled').toggle(fill)
-      $star.find('.empty').toggle(!fill)
+  Stars = {
+    value: (elem) ->
+      elem.attr('data-value')
+    input: (elem) ->
+      elem.closest('.stars').prev('input[type=hidden]')
+    set: (elem) ->
+      newVal = @value(elem)
+      oldVal = @input(elem).val()
+      @input(elem).val(if newVal is oldVal then 0 else newVal)
+    highlight: (elem, hover) ->
+      score = if hover then @value(elem) else @input(elem).val()
+      elem.parent().children().each (i, star) ->
+        $star = $(star)
+        fill = $star.attr('data-value') <= score
+        $star.find('.filled').toggle(fill)
+        $star.find('.empty').toggle(!fill)
+  }
 
-  $('.star').hover (-> highlightStars $(this)),
-    (-> highlightStars $(this), $(this).closest('.stars').prev('input[type=hidden]').val())
+  $('.star').hover (-> Stars.highlight $(this), true),
+    (-> Stars.highlight $(this))
+  $('.star').click -> Stars.set($(this))
