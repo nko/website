@@ -1,0 +1,23 @@
+h1.ribbon Cast Your Vote
+form( method: 'POST', action: '/votes' )
+  - each dimension in ['Usefulness', 'Appearance', 'Innovation', 'Completeness']
+    label( for: dimension.toLowerCase() )= dimension
+    input( type: 'hidden', id: dimension.toLowerCase(), name: dimension.toLowerCase(), value: 0 )
+    .stars
+      - for (var val = 1; val <= 5; val++)
+        span.star( 'data-value': val )
+          span.empty ☆
+          span.filled ★
+    br
+  h2
+    label( for: 'comment' ) Comment
+  .note Optional. A 2-3 sentence mini-review.
+  textarea( name: 'comment', id: 'comment', rows: 3 )
+  h2
+    label( for: 'email' ) Email
+  .note Required. To confirm your vote. We don't spam.
+  input.email( type: 'text', name: 'email', id: 'email' )
+
+  p
+    input.button( type: 'submit', value: 'Vote!' )
+

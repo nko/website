@@ -417,5 +417,13 @@ aside#pullout {
   width: 180px;
   height: 140px; }
 
+.body.votes-new .stars {
+  margin-left: 1em;
+  display: inline; }
+  .body.votes-new .stars .star {
+    cursor: pointer; }
+    .body.votes-new .stars .star .filled {
+      display: none; }
+
 .clear {
   clear: both; }

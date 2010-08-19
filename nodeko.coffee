@@ -235,6 +235,10 @@ get '/teams/:teamId/invite/:personId', ->
             # TODO flash "Sent a new invitation to $@person.email"
             @redirect '/teams/' + team.id()
 
+# new vote
+get '/votes/new', ->
+  @render 'votes/new.html.jade', { layout: 'layout.haml' }
+
 # sign in
 get '/login', ->
   @person = new Person()
