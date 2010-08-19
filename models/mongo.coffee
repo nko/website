@@ -113,6 +113,8 @@ _.extend Mongo,
 
     id: -> @_id?.toHexString()
 
+    toParam: -> @id()
+
     save: (fn) ->
       errors = @validate() if @validate?
       return fn errors if errors?.length

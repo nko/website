@@ -6,7 +6,7 @@
 
 != partial("errors.html.haml", { locals: { ctx: ctx } })
 
-%form{ method: 'POST', action: '/people/' + ctx.person.id() }
+%form{ method: 'POST', action: '/people/' + ctx.person.toParam() }
   %input{ type: 'hidden', name: '_method', value: 'put' }
   != partial('people/form.html.haml', { locals: { ctx: ctx } })
   %p

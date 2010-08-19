@@ -131,6 +131,6 @@ h2#judges.ribbon Expert Judges
           != judge.signature
         - if (ctx.currentPerson && ctx.currentPerson.admin())
           | 
-          a( href: '/people/' + judge.id() + '/edit' ) Edit
+          a( href: '/people/' + judge.toParam() + '/edit' ) Edit
       img( src: '/images/judges/' + judge.name.replace(/\W+/g, '_') + '.jpg' )
       != judge.description

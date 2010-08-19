@@ -2,7 +2,7 @@
 
 != partial("errors.html.haml", { locals: { ctx: ctx } })
 
-%form{ method: 'POST', action: '/teams/' + ctx.team.id() }
+%form{ method: 'POST', action: '/teams/' + ctx.team.toParam() }
   %input{ type: 'hidden', name: '_method', value: 'put' }
   != partial('teams/form.html.haml', { locals: { ctx: ctx } })
   %p
