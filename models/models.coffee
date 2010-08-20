@@ -224,8 +224,7 @@ nko.Person = Person
 
 Mongo.blessAll nko
 
-Team.prototype.toParam = -> @slug
-
+Team::toParam = -> @slug
 Team.fromParam = (id, options, fn) ->
   @first { slug: id }, options, fn
 
