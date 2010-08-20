@@ -68,7 +68,7 @@
             %a#signin{ href: '/login?return_to=' + ctx.req.url } Sign in
           - if (ctx.currentPerson)
             %a{ href: 'http://gravatar.com' }
-              %img{ src: 'http://www.gravatar.com/avatar/' + ctx.currentPerson.emailHash + '?s=40&d=monsterid' }
+              != gravatar(ctx.currentPerson)
             .info
               %a{ href: '/people/' + ctx.currentPerson.toParam() + '/edit' }= ctx.currentPerson.name || ctx.currentPerson.email
               %br

@@ -28,6 +28,7 @@
               - if (member.link)
                 %a{ href: member.link }= member.name
               - if (!member.link)
+                = ' '
                 = member.name
         - if (team.invited.length > 0)
           %li.invited

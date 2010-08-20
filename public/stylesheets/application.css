@@ -142,7 +142,7 @@ form#delete {
     padding: 12px 0px 10px;
     background-color: rgba(126, 150, 153, 0.15);
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.07)), color-stop(0.15, transparent));
-    background-image: -moz-linear-gradient(-90deg, rgba(0, 0, 0, 0.1), transparent 10%);
+    background-image: -moz-linear-gradient(-90deg, rgba(0, 0, 0, 0.07), transparent 10%);
     -webkit-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
     -webkit-border-radius: 3px;
