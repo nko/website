@@ -3,6 +3,7 @@
 var teams = db.Team.find().map(function(t) {
   return {
     name: t.name,
+    slug: t.slug,
     members: t.members.map(function(m) {
       var p = db.Person.findOne({ _id: m._id }, {
         github: true, email: true, name: true
