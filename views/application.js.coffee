@@ -67,45 +67,6 @@ $ ->
         @value = '' if @value is @defaultValue
     not hasError
 
-  $('#attending').click (evt) ->
-    if $(this).is(':checked')
-      $memberInputs = $('#members li input')
-      size = if $memberInputs.length
-        _.compact($memberInputs.map( -> @value).get()).length
-      else
-        $('#members li').length
-
-      $('#attending_count').slideDown('fast').find('input[type=text]').val(size).select()
-    else
-      $('#attending_count').slideUp('fast').find('input[type=text]').val(0)
-
-  if $('.body.teams-show').length > 0
-    getAttendingCount = ->
-      if $('#attending').is(':checked')
-        parseInt($('#attending_count').find('input[type=text]').val()) or 0
-      else 0
-    attendingCount = getAttendingCount()
-    saveAttendingCount = ->
-      ac = getAttendingCount()
-      if ac == attendingCount
-        setTimeout saveAttendingCount, 50
-      else
-        attendingCount = ac
-        $('#attending_form .saving').show()
-        $.ajax(
-          type: 'PUT'
-          url: window.location.pathname
-          data: { joyent_count: ac }
-          error: (xhr, status, err) ->
-            $('#attending_form .saving').hide()
-            $('#attending_form .error').show().delay('slow').fadeOut()
-          success: (data, status, xhr) ->
-            $('#attending_form .saving').hide()
-            $('#attending_form .saved').show().delay('slow').fadeOut()
-          complete: (xhr, status) ->
-            setTimeout saveAttendingCount, 50)
-    saveAttendingCount()
-
   if $('time').length > 0
     [y, m, d, h, i, s] = $('time').attr('datetime').split(/[-:TZ]/)...
     ms = Date.UTC y, m-1, d, h, i, s

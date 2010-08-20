@@ -8,9 +8,6 @@
     != ' <a href="/teams/' + ctx.team.toParam() + '">' + ctx.team.name + '</a>.'
 
 - if (ctx.editAllowed)
-  - if (ctx.currentPerson)
-    != partial('teams/attending.html.haml', { locals: { ctx: ctx } })
-  
   - if (!ctx.currentPerson)
     %p.note
       Nice work! Your team,
