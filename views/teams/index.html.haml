@@ -33,6 +33,7 @@
         - if (team.invited.length > 0)
           %li.invited
             = pluralize(team.invited.length, 'outstanding invite')
+.clear
 
 - if ('unverifiedTeams' in ctx)
   %h2
