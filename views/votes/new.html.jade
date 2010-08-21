@@ -22,10 +22,10 @@ form( method: 'POST', action: '/teams/' + ctx.team.toParam() + '/votes' )
 
   h2
     label( for: 'email' ) Email
-  .email_hidden  
-    input( type: 'hidden', name: 'email', id: 'email', value: ctx.email )
-    | Voting as #{ctx.email}.
-    a( href: '#' ) Change
+  - if (ctx.email)
+    .email_hidden
+      | Voting as #{ctx.email}.
+      a( href: '#' ) Change
   .email_input( style: ctx.email ? 'display: none;' : '' )
     .note Required. To confirm your vote. We don't spam.
     input.email( type: 'text', name: 'email', id: 'email', value: ctx.email || '' )
