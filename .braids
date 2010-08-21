@@ -79,7 +79,7 @@ lib/hoptoad-notifier:
 lib/node-mongodb-native: 
   branch: master
   remote: braid/lib/node-mongodb-native
-  revision: f7671cd0b5b3a849fc542723e9817a9fa2c1b31a
+  revision: cb074b6f14285f9b1b5dccc41e59b41205b3f6b4
   squashed: true
   type: git
   url: http://github.com/christkv/node-mongodb-native.git
