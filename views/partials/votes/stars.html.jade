@@ -1,0 +1,12 @@
+table.dimensions
+  - each dimension in ['Usefulness', 'Design', 'Innovation', 'Completeness']
+    tr
+      td
+        label( for: dimension.toLowerCase() )= dimension
+      td
+        input( type: 'hidden', id: dimension.toLowerCase(), name: dimension.toLowerCase(), value: vote[dimension.toLowerCase()] || 0 )
+        .stars
+          - for (var val = 1; val <= 5; val++)
+            span.star( 'data-value': val )
+              span.empty ☆
+              span.filled ★

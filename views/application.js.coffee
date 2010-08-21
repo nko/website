@@ -67,7 +67,7 @@ $ ->
         @value = '' if @value is @defaultValue
     not hasError
 
-  if $('time').length > 0
+  if $('.body.index time').length > 0
     [y, m, d, h, i, s] = $('time').attr('datetime').split(/[-:TZ]/)...
     ms = Date.UTC y, m-1, d, h, i, s
     countdown = $('#date .about')
@@ -82,18 +82,30 @@ $ ->
       setTimeout tick, 1000
     tick()
 
-  $('time').hover ->
+  $('time').hover (e) ->
+    return $('.localtime').remove() if e.type == 'mouseleave'
+
     $this = $(this)
     [y, m, d, h, i, s] = $this.attr('datetime').split(/[-:TZ]/)...
     ms = Date.UTC y, m-1, d, h, i, s
     dt = new Date(ms)
     $('<div class="localtime blue">')
+      .css({
+        left: e.pageX
+        top: $(this).position().top + 25
+      })
       .html("
         #{dt.strftime('%a %b %d, %I%P %Z').replace(/\b0/,'')}
         ")
-      .appendTo($this)
-  , ->
-    $(this).find('.localtime').remove()
+      .appendTo(document.body)
+
+  (->
+    $('.votes time').each ->
+      [y, m, d, h, i, s] = $(this).attr('datetime').split(/[-:TZ]/)...
+      ms = Date.UTC y, m-1, d, h, i, s
+      $(this).text(prettyDate(new Date(ms)))
+    setTimeout arguments.callee, 5000
+  )()
 
   $('.judge img').each ->
     r = 'rotate(' + new String(Math.random()*6-3) + 'deg)'
@@ -122,9 +134,9 @@ $ ->
   $('.stars').each ->
     Stars.highlight $(this)
 
-  $('.star').hover (-> Stars.highlight $(this), true),
+  $('.votes-new .star').hover (-> Stars.highlight $(this), true),
     (-> Stars.highlight $(this))
-  $('.star').click -> Stars.set($(this))
+  $('.votes-new .star').click -> Stars.set($(this))
 
   $('.email_hidden a').click ->
     $('.email_hidden').fadeOut 'fast', ->

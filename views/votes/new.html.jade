@@ -3,18 +3,7 @@ h1.ribbon Vote for #{ctx.team.name}
 != partial("errors.html.haml", { locals: { ctx: ctx } })
 
 form( method: 'POST', action: '/teams/' + ctx.team.toParam() + '/votes' )
-  table
-    - each dimension in ['Usefulness', 'Design', 'Innovation', 'Completeness']
-      tr
-        td
-          label( for: dimension.toLowerCase() )= dimension
-        td
-          input( type: 'hidden', id: dimension.toLowerCase(), name: dimension.toLowerCase(), value: ctx.vote[dimension.toLowerCase()] || 0 )
-          .stars
-            - for (var val = 1; val <= 5; val++)
-              span.star( 'data-value': val )
-                span.empty ☆
-                span.filled ★
+  != partial("votes/stars.html.jade", { locals: { vote: ctx.vote } })
   h2
     label( for: 'comment' ) Comment
   .note Optional. A 2-3 sentence mini-review.

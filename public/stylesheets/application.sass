@@ -89,6 +89,15 @@ input.error
   .vr
     :margin 1ex
     :color hsla(0, 0%, 0%, 0.15)
+.localtime
+  :position absolute
+  :text-align center
+  :white-space nowrap
+  :color $white
+  :background-color hsla(187, 12%, 55%, 0.95)
+  +rounded
+  div
+    :font-size small
 
 .button
   &.important
@@ -329,6 +338,16 @@ aside#pullout
       :display inline
       :color $red
 
+.dimensions
+  :border-collapse collapse
+  td
+    :padding 0px
+  .stars
+    :margin-left 1em
+    :display inline
+    .star .filled
+      :display none
+
 .body.index
   .heart
     :color #da6a6c
@@ -340,20 +359,8 @@ aside#pullout
       :font-size small
       :margin-top 0.5ex
   time
-    :position relative
     :overflow visible
     :border-bottom 1px dotted $black
-    .localtime
-      :text-align center
-      :position absolute
-      :top -2.5em
-      :left 5ex
-      :white-space nowrap
-      :color $white
-      :background-color hsla(187, 12%, 55%, 0.95)
-      +rounded
-      div
-        :font-size small
   .left
     :color $red
 
@@ -363,20 +370,6 @@ aside#pullout
     :padding-left 0px
     :margin-left 0px
     :margin-top 0px
-.body.teams-new, .body.teams-edit, .body.teams-show
-  input[type=checkbox]
-    :font-size x-large
-  #attending_input
-    :margin-top 1em
-    :margin-bottom 0.5em
-  #attending_count
-    :display none
-    :margin-left 2em
-    :margin-bottom 0.5em
-  #attending_count input[type=text]
-    :font-size medium
-    :width 2em
-    :margin 0px
 
 .body.teams-index
   .teams
@@ -400,6 +393,32 @@ aside#pullout
   .invited
     :font-style italic
     :font-size x-small
+
+.body.teams-show
+  .votes
+    :list-style-type none
+    :padding-left 0px
+    li
+      :clear left
+  .voter
+    :float left
+    :width 190px
+    img
+      :float left
+      :margin-right 5px
+    time
+      :display block
+      :font-size small
+  .vote
+    :margin-left 190px
+    p
+      :white-space pre
+  .dimensions
+    :font-size small
+    td
+      :padding-right 2ex
+      .stars
+        :margin-left 0px
 
 .body.people-edit
   h2
@@ -439,17 +458,12 @@ aside#pullout
     :height 140px
 
 .body.votes-new
-  .stars
-    :margin-left 1em
-    :display inline
-    .star
-      :cursor pointer
-      .filled
-        :display none
   .by_email
     :display none
   .email
     :font-size small
+  .star
+    :cursor pointer
 
 .clear
   :clear both

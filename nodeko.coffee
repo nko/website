@@ -170,13 +170,16 @@ post '/teams', ->
 get '/teams/:id', ->
   Team.fromParam @req.param('id'), (error, team) =>
     if team?
-      Team.all (error, teams) =>
-        @joyentTotal = Team.joyentTotal teams
-        @team = team
+      @team = team
+      @editAllowed = @canEditTeam team
+
+      Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]] }, (error, votes) =>
+        @votes = votes
+
         people = team.members or []
         @members = _.select people, (person) -> person.name
         @invites = _.without people, @members...
-        @editAllowed = @canEditTeam team
+
         @render 'teams/show.html.haml'
     else
       # TODO make this a 404

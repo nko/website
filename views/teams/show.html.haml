@@ -48,3 +48,26 @@
     %a.button{ href: '/teams/' + ctx.team.toParam() + '/edit' } Edit
     %input{ type: 'hidden', name: '_method', value: 'delete' }
     %input.button{ type: 'submit', value: 'Delete', onclick: "return confirm('Are you sure you want to delete this team?');" }
+
+%h2 Votes
+  %ul.votes
+    - each vote in ctx.votes       
+      %li
+        .voter
+          != gravatar(vote.email)
+          = vote.email.replace(/@.*/, '')
+          %time{ datetime: vote.createdAt.toISOString() }
+        .vote
+          %table.dimensions
+            %tr
+            - each dimension in ['Usefulness', 'Design', 'Innovation', 'Completeness']
+              %td
+                %label= dimension
+                %br
+                %input{ type: 'hidden', id: dimension.toLowerCase(), name: dimension.toLowerCase(), value: vote[dimension.toLowerCase()] || 0 }
+                .stars
+                  - for (var val = 1; val <= 5; val++)
+                    %span.star{ 'data-value': val }
+                      %span.empty ☆
+                      %span.filled ★
+          %p= vote.comment
