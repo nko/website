@@ -73,12 +73,11 @@ $ ->
     countdown = $('#date .about')
     tick = ->
       diff = (ms - new Date().getTime()) / 1000
-      weeks = Math.floor diff / 604800
       days = Math.floor diff % 604800 / 86400
       hours = Math.floor diff % 86400 / 3600
       minutes = Math.floor diff % 3600 / 60
       secs = Math.floor diff % 60
-      countdown.html weeks + ' week ' + days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
+      countdown.html days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
       setTimeout tick, 1000
     tick()
 
