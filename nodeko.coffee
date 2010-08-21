@@ -237,19 +237,27 @@ get '/teams/:teamId/invite/:personId', ->
             @redirect '/teams/' + team.toParam()
 
 # new vote
-get '/votes/new', ->
-  # @vote = new Vote()
-  @render 'votes/new.html.jade', { layout: 'layout.haml' }
+get '/teams/:teamId/votes/new', ->
+  Team.fromParam @req.param('teamId'), (error, team) =>
+    # TODO: handle error
+    @team = team
+    @vote = new Vote()
+    @email = @currentPerson?.email
+    @render 'votes/new.html.jade', { layout: 'layout.haml' }
 
 # create vote
-post '/votes', ->
-  @vote = new Vote @req.body
-  @vote.save (errors, res) =>
-    if errors?
-      @errors = errors
-      @render 'votes/new.html.haml'
-    else
-      @redirect '/votes.json'
+post '/teams/:teamId/votes', ->
+  Team.fromParam @req.param('teamId'), (error, team) =>
+    # TODO: handle error
+    @vote = new Vote @req.body
+    @vote.team = @team = team
+    @vote.save (errors, res) =>
+      if errors?
+        @errors = errors
+        @email = @vote.email
+        @render 'votes/new.html.jade', { layout: 'layout.haml' }
+      else
+        @redirect '/votes.json'
 
 Serializer = require('./models/mongo').Serializer
 get '/votes.json', ->

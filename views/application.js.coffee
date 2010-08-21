@@ -111,13 +111,16 @@ $ ->
       oldVal = @input(elem).val()
       @input(elem).val(if newVal is oldVal then 0 else newVal)
     highlight: (elem, hover) ->
-      score = if hover then @value(elem) else @input(elem).val()
-      elem.parent().children().each (i, star) ->
+      score = parseInt(if hover then @value(elem) else @input(elem).val())
+      elem.closest('.stars').children().each (i, star) ->
         $star = $(star)
         fill = $star.attr('data-value') <= score
         $star.find('.filled').toggle(fill)
         $star.find('.empty').toggle(!fill)
   }
+
+  $('.stars').each ->
+    Stars.highlight $(this)
 
   $('.star').hover (-> Stars.highlight $(this), true),
     (-> Stars.highlight $(this))

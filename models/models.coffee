@@ -227,15 +227,15 @@ class Vote
     @person = options?.person
     @team = options?.team
 
-    @usefulness = options?.usefulness
-    @appearance = options?.appearance
-    @innovation = options?.innovation
-    @completeness = options?.completeness
+    @usefulness = parseInt options?.usefulness
+    @design = parseInt options?.design
+    @innovation = parseInt options?.innovation
+    @completeness = parseInt options?.completeness
 
     @comment = options?.comment
 
-    @ip_address = options?.ip_address
-    @user_agent = options?.user_agent
+    @ipAddress = options?.ipAddress
+    @userAgent = options?.userAgent
     @referer = option?.referer
 
     @requestAt = options?.requestAt
@@ -243,6 +243,14 @@ class Vote
     @responseAt = options?.responseAt
 
     @createdAt = @updatedAt = new Date()
+
+  validate: ->
+    errors = []
+    for dimension in [ 'Usefulness', 'Design', 'Innovation', 'Completeness' ]
+      errors.push "#{dimension} should be between 1 and 5 stars" unless 1 <= this[dimension.toLowerCase()] <= 5
+    errors
+
+nko.Vote = Vote
 
 Mongo.blessAll nko
 
