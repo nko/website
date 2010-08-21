@@ -226,6 +226,9 @@ Mongo.blessAll nko
 
 Team::toParam = -> @slug
 Team.fromParam = (id, options, fn) ->
-  @first { slug: id }, options, fn
+  if id.length == 24
+    @first { '$or': [ { slug: id }, Mongo.queryify(id) ] }, options, fn
+  else
+    @first { slug: id }, options, fn
 
 _.extend exports, nko
