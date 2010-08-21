@@ -234,7 +234,7 @@ class Vote
     @completeness = parseInt options?.completeness
 
     @comment = options?.comment
-    @email = options?.email
+    @email = options?.email?.trim()?.toLowerCase()
 
     @ipAddress = options?.ipAddress
     @userAgent = options?.userAgent
