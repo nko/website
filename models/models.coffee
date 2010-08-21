@@ -66,6 +66,7 @@ class Team
     for email in newEmails
       Person.firstOrCreate { email: email }, (error, member) =>
         @members.push member
+        member.type = 'Participant'
         member.inviteTo this, ->
           fn() if --threads is 0
 
