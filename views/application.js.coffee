@@ -125,3 +125,11 @@ $ ->
   $('.star').hover (-> Stars.highlight $(this), true),
     (-> Stars.highlight $(this))
   $('.star').click -> Stars.set($(this))
+
+  $('.email_hidden a').click ->
+    $('.email_hidden').fadeOut 'fast', ->
+      $('.email_input')
+        .fadeIn('fast')
+        .find('input')
+          .focus()
+    false

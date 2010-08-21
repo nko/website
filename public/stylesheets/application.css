@@ -451,9 +451,10 @@ aside#pullout {
     cursor: pointer; }
     .body.votes-new .stars .star .filled {
       display: none; }
+.body.votes-new .by_email {
+  display: none; }
 .body.votes-new .email {
-  font-size: small;
-  width: 34em; }
+  font-size: small; }
 
 .clear {
   clear: both; }
