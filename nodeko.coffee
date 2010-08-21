@@ -121,7 +121,7 @@ get '/error', ->
 get '/teams', ->
   Team.all (error, teams) =>
     [@teams, @unverifiedTeams] = [[], []]
-    for team in teams
+    for team in _.shuffle(teams)
       if team.members.length == team.invited.length
         @unverifiedTeams.push team
       else
@@ -302,8 +302,8 @@ get '/judges/new', ->
     @render 'judges/new.html.haml'
 
 get '/judges|/judging', ->
-  Person.all { type: 'Judge' }, {sort: [['name', 1]]}, (error, judges) =>
-    @judges = judges
+  Person.all { type: 'Judge' }, (error, judges) =>
+    @judges = _.shuffle judges
     @render 'judges/index.html.jade', { layout: 'layout.haml' }
 
 # create person
@@ -341,6 +341,9 @@ put '/people/:id', ->
       person.save (error, resp) =>
         @redirectToTeam person
 
+get '/prizes', ->
+  @render 'prizes.html.jade', { layout: 'layout.haml' }
+
 get '/*', ->
   try
     @render "#{@req.params[0]}.html.haml"
@@ -358,7 +361,17 @@ app.helpers {
 
   markdown: (s) ->
     markdown.toHTML s
+
+  gravatar: (p, s) ->
+    "<img src=\"http://www.gravatar.com/avatar/#{p.emailHash}?s=#{s || 40}&d=monsterid\" />"
 }
+
+_.shuffle = (a) ->
+  r = _.clone a
+  for i in [r.length-1 .. 0]
+    j = parseInt(Math.random() * i)
+    [r[i], r[j]] = [r[j], r[i]]
+  r
 
 # has to be last
 app.use '/', express.errorHandler({ dumpExceptions: true, showStack: true })
