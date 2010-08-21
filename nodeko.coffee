@@ -321,6 +321,9 @@ put '/people/:id', ->
       person.save (error, resp) =>
         @redirectToTeam person
 
+get '/prizes', ->
+  @render 'prizes.html.jade', { layout: 'layout.haml' }
+
 get '/*', ->
   try
     @render "#{@req.params[0]}.html.haml"
