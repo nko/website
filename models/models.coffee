@@ -61,7 +61,7 @@ class Team
 
     newEmails = _.without emails, oldEmails...
     threads = newEmails.length
-    return setTimeout fn, 0 unless threads
+    return process.nextTick fn unless threads
 
     for email in newEmails
       Person.firstOrCreate { email: email }, (error, member) =>
@@ -225,7 +225,6 @@ nko.Person = Person
 
 class Vote
   constructor: (options) ->
-    @person = options?.person
     @team = options?.team
 
     @usefulness = parseInt options?.usefulness
@@ -234,6 +233,7 @@ class Vote
     @completeness = parseInt options?.completeness
 
     @comment = options?.comment
+    @email = options?.email
 
     @ipAddress = options?.ipAddress
     @userAgent = options?.userAgent
@@ -244,6 +244,15 @@ class Vote
     @responseAt = options?.responseAt
 
     @createdAt = @updatedAt = new Date()
+
+  beforeSave: (fn) ->
+    Person.firstOrCreate { email: @email }, (error, voter) =>
+      @person = voter
+      unless @person.type?
+        @person.type = 'Voter'
+        @person.save fn
+      else
+        fn()
 
   validate: ->
     errors = []

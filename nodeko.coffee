@@ -241,7 +241,7 @@ get '/teams/:teamId/votes/new', ->
   Team.fromParam @req.param('teamId'), (error, team) =>
     # TODO: handle error
     @team = team
-    @vote = new Vote()
+    @vote = new Vote
     @email = @currentPerson?.email
     @render 'votes/new.html.jade', { layout: 'layout.haml' }
 
