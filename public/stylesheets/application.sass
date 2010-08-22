@@ -345,6 +345,7 @@ aside#pullout
   .stars
     :margin-left 1em
     :display inline
+    :color $light_blue
     .star .filled
       :display none
 
@@ -402,10 +403,14 @@ aside#pullout
       :background-color white
       :background-color hsla(0, 0%, 100%, 0.6)
       :padding 10px
-      :margin-left -10px
-      :margin-bottom 0.5em
-      +shadow(0px, 2px, 3px)
+      :margin 0.5em 0px 0.5em -10px
+      +shadow(0px, 1px, 3px)
       +rounded
+      &.small
+        :padding 2px 10px
+        :margin 0px 0px 0px -10px
+        &, time
+          :font-size x-small
   .voter
     :float left
     :width 185px

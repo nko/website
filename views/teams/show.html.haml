@@ -52,24 +52,30 @@
 %h2 Votes
   %ul.votes
     - each vote in ctx.votes       
-      %li
+      %li{ 'class': vote.comment ? '' : 'small' }
         .voter
-          != gravatar(vote.person, 50)
-          = vote.person.displayName()
-          %br
-          %time{ datetime: vote.createdAt.toISOString() }
+          - if (vote.comment)
+            != gravatar(vote.person, 50)
+            = vote.person.displayName()
+            %br
+            %time{ datetime: vote.createdAt.toISOString() }
+          - if (!vote.comment)
+            = vote.person.displayName()
+            %time{ datetime: vote.createdAt.toISOString() }
         .vote
           %table.dimensions
             %tr
             - each dimension in ['Usefulness', 'Design', 'Innovation', 'Completeness']
               %td
-                %label= dimension
-                %br
+                - if (vote.comment)
+                  %label= dimension
+                  %br
                 %input{ type: 'hidden', id: dimension.toLowerCase(), name: dimension.toLowerCase(), value: vote[dimension.toLowerCase()] || 0 }
                 .stars
                   - for (var val = 1; val <= 5; val++)
                     %span.star{ 'data-value': val }
                       %span.empty ☆
                       %span.filled ★
-          %p= vote.comment
-          .clear
+          - if (vote.comment)
+            %p= vote.comment
+            .clear
