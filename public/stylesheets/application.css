@@ -480,12 +480,21 @@ aside#pullout {
   width: 180px;
   height: 140px; }
 
-.body.votes-new .by_email {
+.body.votes-new .by_email, #your_vote .by_email {
   display: none; }
-.body.votes-new .email {
+.body.votes-new .email, #your_vote .email {
   font-size: small; }
-.body.votes-new .star {
+.body.votes-new .star, #your_vote .star {
   cursor: pointer; }
+
+#your_vote .dimensions {
+  margin-bottom: 0.5ex; }
+#your_vote .email_input {
+  margin-bottom: 0.5ex; }
+  #your_vote .email_input .note {
+    font-size: small; }
+#your_vote input.button {
+  float: right; }
 
 .clear {
   clear: both; }

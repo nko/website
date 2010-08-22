@@ -175,6 +175,9 @@ get '/teams/:id', ->
 
       Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]] }, (error, votes) =>
         @votes = votes
+        @vote = new Vote()
+        @vote.person = @currentPerson
+        @vote.email = @vote.person?.email
 
         people = team.members or []
         @members = _.select people, (person) -> person.name
