@@ -134,9 +134,9 @@ $ ->
   $('.stars').each ->
     Stars.highlight $(this)
 
-  $('.votes-new .star').hover (-> Stars.highlight $(this), true),
+  $('.votes-new .star, #your_vote .star').hover (-> Stars.highlight $(this), true),
     (-> Stars.highlight $(this))
-  $('.votes-new .star').click -> Stars.set($(this))
+  $('.votes-new .star, #your_vote .star').click -> Stars.set($(this))
 
   $('.email_hidden a').click ->
     $('.email_hidden').fadeOut 'fast', ->
