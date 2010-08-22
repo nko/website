@@ -505,6 +505,8 @@ aside#pullout {
     font-size: small; }
 #your_vote input.button {
   float: right; }
+#your_vote .email_hidden {
+  margin: 0.5em 0em; }
 
 .clear {
   clear: both; }
