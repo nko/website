@@ -238,6 +238,7 @@ class Vote
 
     @comment = options?.comment
     @email = options?.email?.trim()?.toLowerCase()
+    @person = options?.person
 
     @remoteAddress = request?.socket?.remoteAddress
     @remotePort = request?.socket?.remotePort
@@ -252,13 +253,22 @@ class Vote
     @createdAt = @updatedAt = new Date()
 
   beforeSave: (fn) ->
-    Person.firstOrNew { email: @email }, (error, voter) =>
-      @person = voter
-      unless @person.type?
+    if !@person?
+      Person.firstOrNew { email: @email }, (error, voter) =>
+        return fn ['Unauthorized'] unless voter.isNew()
+        @person = voter
         @person.type = 'Voter'
         @person.save fn
-      else
-        fn()
+    else
+      if @isNew()
+        @checkDuplicate fn
+      else fn()
+
+  checkDuplicate: (fn) ->
+    Vote.firstByTeamAndPerson @team, @person, (errors, existing) =>
+      return fn errors if errors?.length
+      return fn ["Duplicate"] if existing?
+      fn()
 
   beforeInstantiate: (fn) ->
     Person.first @person.id(), (error, voter) =>
@@ -270,6 +280,11 @@ class Vote
     for dimension in [ 'Usefulness', 'Design', 'Innovation', 'Completeness' ]
       errors.push "#{dimension} should be between 1 and 5 stars" unless 1 <= this[dimension.toLowerCase()] <= 5
     errors
+
+_.extend Vote, {
+  firstByTeamAndPerson: (team, person, fn) ->
+    Vote.first { 'team._id': team._id, 'person._id': person._id }, fn
+}
 
 nko.Vote = Vote
 

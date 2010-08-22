@@ -122,7 +122,9 @@ _.extend Mongo,
       errors = @validate() if @validate?
       return fn errors if errors?.length
       if @beforeSave?
-        @beforeSave => @_save fn
+        @beforeSave (errors) =>
+          return fn errors if errors?.length
+          @_save fn
       else
         @_save fn
 

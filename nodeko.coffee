@@ -184,7 +184,7 @@ get '/teams/:id', ->
           @render 'teams/show.html.haml'
 
       if @currentPerson
-        Vote.first { 'team._id': team._id, 'person._id': @currentPerson._id }, (error, vote) =>
+        Vote.firstByTeamAndPerson team, @currentPerson, (error, vote) =>
           @vote = vote or new Vote()
           @vote.person = @currentPerson
           @vote.email = @vote.person.email
@@ -265,6 +265,7 @@ post '/teams/:teamId/votes', ->
     # TODO: handle error
     @vote = new Vote @req.body, @req
     @vote.team = @team = team
+    @vote.person = @currentPerson
     @vote.save (errors, res) =>
       if errors?
         @errors = errors
