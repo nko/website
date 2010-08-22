@@ -103,12 +103,13 @@ _.extend Mongo,
           return fn error if error?
           cursor.toArray (error, array) ->
             return fn error if error?
-            teams = []
-            for team in array
-              Mongo.instantiate team, (error, unpacked) =>
+            return fn null, array if array.length == 0
+            items = []
+            for item in array
+              Mongo.instantiate item, (error, unpacked) =>
                 return fn error if error?
-                teams.push unpacked
-                fn null, teams  if teams.length == array.length
+                items.push unpacked
+                fn null, items if items.length == array.length
 
   InstanceMethods:
     collection: (fn) ->
