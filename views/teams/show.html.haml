@@ -47,8 +47,7 @@
   %form{ method: 'POST', action: '/teams/' + ctx.team.toParam() }#delete
     %a.button{ href: '/teams/' + ctx.team.toParam() + '/edit' } Edit
     %input{ type: 'hidden', name: '_method', value: 'delete' }
-    %input.button{ type: 'submit', value: 'Delete', onclick: "return confirm('Are you sure you want to delete this team?');" }
-
+    %input.button{ type: 'submit', rel: 'nofollow', value: 'Delete', onclick: "return confirm('Are you sure you want to delete this team?');" }
 
 %form#your_vote{ method: 'POST', action: '/teams/' + ctx.team.toParam() + '/votes' }
   .voter
@@ -71,15 +70,11 @@
         = ' ' + ctx.vote.email + ' '
         &mdash;
         %a{ href: '#' } Change
+    .clear
 
 %h2 Votes
   %ul.votes
-    - each vote in ctx.votes
-      %li{ 'class': vote.comment ? '' : 'small' }
-        .voter
-          != partial('votes/voter.html.haml', { locals: { vote: vote }})
-        .vote
-          != partial('votes/stars.html.haml', { locals: { vote: vote }})
-          - if (vote.comment)
-            %p= vote.comment
-            .clear
+    != partial('votes/index.html.jade', { locals: { ctx: ctx } })
+    - if (ctx.votes.length == 50)
+      .more
+        %img{ src: '/images/spinner.gif' }

@@ -93,7 +93,7 @@ Date.ext.util.xPad=function(x, pad, r)
 The locale for a specific date object may be changed using \code Date.locale = "new-locale"; \endcode
 The default will be based on the lang attribute of the HTML tag of your document
 */
-Date.prototype.locale = 'en-GB';
+Date.prototype.locale = 'en-US';
 //! \cond FALSE
 if(typeof(document) != 'undefined' && document.getElementsByTagName('html') && document.getElementsByTagName('html')[0].lang)
 {
@@ -344,7 +344,7 @@ Date.prototype.strftime=function(fmt)
 		}
 		else
 		{
-			this.locale = 'en-GB';
+			this.locale = 'en-US';
 		}
 	}
 

@@ -54,16 +54,13 @@ _.extend Mongo,
       fn null, unpacked
 
   ClassMethods:
-    count: (query, options, fn) ->
-      unless fn?
-        fn = options
-        options = {}
+    count: (query, fn) ->
       unless fn?
         fn = query
         query = null
       @prototype.collection (error, collection) ->
         return fn error if error?
-        collection.count query, options, fn
+        collection.count query, fn
 
     firstOrCreate: (query, options, fn) ->
       unless fn?

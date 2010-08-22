@@ -16,7 +16,7 @@ $ ->
       $(this).find('input').select()
     false
 
-  $(':input:visible:first').focus()
+  $(':input:visible:first:not([rel=nofollow])').focus()
 
   $('input.url').click ->
     this.select() if @value is @defaultValue
@@ -73,17 +73,16 @@ $ ->
     countdown = $('#date .about')
     tick = ->
       diff = (ms - new Date().getTime()) / 1000
-      weeks = Math.floor diff / 604800
       days = Math.floor diff % 604800 / 86400
       hours = Math.floor diff % 86400 / 3600
       minutes = Math.floor diff % 3600 / 60
       secs = Math.floor diff % 60
-      countdown.html weeks + ' week ' + days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
+      countdown.html days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
       setTimeout tick, 1000
     tick()
 
-  $('time').hover (e) ->
-    return $('.localtime').remove() if e.type == 'mouseleave'
+  $('time').live 'hover', (e) ->
+    return $('.localtime').remove() if e.type == 'mouseout'
 
     $this = $(this)
     [y, m, d, h, i, s] = $this.attr('datetime').split(/[-:TZ]/)...
@@ -95,17 +94,9 @@ $ ->
         top: $(this).position().top + 25
       })
       .html("
-        #{dt.strftime('%a %b %d, %I%P %Z').replace(/\b0/,'')}
+        #{dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/,'')}
         ")
       .appendTo(document.body)
-
-  (->
-    $('.votes time').each ->
-      [y, m, d, h, i, s] = $(this).attr('datetime').split(/[-:TZ]/)...
-      ms = Date.UTC y, m-1, d, h, i, s
-      $(this).text(prettyDate(new Date(ms)))
-    setTimeout arguments.callee, 5000
-  )()
 
   $('.judge img').each ->
     r = 'rotate(' + new String(Math.random()*6-3) + 'deg)'
@@ -124,19 +115,39 @@ $ ->
       @input(elem).val(if newVal is oldVal then 0 else newVal)
     highlight: (elem, hover) ->
       score = parseInt(if hover then @value(elem) else @input(elem).val())
-      elem.closest('.stars').children().each (i, star) ->
+      elem.parent().children().each (i, star) ->
         $star = $(star)
         fill = $star.attr('data-value') <= score
         $star.find('.filled').toggle(fill)
         $star.find('.empty').toggle(!fill)
   }
 
-  $('.stars').each ->
-    Stars.highlight $(this)
+  $('.votes-new, #your_vote')
+    .delegate('.star', 'hover', (e) -> Stars.highlight $(this), e.type == 'mouseover')
+    .delegate('.star', 'click', (e) -> Stars.set $(this))
 
-  $('.votes-new .star, #your_vote .star').hover (-> Stars.highlight $(this), true),
-    (-> Stars.highlight $(this))
-  $('.votes-new .star, #your_vote .star').click -> Stars.set($(this))
+  (->
+    $('.votes time').each ->
+      [y, m, d, h, i, s] = $(this).attr('datetime').split(/[-:TZ]/)...
+      ms = Date.UTC y, m-1, d, h, i, s
+      $(this).text(prettyDate(new Date(ms)))
+    setTimeout arguments.callee, 10 * 1000
+  )()
+
+  $('.votes .more').each ->
+    $more = $(this)
+    loadMoreNow = $more.position().top - $(window).height() + 10
+    page = 1
+    $(window).scroll (e) ->
+      if loadMoreNow && this.scrollY > loadMoreNow
+        loadMoreNow = null
+        $.get window.location.pathname + "/votes.js?page=#{++page}", (html) ->
+          moreVotes = $('<div class="page">').html(html)
+          $more.remove()
+          $('.votes').append(moreVotes)
+          if moreVotes.find('li').length == 51
+            $('.votes').append($more)
+            loadMoreNow = $more.position().top - $(window).height() + 10
 
   $('.email_hidden a').click ->
     $('.email_hidden').fadeOut 'fast', ->

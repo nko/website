@@ -348,10 +348,7 @@ aside#pullout {
 
 .dimensions {
   border-collapse: collapse; }
-  .dimensions td {
-    padding: 0px; }
   .dimensions .stars {
-    margin-left: 1em;
     display: inline;
     color: #7e9699; }
     .dimensions .stars .star .filled {
@@ -416,7 +413,7 @@ aside#pullout {
   -moz-border-radius: 3px; }
   .body.teams-show .votes li .voter, .body.teams-show #your_vote .voter {
     float: left;
-    width: 185px; }
+    width: 180px; }
     .body.teams-show .votes li .voter img, .body.teams-show #your_vote .voter img {
       float: left;
       margin-right: 5px;
@@ -429,17 +426,18 @@ aside#pullout {
       color: rgba(0, 0, 0, 0.4);
       display: block; }
   .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote {
-    margin-left: 185px; }
+    margin-left: 180px; }
     .body.teams-show .votes li .vote p, .body.teams-show #your_vote .vote p {
       white-space: pre; }
   .body.teams-show .votes li .dimensions, .body.teams-show #your_vote .dimensions {
     font-size: small; }
     .body.teams-show .votes li .dimensions label, .body.teams-show #your_vote .dimensions label {
       display: block; }
-    .body.teams-show .votes li .dimensions td, .body.teams-show #your_vote .dimensions td {
-      padding-right: 2ex; }
-      .body.teams-show .votes li .dimensions td .stars, .body.teams-show #your_vote .dimensions td .stars {
-        margin-left: 0px; }
+    .body.teams-show .votes li .dimensions td, .body.teams-show .votes li .dimensions th, .body.teams-show #your_vote .dimensions td, .body.teams-show #your_vote .dimensions th {
+      padding-right: 2ex;
+      min-width: 81px; }
+  .body.teams-show .votes li.header, .body.teams-show #your_vote.header {
+    padding: 2px 10px; }
   .body.teams-show .votes li.small, .body.teams-show #your_vote.small {
     padding: 2px 10px;
     margin: 0px 0px 0px -10px; }
@@ -452,6 +450,9 @@ aside#pullout {
       .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time {
         display: inline;
         font-size: x-small; }
+.body.teams-show .more {
+  text-align: center;
+  margin-top: 0.5em; }
 
 .body.people-edit h2 {
   margin-top: 1.5em;
@@ -508,7 +509,10 @@ aside#pullout {
 #your_vote input.button {
   float: right; }
 #your_vote .email_hidden {
-  margin: 0.5em 0em; }
+  margin: 0.5em 0em;
+  font-size: small; }
+#your_vote textarea {
+  width: 97%; }
 
 .clear {
   clear: both; }

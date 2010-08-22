@@ -228,7 +228,7 @@ _.extend Person, {
 nko.Person = Person
 
 class Vote
-  constructor: (options) ->
+  constructor: (options, request) ->
     @team = options?.team
 
     @usefulness = parseInt options?.usefulness
@@ -239,9 +239,11 @@ class Vote
     @comment = options?.comment
     @email = options?.email?.trim()?.toLowerCase()
 
-    @ipAddress = options?.ipAddress
-    @userAgent = options?.userAgent
-    @referer = option?.referer
+    @remoteAddress = request?.socket?.remoteAddress
+    @remotePort = request?.socket?.remotePort
+    @userAgent = request?.headers?['user-agent']
+    @referer = request?.headers?['referer']
+    #@accept = request?.headers?['accept']
 
     @requestAt = options?.requestAt
     @renderAt = options?.renderAt
@@ -275,6 +277,9 @@ Mongo.blessAll nko
 
 Team::toParam = -> @slug
 Team.fromParam = (id, options, fn) ->
-  @first { slug: id }, options, fn
+  if id.length == 24
+    @first { '$or': [ { slug: id }, Mongo.queryify(id) ] }, options, fn
+  else
+    @first { slug: id }, options, fn
 
 _.extend exports, nko

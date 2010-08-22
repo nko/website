@@ -38,12 +38,12 @@ request = (type) ->
             for k, v of options
               cookie += "; #{k}=#{v}"
             res.header('Set-Cookie', cookie)
-          render: (file, opts) ->
+          render: (file, opts, fn) ->
             opts ||= {}
             opts.locals ||= {}
             opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
             opts.locals.ctx = ctx
-            res.render file, opts
+            res.render file, opts, fn
           currentPerson: person
           setCurrentPerson: (person, options) ->
             @cookie 'authKey', person?.authKey(), options
@@ -104,7 +104,8 @@ get '/me', ->
 
 get '/*.js', ->
   try
-    @render "#{@req.params[0]}.js.coffee", { layout: false }
+    @render "#{@req.params[0]}.js.coffee", { layout: false }, (error, view) =>
+      @res.send view, { 'Content-Type': 'text/javascript' }
   catch e
     @next()
 
@@ -173,7 +174,7 @@ get '/teams/:id', ->
       @team = team
       @editAllowed = @canEditTeam team
 
-      Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]] }, (error, votes) =>
+      Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]], limit: 50 }, (error, votes) =>
         @votes = votes
         @vote = new Vote()
         @vote.person = @currentPerson
@@ -255,7 +256,7 @@ get '/teams/:teamId/votes/new', ->
 post '/teams/:teamId/votes', ->
   Team.fromParam @req.param('teamId'), (error, team) =>
     # TODO: handle error
-    @vote = new Vote @req.body
+    @vote = new Vote @req.body, @req
     @vote.team = @team = team
     @vote.save (errors, res) =>
       if errors?
@@ -263,17 +264,20 @@ post '/teams/:teamId/votes', ->
         @email = @vote.email
         @render 'votes/new.html.jade', { layout: 'layout.haml' }
       else
-        @redirect '/teams/' + team.toParam()
+        @redirect '/teams/' + @team.toParam()
 
 # list votes
 get '/teams/:teamId/votes', ->
   Team.fromParam @req.param('teamId'), (error, team) =>
     @redirect '/teams/' + team.toParam()
 
-Serializer = require('./models/mongo').Serializer
-get '/votes.json', ->
-  Vote.all {}, {sort: [['modifiedAt', 1]]}, (error, votes) =>
-    @res.send JSON.stringify Serializer.pack(votes)
+get '/teams/:teamId/votes.js', ->
+  skip = 50 * ((@req.query['page'] || 1)-1)
+  Team.fromParam @req.param('teamId'), (error, team) =>
+    # TODO: handle error
+    Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]], skip: skip, limit: 50 }, (error, votes) =>
+      @votes = votes
+      @render 'partials/votes/index.html.jade', { layout: false }
 
 # sign in
 get '/login', ->
