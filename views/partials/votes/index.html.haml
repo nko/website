@@ -1,0 +1,8 @@
+- each vote in ctx.votes
+  %li{ 'class': vote.comment ? '' : 'small' }
+    != partial('votes/voter.html.haml', { locals: { vote: vote }})
+    .vote
+      != partial('votes/stars.html.haml', { locals: { vote: vote }})
+      - if (vote.comment)
+        %p= vote.comment
+        .clear

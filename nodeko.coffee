@@ -173,7 +173,7 @@ get '/teams/:id', ->
       @team = team
       @editAllowed = @canEditTeam team
 
-      Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]] }, (error, votes) =>
+      Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]], limit: 50 }, (error, votes) =>
         @votes = votes
         @vote = new Vote()
         @vote.person = @currentPerson
@@ -263,12 +263,16 @@ post '/teams/:teamId/votes', ->
         @email = @vote.email
         @render 'votes/new.html.jade', { layout: 'layout.haml' }
       else
-        @redirect '/teams/' + team.toParam()
+        @redirect '/teams/' + @team.toParam()
 
-Serializer = require('./models/mongo').Serializer
-get '/votes.json', ->
-  Vote.all {}, {sort: [['modifiedAt', 1]]}, (error, votes) =>
-    @res.send JSON.stringify Serializer.pack(votes)
+# list votes
+get '/teams/:teamId/votes', ->
+  skip = 50 * ((@req.query['page'] || 1)-1)
+  Team.fromParam @req.param('teamId'), (error, team) =>
+    # TODO: handle error
+    Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]], skip: skip, limit: 50 }, (error, votes) =>
+      @votes = votes
+      @render 'partials/votes/index.html.haml'
 
 # sign in
 get '/login', ->
