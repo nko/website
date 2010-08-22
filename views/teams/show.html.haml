@@ -55,7 +55,7 @@
     != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
   .vote
     != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
-    %textarea{ placeholder: '2-3 sentence mini-review. Optional.', rows: 4 }= ctx.vote.comment || ''
+    %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence mini-review. Optional.', rows: 4 }= ctx.vote.comment || ''
     %input.button{ type: 'submit', value: 'Vote!' }
     .email_input{ style: ctx.vote.email ? 'display: none;' : '' }
       %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.vote.email || '', placeholder: 'email@address.com' }

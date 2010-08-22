@@ -263,7 +263,7 @@ post '/teams/:teamId/votes', ->
         @email = @vote.email
         @render 'votes/new.html.jade', { layout: 'layout.haml' }
       else
-        @redirect '/votes.json'
+        @redirect '/teams/' + team.toParam()
 
 Serializer = require('./models/mongo').Serializer
 get '/votes.json', ->
