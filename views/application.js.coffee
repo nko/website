@@ -81,8 +81,8 @@ $ ->
       setTimeout tick, 1000
     tick()
 
-  $('time').hover (e) ->
-    return $('.localtime').remove() if e.type == 'mouseleave'
+  $('time').live 'hover', (e) ->
+    return $('.localtime').remove() if e.type == 'mouseout'
 
     $this = $(this)
     [y, m, d, h, i, s] = $this.attr('datetime').split(/[-:TZ]/)...
@@ -94,7 +94,7 @@ $ ->
         top: $(this).position().top + 25
       })
       .html("
-        #{dt.strftime('%a %b %d, %I%P %Z').replace(/\b0/,'')}
+        #{dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/,'')}
         ")
       .appendTo(document.body)
 
@@ -131,7 +131,7 @@ $ ->
       [y, m, d, h, i, s] = $(this).attr('datetime').split(/[-:TZ]/)...
       ms = Date.UTC y, m-1, d, h, i, s
       $(this).text(prettyDate(new Date(ms)))
-    setTimeout arguments.callee, 5000
+    setTimeout arguments.callee, 10 * 1000
   )()
 
   $('.votes .more').each ->
