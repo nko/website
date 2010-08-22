@@ -13,6 +13,13 @@ lib/coffee/lib/coffee-script:
   type: git
   revision: 5399b989c049a836b90f234d57872cde854374fa
   remote: braid/lib/coffee/lib/coffee-script
+lib/eyes: 
+  squashed: true
+  url: http://github.com/cloudhead/eyes.js.git
+  branch: master
+  type: git
+  revision: ab4f3e56590b1a66b1b39334b656842dfe5a81e1
+  remote: braid/lib/eyes
 lib/socket.io: 
   squashed: true
   branch: master
