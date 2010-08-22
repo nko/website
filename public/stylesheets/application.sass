@@ -399,18 +399,26 @@ aside#pullout
     :list-style-type none
     :padding-left 0px
     li
-      :clear left
+      :background-color white
+      :background-color hsla(0, 0%, 100%, 0.6)
+      :padding 10px
+      :margin-left -10px
+      :margin-bottom 0.5em
   .voter
     :float left
-    :width 190px
+    :width 185px
     img
       :float left
       :margin-right 5px
+      :padding 2px
+      +shadow
     time
       :display block
       :font-size small
+      :font-style italic
+      :color hsla(0, 0%, 0%, 0.4)
   .vote
-    :margin-left 190px
+    :margin-left 185px
     p
       :white-space pre
   .dimensions

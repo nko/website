@@ -54,7 +54,7 @@
     - each vote in ctx.votes       
       %li
         .voter
-          != gravatar(vote.person)
+          != gravatar(vote.person, 50)
           = vote.person.displayName()
           %time{ datetime: vote.createdAt.toISOString() }
         .vote
@@ -71,3 +71,4 @@
                       %span.empty ☆
                       %span.filled ★
           %p= vote.comment
+          .clear
