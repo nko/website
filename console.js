@@ -1,4 +1,4 @@
 require('./support')
-global.db = require('./models/models')
+global.models = require('./models/models')
 
 require('repl').start()
