@@ -54,8 +54,8 @@
     - each vote in ctx.votes       
       %li
         .voter
-          != gravatar(vote.email)
-          = vote.email.replace(/@.*/, '')
+          != gravatar(vote.person)
+          = vote.person.displayName()
           %time{ datetime: vote.createdAt.toISOString() }
         .vote
           %table.dimensions

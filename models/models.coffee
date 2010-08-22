@@ -110,6 +110,9 @@ class Person
   admin: ->
     @confirmed and /\@nodeknockout\.com$/.test(@email)
 
+  displayName: ->
+    @name or @email.replace(/\@.*$/,'')
+
   resetPassword: (fn) ->
     @password = @randomPassword()
     @new_password = true
@@ -254,6 +257,11 @@ class Vote
         @person.save fn
       else
         fn()
+
+  beforeInstantiate: (fn) ->
+    Person.first @person.id(), (error, voter) =>
+      @person = voter
+      fn()
 
   validate: ->
     errors = []
