@@ -38,12 +38,12 @@ request = (type) ->
             for k, v of options
               cookie += "; #{k}=#{v}"
             res.header('Set-Cookie', cookie)
-          render: (file, opts) ->
+          render: (file, opts, fn) ->
             opts ||= {}
             opts.locals ||= {}
             opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
             opts.locals.ctx = ctx
-            res.render file, opts
+            res.render file, opts, fn
           currentPerson: person
           setCurrentPerson: (person, options) ->
             @cookie 'authKey', person?.authKey(), options
@@ -104,7 +104,8 @@ get '/me', ->
 
 get '/*.js', ->
   try
-    @render "#{@req.params[0]}.js.coffee", { layout: false }
+    @render "#{@req.params[0]}.js.coffee", { layout: false }, (error, view) =>
+      @res.send view, { 'Content-Type': 'text/javascript' }
   catch e
     @next()
 
