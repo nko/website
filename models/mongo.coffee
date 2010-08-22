@@ -114,6 +114,8 @@ _.extend Mongo,
 
     id: -> @_id?.toHexString()
 
+    isNew: -> !@_id
+
     toParam: -> @id()
 
     save: (fn) ->
