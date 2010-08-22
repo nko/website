@@ -174,17 +174,24 @@ get '/teams/:id', ->
       @team = team
       @editAllowed = @canEditTeam team
 
-      Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]], limit: 50 }, (error, votes) =>
-        @votes = votes
+      people = team.members or []
+      @members = _.select people, (person) -> person.name
+      @invites = _.without people, @members...
+
+      renderVotes = =>
+        Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]], limit: 50 }, (error, votes) =>
+          @votes = votes
+          @render 'teams/show.html.haml'
+
+      if @currentPerson
+        Vote.first { 'team._id': team._id, 'person._id': @currentPerson._id }, (error, vote) =>
+          @vote = vote or new Vote()
+          @vote.person = @currentPerson
+          @vote.email = @vote.person.email
+          renderVotes()
+      else
         @vote = new Vote()
-        @vote.person = @currentPerson
-        @vote.email = @vote.person?.email
-
-        people = team.members or []
-        @members = _.select people, (person) -> person.name
-        @invites = _.without people, @members...
-
-        @render 'teams/show.html.haml'
+        renderVotes()
     else
       # TODO make this a 404
       @redirect '/'

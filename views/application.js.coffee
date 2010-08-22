@@ -115,7 +115,7 @@ $ ->
       @input(elem).val(if newVal is oldVal then 0 else newVal)
     highlight: (elem, hover) ->
       score = parseInt(if hover then @value(elem) else @input(elem).val())
-      elem.parent().children().each (i, star) ->
+      elem.closest('.stars').children().each (i, star) ->
         $star = $(star)
         fill = $star.attr('data-value') <= score
         $star.find('.filled').toggle(fill)
@@ -125,6 +125,7 @@ $ ->
   $('.votes-new, #your_vote')
     .delegate('.star', 'hover', (e) -> Stars.highlight $(this), e.type == 'mouseover')
     .delegate('.star', 'click', (e) -> Stars.set $(this))
+  $('.votes-new .stars, #your_vote .stars').each -> Stars.highlight $(this)
 
   (->
     $('.votes time').each ->
