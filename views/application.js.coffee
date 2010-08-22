@@ -16,7 +16,7 @@ $ ->
       $(this).find('input').select()
     false
 
-  $(':input:visible:first').focus()
+  $(':input:visible:first:not([rel=nofollow])').focus()
 
   $('input.url').click ->
     this.select() if @value is @defaultValue
