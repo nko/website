@@ -413,7 +413,7 @@ aside#pullout {
   -moz-border-radius: 3px; }
   .body.teams-show .votes li .voter, .body.teams-show #your_vote .voter {
     float: left;
-    width: 220px; }
+    width: 180px; }
     .body.teams-show .votes li .voter img, .body.teams-show #your_vote .voter img {
       float: left;
       margin-right: 5px;
@@ -426,7 +426,7 @@ aside#pullout {
       color: rgba(0, 0, 0, 0.4);
       display: block; }
   .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote {
-    margin-left: 220px; }
+    margin-left: 180px; }
     .body.teams-show .votes li .vote p, .body.teams-show #your_vote .vote p {
       white-space: pre; }
   .body.teams-show .votes li .dimensions, .body.teams-show #your_vote .dimensions {
@@ -509,7 +509,10 @@ aside#pullout {
 #your_vote input.button {
   float: right; }
 #your_vote .email_hidden {
-  margin: 0.5em 0em; }
+  margin: 0.5em 0em;
+  font-size: small; }
+#your_vote textarea {
+  width: 97%; }
 
 .clear {
   clear: both; }
