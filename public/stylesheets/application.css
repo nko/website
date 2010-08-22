@@ -497,6 +497,8 @@ aside#pullout {
 .body.votes-new .star, #your_vote .star {
   cursor: pointer; }
 
+#your_vote .voter h2 {
+  margin: 0.5ex 0px; }
 #your_vote .dimensions {
   margin-bottom: 0.5ex; }
 #your_vote .email_input {

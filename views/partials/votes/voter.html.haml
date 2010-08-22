@@ -1,4 +1,3 @@
-.voter
-  != gravatar(vote.person, 50)
-  = vote.person.displayName()
-  %time{ datetime: vote.createdAt.toISOString() }
+!= gravatar(vote.person, 50)
+= vote.person.displayName()
+%time{ datetime: vote.createdAt.toISOString() }
