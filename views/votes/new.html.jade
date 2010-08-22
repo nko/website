@@ -20,7 +20,7 @@ form( method: 'POST', action: '/teams/' + ctx.team.toParam() + '/votes' )
     input.email( type: 'text', name: 'email', id: 'email', value: ctx.email || '' )
     - if (!ctx.currentPerson)
       |  or
-      a( href: '/login?return_to=/teams/' + ctx.team.toParam() + '/votes/new' ) Login
+      a( href: '/login?return_to=/teams/' + ctx.team.toParam() + '/votes/new' ) Sign in
 
   p
     input.button( type: 'submit', value: 'Vote!' )
