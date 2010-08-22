@@ -99,14 +99,6 @@ $ ->
         ")
       .appendTo(document.body)
 
-  (->
-    $('.votes time').each ->
-      [y, m, d, h, i, s] = $(this).attr('datetime').split(/[-:TZ]/)...
-      ms = Date.UTC y, m-1, d, h, i, s
-      $(this).text(prettyDate(new Date(ms)))
-    setTimeout arguments.callee, 5000
-  )()
-
   $('.judge img').each ->
     r = 'rotate(' + new String(Math.random()*6-3) + 'deg)'
     $(this)
@@ -124,19 +116,39 @@ $ ->
       @input(elem).val(if newVal is oldVal then 0 else newVal)
     highlight: (elem, hover) ->
       score = parseInt(if hover then @value(elem) else @input(elem).val())
-      elem.closest('.stars').children().each (i, star) ->
+      elem.parent().children().each (i, star) ->
         $star = $(star)
         fill = $star.attr('data-value') <= score
         $star.find('.filled').toggle(fill)
         $star.find('.empty').toggle(!fill)
   }
 
-  $('.stars').each ->
-    Stars.highlight $(this)
+  $('.votes-new, #your_vote')
+    .delegate('.star', 'hover', (e) -> Stars.highlight $(this), e.type == 'mouseover')
+    .delegate('.star', 'click', (e) -> Stars.set $(this))
 
-  $('.votes-new .star, #your_vote .star').hover (-> Stars.highlight $(this), true),
-    (-> Stars.highlight $(this))
-  $('.votes-new .star, #your_vote .star').click -> Stars.set($(this))
+  (->
+    $('.votes time').each ->
+      [y, m, d, h, i, s] = $(this).attr('datetime').split(/[-:TZ]/)...
+      ms = Date.UTC y, m-1, d, h, i, s
+      $(this).text(prettyDate(new Date(ms)))
+    setTimeout arguments.callee, 5000
+  )()
+
+  $('.votes .more').each ->
+    $more = $(this)
+    loadMoreNow = $more.position().top - $(window).height() + 10
+    page = 1
+    $(window).scroll (e) ->
+      if loadMoreNow && this.scrollY > loadMoreNow
+        loadMoreNow = null
+        $.get window.location.pathname + "/votes?page=#{++page}", (html) ->
+          moreVotes = $('<div class="page">').html(html)
+          $more.remove()
+          $('.votes').append(moreVotes)
+          if moreVotes.find('li').length == 50
+            $('.votes').append($more)
+            loadMoreNow = $more.position().top - $(window).height() + 10
 
   $('.email_hidden a').click ->
     $('.email_hidden').fadeOut 'fast', ->

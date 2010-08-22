@@ -272,7 +272,7 @@ get '/teams/:teamId/votes', ->
     # TODO: handle error
     Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]], skip: skip, limit: 50 }, (error, votes) =>
       @votes = votes
-      @render 'partials/votes/index.html.haml'
+      @render 'partials/votes/index.html.haml', { layout: false }
 
 # sign in
 get '/login', ->

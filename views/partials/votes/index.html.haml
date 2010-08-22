@@ -1,8 +1,18 @@
 - each vote in ctx.votes
   %li{ 'class': vote.comment ? '' : 'small' }
-    != partial('votes/voter.html.haml', { locals: { vote: vote }})
+    .voter
+      != partial('votes/voter.html.haml', { locals: { vote: vote }})
     .vote
-      != partial('votes/stars.html.haml', { locals: { vote: vote }})
+      %table.dimensions
+        %tr
+          - each dimension in ['Usefulness', 'Design', 'Innovation', 'Completeness']
+            %td
+              %label= dimension
+              .stars
+                - for (var i = 1; i < vote[dimension.toLowerCase()]; i++)
+                  %span.filled ★
+                - for (var i = vote[dimension.toLowerCase()]; i <= 5; i++)
+                  %span.empty ☆
       - if (vote.comment)
         %p= vote.comment
         .clear

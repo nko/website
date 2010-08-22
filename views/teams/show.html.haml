@@ -75,3 +75,5 @@
 %h2 Votes
   %ul.votes
     != partial('votes/index.html.haml', { locals: { ctx: ctx } })
+    .more
+      %img{ src: '/images/spinner.gif' }
