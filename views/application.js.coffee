@@ -145,7 +145,7 @@ $ ->
           moreVotes = $('<div class="page">').html(html)
           $more.remove()
           $('.votes').append(moreVotes)
-          if moreVotes.find('li').length == 50
+          if moreVotes.find('li').length == 51
             $('.votes').append($more)
             loadMoreNow = $more.position().top - $(window).height() + 10
 

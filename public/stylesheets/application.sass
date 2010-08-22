@@ -340,10 +340,7 @@ aside#pullout
 
 .dimensions
   :border-collapse collapse
-  td
-    :padding 0px
   .stars
-    :margin-left 1em
     :display inline
     :color $light_blue
     .star .filled
@@ -408,7 +405,7 @@ aside#pullout
     +rounded
     .voter
       :float left
-      :width 185px
+      :width 220px
       img
         :float left
         :margin-right 5px
@@ -420,17 +417,18 @@ aside#pullout
         :color hsla(0, 0%, 0%, 0.4)
         :display block
     .vote
-      :margin-left 185px
+      :margin-left 220px
       p
         :white-space pre
     .dimensions
       :font-size small
       label
         :display block
-      td
+      td, th
         :padding-right 2ex
-        .stars
-          :margin-left 0px
+        :min-width 81px
+    &.header
+      :padding 2px 10px
     &.small
       :padding 2px 10px
       :margin 0px 0px 0px -10px

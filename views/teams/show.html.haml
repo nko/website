@@ -73,6 +73,6 @@
 
 %h2 Votes
   %ul.votes
-    != partial('votes/index.html.haml', { locals: { ctx: ctx } })
+    != partial('votes/index.html.jade', { locals: { ctx: ctx } })
     .more
       %img{ src: '/images/spinner.gif' }

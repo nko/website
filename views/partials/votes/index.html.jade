@@ -1,0 +1,30 @@
+- each vote, i in ctx.votes
+  - if (i == 0 && !vote.comment)
+    li.header
+      .vote
+        table.dimensions
+          tr
+            - each dimension in ['Usefulness', 'Design', 'Innovation', 'Completeness']
+              th
+                label= dimension
+  li( 'class': vote.comment ? '' : 'small' )
+    .voter
+      != partial('votes/voter.html.haml', { locals: { vote: vote }})
+    .vote
+      table.dimensions
+        tr
+          - ['Usefulness', 'Design', 'Innovation', 'Completeness'].forEach(function(dimension) {
+            td
+              label= dimension
+              .stars
+                - val = vote[dimension.toLowerCase()]
+                - for (var i = 1; i < val; i++)
+                  span.filled ★
+                  | 
+                - for (var i = val; i <= 5; i++)
+                  span.empty ☆
+                  | 
+          - });
+      - if (vote.comment)
+        p= vote.comment
+        .clear
