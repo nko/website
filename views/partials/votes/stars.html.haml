@@ -2,9 +2,7 @@
   %tr
   - each dimension in ['Usefulness', 'Design', 'Innovation', 'Completeness']
     %td
-      - if (vote.comment)
-        %label= dimension
-        %br
+      %label= dimension
       %input{ type: 'hidden', id: dimension.toLowerCase(), name: dimension.toLowerCase(), value: vote[dimension.toLowerCase()] || 0 }
       .stars
         - for (var val = 1; val <= 5; val++)
