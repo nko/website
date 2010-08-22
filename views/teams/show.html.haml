@@ -51,7 +51,8 @@
 
 %h2 Your Vote
 %form#your_vote{ method: 'POST', action: '/teams/' + ctx.team.toParam() + '/votes' }
-  != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
+  - if(ctx.vote.person)
+    != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
   .vote
     != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
     %textarea{ placeholder: '2-3 sentence mini-review. Optional.', rows: 4 }= ctx.vote.comment || ''

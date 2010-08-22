@@ -426,7 +426,8 @@ aside#pullout {
     .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time {
       font-size: small;
       font-style: italic;
-      color: rgba(0, 0, 0, 0.4); }
+      color: rgba(0, 0, 0, 0.4);
+      display: block; }
   .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote {
     margin-left: 185px; }
     .body.teams-show .votes li .vote p, .body.teams-show #your_vote .vote p {
@@ -444,8 +445,13 @@ aside#pullout {
     margin: 0px 0px 0px -10px; }
     .body.teams-show .votes li.small label, .body.teams-show #your_vote.small label {
       display: none; }
-    .body.teams-show .votes li.small, .body.teams-show .votes li.small time, .body.teams-show #your_vote.small, .body.teams-show #your_vote.small time {
+    .body.teams-show .votes li.small img, .body.teams-show #your_vote.small img {
+      display: none; }
+    .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter {
       font-size: x-small; }
+      .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time {
+        display: inline;
+        font-size: x-small; }
 
 .body.people-edit h2 {
   margin-top: 1.5em;

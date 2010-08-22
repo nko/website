@@ -418,6 +418,7 @@ aside#pullout
         :font-size small
         :font-style italic
         :color hsla(0, 0%, 0%, 0.4)
+        :display block
     .vote
       :margin-left 185px
       p
@@ -435,8 +436,13 @@ aside#pullout
       :margin 0px 0px 0px -10px
       label
         :display none
-      &, time
+      img
+        :display none
+      .voter
         :font-size x-small
+        time
+          :display inline
+          :font-size x-small
 
 .body.people-edit
   h2

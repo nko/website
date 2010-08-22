@@ -1,9 +1,4 @@
 .voter
-  - if (vote.comment)
-    != gravatar(vote.person, 50)
-    = vote.person.displayName()
-    %br
-    %time{ datetime: vote.createdAt.toISOString() }
-  - if (!vote.comment)
-    = vote.person.displayName()
-    %time{ datetime: vote.createdAt.toISOString() }
+  != gravatar(vote.person, 50)
+  = vote.person.displayName()
+  %time{ datetime: vote.createdAt.toISOString() }
