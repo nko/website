@@ -62,7 +62,7 @@ _.extend Mongo,
         return fn error if error?
         collection.count query, fn
 
-    firstOrCreate: (query, options, fn) ->
+    firstOrNew: (query, options, fn) ->
       unless fn?
         fn = options
         options = {}

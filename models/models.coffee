@@ -64,7 +64,7 @@ class Team
     return process.nextTick fn unless threads
 
     for email in newEmails
-      Person.firstOrCreate { email: email }, (error, member) =>
+      Person.firstOrNew { email: email }, (error, member) =>
         @members.push member
         member.type = 'Participant'
         member.inviteTo this, ->
@@ -252,7 +252,7 @@ class Vote
     @createdAt = @updatedAt = new Date()
 
   beforeSave: (fn) ->
-    Person.firstOrCreate { email: @email }, (error, voter) =>
+    Person.firstOrNew { email: @email }, (error, voter) =>
       @person = voter
       unless @person.type?
         @person.type = 'Voter'
