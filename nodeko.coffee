@@ -256,7 +256,7 @@ get '/teams/:teamId/votes/new', ->
 post '/teams/:teamId/votes', ->
   Team.fromParam @req.param('teamId'), (error, team) =>
     # TODO: handle error
-    @vote = new Vote @req.body
+    @vote = new Vote @req.body, @req
     @vote.team = @team = team
     @vote.save (errors, res) =>
       if errors?
