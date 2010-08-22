@@ -265,6 +265,11 @@ post '/teams/:teamId/votes', ->
       else
         @redirect '/teams/' + team.toParam()
 
+# list votes
+get '/teams/:teamId/votes', ->
+  Team.fromParam @req.param('teamId'), (error, team) =>
+    @redirect '/teams/' + team.toParam()
+
 Serializer = require('./models/mongo').Serializer
 get '/votes.json', ->
   Vote.all {}, {sort: [['modifiedAt', 1]]}, (error, votes) =>
