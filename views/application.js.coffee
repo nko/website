@@ -149,7 +149,7 @@ $ ->
             $('.votes').append($more)
             loadMoreNow = $more.position().top - $(window).height() + 10
 
-  $('#your_vote a').click ->
+  $('#your_vote a[href$=draft]').click ->
     if window.localStorage?
       localStorage['draft'] = JSON.stringify $(this).closest('form').serializeArray()
 
