@@ -18,7 +18,9 @@
 
 - if (ctx.editAllowed)
   - if (!ctx.team.application)
-    %p.note You currently don&rsquo;t have a description of your application.
+    %p.note
+      You don&rsquo;t have a description for your application yet.
+      %a{ href: '/teams/' + ctx.team.toParam() + '/edit' } Edit now
   - if (!ctx.currentPerson)
     %p.note
       Nice work! Your team,
