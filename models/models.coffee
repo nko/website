@@ -105,6 +105,7 @@ class Person
     @description = options?.description or ''
     @signature = options?.signature or ''
 
+    @token = Math.uuid()
     @calculateHashes()
 
   admin: ->

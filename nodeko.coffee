@@ -34,6 +34,7 @@ request = (type) ->
           cookie: (key, value, options) ->
             value ||= ''
             options ||= {}
+            options.path ||= '/'
             cookie = "#{key}=#{value}"
             for k, v of options
               cookie += "; #{k}=#{v}"
@@ -274,6 +275,8 @@ post '/teams/:teamId/votes', ->
         @email = @vote.email
         @render 'votes/new.html.jade', { layout: 'layout.haml' }
       else
+        # TODO flash "You are now logged into Node Knockout as #{@vote.email}."
+        @setCurrentPerson @vote.person if @vote.person? and !@currentPerson?
         @redirect '/teams/' + @team.toParam()
 
 # list votes
