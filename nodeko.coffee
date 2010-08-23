@@ -56,9 +56,11 @@ request = (type) ->
           redirectToLogin: ->
             @redirect "/login?return_to=#{@req.url}"
           logout: (fn) ->
-            @currentPerson.logout (error, resp) =>
-              @setCurrentPerson null
-              fn()
+            if @currentPerson?
+              @currentPerson.logout (error, resp) =>
+                @setCurrentPerson null
+                fn()
+            else fn()
           canEditTeam: (team) ->
             req.cookies.teamauthkey is team.authKey() or
               team.hasMember(@currentPerson) or
@@ -312,9 +314,7 @@ post '/login', ->
       @render 'login.html.haml'
 
 get '/logout', ->
-  @redirect '/' unless @currentPerson?
-  @logout =>
-    @redirect '/'
+  @logout => @redirect(@req.param('return_to') || '/')
 
 # reset password
 post '/reset_password', ->
@@ -382,7 +382,6 @@ get '/*', ->
     throw e if e.errno != 2
     @next()
 
-markdown = require 'markdown'
 app.helpers {
   pluralize: (n, str) ->
     if n == 1
@@ -390,8 +389,8 @@ app.helpers {
     else
       n + ' ' + str + 's'
 
-  markdown: (s) ->
-    markdown.toHTML s
+  escapeURL: require('querystring').escape
+  markdown: require('markdown').toHTML
 
   gravatar: (p, s) ->
     "<img src=\"http://www.gravatar.com/avatar/#{p.emailHash}?s=#{s || 40}&d=monsterid\" />"
