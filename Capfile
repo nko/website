@@ -6,6 +6,7 @@ default_run_options[:pty] = true
 set :application, "nko"
 set :repository,  "git://github.com/nko/website.git"
 set :scm, :git
+set :deploy_via, :remote_cache
 
 set :user, "app"
 
