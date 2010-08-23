@@ -1,4 +1,4 @@
-// mongo nodeknockout json2.js github.js | tail +5 | python -mjson.tool
+// mongo nodeknockout ../public/javascripts/json2.js github.js | tail +5 | python -mjson.tool
 
 var teams = db.Team.find().map(function(t) {
   return {
