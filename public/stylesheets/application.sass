@@ -65,6 +65,8 @@ input[type=password], input[type=email], input[type=text], textarea
   //:background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.1), transparent 10%, transparent)
   +rounded
   +shadow
+textarea
+  :line-height 150%
 
 input.error
   +shadow(0px, 0px, 10px, hsla(359, 100%, 33%, 0.8))
@@ -367,7 +369,7 @@ aside#pullout
     :margin-left 0px
     :margin-top 0px
   textarea
-    :height 6em
+    :height 10em
 
 .body.teams-index
   .teams
@@ -447,12 +449,17 @@ aside#pullout
     :text-align center
     :margin-top 0.5em
 
-.body.people-edit, .body.teams-edit
+.body.people-edit, .body.teams-edit, .body.people-new, .body.teams-edit
   h2
     :margin-top 1.5em
     :border-bottom solid 1px hsla(0, 0%, 0%, 0.2)
-  h2:first-of-type
+  form > input[type=hidden] + h2
     :margin-top 0px
+  .note
+    :font-size small
+  input[type=text], textarea
+    :font-size large
+    :width 24em
 
 .body.judging, .body.judges-index
   .judge

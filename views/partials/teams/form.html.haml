@@ -7,12 +7,16 @@
 
 %h3
   %label{ for: 'description' } Description
-.note What&rsquo;s your application do?
+.note
+  What&rsquo;s your application do?
+  != ' (<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> ok)'
 %textarea{ name: 'description', id: 'description' }= ctx.team.description
 
 %h3
   %label{ for: 'colophon' } Colophon
-.note What libraries, icons, web service APIs, tools did you use?
+.note
+  What libraries, icons, web service APIs, tools did you use?
+  != ' (<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> ok)'
 %textarea{ name: 'colophon', id: 'colophon'}= ctx.team.colophon
 
 %h3
