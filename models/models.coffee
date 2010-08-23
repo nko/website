@@ -289,6 +289,7 @@ _.extend Vote, {
 nko.Vote = Vote
 
 Mongo.blessAll nko
+nko.Mongo = Mongo
 
 Team::toParam = -> @slug
 Team.fromParam = (id, options, fn) ->
