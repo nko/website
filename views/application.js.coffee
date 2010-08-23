@@ -125,7 +125,6 @@ $ ->
   $('.votes-new, #your_vote')
     .delegate('.star', 'hover', (e) -> Stars.highlight $(this), e.type == 'mouseover')
     .delegate('.star', 'click', (e) -> Stars.set $(this))
-  $('.votes-new .stars, #your_vote .stars').each -> Stars.highlight $(this)
 
   (->
     $('.votes time').each ->
@@ -150,10 +149,15 @@ $ ->
             $('.votes').append($more)
             loadMoreNow = $more.position().top - $(window).height() + 10
 
-  $('.email_hidden a').click ->
-    $('.email_hidden').fadeOut 'fast', ->
-      $('.email_input')
-        .fadeIn('fast')
-        .find('input')
-          .focus()
-    false
+  $('#your_vote a').click ->
+    if window.localStorage?
+      localStorage['draft'] = JSON.stringify $(this).closest('form').serializeArray()
+
+  $('.teams-show #your_vote').each ->
+    return unless window.localStorage?.draft? and window.location.hash is '#draft'
+    try
+      for el in JSON.parse localStorage.draft
+        $(this[el.name]).val el.value
+    finally
+      delete localStorage.draft
+  $('.votes-new .stars, #your_vote .stars').each -> Stars.highlight $(this)
