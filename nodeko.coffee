@@ -179,12 +179,12 @@ get '/teams/:id', ->
 
       if @currentPerson
         Vote.firstByTeamAndPerson team, @currentPerson, (error, vote) =>
-          @vote = vote or new Vote()
+          @vote = vote or new Vote(null, @req)
           @vote.person = @currentPerson
           @vote.email = @vote.person.email
           renderVotes()
       else
-        @vote = new Vote()
+        @vote = new Vote(null, @req)
         renderVotes()
     else
       # TODO make this a 404

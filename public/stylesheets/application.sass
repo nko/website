@@ -415,10 +415,12 @@ aside#pullout
         :margin-right 5px
         :padding 2px
         +shadow
-      time
+      .details
         :font-size small
         :font-style italic
+        :line-height 125%
         :color hsla(0, 0%, 0%, 0.4)
+      time
         :display block
     .vote
       :margin-left 180px
@@ -506,17 +508,19 @@ aside#pullout
     :margin 0.5ex 0px
   .dimensions
     :margin-bottom 0.5ex
+  .email_input, .email_hidden
+    :float left
   .email_input
     :margin-bottom 0.5ex
     .note
       :font-size small
-  input.button
-    :float right
   .email_hidden
     :font-size small
     :margin 0.5em 0em
   textarea
     :font-size medium
     :width 97%
+  input.button
+    :float right
 .clear
   :clear both

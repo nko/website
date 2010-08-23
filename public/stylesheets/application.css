@@ -424,10 +424,12 @@ aside#pullout {
       padding: 2px;
       -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
       -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
-    .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time {
+    .body.teams-show .votes li .voter .details, .body.teams-show #your_vote .voter .details {
       font-size: small;
       font-style: italic;
-      color: rgba(0, 0, 0, 0.4);
+      line-height: 125%;
+      color: rgba(0, 0, 0, 0.4); }
+    .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time {
       display: block; }
   .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote {
     margin-left: 180px; }
@@ -513,18 +515,20 @@ aside#pullout {
   margin: 0.5ex 0px; }
 #your_vote .dimensions {
   margin-bottom: 0.5ex; }
+#your_vote .email_input, #your_vote .email_hidden {
+  float: left; }
 #your_vote .email_input {
   margin-bottom: 0.5ex; }
   #your_vote .email_input .note {
     font-size: small; }
-#your_vote input.button {
-  float: right; }
 #your_vote .email_hidden {
   font-size: small;
   margin: 0.5em 0em; }
 #your_vote textarea {
   font-size: medium;
   width: 97%; }
+#your_vote input.button {
+  float: right; }
 
 .clear {
   clear: both; }

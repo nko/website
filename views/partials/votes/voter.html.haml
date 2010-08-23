@@ -1,3 +1,6 @@
-!= gravatar(vote.person, 50)
-= vote.person.displayName()
-%time{ datetime: vote.createdAt.toISOString() }
+- if (vote.person)
+  != gravatar(vote.person, 50)
+  = vote.person.displayName()
+.details
+  %time{ datetime: vote.createdAt.toISOString() }
+  = vote.remoteAddress

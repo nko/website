@@ -72,12 +72,10 @@
   %form#your_vote{ method: 'POST', action: '/teams/' + ctx.team.toParam() + '/votes' }
     .voter
       %h3 Your Vote
-      - if(ctx.vote.person)
-        != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
+      != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
     .vote
       != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
       %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4 }= ctx.vote.comment || ''
-      %input.button{ type: 'submit', value: 'Vote!' }
       - if (!ctx.currentPerson)
         .email_input
           %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.vote.email || '', placeholder: 'email@address.com' }
@@ -90,6 +88,7 @@
           = ' ' + ctx.vote.email + ' '
           &mdash;
           %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
+      %input.button{ type: 'submit', value: 'Vote!' }
       .clear
 
 %ul.votes
