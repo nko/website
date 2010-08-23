@@ -304,7 +304,7 @@ post '/login', ->
       @render 'login.html.haml'
 
 get '/logout', ->
-  @logout => @redirect(@req.param('return_to') || '/')
+  @logout => @redirect(@req.param('return_to') || @req.headers.referer || '/')
 
 # reset password
 post '/reset_password', ->
