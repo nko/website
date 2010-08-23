@@ -202,11 +202,9 @@ get '/teams/:id', ->
 # edit team
 get '/teams/:id/edit', ->
   Team.fromParam @req.param('id'), (error, team) =>
-    Team.all (error, teams) =>
-      @ensurePermitted team, =>
-        @joyentTotal = Team.joyentTotal teams
-        @team = team
-        @render 'teams/edit.html.haml'
+    @ensurePermitted team, =>
+      @team = team
+      @render 'teams/edit.html.haml'
 
 # update team
 put '/teams/:id', ->
