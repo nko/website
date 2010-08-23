@@ -138,29 +138,19 @@ get '/teams', ->
     else []
     @render 'teams/index.html.haml'
 
-get '/teams/attending', ->
-  Team.all (error, teams) =>
-    @joyentTotal = Team.joyentTotal teams
-    @teams = _.select teams, (team) ->
-      parseInt(team.joyent_count) > 0
-    @render 'teams/index.html.haml'
-
 # new team
 get '/teams/new', ->
   unless @currentPerson? and @currentPerson.admin()
     @redirect '/'
   else
-    Team.all (error, teams) =>
-      @joyentTotal = Team.joyentTotal teams
-      @team = new Team {}, =>
-        @render 'teams/new.html.haml'
+    @team = new Team {}, =>
+      @render 'teams/new.html.haml'
 
 # create team
 post '/teams', ->
   unless @currentPerson? and @currentPerson.admin()
     @redirect '/'
   else
-    @req.body.joyent_count = parseInt(@req.body.joyent_count) || 0
     @team = new Team @req.body, =>
       @team.save (errors, res) =>
         if errors?
@@ -210,8 +200,6 @@ get '/teams/:id/edit', ->
 put '/teams/:id', ->
   Team.fromParam @req.param('id'), (error, team) =>
     @ensurePermitted team, =>
-      team.joyent_count ||= 0
-      @req.body.joyent_count = parseInt(@req.body.joyent_count) || 0
       team.update @req.body
       save = =>
         team.save (errors, result) =>

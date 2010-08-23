@@ -78,12 +78,6 @@ class Team
       else
         @generateSlug fn, @slug + '-'  # try with another -
 
-_.extend Team, {
-  joyentTotal: (teams) ->
-    _.reduce _.pluck(teams, 'joyent_count'), 0, (memo, num) ->
-      memo + (parseInt(num) || 0)
-}
-
 nko.Team = Team
 
 class Person
