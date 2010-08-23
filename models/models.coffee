@@ -120,7 +120,7 @@ class Person
     @calculateHashes()
     @save (error, res) =>
       # TODO get this into a view
-      message = """
+      @sendEmail "Password reset for Node.js Knockout", """
         Hi,
 
         You (or somebody like you) reset the password for this email address.
@@ -131,18 +131,10 @@ class Person
 
         Thanks!
         The Node.js Knockout Organizers
-        """
-      http.post 'http://www.postalgone.com/mail',
-        { sender: '"Node.js Knockout" <mail@nodeknockout.com>',
-        from: 'all@nodeknockout.com',
-        to: @email,
-        subject: "Password reset for Node.js Knockout",
-        body: message }, (error, body, response) ->
-          fn()
+        """, fn
 
   inviteTo: (team, fn) ->
-    # TODO get this into a view
-    message = """
+    @sendEmail "You've been invited to Node.js Knockout", """
       Hi,
 
       You've been invited to the #{team.name} Node.js Knockout team!
@@ -159,12 +151,32 @@ class Person
       The Node.js Knockout Organizers
 
       Node.js Knockout is a 48-hour programming contest using node.js from Aug 28-29, 2010.
-      """
+      """, fn
+
+  welcomeVoter: (fn) ->
+    # TODO get this into a view
+    @sendEmail "Thanks for voting in Node.js Knockout", """
+      Hi,
+
+      You (or somebody like you) used this email address to vote in Node.js Knockout, so we created an account for you.
+
+      Here are your credentials:
+      email: #{@email}
+      password: #{@password}
+
+      Please sign in to confirm your votes: http://nodeknockout.com/login?email=#{@email}&password=#{@password}
+
+      Thanks!
+      The Node.js Knockout Organizers
+      http://nodeknockout.com/
+      """, fn
+
+  sendEmail: (subject, message, fn) ->
     http.post 'http://www.postalgone.com/mail',
       { sender: '"Node.js Knockout" <mail@nodeknockout.com>',
       from: 'all@nodeknockout.com',
       to: @email,
-      subject: "You've been invited to Node.js Knockout",
+      subject: subject,
       body: message }, (error, body, response) ->
         fn()
 
@@ -259,7 +271,8 @@ class Vote
         return fn ['Unauthorized'] unless voter.isNew()
         @person = voter
         @person.type = 'Voter'
-        @person.save fn
+        @person.save =>
+          @person.welcomeVoter fn
     else
       if @isNew()
         @checkDuplicate fn
