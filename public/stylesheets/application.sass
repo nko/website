@@ -65,9 +65,6 @@ input[type=password], input[type=email], input[type=text], textarea
   //:background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.1), transparent 10%, transparent)
   +rounded
   +shadow
-textarea
-  :font-size small
-  :width 34em
 
 input.error
   +shadow(0px, 0px, 10px, hsla(359, 100%, 33%, 0.8))
@@ -138,6 +135,7 @@ input.error
 
 form#delete
   :display inline
+  :padding-left 1em
 
 #page
   :width 70ex
@@ -368,6 +366,8 @@ aside#pullout
     :padding-left 0px
     :margin-left 0px
     :margin-top 0px
+  textarea
+    :height 6em
 
 .body.teams-index
   .teams
@@ -406,6 +406,8 @@ aside#pullout
     .voter
       :float left
       :width 180px
+      h3
+        :margin 0px 0px 1em
       img
         :float left
         :margin-right 5px
@@ -445,10 +447,12 @@ aside#pullout
     :text-align center
     :margin-top 0.5em
 
-.body.people-edit
+.body.people-edit, .body.teams-edit
   h2
     :margin-top 1.5em
     :border-bottom solid 1px hsla(0, 0%, 0%, 0.2)
+  h2:first-of-type
+    :margin-top 0px
 
 .body.judging, .body.judges-index
   .judge
@@ -502,9 +506,10 @@ aside#pullout
   input.button
     :float right
   .email_hidden
-    :margin 0.5em 0em
     :font-size small
+    :margin 0.5em 0em
   textarea
+    :font-size medium
     :width 97%
 .clear
   :clear both

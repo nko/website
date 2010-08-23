@@ -1,7 +1,11 @@
 !!! 5
 %html{ lang: 'en' }
   %head
-    %title Node.js Knockout
+    %title
+      - if (ctx.title)
+        = ctx.title
+        &nbsp;&mdash;&nbsp;
+      Node.js Knockout
     %meta{ charset: 'utf-8' }
     %meta{ 'http-equiv': "X-UA-Compatible", content: "IE=EmulateIE7" }
     %link{ rel: 'stylesheet', type: 'text/css', href: '/stylesheets/application.css' }

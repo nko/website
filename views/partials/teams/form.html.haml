@@ -1,9 +1,34 @@
-%h2
-  %label{ for: 'name' } Team Name
+%h2 Application
+
+%h3
+  %label{ for: 'application' } Name
+.note Name your creation.
+%input{ type: 'text', name: 'application', id: 'application', value: ctx.team.application }
+
+%h3
+  %label{ for: 'description' } Description
+.note What&rsquo;s your application do?
+%textarea{ name: 'description', id: 'description' }= ctx.team.description
+
+%h3
+  %label{ for: 'colophon' } Colophon
+.note What libraries, icons, web service APIs, tools did you use?
+%textarea{ name: 'colophon', id: 'colophon'}= ctx.team.colophon
+
+%h3
+  %label{ for: 'link' } Screencast / Info URL
+.note Sometimes people like watching videos of things.
+%input{ type: 'text', name: 'link', id: 'link', value: ctx.team.link }
+
+
+%h2 Team
+
+%h3
+  %label{ for: 'name' } Name
 .note Uh oh, you have to be witty now.
 %input{ type: 'text', placeholder: 'Clever Team Name', name: 'name', id: 'name', value: ctx.team.name }
 
-%h2 Team Member Emails
+%h3 Member Emails
 .note We don&rsquo;t spam. Teams can have 1-4 people.
 %ol#members
   - for (var i = 1; i < 5; i++)

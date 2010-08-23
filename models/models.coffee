@@ -11,11 +11,17 @@ md5 = (str) ->
   hash.digest 'hex'
 
 class Team
-  constructor: (options, fn) ->
-    @joyent_count = options?.joyent_count or 0
+  build: (options) ->
     @name = options?.name or ''
-    @token = Math.uuid()
     @createdAt = new Date()
+    @application = options?.application or ''
+    @description = options?.description or ''
+    @colophon = options?.colophon or ''
+    @link = options?.link or ''
+
+  constructor: (options, fn) ->
+    @build options
+    @token = Math.uuid()
     @setMembers options?.emails, fn
 
   # TODO DRY

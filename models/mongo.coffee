@@ -176,6 +176,7 @@ class Serializer
 
   unpack: (data) ->
     unpacked = new @copy()
+    unpacked.build() if unpacked.build?
     for k, v of data when k isnt 'serializer'
       unpacked[k] = Serializer.unpack v
     unpacked

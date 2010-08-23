@@ -165,6 +165,7 @@ get '/teams/:id', ->
   Team.fromParam @req.param('id'), (error, team) =>
     if team?
       @team = team
+      @title = @team.name
       @editAllowed = @canEditTeam team
 
       people = team.members or []
