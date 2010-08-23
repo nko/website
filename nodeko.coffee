@@ -105,13 +105,6 @@ get '/me', ->
   else
     @redirectToLogin()
 
-get '/*.js', ->
-  try
-    @render "#{@req.params[0]}.js.coffee", { layout: false }, (error, view) =>
-      @res.send view, { 'Content-Type': 'text/javascript' }
-  catch e
-    @next()
-
 get '/register', ->
   if @currentPerson?
     @redirectToTeam @currentPerson, '/'
