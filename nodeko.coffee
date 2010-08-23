@@ -5,9 +5,9 @@ express = require 'express'
 models = require './models/models'
 [Team, Person, Vote] = [models.Team, models.Person, models.Vote]
 
-pub = __dirname + '/public';
+pub = __dirname + '/public'
 app = express.createServer(
-  connect.compiler({ src: pub, enable: ['sass'] }),
+  connect.compiler({ src: pub, enable: ['sass', 'coffee'] }),
   connect.staticProvider(pub)
 )
 
