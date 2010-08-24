@@ -108,6 +108,11 @@ _.extend Mongo,
                 items.push unpacked
                 fn null, items if items.length == array.length
 
+    updateAll: (query, cmd, fn) ->
+      @prototype.collection (error, collection) ->
+        return fn error if error?
+        collection.update Mongo.queryify(query), cmd, (upsert: false, multi: true), fn
+
   InstanceMethods:
     collection: (fn) ->
       Mongo.db.collection @serializer.name, fn
