@@ -76,7 +76,7 @@ class Team
           fn() if --threads is 0
 
   generateSlug: (fn, attempt) ->
-    @slug = attempt || @name.toLowerCase().replace(/\W+/g, '-')
+    @slug = attempt || @name.toLowerCase().replace(/\W+/g, '-').replace(/^-|-$/, '')
     Team.fromParam @slug, (error, existing) =>
       if !existing? or existing.id() == @id()
         fn()  # no conflicts
