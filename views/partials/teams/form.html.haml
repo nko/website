@@ -32,8 +32,8 @@
 
 %h3
   %label{ for: 'name' } Name
-.note Uh oh, you have to be witty now.
-%input{ type: 'text', placeholder: 'Clever Team Name', name: 'name', id: 'name', value: ctx.team.name }
+.note Name changes have been disabled leading up to the contest.
+%input{ type: 'text', placeholder: 'Clever Team Name', name: 'name', id: 'name', value: ctx.team.name, disabled: 'disabled' }
 
 %h3 Member Emails
 .note We don&rsquo;t spam. Teams can have 1-4 people.

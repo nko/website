@@ -2,6 +2,7 @@
 
 var teams = db.Team.find().map(function(t) {
   return {
+    id: t._id.str,
     name: t.name,
     slug: t.slug,
     members: t.members.map(function(m) {
