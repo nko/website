@@ -185,6 +185,9 @@ class Person
       body: message }, (error, body, response) ->
         fn()
 
+  confirmVotes: (fn) ->
+    Vote.updateAll { 'person._id': @_id, confirmed: false }, { $set: { confirmed: true }}, fn
+
   authKey: ->
     @id() + ':' + @token
 
@@ -229,11 +232,18 @@ _.extend Person, {
       person.token = Math.uuid()
 
       person.confirmed ?= true # grandfather old people in
-      person.confirmed = true if person.new_password
-      person.new_password = false
+      if person.new_password
+        confirm_votes = true
+        person.confirmed = true
+        person.new_password = false
 
       person.save (errors, resp) ->
-        fn null, person
+        if confirm_votes
+          # TODO flash "your votes have been confirmed"
+          person.confirmVotes (errors) ->
+            fn errors, person
+        else
+          fn null, person
 
   firstByAuthKey: (authKey, fn) ->
     [id, token] = authKey.split ':' if authKey?
@@ -258,6 +268,7 @@ class Vote
     @comment = options?.comment
     @email = options?.email?.trim()?.toLowerCase()
     @person = options?.person
+    @confirmed = !! options?.person?.confirmed
 
     @remoteAddress = request?.socket?.remoteAddress
     @remotePort = request?.socket?.remotePort
