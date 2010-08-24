@@ -169,7 +169,7 @@ class Person
       email: #{@email}
       password: #{@password}
 
-      Please sign in to confirm your votes: http://nodeknockout.com/login?email=#{@email}&password=#{@password}
+      Please sign in to confirm your votes: http://nodeknockout.com/login?email=#{escapeURL @email}&password=#{@password}
 
       Thanks!
       The Node.js Knockout Organizers
