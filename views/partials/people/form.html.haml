@@ -2,7 +2,7 @@
   %label{ for: 'name' } Name
 %input{ type: 'text', name: 'name', id: 'name', value: ctx.person.name, autofocus: true }
 
-- if (!ctx.person.type || ctx.person.type === 'Participant')
+- if (ctx.person.type === 'Participant')
   %h3
     %label{ for: 'github' } GitHub username
     .note
@@ -16,9 +16,9 @@
   %label{ for: 'email' } Email
 .note
   We don&rsquo;t spam.&nbsp;
-  - if (!ctx.person.type || ctx.person.type === 'Participant')
+  - if (ctx.person.type === 'Participant')
     Only visible to team members.
-  - if (!(!ctx.person.type || ctx.person.type === 'Participant'))
+  - if (ctx.person.type !== 'Participant')
     Only visible to you.
 %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.person.email }
 
@@ -28,21 +28,23 @@
 .hidden
   %input{ type: 'password', name: 'password', id: 'password' }
 
-%h2 Optional
-%h3
-  %label{ for: 'link' } Link
-  .note Let other people know who you are.
-%input.url{ type: 'text', name: 'link', id: 'link', value: ctx.person.link || 'http://' }
-
-- if (ctx.person.type === 'Judge')
-  %h3
-    %label{ for: 'signature' } Signature
-    .note A one-liner that is put after every comment.
-  %textarea{ name: 'signature', id: 'signature' }= ctx.person.signature
+- if (ctx.person.type !== 'Voter')
+  %h2 Optional
+  - if (ctx.person.type === 'Participant')
+    %h3
+      %label{ for: 'link' } Link
+      .note Let other people know who you are.
+    %input.url{ type: 'text', name: 'link', id: 'link', value: ctx.person.link || 'http://' }
   
-  %h3
-    %label{ for: 'description' } Description
-    .note
-      A bio for the
-      != ' <a href="/judging">judges page</a>.'
-  %textarea{ name: 'description', id: 'description', rows: 10 }= ctx.person.description
+  - if (ctx.person.type === 'Judge')
+    %h3
+      %label{ for: 'signature' } Signature
+      .note A one-liner that is put after every comment.
+    %textarea{ name: 'signature', id: 'signature' }= ctx.person.signature
+    
+    %h3
+      %label{ for: 'description' } Description
+      .note
+        A bio for the
+        != ' <a href="/judging">judges page</a>.'
+    %textarea{ name: 'description', id: 'description', rows: 10 }= ctx.person.description
