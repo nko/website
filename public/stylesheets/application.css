@@ -470,7 +470,7 @@ aside#pullout {
   margin-top: 0px; }
 .body.people-edit .note, .body.teams-edit .note, .body.people-new .note, .body.teams-edit .note {
   font-size: small; }
-.body.people-edit input[type=text], .body.people-edit textarea, .body.teams-edit input[type=text], .body.teams-edit textarea, .body.people-new input[type=text], .body.people-new textarea, .body.teams-edit input[type=text], .body.teams-edit textarea {
+.body.people-edit input[type=text], .body.people-edit input[type=password], .body.people-edit textarea, .body.teams-edit input[type=text], .body.teams-edit input[type=password], .body.teams-edit textarea, .body.people-new input[type=text], .body.people-new input[type=password], .body.people-new textarea, .body.teams-edit input[type=text], .body.teams-edit input[type=password], .body.teams-edit textarea {
   font-size: large;
   width: 24em; }
 
