@@ -10,6 +10,11 @@ md5 = (str) ->
   hash.update str
   hash.digest 'hex'
 
+validEmail = (email) ->
+  /^[a-zA-Z0-9+._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test email
+
+escapeURL = require('querystring').escape
+
 class Team
   constructor: (options, fn) ->
     @joyent_count = options?.joyent_count or 0
@@ -148,7 +153,7 @@ class Person
       #{if @password then 'password: ' + @password else 'and whatever password you already set'}
 
       You still need to complete your registration.
-      Please sign in at: http://nodeknockout.com/login?email=#{@email}&password=#{@password} to do so.
+      Please sign in at: http://nodeknockout.com/login?email=#{escapeURL @email}&password=#{@password} to do so.
 
 
       Thanks!
@@ -172,7 +177,7 @@ class Person
     @save fn
 
   validate: ->
-    ['Invalid email address'] unless /^[a-zA-Z0-9+._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test @email
+    ['Invalid email address'] unless validEmail @email
 
   beforeSave: (fn) ->
     @calculateHashes()
@@ -200,7 +205,8 @@ class Person
 
 _.extend Person, {
   login: (credentials, fn) ->
-    @first { email: /^#{credentials.email}$/i }, (error, person) ->
+    return fn ['Invalid email address'] unless validEmail credentials.email
+    @first { email: credentials.email.trim().toLowerCase() }, (error, person) ->
       return fn ['Unknown email'] unless person?
       return fn ['Invalid password'] unless person.passwordHash is md5 credentials.password
       person.token = Math.uuid()
