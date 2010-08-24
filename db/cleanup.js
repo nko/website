@@ -4,13 +4,17 @@ function pp(a) {
 }
 
 // lowercase emails
+print("--- uppercase letter in email:");
 pp(db.Person.find({email:/[A-Z]/}, {email:1}));
+print("--- downcasing");
 db.Person.find({email:/[A-Z]/}).forEach(function(p) { p.email = p.email.toLowerCase(); db.Person.save(p) });
+print("--- post-downcase uppercase letter in email total:");
 pp(db.Person.count({email:/[A-Z]/}));
 
 // fix Tj email
+print("--- tweaking tj's email");
 pp(db.Person.find({ name: 'Tj Holowaychuk' }, { name: 1, email: 1 }));
-db.Person.update({ name: 'Tj Holowaychuk' }, { $set: { email: 'tjholowayhuk@gmail.com' } }, false, false)
+db.Person.update({ name: 'Tj Holowaychuk' }, { $set: { email: 'tj@vision-media.ca' } }, false, false)
 pp(db.Person.find({ name: 'Tj Holowaychuk' }, { name: 1, email: 1 }));
 
 // find dupes
@@ -37,17 +41,21 @@ function findDupes() {
 // remove duplicate emails
 dupes = findDupes()
 invalid = dupes.filter(function(d) { return d.type == 'Participant' && !d.teams.length })
+print("--- duplicates:");
 pp(dupes)
-pp(invalid)
 
+print("--- duplicate stats:");
 pp({ dupes: dupes.length, invalid: invalid.length, people: db.Person.count() })
 db.Person.remove({ _id: { $in: invalid.map(function(i) { return i._id; }) } })
+print("--- post-remove duplicate stats:");
 pp({ dupes: findDupes(), people: db.Person.count() })
 
 // clear votes
+print("--- clearing votes");
 db.Vote.remove({})
 
 // ensure uniqueness at the db level
+print("--- creating indexes");
 db.Person.ensureIndex({email: 1}, {unique: true});
 db.Team.ensureIndex({slug: 1}, {unique: true});
 db.Vote.ensureIndex({'team._id': 1, 'person._id': 1}, {unique: true});
