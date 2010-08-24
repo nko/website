@@ -281,6 +281,7 @@ class Vote
           @person.welcomeVoter fn
     else
       if @isNew()
+        @email ?= @person?.email
         @checkDuplicate fn
       else fn()
 
