@@ -21,16 +21,17 @@
   - if (!ctx.team.application && ctx.editAllowed)
     .note
       You don&rsquo;t have a description for your application yet.
-      != ' <a href="/teams/' + ctx.team.toParam() + '/edit">Edit now</a>.'
+      != ' <a href="/teams/' + ctx.team.toParam() + '/edit">Edit it now</a>.'
 
 %h3 Who
 %ul#members
   - each member in ctx.members
     %li
+      != gravatar(member, 30)
       - if (member.link)
         %a{ href: member.link }= member.name
       - if (!member.link)
-        = member.name
+        %span= member.name
       - if (ctx.currentPerson && member.id() === ctx.currentPerson.id())
         &nbsp;&ndash;
         %a{ href: '/people/' + member.toParam() + '/edit' } that&rsquo;s you!

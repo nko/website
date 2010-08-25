@@ -436,6 +436,16 @@ aside#pullout {
   width: 375px; }
 .body.teams-show .description h4 {
   margin: 0px 0px 1em; }
+.body.teams-show ul#members {
+  list-style-type: none;
+  padding-left: 0px; }
+  .body.teams-show ul#members img {
+    vertical-align: middle;
+    margin: 2px;
+    padding: 2px;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
 .body.teams-show .votes {
   list-style-type: none;
   padding-left: 0px; }
