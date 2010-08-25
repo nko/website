@@ -431,7 +431,9 @@ aside#pullout {
 .body.teams-show .description h2 {
   margin-top: 0px;
   overflow: hidden;
-  text-overflow: ellipsis; }
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 375px; }
 .body.teams-show .description h4 {
   margin: 0px 0px 1em; }
 .body.teams-show .votes {
