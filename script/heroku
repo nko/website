@@ -1,0 +1,19 @@
+#!/bin/bash
+
+APP=$1   # e.g. fortnightlabs-nko
+USER=$2  # e.g. gerads@gmail.com
+
+# create app
+heroku create $APP
+
+# slug.heroku.nodeknockout.com
+heroku addons:add custom_domains:basic --app $APP
+heroku domains:add $APP.heroku.nodeknockout.com --app $APP
+
+# post deploy hook
+heroku addons:add deployhooks:http url=http://nodeknockout.com/deploys --app $APP
+
+# give them the app
+heroku sharing:add $USER --app $APP
+# TODO add all users
+heroku sharing:transfer $USER --app $APP
