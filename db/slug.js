@@ -1,5 +1,5 @@
 db.Team.find().forEach(function(t) {
-  t.slug = t.name.toLowerCase().replace(/\W+/g, '-');
+  t.slug = t.name.toLowerCase().replace(/\W+/g, '-').replace(/^-|-$/, '');
   db.Team.save(t);
 });
 
