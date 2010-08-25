@@ -9,7 +9,8 @@
       %h2
         %a{ href: ctx.team.url }= ctx.team.url.replace(/^http:\/\//, '')
       %h4= 'by ' + ctx.team.name
-      %a.button{ href: '#your_vote' } Vote &raquo;
+      - if (ctx.isAdmin)
+        %a.button{ href: '#your_vote' } Vote &raquo;
     .clear
     != markdown(ctx.team.description)
     %a{ href: ctx.team.link } More info &raquo;
