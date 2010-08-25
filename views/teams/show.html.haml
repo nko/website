@@ -33,7 +33,7 @@
       - if (!member.link)
         %span= member.name
       - if (ctx.currentPerson && member.id() === ctx.currentPerson.id())
-        &nbsp;&ndash;
+        &ndash;
         %a{ href: '/people/' + member.toParam() + '/edit' } that&rsquo;s you!
   - if (ctx.invites.length && ctx.editAllowed)
     - each invite in ctx.invites
