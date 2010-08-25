@@ -46,6 +46,7 @@ request = (type) ->
             opts.locals.ctx = ctx
             res.render file, opts, fn
           currentPerson: person
+          isAdmin: person? && person.admin()
           setCurrentPerson: (person, options) ->
             @cookie 'authKey', person?.authKey(), options
           redirectToTeam: (person, alternatePath) ->
@@ -64,10 +65,9 @@ request = (type) ->
             else fn()
           canEditTeam: (team) ->
             req.cookies.teamauthkey is team.authKey() or
-              team.hasMember(@currentPerson) or
-              (@currentPerson? and @currentPerson.admin())
+              team.hasMember(@currentPerson) or @isAdmin
           ensurePermitted: (other, fn) ->
-            permitted = (@currentPerson? and @currentPerson.admin() or
+            permitted = (@isAdmin or
               other.hasMember? and @canEditTeam(other) or
               !other.hasMember? and @currentPerson? and other.id() is @currentPerson.id())
             if permitted then fn()
@@ -133,25 +133,23 @@ get '/teams', ->
 
 # new team
 get '/teams/new', ->
-  unless @currentPerson? and @currentPerson.admin()
-    @redirect '/'
-  else
-    @team = new Team {}, =>
-      @render 'teams/new.html.haml'
+  return @redirect '/' unless @isAdmin
+
+  @team = new Team {}, =>
+    @render 'teams/new.html.haml'
 
 # create team
 post '/teams', ->
-  unless @currentPerson? and @currentPerson.admin()
-    @redirect '/'
-  else
-    @team = new Team @req.body, =>
-      @team.save (errors, res) =>
-        if errors?
-          @errors = errors
-          @render 'teams/new.html.haml'
-        else
-          @cookie 'teamAuthKey', @team.authKey()
-          @redirect '/teams/' + @team.toParam()
+  return @redirect '/' unless @isAdmin
+
+  @team = new Team @req.body, =>
+    @team.save (errors, res) =>
+      if errors?
+        @errors = errors
+        @render 'teams/new.html.haml'
+      else
+        @cookie 'teamAuthKey', @team.authKey()
+        @redirect '/teams/' + @team.toParam()
 
 # show team
 get '/teams/:id', ->
@@ -235,6 +233,8 @@ get '/teams/:teamId/invite/:personId', ->
 
 # new vote
 get '/teams/:teamId/votes/new', ->
+  return @redirect '/teams/' + @req.param('teamId') unless @isAdmin
+
   Team.fromParam @req.param('teamId'), (error, team) =>
     # TODO: handle error
     @team = team
@@ -244,6 +244,8 @@ get '/teams/:teamId/votes/new', ->
 
 # create vote
 post '/teams/:teamId/votes', ->
+  return @redirect '/teams/' + @req.param('teamId') unless @isAdmin
+
   Team.fromParam @req.param('teamId'), (error, team) =>
     # TODO: handle error
     @vote = new Vote @req.body, @req
@@ -261,8 +263,7 @@ post '/teams/:teamId/votes', ->
 
 # list votes
 get '/teams/:teamId/votes', ->
-  Team.fromParam @req.param('teamId'), (error, team) =>
-    @redirect '/teams/' + team.toParam()
+  @redirect '/teams/' + @req.param('teamId')
 
 get '/teams/:teamId/votes.js', ->
   skip = 50 * ((@req.query['page'] || 1)-1)
