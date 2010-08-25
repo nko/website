@@ -13,7 +13,8 @@
         %a.button{ href: '#your_vote' } Vote &raquo;
     .clear
     != markdown(ctx.team.description)
-    %a{ href: ctx.team.link } More info &raquo;
+    - if (ctx.team.link)
+      %a{ href: ctx.team.link } More info &raquo;
   - if (!ctx.team.application && ctx.editAllowed)
     .note
       You don&rsquo;t have a description for your application yet.
