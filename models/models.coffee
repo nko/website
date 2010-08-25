@@ -23,6 +23,7 @@ class Team
     @description = options?.description or ''
     @colophon = options?.colophon or ''
     @link = options?.link or ''
+    @url = options?.url or ''
 
   constructor: (options, fn) ->
     @build options

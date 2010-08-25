@@ -1,39 +1,7 @@
-%h2 Application
-%p
-  Feel free to fill out this information any time before coding ends. Use it
-  to help judges get an idea of what you&rsquo;ve accomplished.
-
-%h3
-  %label{ for: 'application' } Name
-.note Name your creation.
-%input{ type: 'text', name: 'application', id: 'application', value: ctx.team.application }
-
-%h3
-  %label{ for: 'description' } Description
-.note
-  What&rsquo;s your application do?
-  != ' (<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> ok)'
-%textarea{ name: 'description', id: 'description' }= ctx.team.description
-
-%h3
-  %label{ for: 'colophon' } Colophon
-.note
-  What libraries, icons, web service APIs, tools did you use?
-  != ' (<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> ok)'
-%textarea{ name: 'colophon', id: 'colophon'}= ctx.team.colophon
-
-%h3
-  %label{ for: 'link' } Screencast / Info URL
-.note Sometimes people like watching videos of things.
-%input{ type: 'text', name: 'link', id: 'link', value: ctx.team.link }
-
-
-%h2 Team
-
 %h3
   %label{ for: 'name' } Name
 .note Name changes have been disabled leading up to the contest.
-%input{ type: 'text', placeholder: 'Clever Team Name', name: 'name', id: 'name', value: ctx.team.name, disabled: ctx.isAdmin ? '' : 'disabled' }
+%input{ type: 'text', placeholder: 'Clever Team Name', name: 'name', id: 'name', value: ctx.team.name, disabled: 'disabled' }
 
 %h3 Member Emails
 .note We don&rsquo;t spam. Teams can have 1-4 people.
