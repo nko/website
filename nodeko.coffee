@@ -76,8 +76,7 @@ request = (type) ->
                 @redirectToLogin()
               else
                 # TODO flash "Oops! You don't have permissions to see that. Try logging in as somebody else."
-                @logout =>
-                  @redirectToLogin()}
+                @redirectToLogin()}
         try
           __bind(fn, ctx)()
         catch e
