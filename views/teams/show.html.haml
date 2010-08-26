@@ -2,45 +2,7 @@
 .clear
 
 - if (!ctx.team.url && ctx.canEditTeam(ctx.team))
-  .deploy
-    %h3 NOT YET DEPLOYED
-    %p.note
-      You can deploy to either Joyent or Heroku.
-      %br
-      We will use the server that was most recently deployed to.
-    %table
-      %tr
-        %th Joyent
-        %th Heroku
-      %tr
-        %td
-          %ol
-            %li
-              %a{ href: 'http://no.de/signup' }
-                Provision a free SmartMachine
-              .coupon
-                with coupon code:
-                %strong
-                  = ' ' + ctx.team.joyentCode
-            %li
-              %code
-                git remote add joyent \\<br/> ssh://node@
-                = ctx.team.slug.replace(/^(\d)/, 'ko-$1')
-                \.no.de/repo
-            %li
-              %code git push joyent
-        %td
-          %ol
-            %li
-              We&rsquo;ll create a Heroku app for you
-              .coupon &nbsp;
-            %li
-              %code
-                git remote add heroku \\<br/> git@heroku.com:
-                = ctx.team.slug
-                \-nko.git
-            %li
-              %code git push heroku
+  != partial("teams/deploy.html.haml", { locals: { ctx: ctx } })
 
 - if (ctx.team.description)
   .application

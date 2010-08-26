@@ -46,7 +46,7 @@ request = (type) ->
           render: (file, opts, fn) ->
             opts ||= {}
             opts.locals ||= {}
-            opts.locals.view = file.replace(/\..*$/,'').replace(/\//,'-')
+            opts.locals.view = file.replace(/\..*$/,'').replace(/\//g,'-')
             opts.locals.ctx = ctx
             res.render file, opts, fn
           currentPerson: person
@@ -93,6 +93,23 @@ get = request 'get'
 post = request 'post'
 put = request 'put'
 del = request 'del'
+
+# redirect foo.nodeknockout.com -> team foo's app
+app.use (req, res, next) ->
+  host = req.headers.host.toLowerCase()
+  return next() if host == 'nodeknockout.com' || host == 'www.nodeknockout.com'
+
+  prefix = host.split('.')[0]
+  Team.first { applicationSlug: prefix }, (error, team) =>
+    if team
+      if team.url
+        res.redirect team.url
+      else
+        req.url = "/teams/#{team.toParam()}/deploys/pending"
+        next()
+    else
+      # TODO 404!
+      next()
 
 get /.*/, ->
   [host, path] = [@req.header('host'), @req.url]
@@ -289,6 +306,12 @@ get '/teams/:teamId/votes.js', ->
     Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]], skip: skip, limit: 50 }, (error, votes) =>
       @votes = votes
       @render 'partials/votes/index.html.jade', { layout: false }
+
+# missing application deploy
+get '/teams/:id/deploys/pending', ->
+  Team.fromParam @req.param('id'), (error, team) =>
+    @team = team
+    @render 'partials/teams/deploy.html.haml'
 
 # sign in
 get '/login', ->
