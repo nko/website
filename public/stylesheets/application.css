@@ -400,11 +400,11 @@ aside#pullout {
   font-style: italic;
   font-size: x-small; }
 
-.body.teams-show h1, .body.partials-teams-deploy h1 {
+.body.teams-show h1 {
   margin-right: 1ex; }
-.body.teams-show form#delete, .body.partials-teams-deploy form#delete {
+.body.teams-show form#delete {
   display: inline-block; }
-.body.teams-show .deploy, .body.partials-teams-deploy .deploy {
+.body.teams-show .deploy {
   background-color: white;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 10px;
@@ -417,7 +417,7 @@ aside#pullout {
   background-image: -moz-linear-gradient(-90deg, rgba(0, 0, 0, 0.07), transparent 4%);
   text-align: center;
   margin-bottom: 1em; }
-  .body.teams-show .deploy h3, .body.partials-teams-deploy .deploy h3 {
+  .body.teams-show .deploy h3 {
     margin: 0px;
     background-color: #a80003;
     font-size: 48px;
@@ -427,32 +427,32 @@ aside#pullout {
     padding: 0.25em 0px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px; }
-  .body.teams-show .deploy table, .body.partials-teams-deploy .deploy table {
+  .body.teams-show .deploy table {
     border-collapse: collapse;
     width: 100%; }
-  .body.teams-show .deploy th, .body.partials-teams-deploy .deploy th {
+  .body.teams-show .deploy th {
     background-color: rgba(0, 0, 0, 0.1);
     padding: 0.5em 0px;
     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5); }
-  .body.teams-show .deploy td, .body.partials-teams-deploy .deploy td {
+  .body.teams-show .deploy td {
     width: 50%;
     padding: 0px 10px;
     vertical-align: top; }
-    .body.teams-show .deploy td:first-child, .body.partials-teams-deploy .deploy td:first-child {
+    .body.teams-show .deploy td:first-child {
       border-right: solid 1px #eeeeee;
       border-right: solid 1px rgba(0, 0, 0, 0.1); }
-  .body.teams-show .deploy ol, .body.partials-teams-deploy .deploy ol {
+  .body.teams-show .deploy ol {
     padding-left: 20px;
     text-align: left; }
-    .body.teams-show .deploy ol li, .body.partials-teams-deploy .deploy ol li {
+    .body.teams-show .deploy ol li {
       margin: 0.25em 0px; }
-    .body.teams-show .deploy ol .coupon, .body.partials-teams-deploy .deploy ol .coupon {
+    .body.teams-show .deploy ol .coupon {
       font-size: small; }
-      .body.teams-show .deploy ol .coupon strong, .body.partials-teams-deploy .deploy ol .coupon strong {
+      .body.teams-show .deploy ol .coupon strong {
         font-family: inconsolata, menlo, monospace; }
-  .body.teams-show .deploy code, .body.partials-teams-deploy .deploy code {
+  .body.teams-show .deploy code {
     font-family: inconsolata, menlo, monospace; }
-.body.teams-show .application, .body.partials-teams-deploy .application {
+.body.teams-show .application {
   background-color: white;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 10px;
@@ -460,7 +460,7 @@ aside#pullout {
   -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px; }
-.body.teams-show #screenshot, .body.partials-teams-deploy #screenshot {
+.body.teams-show #screenshot {
   -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
   width: 160px;
@@ -468,36 +468,36 @@ aside#pullout {
   float: left;
   margin-right: 10px;
   text-align: center; }
-  .body.teams-show #screenshot .note, .body.partials-teams-deploy #screenshot .note {
+  .body.teams-show #screenshot .note {
     display: inline-block;
     margin-top: 2em;
     font-weight: bold;
     color: #cccccc; }
-  .body.teams-show #screenshot img, .body.partials-teams-deploy #screenshot img {
+  .body.teams-show #screenshot img {
     width: 100%;
     height: 100%; }
-.body.teams-show .description h2, .body.partials-teams-deploy .description h2 {
+.body.teams-show .description h2 {
   margin-top: 0px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 375px; }
-.body.teams-show .description h4, .body.partials-teams-deploy .description h4 {
+.body.teams-show .description h4 {
   margin: 0px 0px 1em; }
-.body.teams-show ul#members, .body.partials-teams-deploy ul#members {
+.body.teams-show ul#members {
   list-style-type: none;
   padding-left: 0px; }
-  .body.teams-show ul#members img, .body.partials-teams-deploy ul#members img {
+  .body.teams-show ul#members img {
     vertical-align: middle;
     margin: 2px;
     padding: 2px;
     background-color: white;
     -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
-.body.teams-show .votes, .body.partials-teams-deploy .votes {
+.body.teams-show .votes {
   list-style-type: none;
   padding-left: 0px; }
-.body.teams-show .votes li, .body.teams-show #your_vote, .body.partials-teams-deploy .votes li, .body.partials-teams-deploy #your_vote {
+.body.teams-show .votes li, .body.teams-show #your_vote {
   background-color: white;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 10px;
@@ -506,50 +506,50 @@ aside#pullout {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   margin: 0.5em 0px 0.5em -10px; }
-  .body.teams-show .votes li .voter, .body.teams-show #your_vote .voter, .body.partials-teams-deploy .votes li .voter, .body.partials-teams-deploy #your_vote .voter {
+  .body.teams-show .votes li .voter, .body.teams-show #your_vote .voter {
     float: left;
     width: 180px; }
-    .body.teams-show .votes li .voter h3, .body.teams-show #your_vote .voter h3, .body.partials-teams-deploy .votes li .voter h3, .body.partials-teams-deploy #your_vote .voter h3 {
+    .body.teams-show .votes li .voter h3, .body.teams-show #your_vote .voter h3 {
       margin: 0px 0px 1em; }
-    .body.teams-show .votes li .voter img, .body.teams-show #your_vote .voter img, .body.partials-teams-deploy .votes li .voter img, .body.partials-teams-deploy #your_vote .voter img {
+    .body.teams-show .votes li .voter img, .body.teams-show #your_vote .voter img {
       float: left;
       margin-right: 5px;
       padding: 2px;
       -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
       -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
-    .body.teams-show .votes li .voter .details, .body.teams-show #your_vote .voter .details, .body.partials-teams-deploy .votes li .voter .details, .body.partials-teams-deploy #your_vote .voter .details {
+    .body.teams-show .votes li .voter .details, .body.teams-show #your_vote .voter .details {
       font-size: small;
       font-style: italic;
       line-height: 125%;
       color: rgba(0, 0, 0, 0.4); }
-    .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time, .body.partials-teams-deploy .votes li .voter time, .body.partials-teams-deploy #your_vote .voter time {
+    .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time {
       display: block; }
-  .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote, .body.partials-teams-deploy .votes li .vote, .body.partials-teams-deploy #your_vote .vote {
+  .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote {
     margin-left: 180px; }
-    .body.teams-show .votes li .vote p, .body.teams-show #your_vote .vote p, .body.partials-teams-deploy .votes li .vote p, .body.partials-teams-deploy #your_vote .vote p {
+    .body.teams-show .votes li .vote p, .body.teams-show #your_vote .vote p {
       white-space: pre; }
-  .body.teams-show .votes li .dimensions, .body.teams-show #your_vote .dimensions, .body.partials-teams-deploy .votes li .dimensions, .body.partials-teams-deploy #your_vote .dimensions {
+  .body.teams-show .votes li .dimensions, .body.teams-show #your_vote .dimensions {
     font-size: small; }
-    .body.teams-show .votes li .dimensions label, .body.teams-show #your_vote .dimensions label, .body.partials-teams-deploy .votes li .dimensions label, .body.partials-teams-deploy #your_vote .dimensions label {
+    .body.teams-show .votes li .dimensions label, .body.teams-show #your_vote .dimensions label {
       display: block; }
-    .body.teams-show .votes li .dimensions td, .body.teams-show .votes li .dimensions th, .body.teams-show #your_vote .dimensions td, .body.teams-show #your_vote .dimensions th, .body.partials-teams-deploy .votes li .dimensions td, .body.partials-teams-deploy .votes li .dimensions th, .body.partials-teams-deploy #your_vote .dimensions td, .body.partials-teams-deploy #your_vote .dimensions th {
+    .body.teams-show .votes li .dimensions td, .body.teams-show .votes li .dimensions th, .body.teams-show #your_vote .dimensions td, .body.teams-show #your_vote .dimensions th {
       padding-right: 2ex;
       min-width: 81px; }
-  .body.teams-show .votes li.header, .body.teams-show #your_vote.header, .body.partials-teams-deploy .votes li.header, .body.partials-teams-deploy #your_vote.header {
+  .body.teams-show .votes li.header, .body.teams-show #your_vote.header {
     padding: 2px 10px; }
-  .body.teams-show .votes li.small, .body.teams-show #your_vote.small, .body.partials-teams-deploy .votes li.small, .body.partials-teams-deploy #your_vote.small {
+  .body.teams-show .votes li.small, .body.teams-show #your_vote.small {
     padding: 2px 10px;
     margin: 0px 0px 0px -10px; }
-    .body.teams-show .votes li.small label, .body.teams-show #your_vote.small label, .body.partials-teams-deploy .votes li.small label, .body.partials-teams-deploy #your_vote.small label {
+    .body.teams-show .votes li.small label, .body.teams-show #your_vote.small label {
       display: none; }
-    .body.teams-show .votes li.small img, .body.teams-show #your_vote.small img, .body.partials-teams-deploy .votes li.small img, .body.partials-teams-deploy #your_vote.small img {
+    .body.teams-show .votes li.small img, .body.teams-show #your_vote.small img {
       display: none; }
-    .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter, .body.partials-teams-deploy .votes li.small .voter, .body.partials-teams-deploy #your_vote.small .voter {
+    .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter {
       font-size: x-small; }
-      .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time, .body.partials-teams-deploy .votes li.small .voter time, .body.partials-teams-deploy #your_vote.small .voter time {
+      .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time {
         display: inline;
         font-size: x-small; }
-.body.teams-show .more, .body.partials-teams-deploy .more {
+.body.teams-show .more {
   text-align: center;
   margin-top: 0.5em; }
 
@@ -627,6 +627,3 @@ aside#pullout {
 
 .clear {
   clear: both; }
-
-body.partials-teams-deploy nav, body.partials-teams-deploy aside {
-  display: none !important; }
