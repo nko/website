@@ -141,7 +141,7 @@ input.error {
   -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
   color: #142229;
-  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.9); }
+  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8); }
   #page header h1#logo {
     text-align: center; }
   #page nav {
@@ -152,7 +152,7 @@ input.error {
     padding: 12px 0px 10px;
     background-color: rgba(126, 150, 153, 0.15);
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.07)), color-stop(0.15, transparent));
-    background-image: -moz-linear-gradient(-90deg, rgba(0, 0, 0, 0.07), transparent 10%);
+    background-image: -moz-linear-gradient(-90deg, rgba(0, 0, 0, 0.07), transparent 15%);
     -webkit-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
     -webkit-border-radius: 3px;
@@ -404,6 +404,48 @@ aside#pullout {
   margin-right: 1ex; }
 .body.teams-show form#delete {
   display: inline-block; }
+.body.teams-show .deploy {
+  background-color: white;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 10px;
+  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  background-color: rgba(126, 150, 153, 0.15);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.07)), color-stop(0.04, transparent));
+  background-image: -moz-linear-gradient(-90deg, rgba(0, 0, 0, 0.07), transparent 4%);
+  text-align: center;
+  margin-bottom: 1em; }
+  .body.teams-show .deploy h3 {
+    margin: 0px 0px 0.5em !important;
+    background-color: #a80003;
+    font-size: 48px;
+    color: white;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.25em 0px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px; }
+  .body.teams-show .deploy table {
+    border-collapse: collapse;
+    width: 100%; }
+  .body.teams-show .deploy th {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.5em 0px;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5); }
+  .body.teams-show .deploy td {
+    width: 50%;
+    padding: 0px 10px;
+    vertical-align: top; }
+    .body.teams-show .deploy td:first-child {
+      border-right: solid 1px #eeeeee;
+      border-right: solid 1px rgba(0, 0, 0, 0.1); }
+  .body.teams-show .deploy ol {
+    padding-left: 20px;
+    text-align: left; }
+  .body.teams-show .deploy code {
+    font-family: monospace; }
 .body.teams-show .application {
   background-color: white;
   background-color: rgba(255, 255, 255, 0.6);
@@ -453,11 +495,11 @@ aside#pullout {
   background-color: white;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 10px;
-  margin: 0.5em 0px 0.5em -10px;
   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   -webkit-border-radius: 3px;
-  -moz-border-radius: 3px; }
+  -moz-border-radius: 3px;
+  margin: 0.5em 0px 0.5em -10px; }
   .body.teams-show .votes li .voter, .body.teams-show #your_vote .voter {
     float: left;
     width: 180px; }

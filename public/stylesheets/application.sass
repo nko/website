@@ -27,6 +27,13 @@ $red: #A80003
   :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
   +shadow(0px, 2px, 5px)
 
+=box
+  :background-color #fff
+  :background-color hsla(0, 0%, 100%, 0.6)
+  :padding 10px
+  +shadow(0px, 1px, 3px)
+  +rounded
+
 pre
   :width 70ex
   :overflow auto
@@ -145,7 +152,7 @@ input.error
   :padding 1em 20px
   +shadow(1px, 1px, 10px, hsla(0, 0%, 0%, 0.2))
   :color $black
-  :text-shadow 0px 1px 0px hsla(0, 0%, 100%, 0.9)
+  :text-shadow 0px 1px 0px hsla(0, 0%, 100%, 0.8)
   header h1#logo
     :text-align center
   nav
@@ -156,7 +163,7 @@ input.error
     :padding 12px 0px 10px
     :background-color rgba(126, 150, 153, 0.15)
     :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 0%, 0.07)), color-stop(0.15, transparent))
-    :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.07), transparent 10%)
+    :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.07), transparent 15%)
     +shadow(0px, 2px, 3px)
     +rounded
     ul
@@ -397,12 +404,43 @@ aside#pullout
     :margin-right 1ex
   form#delete
     :display inline-block
+  .deploy
+    +box
+    :background-color rgba(126, 150, 153, 0.15)
+    :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 0%, 0.07)), color-stop(0.04, transparent))
+    :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.07), transparent 4%)
+    :text-align center
+    :margin-bottom 1em
+    h3
+      :margin 0px 0px 0.5em !important
+      :background-color $red
+      :font-size 48px
+      :color white
+      :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.5)
+      :border 1px solid hsla(0, 0%, 0%, 0.1)
+      :padding 0.25em 0px
+      +rounded
+    table
+      :border-collapse collapse
+      :width 100%
+    th
+      :background-color hsla(0, 0%, 0%, 0.1)
+      :padding 0.5em 0px
+      :text-shadow 0px 1px 0px hsla(0, 0%, 100%, 0.5)
+    td
+      :width 50%
+      :padding 0px 10px
+      :vertical-align top
+      &:first-child
+        :border-right solid 1px #eee
+        :border-right solid 1px hsla(0, 0%, 0%, 0.1)
+    ol
+      :padding-left 20px
+      :text-align left
+    code
+      :font-family monospace
   .application
-    :background-color white
-    :background-color hsla(0, 0%, 100%, 0.6)
-    :padding 10px
-    +shadow(0px, 1px, 3px)
-    +rounded
+    +box
   #screenshot
     +shadow(0px, 0px, 2px)
     :width 160px
@@ -440,12 +478,8 @@ aside#pullout
     :list-style-type none
     :padding-left 0px
   .votes li, #your_vote
-    :background-color white
-    :background-color hsla(0, 0%, 100%, 0.6)
-    :padding 10px
+    +box
     :margin 0.5em 0px 0.5em -10px
-    +shadow(0px, 1px, 3px)
-    +rounded
     .voter
       :float left
       :width 180px
