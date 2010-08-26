@@ -132,10 +132,6 @@ input.error {
   font-size: small;
   color: rgba(0, 0, 0, 0.4); }
 
-form#delete {
-  display: inline;
-  padding-left: 1em; }
-
 #page {
   width: 70ex;
   text-align: left;
@@ -404,6 +400,52 @@ aside#pullout {
   font-style: italic;
   font-size: x-small; }
 
+.body.teams-show h1 {
+  margin-right: 1ex; }
+.body.teams-show form#delete {
+  display: inline-block; }
+.body.teams-show .application {
+  background-color: white;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 10px;
+  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px; }
+.body.teams-show #screenshot {
+  -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  width: 160px;
+  height: 120px;
+  float: left;
+  margin-right: 10px;
+  text-align: center; }
+  .body.teams-show #screenshot .note {
+    display: inline-block;
+    margin-top: 2em;
+    font-weight: bold;
+    color: #cccccc; }
+  .body.teams-show #screenshot img {
+    width: 100%;
+    height: 100%; }
+.body.teams-show .description h2 {
+  margin-top: 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 375px; }
+.body.teams-show .description h4 {
+  margin: 0px 0px 1em; }
+.body.teams-show ul#members {
+  list-style-type: none;
+  padding-left: 0px; }
+  .body.teams-show ul#members img {
+    vertical-align: middle;
+    margin: 2px;
+    padding: 2px;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
 .body.teams-show .votes {
   list-style-type: none;
   padding-left: 0px; }

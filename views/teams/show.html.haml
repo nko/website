@@ -1,49 +1,39 @@
-%h1
+%h1= ctx.team.application || ctx.team.name
+.clear
+.application
   - if (ctx.team.application)
-    = ctx.team.application + ' by '
-  = ctx.team.name
-
-- if (ctx.editAllowed)
-  %form{ method: 'POST', action: '/teams/' + ctx.team.toParam() }#delete
-    %a.button{ href: '/teams/' + ctx.team.toParam() + '/edit' } Edit
-    %input{ type: 'hidden', name: '_method', value: 'delete' }
-    %input.button{ type: 'submit', rel: 'nofollow', value: 'Delete', onclick: "return confirm('Are you sure you want to delete this team?');" }
-
-- if (!ctx.editAllowed)
-  %p.note
-    You&rsquo;re looking at the
-    %a{ href: '/' } Node.js Knockout
-    team profile for
-    != ' <a href="/teams/' + ctx.team.toParam() + '">' + ctx.team.name + '</a>.'
-
-- if (ctx.editAllowed)
-  - if (!ctx.team.application)
-    %p.note
+    #screenshot
+      %span.note Deploy for a screenshot
+      %img{ src: '/images/blank.png' }
+    .description
+      %h2
+        - if (ctx.team.url)
+          %a{ href: ctx.team.url }= ctx.team.url.replace(/^http:\/\//, '')
+        - if (!ctx.team.url)
+          = ctx.team.slug + '.nodeknockout.com'
+      %h4= 'by ' + ctx.team.name
+      - if (ctx.isAdmin)
+        %a.button.important{ href: '#your_vote' } Vote &raquo;
+    .clear
+    != markdown(ctx.team.description)
+    - if (ctx.team.link)
+      %a{ href: ctx.team.link } More info &raquo;
+  - if (!ctx.team.application && ctx.editAllowed)
+    .note
       You don&rsquo;t have a description for your application yet.
-      %a{ href: '/teams/' + ctx.team.toParam() + '/edit' } Edit now
-  - if (!ctx.currentPerson)
-    %p.note
-      Nice work! Your team,
-      != ' <a href="/teams/' + ctx.team.toParam() + '">' + ctx.team.name + '</a>, '
-      is officially registered for Node.js Knockout.
-    
-    %p.note
-      %strong
-        An invitation email with log-in information has been sent to each team member.
-      All team members now need to
-      %a{ href: '/login' } sign in and update their profile information.
+      != ' <a href="/teams/' + ctx.team.toParam() + '/edit">Edit it now</a>.'
 
-%h3 Team Members
-
+%h3 Who
 %ul#members
   - each member in ctx.members
     %li
+      != gravatar(member, 30)
       - if (member.link)
         %a{ href: member.link }= member.name
       - if (!member.link)
-        = member.name
+        %span= member.name
       - if (ctx.currentPerson && member.id() === ctx.currentPerson.id())
-        &nbsp;&ndash;
+        &ndash;
         %a{ href: '/people/' + member.toParam() + '/edit' } that&rsquo;s you!
   - if (ctx.invites.length && ctx.editAllowed)
     - each invite in ctx.invites
@@ -57,13 +47,16 @@
   %p
     = pluralize(ctx.invites.length, 'outstanding invitation')
 
-- if (ctx.team.application)
-  %h3 Description
-  != markdown(ctx.team.description)
-  %h3 Colophon
+- if (ctx.team.colophon)
+  %h3 How
   != markdown(ctx.team.colophon)
-  %h3 Screencast / Info URL
-  %a{ href: ctx.team.link }= ctx.team.link
+
+- if (ctx.editAllowed)
+  %a.button{ href: '/teams/' + ctx.team.toParam() + '/edit' } Edit
+  - if (ctx.isAdmin)
+    %form{ method: 'POST', action: '/teams/' + ctx.team.toParam() }#delete
+      %input{ type: 'hidden', name: '_method', value: 'delete' }
+      %input.button{ type: 'submit', rel: 'nofollow', value: 'Delete', onclick: "return confirm('Are you sure you want to delete this team?');" }
 
 .clear
 
