@@ -374,7 +374,6 @@ put '/people/:id', ->
         @redirectToTeam person
 
 post '/deploys', ->
-  #sys.log sys.inspect(@req)
   # , body: 
      # { user: 'visnupx@gmail.com'
      # , head: '87eaeb6'
@@ -384,6 +383,17 @@ post '/deploys', ->
      # , prev_head: ''
      # , head_long: '87eaeb69d726593de6a47a5f38ff6126fd3920fa'
      # }
+  [ slug, deployedTo ] =
+  if app = @req.param('app')
+    [ app.replace(/-nko$/, ''), 'heroku' ]
+  else
+    [ @req.param('url').replace(/^http:\/\/(ko-)?|\.no\.de$/g, ''), 'joyent' ]
+  Team.fromParam slug, (error, team) =>
+    if team
+      team.url = @req.param('url')
+      team.lastDeployedTo = deployedTo
+      team.lastDeployedAt = new Date()
+      team.save(->)
   @render 'deploys/ok.html.haml', { layout: false }
 
 get '/prizes', ->

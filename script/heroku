@@ -7,8 +7,8 @@ USER=$2  # e.g. gerads@gmail.com
 heroku create $APP
 
 # slug.heroku.nodeknockout.com
-heroku addons:add custom_domains:basic --app $APP
-heroku domains:add $APP.heroku.nodeknockout.com --app $APP
+#heroku addons:add custom_domains:basic --app $APP
+#heroku domains:add $APP.heroku.nodeknockout.com --app $APP
 
 # post deploy hook
 heroku addons:add deployhooks:http url=http://nodeknockout.com/deploys --app $APP
