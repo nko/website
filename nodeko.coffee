@@ -169,7 +169,7 @@ get '/teams/:id', ->
       @team = team
       @title = @team.name
       @editAllowed = @canEditTeam team
-      @url = @team.url || "http://#{@team.applicationSlug}.nodeknockout.com"
+      @url = @team.url || "http://#{@team.application}.nodeknockout.com"
 
       people = team.members or []
       @members = _.select people, (person) -> person.name
@@ -372,6 +372,19 @@ put '/people/:id', ->
       person.update attributes
       person.save (error, resp) =>
         @redirectToTeam person
+
+post '/deploys', ->
+  #sys.log sys.inspect(@req)
+  # , body: 
+     # { user: 'visnupx@gmail.com'
+     # , head: '87eaeb6'
+     # , app: 'visnup-nko'
+     # , url: 'http://visnup-nko.heroku.com'
+     # , git_log: ''
+     # , prev_head: ''
+     # , head_long: '87eaeb69d726593de6a47a5f38ff6126fd3920fa'
+     # }
+  @render 'deploys/ok.html.haml', { layout: false }
 
 get '/prizes', ->
   @render 'prizes.html.jade', { layout: 'layout.haml' }

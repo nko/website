@@ -20,7 +20,6 @@ class Team
     @name = options?.name or ''
     @createdAt = new Date()
     @application = options?.application or ''
-    @applicationSlug = options?.applicationSlug or ''
     @description = options?.description or ''
     @colophon = options?.colophon or ''
     @link = options?.link or ''
@@ -86,12 +85,12 @@ class Team
           fn() if --threads is 0
 
   generateSlug: (fn, attempt) ->
-    @applicationSlug = attempt || @application.toLowerCase().replace(/\W+/g, '-').replace(/^-|-$/, '')
-    Team.first { applicationSlug: @applicationSlug }, (error, existing) =>
+    @slug = attempt || @name.toLowerCase().replace(/\W+/g, '-').replace(/^-|-$/, '')
+    Team.fromParam @slug, (error, existing) =>
       if !existing? or existing.id() == @id()
         fn()  # no conflicts
       else
-        @generateSlug fn, @applicationSlug + '-'  # try with another -
+        @generateSlug fn, @slug + '-'  # try with another -
 
 nko.Team = Team
 
