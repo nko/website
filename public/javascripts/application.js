@@ -117,27 +117,27 @@
         countdown.html((days > 0 ? days + ' day ' : '') + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds');
         return setTimeout(tick, 1000);
       };
-      tick();
-      return $('time').live('hover', function(e) {
-        var $this, _b, dt, ms;
-        if (e.type === 'mouseout') {
-          return $('.localtime').remove();
-        }
-        $this = $(this);
-        _b = $this.attr('datetime').split(/[-:TZ]/);
-        y = _b[0];
-        m = _b[1];
-        d = _b[2];
-        h = _b[3];
-        i = _b[4];
-        s = _b[5];
-        ms = Date.UTC(y, m - 1, d, h, i, s);
-        dt = new Date(ms);
-        return $('<div class="localtime blue">').css({
-          left: e.pageX,
-          top: $(this).position().top + 25
-        }).html(("" + (dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/, '')))).appendTo(document.body);
-      });
+      return tick();
+    });
+    $('.body.index time').live('hover', function(e) {
+      var $this, _a, d, dt, h, i, m, ms, s, y;
+      if (e.type === 'mouseout') {
+        return $('.localtime').remove();
+      }
+      $this = $(this);
+      _a = $this.attr('datetime').split(/[-:TZ]/);
+      y = _a[0];
+      m = _a[1];
+      d = _a[2];
+      h = _a[3];
+      i = _a[4];
+      s = _a[5];
+      ms = Date.UTC(y, m - 1, d, h, i, s);
+      dt = new Date(ms);
+      return $('<div class="localtime blue">').css({
+        left: e.pageX,
+        top: $(this).position().top + 25
+      }).html(("" + (dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/, '')))).appendTo(document.body);
     });
     $('.judge img').each(function() {
       var r;

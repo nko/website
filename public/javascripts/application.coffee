@@ -84,7 +84,7 @@ $ ->
       setTimeout tick, 1000
     tick()
 
-  $('time').live 'hover', (e) ->
+  $('.body.index time').live 'hover', (e) ->
     return $('.localtime').remove() if e.type == 'mouseout'
 
     $this = $(this)
