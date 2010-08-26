@@ -1,3 +1,7 @@
+# this entire application is pretty gross, by our own judgement. we'd love to
+# clean it up, but we'd probably just rewrite the whole thing anyway. you have
+# been warned.
+
 sys = require 'sys'
 connect = require 'connect'
 express = require 'express'
