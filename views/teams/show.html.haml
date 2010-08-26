@@ -3,44 +3,65 @@
 
 - if (!ctx.team.url && ctx.canEditTeam(ctx.team))
   .deploy
-    %h3 NOT YET DEPLOYED
-    %p.note
-      You can deploy to either Joyent or Heroku.
-      %br
-      We will use the server that was most recently deployed to.
-    %table
-      %tr
-        %th Joyent
-        %th Heroku
-      %tr
-        %td
-          %ol
-            %li
-              %a{ href: 'http://no.de/signup' }
-                Provision a free SmartMachine
-              .coupon
-                with coupon code:
-                %strong
-                  = ' ' + ctx.team.joyentCode
-            %li
-              %code
-                git remote add joyent \\<br/> ssh://node@
-                = ctx.team.slug.replace(/^(\d)/, 'ko-$1')
-                \.no.de/repo
-            %li
-              %code git push joyent
-        %td
-          %ol
-            %li
-              We&rsquo;ll create a Heroku app for you
-              .coupon &nbsp;
-            %li
-              %code
-                git remote add heroku \\<br/> git@heroku.com:
-                = ctx.team.slug
-                \-nko.git
-            %li
-              %code git push heroku
+    - if (ctx.team.lastDeployedTo)
+      %h3.green
+        DEPLOYED TO
+        = ' ' + ctx.team.lastDeployedTo.toUpperCase()
+      %a{ href: '#' }.more_info Show setup instructions
+    - if (!ctx.team.lastDeployedTo)
+      %h3 NOT YET DEPLOYED
+    .setup_instructions{ style: 'display:' + (ctx.team.lastDeployedTo ? 'none' : '') }
+      %p.note
+        You can deploy to either Joyent or Heroku.
+        %br
+        We will use the server from the most recent deploy.
+      %table
+        %tr
+          %th{ colspan: 2 }
+            GitHub
+        %tr
+          %td{ colspan: 2 }
+            %ol{ start: '0' }
+              %li.github
+                Get your
+                %a{ href: 'https://github.com/nko/' + escapeURL(ctx.team.slug) } code repository
+                %div
+                  %code
+                    git clone git@github.com:nko/
+                    = ctx.team.slug
+                    \.git
+        %tr
+          %th Joyent
+          %th Heroku
+        %tr
+          %td.rightborder
+            %ol
+              %li
+                %a{ href: 'http://no.de/signup' }
+                  Provision a free SmartMachine
+                .coupon
+                  with coupon code:
+                  %strong
+                    = ' ' + ctx.team.joyentCode
+              %li
+                %code
+                  git remote add joyent \\<br/> ssh://node@
+                  = ctx.team.slug.replace(/^(\d)/, 'ko-$1')
+                  \.no.de/repo
+              %li
+                %code git push joyent
+          %td
+            %ol
+              %li
+                We&rsquo;ll create a Heroku app for you
+                .coupon &nbsp;
+              %li
+                %code
+                  git remote add heroku \\<br/> git@heroku.com:
+                  = ctx.team.slug
+                  \-nko.git
+              %li
+                %code git push heroku
 
 - if (ctx.team.description)
   .application

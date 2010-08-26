@@ -25,6 +25,8 @@ class Team
     @colophon = options?.colophon or ''
     @link = options?.link or ''
     @url = options?.url or ''
+    @lastDeployedTo = options?.lastDeployedTo or ''
+    @lastDeployedAt = options?.lastDeployedAt
 
   constructor: (options, fn) ->
     @build options

@@ -427,18 +427,25 @@ aside#pullout {
     padding: 0.25em 0px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px; }
+  .body.teams-show .deploy h3.green {
+    background-color: #7e9699; }
+  .body.teams-show .deploy a.more_info {
+    display: block;
+    text-align: left;
+    margin: 0.5em 0px 0px; }
   .body.teams-show .deploy table {
     border-collapse: collapse;
     width: 100%; }
   .body.teams-show .deploy th {
-    background-color: rgba(0, 0, 0, 0.1);
+    border-bottom: solid 1px #eeeeee;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 0.5em 0px;
     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5); }
   .body.teams-show .deploy td {
     width: 50%;
     padding: 0px 10px;
     vertical-align: top; }
-    .body.teams-show .deploy td:first-child {
+    .body.teams-show .deploy td.rightborder {
       border-right: solid 1px #eeeeee;
       border-right: solid 1px rgba(0, 0, 0, 0.1); }
   .body.teams-show .deploy ol {
@@ -451,7 +458,8 @@ aside#pullout {
       .body.teams-show .deploy ol .coupon strong {
         font-family: inconsolata, menlo, monospace; }
   .body.teams-show .deploy code {
-    font-family: inconsolata, menlo, monospace; }
+    font-family: inconsolata, menlo, monospace;
+    font-size: small; }
 .body.teams-show .application {
   background-color: white;
   background-color: rgba(255, 255, 255, 0.6);

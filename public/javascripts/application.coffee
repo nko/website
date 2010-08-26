@@ -102,6 +102,12 @@ $ ->
       .css('-webkit-transform', r)
       .css('-moz-transform', r)
 
+  $('.deploy a.more_info').click ->
+    $(this).hide()
+    $('.deploy .setup_instructions').slideDown 'fast'
+    false
+
+
   Stars = {
     value: (elem) ->
       elem.attr('data-value')

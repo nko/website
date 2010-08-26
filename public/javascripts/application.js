@@ -143,6 +143,11 @@
       r = 'rotate(' + new String(Math.random() * 6 - 3) + 'deg)';
       return $(this).css('-webkit-transform', r).css('-moz-transform', r);
     });
+    $('.deploy a.more_info').click(function() {
+      $(this).hide();
+      $('.deploy .setup_instructions').slideDown('fast');
+      return false;
+    });
     Stars = {
       value: function(elem) {
         return elem.attr('data-value');
