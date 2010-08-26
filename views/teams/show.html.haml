@@ -40,6 +40,7 @@
   - if (ctx.invites.length && ctx.editAllowed)
     - each invite in ctx.invites
       %li
+        != gravatar(invite, 30)
         %a{ href: 'mailto:' + invite.email }= invite.email
         invited
         &nbsp;&ndash;&nbsp;
