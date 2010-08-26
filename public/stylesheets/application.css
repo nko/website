@@ -444,8 +444,14 @@ aside#pullout {
   .body.teams-show .deploy ol {
     padding-left: 20px;
     text-align: left; }
+    .body.teams-show .deploy ol li {
+      margin: 0.25em 0px; }
+    .body.teams-show .deploy ol .coupon {
+      font-size: small; }
+      .body.teams-show .deploy ol .coupon strong {
+        font-family: inconsolata, menlo, monospace; }
   .body.teams-show .deploy code {
-    font-family: monospace; }
+    font-family: inconsolata, menlo, monospace; }
 .body.teams-show .application {
   background-color: white;
   background-color: rgba(255, 255, 255, 0.6);

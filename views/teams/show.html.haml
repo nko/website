@@ -16,7 +16,12 @@
         %td
           %ol
             %li
-              %a{ href: '#' } Provision a free SmartMachine
+              %a{ href: 'http://no.de' }
+                Provision a free SmartMachine
+              .coupon
+                Coupon code:
+                %strong
+                  = ' ' + ctx.team.joyentCode
             %li
               %code
                 git remote add joyent \\<br/> ssh://node@
@@ -26,7 +31,9 @@
               %code git push joyent
         %td
           %ol
-            %li We&rsquo;ll create an app for you
+            %li
+              We&rsquo;ll create an app for you
+              .coupon &nbsp;
             %li
               %code
                 git remote add heroku \\<br/> git@heroku.com:nko-
