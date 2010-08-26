@@ -532,6 +532,8 @@ aside#pullout {
   width: 97%; }
 #your_vote input.button {
   float: right; }
+#your_vote #errors {
+  display: none; }
 
 .clear {
   clear: both; }

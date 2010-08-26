@@ -71,6 +71,7 @@
   %h1 Votes
   - if (ctx.vote.isNew())
     %form#your_vote{ method: 'POST', action: '/teams/' + ctx.team.toParam() + '/votes' }
+      != partial("errors.html.haml", { locals: { ctx: ctx } })
       .voter
         %h3 Your Vote
         != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})

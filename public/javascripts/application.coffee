@@ -21,13 +21,16 @@ $ ->
   $('input.url').click ->
     this.select() if @value is @defaultValue
 
+  ajaxForm = (form, options) ->
+    options.type = form.attr('method')
+    options.url = form.attr('action')
+    options.data = form.serialize()
+    $.ajax(options)
+
   $('form.reset_password').submit ->
     form = $ this
     email = form.find('input.email').val()
-    $.ajax(
-      type: form.attr('method')
-      url: form.attr('action')
-      data: form.serialize()
+    ajaxForm(form,
       success: (data) ->
         form.replaceWith """
           <h2>#email has been sent a new password</h2>
@@ -81,22 +84,17 @@ $ ->
       setTimeout tick, 1000
     tick()
 
-  $('time').live 'hover', (e) ->
-    return $('.localtime').remove() if e.type == 'mouseout'
+    $('time').live 'hover', (e) ->
+      return $('.localtime').remove() if e.type == 'mouseout'
 
-    $this = $(this)
-    [y, m, d, h, i, s] = $this.attr('datetime').split(/[-:TZ]/)...
-    ms = Date.UTC y, m-1, d, h, i, s
-    dt = new Date(ms)
-    $('<div class="localtime blue">')
-      .css({
+      $this = $(this)
+      [y, m, d, h, i, s] = $this.attr('datetime').split(/[-:TZ]/)...
+      ms = Date.UTC y, m-1, d, h, i, s
+      dt = new Date(ms)
+      $('<div class="localtime blue">').css({
         left: e.pageX
         top: $(this).position().top + 25
-      })
-      .html("
-        #{dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/,'')}
-        ")
-      .appendTo(document.body)
+      }).html("#{dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/,'')}").appendTo(document.body)
 
   $('.judge img').each ->
     r = 'rotate(' + new String(Math.random()*6-3) + 'deg)'
@@ -149,15 +147,45 @@ $ ->
             $('.votes').append($more)
             loadMoreNow = $more.position().top - $(window).height() + 10
 
+  saveDraft = (form) =>
+    return unless window.localStorage?
+    localStorage['draft'] = JSON.stringify form.serializeArray()
+
   $('#your_vote a[href$=draft]').click ->
-    if window.localStorage?
-      localStorage['draft'] = JSON.stringify $(this).closest('form').serializeArray()
+    saveDraft $(this).closest('form')
+
+  $('#your_vote').submit (e) ->
+    $form = $(this)
+    $errors = $form.find('#errors')
+    ajaxForm $form,
+      success: (data) ->
+        if $('#your_vote .email_input').length # not logged in
+          window.location.reload()
+        else
+          $(data).prependTo('ul.votes')
+            .hide()
+            .next('li.header').remove().end()
+            .slideDown('fast')
+      error: (xhr) ->
+        if xhr.status is 403 # unauthorized
+          # TODO flash you tried to use an email
+          saveDraft $form
+          email = encodeURIComponent $form.find('#email').val()
+          path = encodeURIComponent window.location.pathname + '#save'
+          window.location = "/login?return_to=#{path}&email=#{email}"
+        else
+          errors = JSON.parse(xhr.responseText)
+          $errors.html(errors.map((error) -> "<li>#{error}</li>").join("\n"))
+            .slideDown()
+    false
 
   $('.teams-show #your_vote').each ->
-    return unless window.localStorage?.draft? and window.location.hash is '#draft'
+    hash = window.location.hash
+    draft = window.localStorage?.draft?
     try
-      for el in JSON.parse localStorage.draft
-        $(this[el.name]).val el.value
+      return unless draft and (hash is '#save' or hash is '#draft')
+      $(this[el.name]).val el.value for el in JSON.parse draft
+      # $('#your_vote').submit() if window.location.hash is '#save'
     finally
       delete localStorage.draft
   $('.votes-new .stars, #your_vote .stars').each -> Stars.highlight $(this)

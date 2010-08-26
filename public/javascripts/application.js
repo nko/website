@@ -1,7 +1,9 @@
 (function() {
-  var Stars;
+  var __bind = function(func, context) {
+    return function(){ return func.apply(context, arguments); };
+  };
   $(function() {
-    var _a, countdown, d, h, i, m, ms, s, tick, y;
+    var Stars, _a, ajaxForm, countdown, d, h, i, m, ms, s, saveDraft, tick, y;
     $('a.resend').click(function() {
       var a;
       a = $(this);
@@ -29,14 +31,17 @@
         return this.select();
       }
     });
+    ajaxForm = function(form, options) {
+      options.type = form.attr('method');
+      options.url = form.attr('action');
+      options.data = form.serialize();
+      return $.ajax(options);
+    };
     $('form.reset_password').submit(function() {
       var email, form;
       form = $(this);
       email = form.find('input.email').val();
-      $.ajax({
-        type: form.attr('method'),
-        url: form.attr('action'),
-        data: form.serialize(),
+      ajaxForm(form, {
         success: function(data) {
           return form.replaceWith("<h2>" + email + " has been sent a new password</h2>\n<p>It should arrive shortly.</p>");
         },
@@ -112,122 +117,153 @@
         return setTimeout(tick, 1000);
       };
       tick();
-    }
-    return $('time').live('hover', function(e) {
-      var $this, _b, dt;
-      if (e.type === 'mouseout') {
-        return $('.localtime').remove();
-      }
-      $this = $(this);
-      _b = $this.attr('datetime').split(/[-:TZ]/);
-      y = _b[0];
-      m = _b[1];
-      d = _b[2];
-      h = _b[3];
-      i = _b[4];
-      s = _b[5];
-      ms = Date.UTC(y, m - 1, d, h, i, s);
-      dt = new Date(ms);
-      return $('<div class="localtime blue">').css({
-        left: e.pageX,
-        top: $(this).position().top + 25
-      }).html((" \
-" + (dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/, '')) + " \
-")).appendTo(document.body);
-    });
-  });
-  $('.judge img').each(function() {
-    var r;
-    r = 'rotate(' + new String(Math.random() * 6 - 3) + 'deg)';
-    return $(this).css('-webkit-transform', r).css('-moz-transform', r);
-  });
-  Stars = {
-    value: function(elem) {
-      return elem.attr('data-value');
-    },
-    input: function(elem) {
-      return elem.closest('.stars').prev('input[type=hidden]');
-    },
-    set: function(elem) {
-      var newVal, oldVal;
-      newVal = this.value(elem);
-      oldVal = this.input(elem).val();
-      return this.input(elem).val(newVal === oldVal ? 0 : newVal);
-    },
-    highlight: function(elem, hover) {
-      var score;
-      score = parseInt(hover ? this.value(elem) : this.input(elem).val());
-      return elem.closest('.stars').children().each(function(i, star) {
-        var $star, fill;
-        $star = $(star);
-        fill = $star.attr('data-value') <= score;
-        $star.find('.filled').toggle(fill);
-        return $star.find('.empty').toggle(!fill);
+      $('time').live('hover', function(e) {
+        var $this, _b, dt;
+        if (e.type === 'mouseout') {
+          return $('.localtime').remove();
+        }
+        $this = $(this);
+        _b = $this.attr('datetime').split(/[-:TZ]/);
+        y = _b[0];
+        m = _b[1];
+        d = _b[2];
+        h = _b[3];
+        i = _b[4];
+        s = _b[5];
+        ms = Date.UTC(y, m - 1, d, h, i, s);
+        dt = new Date(ms);
+        return $('<div class="localtime blue">').css({
+          left: e.pageX,
+          top: $(this).position().top + 25
+        }).html(("" + (dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/, '')))).appendTo(document.body);
       });
     }
-  };
-  $('.votes-new, #your_vote').delegate('.star', 'hover', function(e) {
-    return Stars.highlight($(this), e.type === 'mouseover');
-  }).delegate('.star', 'click', function(e) {
-    return Stars.set($(this));
-  });
-  (function() {
-    $('.votes time').each(function() {
-      var _a, d, h, i, m, ms, s, y;
-      _a = $(this).attr('datetime').split(/[-:TZ]/);
-      y = _a[0];
-      m = _a[1];
-      d = _a[2];
-      h = _a[3];
-      i = _a[4];
-      s = _a[5];
-      ms = Date.UTC(y, m - 1, d, h, i, s);
-      return $(this).text(prettyDate(new Date(ms)));
+    $('.judge img').each(function() {
+      var r;
+      r = 'rotate(' + new String(Math.random() * 6 - 3) + 'deg)';
+      return $(this).css('-webkit-transform', r).css('-moz-transform', r);
     });
-    return setTimeout(arguments.callee, 10 * 1000);
-  })();
-  $('.votes .more').each(function() {
-    var $more, loadMoreNow, page;
-    $more = $(this);
-    loadMoreNow = $more.position().top - $(window).height() + 10;
-    page = 1;
-    return $(window).scroll(function(e) {
-      if (loadMoreNow && this.scrollY > loadMoreNow) {
-        loadMoreNow = null;
-        return $.get(window.location.pathname + ("/votes.js?page=" + (++page)), function(html) {
-          var moreVotes;
-          moreVotes = $('<div class="page">').html(html);
-          $more.remove();
-          $('.votes').append(moreVotes);
-          if (moreVotes.find('li').length === 51) {
-            $('.votes').append($more);
-            return (loadMoreNow = $more.position().top - $(window).height() + 10);
-          }
+    Stars = {
+      value: function(elem) {
+        return elem.attr('data-value');
+      },
+      input: function(elem) {
+        return elem.closest('.stars').prev('input[type=hidden]');
+      },
+      set: function(elem) {
+        var newVal, oldVal;
+        newVal = this.value(elem);
+        oldVal = this.input(elem).val();
+        return this.input(elem).val(newVal === oldVal ? 0 : newVal);
+      },
+      highlight: function(elem, hover) {
+        var score;
+        score = parseInt(hover ? this.value(elem) : this.input(elem).val());
+        return elem.closest('.stars').children().each(function(i, star) {
+          var $star, fill;
+          $star = $(star);
+          fill = $star.attr('data-value') <= score;
+          $star.find('.filled').toggle(fill);
+          return $star.find('.empty').toggle(!fill);
         });
       }
+    };
+    $('.votes-new, #your_vote').delegate('.star', 'hover', function(e) {
+      return Stars.highlight($(this), e.type === 'mouseover');
+    }).delegate('.star', 'click', function(e) {
+      return Stars.set($(this));
     });
-  });
-  $('#your_vote a[href$=draft]').click(function() {
-    var _a;
-    return (typeof (_a = window.localStorage) !== "undefined" && _a !== null) ? (localStorage['draft'] = JSON.stringify($(this).closest('form').serializeArray())) : null;
-  });
-  $('.teams-show #your_vote').each(function() {
-    var _a, _b, _c, _d, _e, el;
-    if (!((typeof (_a = window.localStorage == undefined ? undefined : window.localStorage.draft) !== "undefined" && _a !== null) && window.location.hash === '#draft')) {
-      return null;
-    }
-    try {
-      _b = []; _d = JSON.parse(localStorage.draft);
-      for (_c = 0, _e = _d.length; _c < _e; _c++) {
-        el = _d[_c];
-        _b.push($(this[el.name]).val(el.value));
+    (function() {
+      $('.votes time').each(function() {
+        var _b;
+        _b = $(this).attr('datetime').split(/[-:TZ]/);
+        y = _b[0];
+        m = _b[1];
+        d = _b[2];
+        h = _b[3];
+        i = _b[4];
+        s = _b[5];
+        ms = Date.UTC(y, m - 1, d, h, i, s);
+        return $(this).text(prettyDate(new Date(ms)));
+      });
+      return setTimeout(arguments.callee, 10 * 1000);
+    })();
+    $('.votes .more').each(function() {
+      var $more, loadMoreNow, page;
+      $more = $(this);
+      loadMoreNow = $more.position().top - $(window).height() + 10;
+      page = 1;
+      return $(window).scroll(function(e) {
+        if (loadMoreNow && this.scrollY > loadMoreNow) {
+          loadMoreNow = null;
+          return $.get(window.location.pathname + ("/votes.js?page=" + (++page)), function(html) {
+            var moreVotes;
+            moreVotes = $('<div class="page">').html(html);
+            $more.remove();
+            $('.votes').append(moreVotes);
+            if (moreVotes.find('li').length === 51) {
+              $('.votes').append($more);
+              return (loadMoreNow = $more.position().top - $(window).height() + 10);
+            }
+          });
+        }
+      });
+    });
+    saveDraft = __bind(function(form) {
+      var _b;
+      if (!((typeof (_b = window.localStorage) !== "undefined" && _b !== null))) {
+        return null;
       }
-      return _b;
-    } finally {
-      delete localStorage.draft;
-    }
-  });
-  $('.votes-new .stars, #your_vote .stars').each(function() {
-    return Stars.highlight($(this));
+      return (localStorage['draft'] = JSON.stringify(form.serializeArray()));
+    }, this);
+    $('#your_vote a[href$=draft]').click(function() {
+      return saveDraft($(this).closest('form'));
+    });
+    $('#your_vote').submit(function(e) {
+      var $errors, $form;
+      $form = $(this);
+      $errors = $form.find('#errors');
+      ajaxForm($form, {
+        success: function(data) {
+          return $('#your_vote .email_input').length ? window.location.reload() : $(data).prependTo('ul.votes').hide().next('li.header').remove().end().slideDown('fast');
+        },
+        error: function(xhr) {
+          var email, errors, path;
+          if (xhr.status === 403) {
+            saveDraft($form);
+            email = encodeURIComponent($form.find('#email').val());
+            path = encodeURIComponent(window.location.pathname + '#save');
+            return (window.location = ("/login?return_to=" + (path) + "&email=" + (email)));
+          } else {
+            errors = JSON.parse(xhr.responseText);
+            return $errors.html(errors.map(function(error) {
+              return "<li>" + (error) + "</li>";
+            }).join("\n")).slideDown();
+          }
+        }
+      });
+      return false;
+    });
+    $('.teams-show #your_vote').each(function() {
+      var _b, _c, _d, _e, _f, draft, el, hash;
+      hash = window.location.hash;
+      draft = (typeof (_b = window.localStorage == undefined ? undefined : window.localStorage.draft) !== "undefined" && _b !== null);
+      try {
+        if (!(draft && (hash === '#save' || hash === '#draft'))) {
+          return null;
+        }
+        _c = []; _e = JSON.parse(draft);
+        for (_d = 0, _f = _e.length; _d < _f; _d++) {
+          el = _e[_d];
+          _c.push($(this[el.name]).val(el.value));
+        }
+        return _c;
+      } finally {
+        delete localStorage.draft;
+      }
+    });
+    return $('.votes-new .stars, #your_vote .stars').each(function() {
+      return Stars.highlight($(this));
+    });
   });
 })();

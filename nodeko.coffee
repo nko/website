@@ -252,13 +252,18 @@ post '/teams/:teamId/votes', ->
     @vote.person = @currentPerson
     @vote.save (errors, res) =>
       if errors?
-        @errors = errors
-        @email = @vote.email
-        @render 'votes/new.html.jade', { layout: 'layout.haml' }
+        if errors[0] is 'Unauthorized'
+          # TODO flash "You must login to vote as #{@vote.email}."
+          @res.send 'Unauthorized', 403
+        else
+          @res.send JSON.stringify(errors), 400
       else
         # TODO flash "You are now logged into Node Knockout as #{@vote.email}."
         @setCurrentPerson @vote.person if @vote.person? and !@currentPerson?
-        @redirect '/teams/' + @team.toParam()
+
+        @noHeader = true
+        @votes = [@vote]
+        @render 'partials/votes/index.html.jade', { layout: false }
 
 # list votes
 get '/teams/:teamId/votes', ->
