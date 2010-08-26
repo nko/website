@@ -373,6 +373,10 @@ put '/people/:id', ->
       person.save (error, resp) =>
         @redirectToTeam person
 
+post '/deploys', ->
+  sys.log sys.inspect(@req)
+  @next()
+
 get '/prizes', ->
   @render 'prizes.html.jade', { layout: 'layout.haml' }
 
