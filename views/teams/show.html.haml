@@ -17,19 +17,15 @@
         We will use the server from the most recent deploy.
       %table
         %tr
-          %th{ colspan: 2 }
-            GitHub
-        %tr
           %td{ colspan: 2 }
             %ol{ start: '0' }
               %li.github
                 Get your
-                %a{ href: 'https://github.com/nko/' + escapeURL(ctx.team.slug) } code repository
-                %div
-                  %code
-                    git clone git@github.com:nko/
-                    = ctx.team.slug
-                    \.git
+                != ' <a href="https://github.com/nko/' + ctx.team.slug + '">GitHub code repository</a>:'
+                %code
+                  git clone git@github.com:nko/
+                  = ctx.team.slug
+                  \.git
         %tr
           %th Joyent
           %th Heroku
