@@ -25,7 +25,7 @@
             %li
               %code
                 git remote add joyent \\<br/> ssh://node@
-                = ctx.team.slug
+                = ctx.team.slug.replace(/^(\d)/, 'ko-$1')
                 \.no.de/repo
             %li
               %code git push joyent
