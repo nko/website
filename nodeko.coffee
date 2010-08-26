@@ -157,7 +157,7 @@ get '/teams/:id', ->
       @team = team
       @title = @team.name
       @editAllowed = @canEditTeam team
-      @url = @team.url || "http://#{@team.application}.nodeknockout.com"
+      @url = @team.url || "http://#{@team.applicationSlug}.nodeknockout.com"
 
       people = team.members or []
       @members = _.select people, (person) -> person.name
