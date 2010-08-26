@@ -3,7 +3,7 @@
     return function(){ return func.apply(context, arguments); };
   };
   $(function() {
-    var Stars, _a, ajaxForm, countdown, d, h, i, m, ms, s, saveDraft, tick, y;
+    var Stars, ajaxForm, saveDraft;
     $('a.resend').click(function() {
       var a;
       a = $(this);
@@ -96,29 +96,30 @@
       }) : null;
       return !hasError;
     });
-    if ($('.body.index time').length > 0) {
-      _a = $('time').attr('datetime').split(/[-:TZ]/);
+    $('.body.index time:first').each(function() {
+      var _a, countdown, d, h, i, m, s, start, tick, y;
+      _a = $(this).attr('datetime').split(/[-:TZ]/);
       y = _a[0];
       m = _a[1];
       d = _a[2];
       h = _a[3];
       i = _a[4];
       s = _a[5];
-      ms = Date.UTC(y, m - 1, d, h, i, s);
-      countdown = $('#date .about');
+      start = Date.UTC(y, m - 1, d, h, i, s);
+      countdown = $('#date .countdown');
       tick = function() {
         var days, diff, hours, minutes, secs;
-        diff = (ms - new Date().getTime()) / 1000;
+        diff = (start - new Date().getTime()) / 1000;
         days = Math.floor(diff % 604800 / 86400);
         hours = Math.floor(diff % 86400 / 3600);
         minutes = Math.floor(diff % 3600 / 60);
         secs = Math.floor(diff % 60);
-        countdown.html(days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds');
+        countdown.html((days > 0 ? days + ' day ' : '') + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds');
         return setTimeout(tick, 1000);
       };
       tick();
-      $('time').live('hover', function(e) {
-        var $this, _b, dt;
+      return $('time').live('hover', function(e) {
+        var $this, _b, dt, ms;
         if (e.type === 'mouseout') {
           return $('.localtime').remove();
         }
@@ -137,7 +138,7 @@
           top: $(this).position().top + 25
         }).html(("" + (dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/, '')))).appendTo(document.body);
       });
-    }
+    });
     $('.judge img').each(function() {
       var r;
       r = 'rotate(' + new String(Math.random() * 6 - 3) + 'deg)';
@@ -180,14 +181,14 @@
     });
     (function() {
       $('.votes time').each(function() {
-        var _b;
-        _b = $(this).attr('datetime').split(/[-:TZ]/);
-        y = _b[0];
-        m = _b[1];
-        d = _b[2];
-        h = _b[3];
-        i = _b[4];
-        s = _b[5];
+        var _a, d, h, i, m, ms, s, y;
+        _a = $(this).attr('datetime').split(/[-:TZ]/);
+        y = _a[0];
+        m = _a[1];
+        d = _a[2];
+        h = _a[3];
+        i = _a[4];
+        s = _a[5];
         ms = Date.UTC(y, m - 1, d, h, i, s);
         return $(this).text(prettyDate(new Date(ms)));
       });
@@ -215,8 +216,8 @@
       });
     });
     saveDraft = __bind(function(form) {
-      var _b;
-      if (!((typeof (_b = window.localStorage) !== "undefined" && _b !== null))) {
+      var _a;
+      if (!((typeof (_a = window.localStorage) !== "undefined" && _a !== null))) {
         return null;
       }
       return (localStorage['draft'] = JSON.stringify(form.serializeArray()));
@@ -250,19 +251,19 @@
       return false;
     });
     $('.teams-show #your_vote').each(function() {
-      var _b, _c, _d, _e, _f, draft, el, hash;
+      var _a, _b, _c, _d, _e, draft, el, hash;
       hash = window.location.hash;
-      draft = (typeof (_b = window.localStorage == undefined ? undefined : window.localStorage.draft) !== "undefined" && _b !== null);
+      draft = (typeof (_a = window.localStorage == undefined ? undefined : window.localStorage.draft) !== "undefined" && _a !== null);
       try {
         if (!(draft && (hash === '#save' || hash === '#draft'))) {
           return null;
         }
-        _c = []; _e = JSON.parse(draft);
-        for (_d = 0, _f = _e.length; _d < _f; _d++) {
-          el = _e[_d];
-          _c.push($(this[el.name]).val(el.value));
+        _b = []; _d = JSON.parse(draft);
+        for (_c = 0, _e = _d.length; _c < _e; _c++) {
+          el = _d[_c];
+          _b.push($(this[el.name]).val(el.value));
         }
-        return _c;
+        return _b;
       } finally {
         delete localStorage.draft;
       }

@@ -70,31 +70,31 @@ $ ->
         @value = '' if @value is @defaultValue
     not hasError
 
-  if $('.body.index time').length > 0
-    [y, m, d, h, i, s] = $('time').attr('datetime').split(/[-:TZ]/)...
-    ms = Date.UTC y, m-1, d, h, i, s
-    countdown = $('#date .about')
+  $('.body.index time:first').each ->
+    [y, m, d, h, i, s] = $(this).attr('datetime').split(/[-:TZ]/)...
+    start = Date.UTC y, m-1, d, h, i, s
+    countdown = $('#date .countdown')
     tick = ->
-      diff = (ms - new Date().getTime()) / 1000
+      diff = (start - new Date().getTime()) / 1000
       days = Math.floor diff % 604800 / 86400
       hours = Math.floor diff % 86400 / 3600
       minutes = Math.floor diff % 3600 / 60
       secs = Math.floor diff % 60
-      countdown.html days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
+      countdown.html (if days > 0 then days + ' day ' else '') + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
       setTimeout tick, 1000
     tick()
 
-    $('time').live 'hover', (e) ->
-      return $('.localtime').remove() if e.type == 'mouseout'
+  $('time').live 'hover', (e) ->
+    return $('.localtime').remove() if e.type == 'mouseout'
 
-      $this = $(this)
-      [y, m, d, h, i, s] = $this.attr('datetime').split(/[-:TZ]/)...
-      ms = Date.UTC y, m-1, d, h, i, s
-      dt = new Date(ms)
-      $('<div class="localtime blue">').css({
-        left: e.pageX
-        top: $(this).position().top + 25
-      }).html("#{dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/,'')}").appendTo(document.body)
+    $this = $(this)
+    [y, m, d, h, i, s] = $this.attr('datetime').split(/[-:TZ]/)...
+    ms = Date.UTC y, m-1, d, h, i, s
+    dt = new Date(ms)
+    $('<div class="localtime blue">').css({
+      left: e.pageX
+      top: $(this).position().top + 25
+    }).html("#{dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/,'')}").appendTo(document.body)
 
   $('.judge img').each ->
     r = 'rotate(' + new String(Math.random()*6-3) + 'deg)'
