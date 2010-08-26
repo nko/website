@@ -67,16 +67,15 @@ request = (type) ->
             req.cookies.teamauthkey is team.authKey() or
               team.hasMember(@currentPerson) or @isAdmin
           ensurePermitted: (other, fn) ->
-            permitted = (@isAdmin or
-              other.hasMember? and @canEditTeam(other) or
-              !other.hasMember? and @currentPerson? and other.id() is @currentPerson.id())
-            if permitted then fn()
+            permitted = @isAdmin
+            if other.hasMember?
+              permitted ||= @canEditTeam(other)
+            else if other.person?
+              permitted ||= (@currentPerson? and other.person.id() is @currentPerson.id())
             else
-              unless @currentPerson?
-                @redirectToLogin()
-              else
-                # TODO flash "Oops! You don't have permissions to see that. Try logging in as somebody else."
-                @redirectToLogin()}
+              permitted ||= (@currentPerson? and other.id() is @currentPerson.id())
+            if permitted then fn()
+            else @redirectToLogin()}
         try
           __bind(fn, ctx)()
         catch e
@@ -241,6 +240,20 @@ get '/teams/:teamId/votes/new', ->
     @email = @currentPerson?.email
     @render 'votes/new.html.jade', { layout: 'layout.haml' }
 
+saveVote = ->
+  @vote.save (errors, res) =>
+    if errors?
+      if errors[0] is 'Unauthorized'
+        # TODO flash "You must login to vote as #{@vote.email}."
+        @res.send 'Unauthorized', 403
+      else
+        @res.send JSON.stringify(errors), 400
+    else
+      # TODO flash "You are now logged into Node Knockout as #{@vote.email}."
+      @setCurrentPerson @vote.person if @vote.person? and !@currentPerson?
+      @votes = [@vote]
+      @render 'partials/votes/index.html.jade', { layout: false }
+
 # create vote
 post '/teams/:teamId/votes', ->
   return @redirect '/teams/' + @req.param('teamId') unless @isAdmin
@@ -250,20 +263,15 @@ post '/teams/:teamId/votes', ->
     @vote = new Vote @req.body, @req
     @vote.team = @team = team
     @vote.person = @currentPerson
-    @vote.save (errors, res) =>
-      if errors?
-        if errors[0] is 'Unauthorized'
-          # TODO flash "You must login to vote as #{@vote.email}."
-          @res.send 'Unauthorized', 403
-        else
-          @res.send JSON.stringify(errors), 400
-      else
-        # TODO flash "You are now logged into Node Knockout as #{@vote.email}."
-        @setCurrentPerson @vote.person if @vote.person? and !@currentPerson?
+    saveVote.call(this)
 
+put '/teams/:teamId/votes/:voteId', ->
+  Team.fromParam @req.param('teamId'), (error, team) =>
+    Vote.fromParam @req.param('voteId'), (error, vote) =>
+      @ensurePermitted vote, =>
         @noHeader = true
-        @votes = [@vote]
-        @render 'partials/votes/index.html.jade', { layout: false }
+        @vote = vote
+        saveVote.call(this)
 
 # list votes
 get '/teams/:teamId/votes', ->

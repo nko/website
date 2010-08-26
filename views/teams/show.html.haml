@@ -62,29 +62,28 @@
 
 - if (ctx.isAdmin)
   %h1 Votes
-  - if (ctx.vote.isNew())
-    %form#your_vote{ method: 'POST', action: '/teams/' + ctx.team.toParam() + '/votes' }
-      != partial("errors.html.haml", { locals: { ctx: ctx } })
-      .voter
-        %h3 Your Vote
-        != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
-      .vote
-        != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
-        %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4 }= ctx.vote.comment || ''
-        - if (!ctx.currentPerson)
-          .email_input
-            %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.vote.email || '', placeholder: 'email@address.com' }
-              &nbsp;or
-              %a{ href: '/login?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Sign in
-            .note Required to confirm your vote. We don't spam.
-        - if (ctx.currentPerson)
-          .note.email_hidden
-            Voting as
-            = ' ' + ctx.vote.email + ' '
-            &mdash;
-            %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
-        %input.button{ type: 'submit', value: 'Vote!' }
-        .clear
+  %form#your_vote{ method: (ctx.vote.isNew() ? 'POST' : 'PUT'), action: '/teams/' + ctx.team.toParam() + '/votes' + (ctx.vote.isNew() ? '' : '/' + ctx.vote.id()) }
+    != partial("errors.html.haml", { locals: { ctx: ctx } })
+    .voter
+      %h3 Your Vote
+      != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
+    .vote
+      != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
+      %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4 }= ctx.vote.comment || ''
+      - if (!ctx.currentPerson)
+        .email_input
+          %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.vote.email || '', placeholder: 'email@address.com' }
+            &nbsp;or
+            %a{ href: '/login?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Sign in
+          .note Required to confirm your vote. We don't spam.
+      - if (ctx.currentPerson)
+        .note.email_hidden
+          Voting as
+          = ' ' + ctx.vote.email + ' '
+          &mdash;
+          %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
+      %input.button{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save' }
+      .clear
   %ul.votes
     != partial('votes/index.html.jade', { locals: { ctx: ctx } })
     - if (ctx.votes.length == 50)

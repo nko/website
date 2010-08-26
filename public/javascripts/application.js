@@ -3,7 +3,7 @@
     return function(){ return func.apply(context, arguments); };
   };
   $(function() {
-    var Stars, _a, ajaxForm, countdown, d, h, i, m, ms, s, saveDraft, tick, y;
+    var Stars, _a, ajaxForm, countdown, d, h, i, m, ms, prependVote, s, saveDraft, tick, updateVote, y;
     $('a.resend').click(function() {
       var a;
       a = $(this);
@@ -219,13 +219,22 @@
     $('#your_vote a[href$=draft]').click(function() {
       return saveDraft($(this).closest('form'));
     });
+    prependVote = function(data) {
+      return $(data).prependTo('ul.votes').hide().next('li.header').remove().end().slideDown('fast');
+    };
+    updateVote = function(data) {
+      var $newVote, id;
+      $newVote = $(data);
+      id = $newVote.attr('id');
+      return $('#' + id).replaceWith($newVote);
+    };
     $('#your_vote').submit(function(e) {
       var $errors, $form;
       $form = $(this);
       $errors = $form.find('#errors');
       ajaxForm($form, {
         success: function(data) {
-          return $('#your_vote .email_input').length ? window.location.reload() : $(data).prependTo('ul.votes').hide().next('li.header').remove().end().slideDown('fast');
+          return $('#your_vote .email_input').length ? window.location.reload() : $form.attr('method') === 'POST' ? prependVote(data) : updateVote(data);
         },
         error: function(xhr) {
           var email, errors, path;

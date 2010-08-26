@@ -154,6 +154,17 @@ $ ->
   $('#your_vote a[href$=draft]').click ->
     saveDraft $(this).closest('form')
 
+  prependVote = (data) ->
+    $(data).prependTo('ul.votes')
+      .hide()
+      .next('li.header').remove().end()
+      .slideDown('fast')
+
+  updateVote = (data) ->
+    $newVote = $(data)
+    id = $newVote.attr('id')
+    $('#'+id).replaceWith($newVote)
+
   $('#your_vote').submit (e) ->
     $form = $(this)
     $errors = $form.find('#errors')
@@ -162,10 +173,10 @@ $ ->
         if $('#your_vote .email_input').length # not logged in
           window.location.reload()
         else
-          $(data).prependTo('ul.votes')
-            .hide()
-            .next('li.header').remove().end()
-            .slideDown('fast')
+          if $form.attr('method') is 'POST'
+            prependVote(data)
+          else
+            updateVote(data)
       error: (xhr) ->
         if xhr.status is 403 # unauthorized
           # TODO flash you tried to use an email

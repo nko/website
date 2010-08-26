@@ -1,5 +1,5 @@
 - each vote, i in ctx.votes
-  - if (i == 0 && !vote.comment)
+  - if (i == 0 && !vote.comment && !ctx.noHeader)
     li.header
       .vote
         table.dimensions
@@ -7,7 +7,7 @@
             - each dimension in ['Usefulness', 'Design', 'Innovation', 'Completeness']
               th
                 label= dimension
-  li( 'class': vote.comment ? '' : 'small' )
+  li( 'class': vote.comment ? '' : 'small', id: vote.id() )
     .voter
       != partial('votes/voter.html.haml', { locals: { vote: vote }})
     .vote
