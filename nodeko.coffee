@@ -49,12 +49,14 @@ request = (type) ->
           isAdmin: person? && person.admin()
           setCurrentPerson: (person, options) ->
             @cookie 'authKey', person?.authKey(), options
-          redirectToTeam: (person, alternatePath) ->
+          redirectToTeam: (person, alternate) ->
             Team.first { 'members._id': person._id }, (error, team) =>
               if team?
                 @redirect '/teams/' + team.toParam()
+              else if alternate
+                alternate()
               else
-                @redirect (alternatePath or '/')
+                @redirect '/'
           redirectToLogin: ->
             @redirect "/login?return_to=#{@req.url}"
           logout: (fn) ->
@@ -104,9 +106,15 @@ get '/me', ->
   else
     @redirectToLogin()
 
+get '/team', ->
+  if @currentPerson?
+    @redirectToTeam @currentPerson, __bind(@redirectToLogin, this)
+  else
+    @redirectToLogin()
+
 get '/register', ->
   if @currentPerson?
-    @redirectToTeam @currentPerson, '/'
+    @redirectToTeam @currentPerson
   else
     @redirect "/login?return_to=#{@req.url}"
 
