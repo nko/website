@@ -452,10 +452,8 @@ aside#pullout {
     text-align: left; }
     .body.teams-show .deploy ol li {
       margin: 0.25em 0px; }
-    .body.teams-show .deploy ol .coupon {
-      font-size: small; }
-      .body.teams-show .deploy ol .coupon strong {
-        font-family: inconsolata, menlo, monospace; }
+    .body.teams-show .deploy ol .coupon strong {
+      font-family: inconsolata, menlo, monospace; }
   .body.teams-show .deploy code {
     font-family: inconsolata, menlo, monospace;
     font-size: small; }

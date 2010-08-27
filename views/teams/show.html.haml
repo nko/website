@@ -45,8 +45,10 @@
         %td
           %ol
             %li
-              We&rsquo;ll create a Heroku app for you
-              .coupon &nbsp;
+              We&rsquo;ve
+              %a{ href: 'http://' + ctx.team.herokuSlug + '.heroku.com' }
+                already created a Heroku app
+              for you
             %li
               %code
                 git remote add heroku \\<br/> git@heroku.com:
