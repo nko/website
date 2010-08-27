@@ -1,7 +1,7 @@
 %h1= ctx.team.application || ctx.team.name
 .clear
 
-- if (!ctx.team.url && ctx.canEditTeam(ctx.team))
+- if (ctx.canEditTeam(ctx.team))
   .deploy
     - if (ctx.team.lastDeployedTo)
       %h3.green
@@ -45,7 +45,7 @@
               %li
                 %code
                   git remote add joyent \\<br/> ssh://node@
-                  = ctx.team.toJoyentSlug() + '.no.de/repo'
+                  = ctx.team.joyentSlug + '.no.de/repo'
               %li
                 %code git push joyent master
           %td
@@ -56,7 +56,7 @@
               %li
                 %code
                   git remote add heroku \\<br/> git@heroku.com:
-                  = ctx.team.toHerokuSlug() + '.git'
+                  = ctx.team.herokuSlug + '.git'
               %li
                 %code git push heroku master
 
@@ -67,7 +67,7 @@
       %img{ src: '/images/blank.png' }
     .description
       %h2
-        %a{ href: ctx.url }= ctx.url.replace(/^http:\/\//, '')
+        %a{ href: ctx.team.url }= ctx.team.application
       %h4= 'by ' + ctx.team.name
       - if (ctx.isAdmin)
         %a.button.important{ href: '#your_vote' } Vote &raquo;

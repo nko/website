@@ -52,6 +52,7 @@ class Team
 
   beforeSave: (fn) ->
     @generateSlug =>
+      @generateDeploySlugs()
       threads = @members.length
       return fn() unless threads
       for member in @members
@@ -93,11 +94,9 @@ class Team
       else
         @generateSlug fn, @slug + '-'  # try with another -
 
-  toJoyentSlug: ->
-    @slug.replace(/^(\d)/, 'ko-$1')
-
-  toHerokuSlug: ->
-    'nko-' + @slug.replace(/_/g, '-').substring(0, 26)
+  generateDeploySlugs: ->
+    @joyentSlug = @slug.replace(/^(\d)/, 'ko-$1')
+    @herokuSlug = 'nko-' + @slug.replace(/_/g, '-').substring(0, 26)
 
 nko.Team = Team
 

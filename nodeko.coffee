@@ -169,7 +169,6 @@ get '/teams/:id', ->
       @team = team
       @title = @team.name
       @editAllowed = @canEditTeam team
-      @url = @team.url || "http://#{@team.application}.nodeknockout.com"
 
       people = team.members or []
       @members = _.select people, (person) -> person.name
@@ -374,21 +373,19 @@ put '/people/:id', ->
         @redirectToTeam person
 
 post '/deploys', ->
-  # , body: 
-     # { user: 'visnupx@gmail.com'
-     # , head: '87eaeb6'
-     # , app: 'visnup-nko'
-     # , url: 'http://visnup-nko.heroku.com'
-     # , git_log: ''
-     # , prev_head: ''
-     # , head_long: '87eaeb69d726593de6a47a5f38ff6126fd3920fa'
-     # }
-  [ slug, deployedTo ] =
-  if app = @req.param('app')
-    [ app.replace(/^nko-/, ''), 'heroku' ]
-  else
-    [ @req.param('url').replace(/^http:\/\/(ko-)?|\.no\.de$/g, ''), 'joyent' ]
-  Team.fromParam slug, (error, team) =>
+  # user: 'visnupx@gmail.com'
+  # head: '87eaeb6'
+  # app: 'visnup-nko'
+  # url: 'http://visnup-nko.heroku.com'
+  # git_log: ''
+  # prev_head: ''
+  # head_long: '87eaeb69d726593de6a47a5f38ff6126fd3920fa'
+  # TODO don't let anyone post here
+  sys.log sys.inspect(@req)
+  query = {}
+  deployedTo = if /\.no\.de$/.test(@req.param('url')) then 'joyent' else 'heroku'
+  query[deployedTo + 'Slug'] = @req.param('app')
+  Team.first query, (error, team) =>
     if team
       team.url = @req.param('url')
       team.lastDeployedTo = deployedTo
