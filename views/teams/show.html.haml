@@ -65,7 +65,7 @@
         Deployed to
         %a{ href: ctx.team.url }= ctx.team.url
     #screenshot
-      %img{ src: '/images/blank.png' }
+      %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url) + '&out-format=png&resize=160' : '/images/blank.png' }
       - if (ctx.isAdmin)
         %p
           %a.button.important{ href: '#your_vote' } Vote &raquo;
