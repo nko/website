@@ -76,12 +76,15 @@ $ ->
     countdown = $('#date .countdown')
     tick = ->
       diff = (start - new Date().getTime()) / 1000
-      days = Math.floor diff % 604800 / 86400
-      hours = Math.floor diff % 86400 / 3600
-      minutes = Math.floor diff % 3600 / 60
-      secs = Math.floor diff % 60
-      countdown.html (if days > 0 then days + ' day ' else '') + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
-      setTimeout tick, 1000
+      if diff <= 0
+        countdown.html "START CODING!"
+      else
+        days = Math.floor diff % 604800 / 86400
+        hours = Math.floor diff % 86400 / 3600
+        minutes = Math.floor diff % 3600 / 60
+        secs = Math.floor diff % 60
+        countdown.html (if days > 0 then days + ' day ' else '') + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds'
+        setTimeout tick, 1000
     tick()
 
   $('.body.index time').live 'hover', (e) ->
