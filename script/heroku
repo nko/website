@@ -5,15 +5,18 @@ require 'mongo'
 
 def run s
   puts s
-  #puts `#{s}`
+  # puts `#{s}`
 end
 
 db = Mongo::Connection.new.db 'nodeknockout'
 db_teams = db.collection 'Team'
 db_people = db.collection 'Person'
 
+apps = `heroku list`.split("\n").map { |app| app.split(/\s+/).first }
+
 db_teams.find().each do |t|
-  app = 'nko-' + t['slug']
+  app = 'nko-' + t['slug'].gsub('_', '-')[0,26]
+  next if apps.include?(app)
 
   # create app
   run "heroku create --stack beech #{app}"
