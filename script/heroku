@@ -13,6 +13,8 @@ db_teams = db.collection 'Team'
 db_people = db.collection 'Person'
 
 apps = %w(
+  delete-this-nko-me-and-my-sher
+  delete-this-nko-reiding
   nko-me-and-my-sherpa-from-mit
   nko-json
   nko-reiding
@@ -220,6 +222,12 @@ apps = %w(
   nko-grahnix
   nko-railsgeeklab
   nko-vwxyz
+  nko-zenith-workloom
+  nko-felid-lawbook
+  nko-demiox-boiko
+  nko-stiff-plowbote
+  nko-kanara-kittul
+  nko-gariba-diffame
 )
 
 db_teams.find().each do |t|
