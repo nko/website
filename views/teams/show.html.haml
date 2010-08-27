@@ -45,7 +45,7 @@
                   = ctx.team.slug.replace(/^(\d)/, 'ko-$1')
                   \.no.de/repo
               %li
-                %code git push joyent
+                %code git push joyent master
           %td
             %ol
               %li
@@ -53,11 +53,11 @@
                 .coupon &nbsp;
               %li
                 %code
-                  git remote add heroku \\<br/> git@heroku.com:
+                  git remote add heroku \\<br/> git@heroku.com:nko-
                   = ctx.team.slug
-                  \-nko.git
+                  \.git
               %li
-                %code git push heroku
+                %code git push heroku master
 
 - if (ctx.team.description)
   .application

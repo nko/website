@@ -385,7 +385,7 @@ post '/deploys', ->
      # }
   [ slug, deployedTo ] =
   if app = @req.param('app')
-    [ app.replace(/-nko$/, ''), 'heroku' ]
+    [ app.replace(/^nko-/, ''), 'heroku' ]
   else
     [ @req.param('url').replace(/^http:\/\/(ko-)?|\.no\.de$/g, ''), 'joyent' ]
   Team.fromParam slug, (error, team) =>

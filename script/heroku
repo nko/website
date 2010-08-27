@@ -1,19 +1,36 @@
-#!/bin/bash
+#!/usr/bin/env ruby
 
-APP=$1   # e.g. fortnightlabs-nko
-USER=$2  # e.g. gerads@gmail.com
+require 'rubygems'
+require 'mongo'
 
-# create app
-heroku create $APP
+def run s
+  puts s
+  #puts `#{s}`
+end
 
-# slug.heroku.nodeknockout.com
-#heroku addons:add custom_domains:basic --app $APP
-#heroku domains:add $APP.heroku.nodeknockout.com --app $APP
+db = Mongo::Connection.new.db 'nodeknockout'
+db_teams = db.collection 'Team'
+db_people = db.collection 'Person'
 
-# post deploy hook
-heroku addons:add deployhooks:http url=http://nodeknockout.com/deploys --app $APP
+db_teams.find().each do |t|
+  app = 'nko-' + t['slug']
 
-# give them the app
-heroku sharing:add $USER --app $APP
-# TODO add all users
-heroku sharing:transfer $USER --app $APP
+  # create app
+  run "heroku create --stack beech #{app}"
+
+  # post deploy hook
+  run "heroku addons:add custom_domains:basic --app #{app}"
+  run "heroku addons:add deployhooks:http url=http://nodeknockout.com/deploys --app #{app}"
+
+  # give them the app
+  # TODO add all users
+  people = t['members'].map { |p| db_people.find_one p['_id'] }
+  people.each do |p|
+    run "heroku sharing:add #{p['email']} --app #{app}"
+  end
+  run "heroku sharing:add all@nodeknockout.com --app #{app}"
+
+  # transfer ownership
+  run "heroku sharing:transfer #{people.first['email']} --app #{app}"
+  puts "\n"
+end
