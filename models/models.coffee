@@ -93,6 +93,12 @@ class Team
       else
         @generateSlug fn, @slug + '-'  # try with another -
 
+  toJoyentSlug: ->
+    @slug.replace(/^(\d)/, 'ko-$1')
+
+  toHerokuSlug: ->
+    'nko-' + @slug.replace(/_/g, '-').substring(0, 26)
+
 nko.Team = Team
 
 class Person

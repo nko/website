@@ -45,8 +45,7 @@
               %li
                 %code
                   git remote add joyent \\<br/> ssh://node@
-                  = ctx.team.slug.replace(/^(\d)/, 'ko-$1')
-                  \.no.de/repo
+                  = ctx.team.toJoyentSlug() + '.no.de/repo'
               %li
                 %code git push joyent master
           %td
@@ -56,9 +55,8 @@
                 .coupon &nbsp;
               %li
                 %code
-                  git remote add heroku \\<br/> git@heroku.com:nko-
-                  = ctx.team.slug
-                  \.git
+                  git remote add heroku \\<br/> git@heroku.com:
+                  = ctx.team.toHerokuSlug() + '.git'
               %li
                 %code git push heroku master
 
