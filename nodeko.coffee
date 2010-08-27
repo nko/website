@@ -372,6 +372,7 @@ put '/people/:id', ->
       person.save (error, resp) =>
         @redirectToTeam person
 
+# TODO security
 post '/deploys', ->
   # user: 'visnupx@gmail.com'
   # head: '87eaeb6'
@@ -380,8 +381,6 @@ post '/deploys', ->
   # git_log: ''
   # prev_head: ''
   # head_long: '87eaeb69d726593de6a47a5f38ff6126fd3920fa'
-  # TODO don't let anyone post here
-  sys.log sys.inspect(@req)
   query = {}
   deployedTo = if /\.no\.de$/.test(@req.param('url')) then 'joyent' else 'heroku'
   query[deployedTo + 'Slug'] = @req.param('app')
@@ -391,6 +390,7 @@ post '/deploys', ->
       team.lastDeployedTo = deployedTo
       team.lastDeployedAt = new Date()
       team.lastDeployedHead = @req.param('head')
+      team.lastDeployedHeadLong = @req.param('head_long')
       team.save(->)
   @render 'deploys/ok.html.haml', { layout: false }
 
