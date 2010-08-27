@@ -390,6 +390,7 @@ post '/deploys', ->
       team.url = @req.param('url')
       team.lastDeployedTo = deployedTo
       team.lastDeployedAt = new Date()
+      team.lastDeployedHead = @req.param('head')
       team.save(->)
   @render 'deploys/ok.html.haml', { layout: false }
 
