@@ -24,6 +24,7 @@ class Team
     @colophon = options?.colophon or ''
     @link = options?.link or ''
     @url = options?.url or ''
+    @joyentCode = options?.joyentCode or ''
     @lastDeployedTo = options?.lastDeployedTo or ''
     @lastDeployedAt = options?.lastDeployedAt
 

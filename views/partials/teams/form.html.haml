@@ -3,6 +3,13 @@
 .note Name changes have been disabled leading up to the contest.
 %input{ type: 'text', placeholder: 'Clever Team Name', name: 'name', id: 'name', value: ctx.team.name, disabled: ctx.isAdmin ? '' : 'disabled' }
 
+%h3
+  %label{ for: 'joyent_code' } Coupon Code
+.note
+  Coupon code for
+  != ' <a href="http://no.de/signup">your free Joyent SmartMachine</a>.'
+%input{ type: 'text', name: 'joyentCode', id: 'joyent_code', value: ctx.team.joyentCode, disabled: ctx.isAdmin ? '' : 'disabled' }
+
 %h3 Member Emails
 .note We don&rsquo;t spam. Teams can have 1-4 people.
 %ol#members
