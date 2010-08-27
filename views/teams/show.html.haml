@@ -12,7 +12,10 @@
       %h3 NOT YET DEPLOYED
     .setup_instructions{ style: 'display:' + (ctx.team.lastDeployedTo ? 'none' : '') }
       %p.note
-        You can deploy to either Joyent or Heroku.
+        You can deploy to either
+        != ' <a href="http://nodeknockout.posterous.com/countdown-to-knockout-post-11-deploying-to-jo">Joyent</a> '
+        or
+        != ' <a href="http://nodeknockout.posterous.com/countdown-to-knockout-post-8-deploying-to-her">Heroku</a>.'
         %br
         We will use the server from the most recent deploy.
       %table
