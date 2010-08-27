@@ -22,15 +22,15 @@ db_teams.find().each do |t|
   run "heroku addons:add custom_domains:basic --app #{app}"
   run "heroku addons:add deployhooks:http url=http://nodeknockout.com/deploys --app #{app}"
 
-  # give them the app
-  # TODO add all users
+  # add everyone on the team
+  run "heroku sharing:add all@nodeknockout.com --app #{app}"
   people = t['members'].map { |p| db_people.find_one p['_id'] }
   people.each do |p|
-    run "heroku sharing:add #{p['email']} --app #{app}"
+    #run "heroku sharing:add #{p['email']} --app #{app}"
   end
-  run "heroku sharing:add all@nodeknockout.com --app #{app}"
 
   # transfer ownership
-  run "heroku sharing:transfer #{people.first['email']} --app #{app}"
+  #run "heroku sharing:transfer #{people.first['email']} --app #{app}"
+  run "heroku sharing:transfer all@nodeknockout.com --app #{app}"
   puts "\n"
 end
