@@ -1,7 +1,7 @@
 // http://kuler.adobe.com/#themeID/337112
 $black: #142229
-$light_green: #BBDB70
-$light_blue: #7e9699
+$light_green: #BBDB70 /* hsl(78, 60%, 65%) */
+$light_blue: #7e9699  /* hsl(187, 12%, 55%) */
 $dark_green: #005A1F
 $white: #F6FFEF
 $red: #A80003
@@ -34,6 +34,13 @@ $red: #A80003
   :padding 10px
   +shadow(0px, 1px, 3px)
   +rounded
+
+=blue
+  :background-color $light_blue
+  :color $white !important
+  :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
+  a
+    :color $white
 
 pre
   :width 70ex
@@ -85,13 +92,11 @@ input.error
 .ribbon, .localtime
   +ribbon
 .blue
-  :background-color $light_blue
+  +blue
   +gradient(hsla(0, 0%, 100%, 0.2), hsla(0, 0%, 100%, 0.0))
   :border-color hsla(0, 0%, 0%, 0.15)
-  :color #ccc
+  :color #ccc !important
   a
-    :color $white
-    :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
     :text-decoration none
     &:hover
       :text-decoration underline
@@ -102,7 +107,7 @@ input.error
   :position absolute
   :text-align center
   :white-space nowrap
-  :color $white
+  :color $white !important
   :background-color hsla(187, 12%, 55%, 0.95)
   +rounded
   div
@@ -129,10 +134,8 @@ input.error
   :padding 5px 10px
   :text-decoration none
   +shadow(1px, 1px, 5px)
-  :background-color $light_blue
   :border solid 1px hsla(0, 0%, 0%, 0.1)
-  :color $white !important
-  :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
+  +blue
   +rounded
   +gradient(hsla(0, 0%, 100%, 0.35), hsla(0, 0%, 100%, 0))
   :-webkit-transition -webkit-box-shadow 150ms linear
@@ -418,8 +421,6 @@ aside#pullout
       :border 1px solid hsla(0, 0%, 0%, 0.1)
       :padding 0.25em 0px
       +rounded
-    h3.green
-      :background-color $light_blue
     a.more_info
       :display block
       :text-align left
@@ -453,21 +454,27 @@ aside#pullout
       :font-size small
   .application
     +box
+    .deployed
+      :font-size small
+      :padding 5px
+      :margin-bottom 1em
+      +blue
+      +rounded
+      :color #eee !important
+      a
+        :color #eee !important
+      .more
+        :float right
+        :margin 0px
   #screenshot
-    +shadow(0px, 0px, 2px)
-    :width 160px
-    :height 120px
     :float left
     :margin-right 10px
+    :margin-bottom 10px
     :text-align center
-    .note
-      :display inline-block
-      :margin-top 2em
-      :font-weight bold
-      :color #ccc
     img
-      :width 100%
-      :height 100%
+      +shadow(0px, 0px, 2px)
+      :width 160px
+      :height 120px
   .description
     h2
       :margin-top 0px

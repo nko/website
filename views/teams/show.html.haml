@@ -2,79 +2,79 @@
 .clear
 
 - if (ctx.canEditTeam(ctx.team))
-  .deploy
-    - if (ctx.team.lastDeployedTo)
-      %h3.green
-        DEPLOYED TO
-        = ' ' + ctx.team.lastDeployedTo.toUpperCase()
-      %a{ href: '#' }.more_info Show setup instructions
+  .deploy{ style: 'display:' + (ctx.team.lastDeployedTo ? 'none' : '') }
     - if (!ctx.team.lastDeployedTo)
       %h3 NOT YET DEPLOYED
-    .setup_instructions{ style: 'display:' + (ctx.team.lastDeployedTo ? 'none' : '') }
-      %p.note
-        You can deploy to either
-        != ' <a href="http://nodeknockout.posterous.com/countdown-to-knockout-post-11-deploying-to-jo">Joyent</a> '
-        or
-        != ' <a href="http://nodeknockout.posterous.com/countdown-to-knockout-post-8-deploying-to-her">Heroku</a>.'
-        %br
-        We will use the server from the most recent deploy.
-      %table
-        %tr
-          %td{ colspan: 2 }
-            %ol{ start: '0' }
-              %li.github
-                Get your
-                != ' <a href="https://github.com/nko/' + ctx.team.slug + '">GitHub code repository</a>:'
-                %code
-                  git clone git@github.com:nko/
-                  = ctx.team.slug
-                  \.git
-        %tr
-          %th Joyent
-          %th Heroku
-        %tr
-          %td.rightborder
-            %ol
-              %li
-                %a{ href: 'http://no.de/signup' }
-                  Provision a free SmartMachine
-                .coupon
-                  with coupon code:
-                  %strong
-                    = ' ' + ctx.team.joyentCode
-              %li
-                %code
-                  git remote add joyent \\<br/> ssh://node@
-                  = ctx.team.joyentSlug + '.no.de/repo'
-              %li
-                %code git push joyent master
-          %td
-            %ol
-              %li
-                We&rsquo;ll create a Heroku app for you
-                .coupon &nbsp;
-              %li
-                %code
-                  git remote add heroku \\<br/> git@heroku.com:
-                  = ctx.team.herokuSlug + '.git'
-              %li
-                %code git push heroku master
+    %p.note
+      You can deploy to either
+      != ' <a href="http://nodeknockout.posterous.com/countdown-to-knockout-post-11-deploying-to-jo">Joyent</a> '
+      or
+      != ' <a href="http://nodeknockout.posterous.com/countdown-to-knockout-post-8-deploying-to-her">Heroku</a>.'
+      %br
+      We will use the server from the most recent deploy.
+    %table
+      %tr
+        %td{ colspan: 2 }
+          %ol{ start: '0' }
+            %li.github
+              Get your
+              != ' <a href="https://github.com/nko/' + ctx.team.slug + '">GitHub code repository</a>:'
+              %code
+                git clone git@github.com:nko/
+                = ctx.team.slug
+                \.git
+      %tr
+        %th Joyent
+        %th Heroku
+      %tr
+        %td.rightborder
+          %ol
+            %li
+              %a{ href: 'http://no.de/signup' }
+                Provision a free SmartMachine
+              .coupon
+                with coupon code:
+                %strong
+                  = ' ' + ctx.team.joyentCode
+            %li
+              %code
+                git remote add joyent \\<br/> ssh://node@
+                = ctx.team.joyentSlug + '.no.de/repo'
+            %li
+              %code git push joyent master
+        %td
+          %ol
+            %li
+              We&rsquo;ll create a Heroku app for you
+              .coupon &nbsp;
+            %li
+              %code
+                git remote add heroku \\<br/> git@heroku.com:
+                = ctx.team.herokuSlug + '.git'
+            %li
+              %code git push heroku master
 
-- if (ctx.team.description)
+- if (ctx.team.lastDeployedTo || ctx.team.description)
   .application
+    - if (ctx.team.lastDeployedTo && ctx.editAllowed)
+      .deployed
+        .more
+          %a{ href: '#' } Deploy instructions
+        Deployed to
+        %a{ href: ctx.team.url }= ctx.team.url
     #screenshot
-      %span.note Deploy for a screenshot
       %img{ src: '/images/blank.png' }
+      - if (ctx.isAdmin)
+        %p
+          %a.button.important{ href: '#your_vote' } Vote &raquo;
     .description
       %h2
         %a{ href: ctx.team.url }= ctx.team.application
       %h4= 'by ' + ctx.team.name
-      - if (ctx.isAdmin)
-        %a.button.important{ href: '#your_vote' } Vote &raquo;
-    .clear
-    != markdown(ctx.team.description)
+      != markdown(ctx.team.description)
     - if (ctx.team.link)
       %a{ href: ctx.team.link } More info &raquo;
+    .clear
 - if (!ctx.team.description && ctx.editAllowed)
   .application
     .note

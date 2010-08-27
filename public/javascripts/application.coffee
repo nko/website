@@ -105,11 +105,9 @@ $ ->
       .css('-webkit-transform', r)
       .css('-moz-transform', r)
 
-  $('.deploy a.more_info').click ->
-    $(this).hide()
-    $('.deploy .setup_instructions').slideDown 'fast'
+  $('.application .deployed .more a').click ->
+    $('.deploy').slideToggle 'fast'
     false
-
 
   Stars = {
     value: (elem) ->
