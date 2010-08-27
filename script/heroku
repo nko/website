@@ -5,7 +5,7 @@ require 'mongo'
 
 def run s
   puts s
-  # puts `#{s}`
+  puts `#{s}`
 end
 
 db = Mongo::Connection.new.db 'nodeknockout'
