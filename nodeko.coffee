@@ -391,6 +391,7 @@ post '/deploys', ->
       team.lastDeployedAt = new Date()
       team.lastDeployedHead = @req.param('head')
       team.lastDeployedHeadLong = @req.param('head_long')
+      team.deployHeads.push team.lastDeployedHeadLong
       team.save(->)
   @render 'deploys/ok.html.haml', { layout: false }
 

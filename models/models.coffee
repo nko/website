@@ -27,6 +27,7 @@ class Team
     @joyentCode = options?.joyentCode or ''
     @lastDeployedTo = options?.lastDeployedTo or ''
     @lastDeployedAt = options?.lastDeployedAt
+    @deployHeads = options?.deployHeads or []
 
   constructor: (options, fn) ->
     @build options
