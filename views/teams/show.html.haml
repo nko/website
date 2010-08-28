@@ -65,7 +65,8 @@
         Deployed to
         %a{ href: ctx.team.url }= ctx.team.url
     #screenshot
-      %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url + '/?' + ctx.team.lastDeployedHead) + '&out-format=png&resize=160' : '/images/blank.png' }
+      %a{ href: ctx.team.url }
+        %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url + '/?' + ctx.team.lastDeployedHead) + '&out-format=png&resize=160' : '/images/blank.png' }
       - if (ctx.isAdmin)
         %p
           %a.button.important{ href: '#your_vote' } Vote &raquo;

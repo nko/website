@@ -5,40 +5,14 @@
     Your Team
   - each team in ctx.yourTeams
     %ul.teams
-      %li
-        %a{ href: '/teams/' + team.toParam() }= team.name
-        %ul.members
-          - each member in team.members
-            - if (member.name !== '')
-              %li
-                - if (member.link)
-                  %a{ href: member.link }= member.name
-                - if (!member.link)
-                  = ' '
-                  = member.name
-          - if (team.invited.length > 0)
-            %li.invited
-              = pluralize(team.invited.length, 'outstanding invite')
+      %li!= partial('teams/application.html.haml', { locals: { team: team } })
 
 %h2
   Verified Teams
   = ' (' + ctx.teams.length + ')'
 %ul.teams
   - each team in ctx.teams
-    %li
-      %a{ href: '/teams/' + team.toParam() }= team.name
-      %ul.members
-        - each member in team.members
-          - if (member.name !== '')
-            %li
-              - if (member.link)
-                %a{ href: member.link }= member.name
-              - if (!member.link)
-                = ' '
-                = member.name
-        - if (team.invited.length > 0)
-          %li.invited
-            = pluralize(team.invited.length, 'outstanding invite')
+    %li!= partial('teams/application.html.haml', { locals: { team: team } })
 .clear
 
 - if (false && 'unverifiedTeams' in ctx)

@@ -1,0 +1,22 @@
+.application
+  #screenshot
+    %a{ href: team.url }
+      %img{ src: team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(team.url + '/?' + team.lastDeployedHead) + '&out-format=png&resize=160' : '/images/blank.png' }
+  .description
+    %h2
+      %a{ href: team.url }= team.application
+    %h4
+      by
+      %a{ href: '/teams/' + team.toParam() }= team.name
+    %ul.members
+      - each member in team.members
+        - if (member.name !== '')
+          %li
+            - if (member.link)
+              %a{ href: member.link }= member.name
+            - if (!member.link)
+              = ' '
+              = member.name
+  - if (team.link)
+    %a{ href: team.link } More info &raquo;
+  .clear

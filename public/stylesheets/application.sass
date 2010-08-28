@@ -387,6 +387,26 @@ aside#pullout
   textarea
     :height 10em
 
+.body.teams-index, .body.teams-show
+  #screenshot
+    :float left
+    :margin-right 10px
+    :margin-bottom 10px
+    :text-align center
+    img
+      +shadow(0px, 0px, 2px)
+      :width 160px
+      :height 120px
+  .description
+    h2
+      :margin-top 0px
+      :overflow hidden
+      :text-overflow ellipsis
+      :white-space nowrap
+      :width 375px
+    h4
+      :margin 0px 0px 0.5em
+
 .body.teams-index
   .teams
     :list-style-type none
@@ -400,8 +420,9 @@ aside#pullout
       :background-color hsla(0%, 100%, 100%, 0.9)
       +shadow
       +rounded
-      ul
-        :padding-left 25px
+      ul.members
+        :margin-left 170px
+        :padding-left 20px
         :font-size small
   .invited
     :font-style italic
@@ -471,24 +492,6 @@ aside#pullout
       .more
         :float right
         :margin 0px
-  #screenshot
-    :float left
-    :margin-right 10px
-    :margin-bottom 10px
-    :text-align center
-    img
-      +shadow(0px, 0px, 2px)
-      :width 160px
-      :height 120px
-  .description
-    h2
-      :margin-top 0px
-      :overflow hidden
-      :text-overflow ellipsis
-      :white-space nowrap
-      :width 375px
-    h4
-      :margin 0px 0px 1em
   ul#members
     :list-style-type none
     :padding-left 0px
