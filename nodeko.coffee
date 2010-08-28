@@ -127,9 +127,9 @@ get '/error', ->
 
 # list teams
 get '/teams', ->
-  Team.all (error, teams) =>
+  Team.all {}, { 'sort': [['lastDeployedAt', -1]] }, (error, teams) =>
     [@teams, @unverifiedTeams] = [[], []]
-    for team in _.shuffle(teams)
+    for team in teams
       if team.members.length == team.invited.length
         @unverifiedTeams.push team
       else
