@@ -287,6 +287,7 @@ put '/teams/:teamId/votes/:voteId', ->
       @ensurePermitted vote, =>
         @noHeader = true
         @vote = vote
+        vote.update @req.body
         saveVote.call(this)
 
 # list votes

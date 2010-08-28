@@ -142,8 +142,12 @@ _.extend Mongo,
           fn error, saved
 
     update: (attributes) ->
-      for k, v of attributes when @hasOwnProperty(k)
-        this[k] = v
+      if @updateable_attributes?
+        for k in @updateable_attributes when attributes[k]?
+          this[k] = attributes[k]
+      else
+        for k, v of attributes when @hasOwnProperty(k)
+          this[k] = v
 
     remove: (fn) ->
       @collection (error, collection) =>

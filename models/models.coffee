@@ -267,6 +267,8 @@ _.extend Person, {
 nko.Person = Person
 
 class Vote
+  updateable_attributes: ['usefulness', 'design', 'innovation', 'completeness', 'comment']
+
   constructor: (options, request) ->
     @team = options?.team
 
@@ -304,7 +306,9 @@ class Vote
       if @isNew()
         @email ?= @person?.email
         @checkDuplicate fn
-      else fn()
+      else
+        @updatedAt = new Date()
+        fn()
 
   checkDuplicate: (fn) ->
     Vote.firstByTeamAndPerson @team, @person, (errors, existing) =>
