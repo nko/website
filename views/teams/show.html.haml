@@ -74,7 +74,7 @@
       %h2
         %a{ href: ctx.team.url }= ctx.team.application
       %h4= 'by ' + ctx.team.name
-      != markdown(ctx.team.description)
+      .markdown!= markdown(ctx.team.description)
     - if (ctx.team.link)
       %a{ href: ctx.team.link } More info &raquo;
     .clear
@@ -111,7 +111,7 @@
 
 - if (ctx.team.colophon)
   %h3 How
-  != markdown(ctx.team.colophon)
+  .markdown!= markdown(ctx.team.colophon)
 
 - if (ctx.editAllowed)
   %a.button{ href: '/teams/' + ctx.team.toParam() + '/edit' } Edit

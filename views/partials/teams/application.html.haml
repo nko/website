@@ -8,7 +8,7 @@
     %h4
       by
       %a{ href: '/teams/' + team.toParam() }= team.name
-    != firstParagraph(team.description)
+    .markdown!= firstParagraph(team.description)
     - if (team.link)
       %a{ href: team.link } More info &raquo;
   .clear
