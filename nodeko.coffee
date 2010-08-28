@@ -376,6 +376,13 @@ put '/people/:id', ->
       person.save (error, resp) =>
         @redirectToTeam person
 
+# delete person
+del '/people/:id', ->
+  Person.fromParam @req.param('id'), (error, person) =>
+    @ensurePermitted person, =>
+      person.remove (error, result) =>
+        @redirect '/'
+
 # TODO security
 post '/deploys', ->
   # user: 'visnupx@gmail.com'
