@@ -70,20 +70,18 @@ $ ->
         @value = '' if @value is @defaultValue
     not hasError
 
-  $('.body.index time:first').each ->
-    [y, m, d, h, i, s] = $(this).attr('datetime').split(/[-:TZ]/)...
-    start = Date.UTC y, m-1, d, h, i, s
+  $('.body.index .countdown').each ->
+    start = Date.UTC 2010, 7, 30, 0, 0, 0
     countdown = $('#date .countdown')
     tick = ->
       diff = (start - new Date().getTime()) / 1000
       if diff <= 0
-        countdown.html "START CODING!"
+        countdown.html "TIME'S UP!"
       else
-        days = Math.floor diff % 604800 / 86400
-        hours = Math.floor diff % 86400 / 3600
+        hours = Math.floor diff / 3600
         minutes = Math.floor diff % 3600 / 60
         secs = Math.floor diff % 60
-        countdown.html (if days > 0 then days + ' day ' else '') + (if hours > 0 then hours + ' hours ' else '') + (if minutes > 0 then minutes + ' minutes ' else '') + secs + ' seconds'
+        countdown.html (if hours > 0 then hours + ' hours ' else '') + (if minutes > 0 || hours > 0 then minutes + ' minutes ' else minutes) + secs + ' seconds'
         setTimeout tick, 1000
     tick()
 

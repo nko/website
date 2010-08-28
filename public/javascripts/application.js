@@ -96,28 +96,20 @@
       }) : null;
       return !hasError;
     });
-    $('.body.index time:first').each(function() {
-      var _a, countdown, d, h, i, m, s, start, tick, y;
-      _a = $(this).attr('datetime').split(/[-:TZ]/);
-      y = _a[0];
-      m = _a[1];
-      d = _a[2];
-      h = _a[3];
-      i = _a[4];
-      s = _a[5];
-      start = Date.UTC(y, m - 1, d, h, i, s);
+    $('.body.index .countdown').each(function() {
+      var countdown, start, tick;
+      start = Date.UTC(2010, 7, 30, 0, 0, 0);
       countdown = $('#date .countdown');
       tick = function() {
-        var days, diff, hours, minutes, secs;
+        var diff, hours, minutes, secs;
         diff = (start - new Date().getTime()) / 1000;
         if (diff <= 0) {
-          return countdown.html("START CODING!");
+          return countdown.html("TIME'S UP!");
         } else {
-          days = Math.floor(diff % 604800 / 86400);
-          hours = Math.floor(diff % 86400 / 3600);
+          hours = Math.floor(diff / 3600);
           minutes = Math.floor(diff % 3600 / 60);
           secs = Math.floor(diff % 60);
-          countdown.html((days > 0 ? days + ' day ' : '') + (hours > 0 ? hours + ' hours ' : '') + (minutes > 0 ? minutes + ' minutes ' : '') + secs + ' seconds');
+          countdown.html((hours > 0 ? hours + ' hours ' : '') + (minutes > 0 || hours > 0 ? minutes + ' minutes ' : minutes) + secs + ' seconds');
           return setTimeout(tick, 1000);
         }
       };

@@ -1,70 +1,28 @@
-%h2.ribbon News
-%iframe#twitter{ src: 'http://knockout.nodejs.se/' }
-%p
-  %a{ href: 'http://twitter.com/node_knockout' } Follow us on Twitter
-  for the latest. During the competition, we&rsquo;ll be hanging out virtually
-  in #node.js (irc.freenode.net) and physically at
-  != ' <a href="/locations">Knockout HQ</a>.'
-%h2.ribbon When
 %h3#date
   .countdown &nbsp;
-  .about August 28 &ndash; 29, 2010 UTC
-%p
-  The coding phase of the competition will begin at
-  != ' <time datetime="2010-08-28T00:00:00Z">Saturday, August 28, 00:00 GMT</time> '
-  and end exactly 48 hours later at
-  != ' <time datetime="2010-08-30T00:00:00Z">Monday, August 30, 00:00 GMT</time>. '
-%h2.ribbon Where
-%p
-  Contestants may compete &ldquo;virtually&rdquo; from anywhere in the world, but
-  %a{ href: 'http://www.joyent.com/?utm_source=web&utm_medium=sponsorship&utm_campaign=nodeknockout' } Joyent
-  will be hosting
-  %a{ href: "http://nodeknockout.posterous.com/get-ready-for-the-nodejs-knockout-at-joyents"} Knockout HQ
+  .about until coding ends
+%p.note
+  %a{ href: 'http://twitter.com/node_knockout' } Follow us on Twitter
+  for the latest. During the competition, we&rsquo;ll be hanging out virtually
   in
-  != ' <a href="/locations">San Francisco</a>.'
+  %a{ href: 'http://webchat.freenode.net/' } #node.js on irc.freenode.net
+  and physically at
+  != ' <a href="/locations">Knockout HQ</a>.'
+
+%h2.ribbon Recently Deployed
+
+%ul.teams
+  - each team in ctx.teams
+    %li!= partial('teams/application.html.haml', { locals: { team: team } })
+
 %p
-  There are also
-  %a{ href: '/locations' } a handful of other locations
-  where people can optionally compete in person.
+  %a{ href: '/teams' } See all entries
+
 %h2.ribbon What
 %p
-  %a{ href: 'http://fortnightlabs.com' } We
-  %span.heart &hearts;
-  != ' <a href="http://nodejs.org">node.js</a>. '
-  We
-  %span.heart &hearts;
-  != ' <a href="http://railsrumble.com">Rails Rumble</a>. '
-  Combining the two, we got:
-  != ' <strong>Node.js Knockout &mdash; a 48-hour node.js coding contest</strong>. '
-%h2.ribbon How
-%p
-  The contest format is similar to
-  != ' <a href="http://railsrumble.com">Rails Rumble</a>:'
-%ul
-  %li Build any web project you can imagine;
-  %li In 48 hours, starting from scratch;
-  %li With a team of up to 4;
-  %li Using node.js and whatever else you want;
-%p
-  To amaze and delight your audience and expert judges, and to earn prizes
-  and glory! Check out the
-  != ' <a href="/rules">full rules</a>.'
-%h2.ribbon Why
-%p
-  %a{ href: 'http://www.nodejs.org' } node.js
-  isn&rsquo;t another MVC web framework.  It&rsquo;s at the bleeding edge of a
-  technology stack that allows developers to blur the lines between software,
-  the web, and the new like never before.
-%p
-  Whatever the contest winners are, we suspect they
-  %a{ href: 'http://mnutt.github.com/hummingbird/' } won&rsquo;t
-  %a{ href: 'http://wargamez.mape.me/' } look
-  %a{ href: 'http://githubissues.heroku.com/' } like
-  traditional websites.
-%h2.ribbon How can I help?
-%p
-  Spread the word. Start thinking of ideas.
-%p
-  If you're interested in sponsoring, judging, or helping out in some
-  other way, definitely
-  != ' <a href="mailto:all@nodeknockout.com">drop us a line</a>.'
+  Node.js Knockout is a 48-hour coding contest using Node.js inspired by
+  != ' <a href="http://railsrumble.com/">Rails Rumble</a>. '
+  = ctx.teamCount + ' '
+  teams
+  %a{ href: '/locations' } around the world
+  are competing between August 28 &amp; 29, 2010 UTC.

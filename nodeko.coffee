@@ -102,7 +102,11 @@ get /.*/, ->
     @next()
 
 get '/', ->
-  @render 'index.html.haml'
+  Team.count (error, teamCount) =>
+    Team.all {}, { sort: [['lastDeployedAt', -1]], limit: 10 }, (error, teams) =>
+      @teams = teams
+      @teamCount = teamCount
+      @render 'index.html.haml'
 
 get '/me', ->
   if @currentPerson?

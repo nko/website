@@ -64,7 +64,7 @@
           %a{ href: '#' } Deploy instructions
         Deployed to
         %a{ href: ctx.team.url }= ctx.team.url
-    #screenshot
+    .screenshot
       %a{ href: ctx.team.url }
         %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url + '/?' + ctx.team.lastDeployedHead) + '&out-format=png&resize=160' : '/images/blank.png' }
       - if (ctx.isAdmin)
