@@ -25,6 +25,8 @@ Hoptoad.key = 'b76b10945d476da44a0eac6bfe1aeabd'
 process.on 'uncaughtException', (e) ->
   Hoptoad.notify e
 
+sys.log "Connecting to Redis at #{process.env.REDISTOGO_URL}"
+
 request = (type) ->
   (path, fn) ->
     app[type] path, (req, res, next) ->
