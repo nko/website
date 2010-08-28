@@ -51,6 +51,7 @@ request = (type) ->
             res.render file, opts, fn
           currentPerson: person
           isAdmin: person? && person.admin()
+          isJudge: person? && person.type is 'Judge'
           setCurrentPerson: (person, options) ->
             @cookie 'authKey', person?.authKey(), options
           redirectToTeam: (person, alternate) ->

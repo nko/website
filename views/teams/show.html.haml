@@ -67,7 +67,7 @@
     .screenshot
       %a{ href: ctx.team.url }
         %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url + '/?' + ctx.team.lastDeployedHead) + '&out-format=png&resize=160' : '/images/blank.png' }
-      - if (ctx.isAdmin)
+      - if (ctx.isJudge)
         %p
           %a.button.important{ href: '#your_vote' } Vote &raquo;
     .description
@@ -122,7 +122,7 @@
 
 .clear
 
-- if (ctx.isAdmin)
+- if (ctx.isJudge)
   %h1 Votes
   %form#your_vote{ method: (ctx.vote.isNew() ? 'POST' : 'PUT'), action: '/teams/' + ctx.team.toParam() + '/votes' + (ctx.vote.isNew() ? '' : '/' + ctx.vote.id()) }
     != partial("errors.html.haml", { locals: { ctx: ctx } })
@@ -146,6 +146,7 @@
           %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
       %input.button{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save' }
       .clear
+      .warning Voting is currently in testing. It is only visible to judges and all votes will be cleared at 7pm PST Sunday.
   %ul.votes
     != partial('votes/index.html.jade', { locals: { ctx: ctx } })
     - if (ctx.votes.length == 50)

@@ -27,6 +27,10 @@ a img {
   display: table-cell;
   vertical-align: top; }
 
+.warning {
+  font-weight: bold;
+  color: #a80003; }
+
 input[type=password], input[type=email], input[type=text], textarea {
   font-size: xx-large;
   padding: 5px 5px;
