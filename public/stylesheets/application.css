@@ -396,14 +396,16 @@ aside#pullout {
     -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
     width: 160px; }
-.body.teams-index .description h2, .body.teams-show .description h2, .body.index .description h2 {
-  margin-top: 0px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 375px; }
-.body.teams-index .description h4, .body.teams-show .description h4, .body.index .description h4 {
-  margin: 0px 0px 0.5em; }
+.body.teams-index .description, .body.teams-show .description, .body.index .description {
+  margin-left: 170px; }
+  .body.teams-index .description h2, .body.teams-show .description h2, .body.index .description h2 {
+    margin-top: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 375px; }
+  .body.teams-index .description h4, .body.teams-show .description h4, .body.index .description h4 {
+    margin: 0px 0px 0.5em; }
 
 .body.teams-index .teams, .body.index .teams {
   list-style-type: none;
@@ -420,7 +422,6 @@ aside#pullout {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px; }
     .body.teams-index .teams > li ul.members, .body.index .teams > li ul.members {
-      margin-left: 170px;
       padding-left: 20px;
       font-size: small; }
 .body.teams-index .invited, .body.index .invited {

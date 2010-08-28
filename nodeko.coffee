@@ -426,6 +426,9 @@ app.helpers {
   escapeURL: require('querystring').escape
   markdown: require('markdown').toHTML
 
+  firstParagraph: (md) ->
+    require('markdown').toHTML(md).match(/<p>.*?<\/p>/)?[0] || ''
+
   gravatar: (p, s) ->
     "<img src=\"http://www.gravatar.com/avatar/#{p.emailHash}?s=#{s || 40}&d=monsterid\" />"
 }

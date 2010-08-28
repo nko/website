@@ -8,15 +8,7 @@
     %h4
       by
       %a{ href: '/teams/' + team.toParam() }= team.name
-    %ul.members
-      - each member in team.members
-        - if (member.name !== '')
-          %li
-            - if (member.link)
-              %a{ href: member.link }= member.name
-            - if (!member.link)
-              = ' '
-              = member.name
-  - if (team.link)
-    %a{ href: team.link } More info &raquo;
+    != firstParagraph(team.description)
+    - if (team.link)
+      %a{ href: team.link } More info &raquo;
   .clear
