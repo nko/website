@@ -95,7 +95,7 @@ class Team
         @generateSlug fn, @slug + '-'  # try with another -
 
   generateDeploySlugs: ->
-    @joyentSlug = @slug.replace(/^(\d)/, 'ko-$1')
+    @joyentSlug = @slug.replace(/^(\d)/, 'ko-$1').replace(/_/g, '-').substring(0, 30)
     @herokuSlug = 'nko-' + @slug.replace(/_/g, '-').substring(0, 26)
 
 nko.Team = Team
