@@ -16,13 +16,13 @@
     %label{ for: 'description' } Description
   .note
     What&rsquo;s your application do?
-    != ' (<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> ok)'
+    != ' (<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> OK)'
   %textarea{ name: 'description', id: 'description' }= ctx.team.description
   %h3
     %label{ for: 'colophon' } Colophon
   .note
     What libraries, icons, web service APIs, tools did you use?
-    != ' (<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> ok)'
+    != ' (<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> OK)'
   %textarea{ name: 'colophon', id: 'colophon'}= ctx.team.colophon
   %h3
     %label{ for: 'link' } Screencast / Info URL

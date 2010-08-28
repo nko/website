@@ -1,7 +1,8 @@
 // http://kuler.adobe.com/#themeID/337112
 $black: #142229
-$light_green: #BBDB70
-$light_blue: #7e9699
+$light_green: #BBDB70 /* hsl(78, 60%, 65%) */
+$light_blue: #7e9699  /* hsl(187, 12%, 55%) */
+$dark_green: #005A1F
 $white: #F6FFEF
 $red: #A80003
 
@@ -26,6 +27,20 @@ $red: #A80003
   :color $white
   :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
   +shadow(0px, 2px, 5px)
+
+=box
+  :background-color #fff
+  :background-color hsla(0, 0%, 100%, 0.6)
+  :padding 10px
+  +shadow(0px, 1px, 3px)
+  +rounded
+
+=blue
+  :background-color $light_blue
+  :color $white !important
+  :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
+  a
+    :color $white
 
 pre
   :width 70ex
@@ -77,13 +92,11 @@ input.error
 .ribbon, .localtime
   +ribbon
 .blue
-  :background-color $light_blue
+  +blue
   +gradient(hsla(0, 0%, 100%, 0.2), hsla(0, 0%, 100%, 0.0))
   :border-color hsla(0, 0%, 0%, 0.15)
-  :color #ccc
+  :color #ccc !important
   a
-    :color $white
-    :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
     :text-decoration none
     &:hover
       :text-decoration underline
@@ -94,7 +107,7 @@ input.error
   :position absolute
   :text-align center
   :white-space nowrap
-  :color $white
+  :color $white !important
   :background-color hsla(187, 12%, 55%, 0.95)
   +rounded
   div
@@ -121,10 +134,8 @@ input.error
   :padding 5px 10px
   :text-decoration none
   +shadow(1px, 1px, 5px)
-  :background-color $light_blue
   :border solid 1px hsla(0, 0%, 0%, 0.1)
-  :color $white !important
-  :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.15)
+  +blue
   +rounded
   +gradient(hsla(0, 0%, 100%, 0.35), hsla(0, 0%, 100%, 0))
   :-webkit-transition -webkit-box-shadow 150ms linear
@@ -145,7 +156,7 @@ input.error
   :padding 1em 20px
   +shadow(1px, 1px, 10px, hsla(0, 0%, 0%, 0.2))
   :color $black
-  :text-shadow 0px 1px 0px hsla(0, 0%, 100%, 0.9)
+  :text-shadow 0px 1px 0px hsla(0, 0%, 100%, 0.8)
   header h1#logo
     :text-align center
   nav
@@ -156,7 +167,7 @@ input.error
     :padding 12px 0px 10px
     :background-color rgba(126, 150, 153, 0.15)
     :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 0%, 0.07)), color-stop(0.15, transparent))
-    :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.07), transparent 10%)
+    :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.07), transparent 15%)
     +shadow(0px, 2px, 3px)
     +rounded
     ul
@@ -193,6 +204,13 @@ input.error
     :min-height 550px
     h1
       +ribbon
+    .markdown h1
+      :display block
+      :background inherit
+      :color inherit
+      :-webkit-box-shadow none
+      :-moz-box-shadow none
+      :border none
   h2, h3
     :margin-bottom 0px
   ul#errors
@@ -345,6 +363,13 @@ aside#pullout
       :display none
 
 .body.index
+  #twitter
+    :border none
+    :float right
+    :margin-top 1em
+    :width 320px
+    :height 220px
+    :overflow-y hidden
   .heart
     :color #da6a6c
   #date
@@ -369,7 +394,27 @@ aside#pullout
   textarea
     :height 10em
 
-.body.teams-index
+.body.teams-index, .body.teams-show, .body.index
+  .screenshot
+    :float left
+    :margin-right 10px
+    :margin-bottom 10px
+    :text-align center
+    img
+      +shadow(0px, 0px, 2px)
+      :width 160px
+  .description
+    :margin-left 170px
+    h2
+      :margin-top 0px
+      :overflow hidden
+      :text-overflow ellipsis
+      :white-space nowrap
+      :width 375px
+    h4
+      :margin 0px 0px 0.5em
+
+.body.teams-index, .body.index
   .teams
     :list-style-type none
     :padding 0px
@@ -377,16 +422,13 @@ aside#pullout
     > li
       :margin-top 10px
       :margin-right 10px
-      :width 163px
-      :height 8em
       :padding 10px
       :background-color #fff
       :background-color hsla(0%, 100%, 100%, 0.9)
       +shadow
       +rounded
-      :float left
-      ul
-        :padding-left 25px
+      ul.members
+        :padding-left 20px
         :font-size small
   .invited
     :font-style italic
@@ -397,36 +439,65 @@ aside#pullout
     :margin-right 1ex
   form#delete
     :display inline-block
-  .application
-    :background-color white
-    :background-color hsla(0, 0%, 100%, 0.6)
-    :padding 10px
-    +shadow(0px, 1px, 3px)
-    +rounded
-  #screenshot
-    +shadow(0px, 0px, 2px)
-    :width 160px
-    :height 120px
-    :float left
-    :margin-right 10px
+  .deploy
+    +box
+    :background-color rgba(126, 150, 153, 0.15)
+    :background-image -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 0%, 0.07)), color-stop(0.04, transparent))
+    :background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.07), transparent 4%)
     :text-align center
+    :margin-bottom 1em
+    h3
+      :margin 0px
+      :background-color $red
+      :font-size 48px
+      :color white
+      :text-shadow 0px -1px 0px hsla(0, 0%, 0%, 0.5)
+      :border 1px solid hsla(0, 0%, 0%, 0.1)
+      :padding 0.25em 0px
+      +rounded
+    a.more_info
+      :display block
+      :text-align left
+      :margin .5em 0px 0px
     .note
-      :display inline-block
-      :margin-top 2em
-      :font-weight bold
-      :color #ccc
-    img
+      :margin 0.5em 0px
+    table
+      :border-collapse collapse
       :width 100%
-      :height 100%
-  .description
-    h2
-      :margin-top 0px
-      :overflow hidden
-      :text-overflow ellipsis
-      :white-space nowrap
-      :width 375px
-    h4
-      :margin 0px 0px 1em
+    th
+      :padding 0.5em 0px 0.25em
+    td
+      :width 50%
+      :padding 0px 10px
+      :vertical-align top
+    .rightborder
+      :border-right solid 1px #eee
+      :border-right solid 1px hsla(0, 0%, 0%, 0.1)
+    ol
+      :padding-left 20px
+      :margin 0px
+      :text-align left
+      li
+        :margin 0.25em 0px
+      .coupon strong
+        :font-family inconsolata, menlo, monospace
+    code
+      :font-family inconsolata, menlo, monospace
+      :font-size small
+  .application
+    +box
+    .deployed
+      :font-size small
+      :padding 5px
+      :margin-bottom 1em
+      +blue
+      +rounded
+      :color #eee !important
+      a
+        :color #eee !important
+      .more
+        :float right
+        :margin 0px
   ul#members
     :list-style-type none
     :padding-left 0px
@@ -440,12 +511,8 @@ aside#pullout
     :list-style-type none
     :padding-left 0px
   .votes li, #your_vote
-    :background-color white
-    :background-color hsla(0, 0%, 100%, 0.6)
-    :padding 10px
+    +box
     :margin 0.5em 0px 0.5em -10px
-    +shadow(0px, 1px, 3px)
-    +rounded
     .voter
       :float left
       :width 180px
@@ -492,7 +559,7 @@ aside#pullout
     :text-align center
     :margin-top 0.5em
 
-.body.people-edit, .body.teams-edit, .body.people-new, .body.teams-edit
+.body.people-edit, .body.teams-edit, .body.people-new, .body.teams-edit, .body.judges-new
   h2
     :margin-top 1.5em
     :border-bottom solid 1px hsla(0, 0%, 0%, 0.2)

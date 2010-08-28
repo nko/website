@@ -1,19 +1,255 @@
-#!/bin/bash
+#!/usr/bin/env ruby
 
-APP=$1   # e.g. fortnightlabs-nko
-USER=$2  # e.g. gerads@gmail.com
+require 'rubygems'
+require 'mongo'
 
-# create app
-heroku create $APP
+def run s
+  puts s
+  # puts `#{s}`
+end
 
-# slug.heroku.nodeknockout.com
-heroku addons:add custom_domains:basic --app $APP
-heroku domains:add $APP.heroku.nodeknockout.com --app $APP
+db = Mongo::Connection.new.db 'nodeknockout'
+db_teams = db.collection 'Team'
+db_people = db.collection 'Person'
 
-# post deploy hook
-heroku addons:add deployhooks:http url=http://nodeknockout.com/deploys --app $APP
+apps = %w(
+  delete-this-nko-me-and-my-sher
+  delete-this-nko-reiding
+  nko-me-and-my-sherpa-from-mit
+  nko-json
+  nko-reiding
+  nko-stokers
+  nko-node-us
+  nko-the-verbose
+  nko-error-500
+  nko-the-last-one-finished
+  nko-copypastel
+  nko-nodelicious
+  nko-moo
+  nko-rallarpojken
+  nko-yayquery-sparkleforce
+  nko-8-d
+  nko-tetra-agency
+  nko-flipnode-squad
+  nko-dunno
+  nko-solariangroup
+  nko-wtfbbq
+  nko-mesolabs
+  nko-vegasjs
+  nko-the-anti-wit-league
+  nko-awx
+  nko-electro-space-octogon
+  nko-enoch-coder
+  nko-teropa
+  nko-vinova
+  nko-chaosscript
+  nko-vevi-men
+  nko-sagganitra
+  nko-awesometown
+  nko-fvk
+  nko-weekendist
+  nko-code-js
+  nko-umeboshi-fireteam
+  nko-bit-zesty
+  nko-hey-it-s-opower
+  nko-lazercatz
+  nko-team-rocketpants
+  nko-h4ck-n-lash
+  nko-nodelay
+  nko-no-de-use-for-a-name
+  nko-jazzcloud
+  nko-734m
+  nko-teamlazer
+  nko-highjack
+  nko-not-your-mother-s-node
+  nko-invincibles
+  nko-team-soundcloud
+  nko-four-bean-soup
+  nko-pandorica-believers
+  nko-code-strong-island
+  nko-node-sleep-till-brooklyn
+  nko-done-js
+  nko-dvar
+  nko-uxebu
+  nko-leviathan
+  nko-selvakumar
+  nko-bsods
+  nko-fortnight-labs
+  nko-cloudrapid
+  nko-direx-biocultures
+  nko-jackalope
+  nko-chaotic-unicorns
+  nko-mxt-ps
+  nko-explorer-sox
+  nko-nvariable
+  nko-highgroove
+  nko-pepp
+  nko-piston-hurricane
+  nko-radus
+  nko-emergent-heroes
+  nko-naughtify
+  nko-konui
+  nko-hinge
+  nko-pseudocode
+  nko-shimondoodkin
+  nko-ponies-for-orphans
+  nko-binary-soul
+  nko-schnobs
+  nko-walter-sobchak
+  nko-nodebodies
+  nko-drop-shadow
+  nko-crybabies
+  nko-gullickson-laboratories
+  nko-spoon
+  nko-team-hyphen
+  nko-node-duh
+  nko-foil
+  nko-hyphy
+  nko-pitcrew
+  nko-javascript-nazi
+  nko-medium
+  nko-yerbamate
+  nko-leo-zeng
+  nko-node-house
+  nko-dark-knights
+  nko-awesome-ninjas
+  nko-gydoosh-ro
+  nko-cassius-clay-ko
+  nko-the-bald-buddhist-scrum-ma
+  nko-whatcodecraves
+  nko-52-31-n-13-24-e
+  nko-rochester-js
+  nko-rose
+  nko-hawk
+  nko-siter
+  nko-3-2-1
+  nko-hms-dreadnode
+  nko-cronify
+  nko-pie
+  nko-gu-nat-s
+  nko-js
+  nko-glix
+  nko-stuart
+  nko-node-rookie
+  nko-team-never-used-node-befor
+  nko-team-down
+  nko-octathorpe
+  nko-asuka
+  nko-speedo
+  nko-depeche-node
+  nko-team-discovery-channel
+  nko-nodty
+  nko-cereal-killers
+  nko-insertmode
+  nko-merge-fm
+  nko-braintree
+  nko-flockfeed
+  nko-team-tbders
+  nko-pants-pants-evolution
+  nko-knock-down-drag-node-fight
+  nko-dionysus
+  nko-now-running-in-safe-node
+  nko-inflatable-chum
+  nko-the-nyc-nodejitsu-ninjas
+  nko-node-rs
+  nko-dunowet
+  nko-edison-labs
+  nko-kodekabuki
+  nko-bakery
+  nko-virtual-design
+  nko-tahu
+  nko-horologe
+  nko-thecaptains
+  nko-hotnode
+  nko-mustardamus
+  nko-public-class
+  nko-interrobang
+  nko-fail-better
+  nko-electric-lazer-commanders
+  nko-never-follow
+  nko-stubfugees
+  nko-8thlight
+  nko-salamander
+  nko-seattle-js
+  nko-ronins
+  nko-fewtter
+  nko-ebaz
+  nko-witty-now
+  nko-tautologistics
+  nko-ikongfu
+  nko-upstream
+  nko-codexmeus
+  nko-boston-slap
+  nko-karen
+  nko-spoetie-201
+  nko-saber-tooth-moose-lion
+  nko-anansi
+  nko-the-node-kushes
+  nko-sourlander
+  nko-soldier-of-code
+  nko-nv
+  nko-db-teams-drop
+  nko-laktek
+  nko-gemini
+  nko-eduf2f
+  nko-rxvl
+  nko-spplaceholder
+  nko-bocoup
+  nko-hmmmm
+  nko-timzadoosh
+  nko-monode
+  nko-a-few-chicago-guys
+  nko-yeaaaaaah
+  nko-professional-drunks
+  nko-wrench-labs
+  nko-cowboyonrails
+  nko-nodestradamus
+  nko-teamclevererest
+  nko-midwest-rabble-rousers
+  nko-bearshark
+  nko-teamtubehappy
+  nko-project-cheese-beef
+  nko-debuggable
+  nko-butterflynode
+  nko-abk
+  nko-prague-js
+  nko-celestial-being
+  nko-team-awesome
+  nko-del-fuegos
+  nko-starcraft-2-destroyed-my-m
+  nko-tvg
+  nko-some-cool-name
+  nko-grahnix
+  nko-railsgeeklab
+  nko-vwxyz
+  nko-zenith-workloom
+  nko-felid-lawbook
+  nko-demiox-boiko
+  nko-stiff-plowbote
+  nko-kanara-kittul
+  nko-gariba-diffame
+)
 
-# give them the app
-heroku sharing:add $USER --app $APP
-# TODO add all users
-heroku sharing:transfer $USER --app $APP
+db_teams.find().each do |t|
+  app = 'nko-' + t['slug'].gsub('_', '-')[0,26]
+  next if apps.include?(app)
+
+  # create app
+  run "heroku create --stack beech #{app}"
+
+  # post deploy hook
+  run "heroku addons:add custom_domains:basic --app #{app}"
+  run "heroku addons:add deployhooks:http url=http://nodeknockout.com/deploys --app #{app}"
+
+  # add everyone on the team
+  run "heroku sharing:add all@nodeknockout.com --app #{app}"
+  people = t['members'].map { |p| db_people.find_one p['_id'] }
+  people.each do |p|
+    #run "heroku sharing:add #{p['email']} --app #{app}"
+  end
+
+  # transfer ownership
+  #run "heroku sharing:transfer #{people.first['email']} --app #{app}"
+  run "heroku sharing:transfer all@nodeknockout.com --app #{app}"
+  puts "\n"
+end

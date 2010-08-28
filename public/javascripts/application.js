@@ -3,7 +3,7 @@
     return function(){ return func.apply(context, arguments); };
   };
   $(function() {
-    var Stars, _a, ajaxForm, countdown, d, h, i, m, ms, prependVote, s, saveDraft, tick, updateVote, y;
+    var Stars, ajaxForm, prependVote, saveDraft, updateVote;
     $('a.resend').click(function() {
       var a;
       a = $(this);
@@ -96,8 +96,32 @@
       }) : null;
       return !hasError;
     });
-    if ($('.body.index time').length > 0) {
-      _a = $('time').attr('datetime').split(/[-:TZ]/);
+    $('.body.index .countdown').each(function() {
+      var countdown, start, tick;
+      start = Date.UTC(2010, 7, 30, 0, 0, 0);
+      countdown = $('#date .countdown');
+      tick = function() {
+        var diff, hours, minutes, secs;
+        diff = (start - new Date().getTime()) / 1000;
+        if (diff <= 0) {
+          return countdown.html("TIME'S UP!");
+        } else {
+          hours = Math.floor(diff / 3600);
+          minutes = Math.floor(diff % 3600 / 60);
+          secs = Math.floor(diff % 60);
+          countdown.html((hours > 0 ? hours + ' hours ' : '') + (minutes > 0 || hours > 0 ? minutes + ' minutes ' : minutes) + secs + ' seconds');
+          return setTimeout(tick, 1000);
+        }
+      };
+      return tick();
+    });
+    $('.body.index time').live('hover', function(e) {
+      var $this, _a, d, dt, h, i, m, ms, s, y;
+      if (e.type === 'mouseout') {
+        return $('.localtime').remove();
+      }
+      $this = $(this);
+      _a = $this.attr('datetime').split(/[-:TZ]/);
       y = _a[0];
       m = _a[1];
       d = _a[2];
@@ -105,43 +129,20 @@
       i = _a[4];
       s = _a[5];
       ms = Date.UTC(y, m - 1, d, h, i, s);
-      countdown = $('#date .about');
-      tick = function() {
-        var days, diff, hours, minutes, secs;
-        diff = (ms - new Date().getTime()) / 1000;
-        days = Math.floor(diff % 604800 / 86400);
-        hours = Math.floor(diff % 86400 / 3600);
-        minutes = Math.floor(diff % 3600 / 60);
-        secs = Math.floor(diff % 60);
-        countdown.html(days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + secs + ' seconds');
-        return setTimeout(tick, 1000);
-      };
-      tick();
-      $('time').live('hover', function(e) {
-        var $this, _b, dt;
-        if (e.type === 'mouseout') {
-          return $('.localtime').remove();
-        }
-        $this = $(this);
-        _b = $this.attr('datetime').split(/[-:TZ]/);
-        y = _b[0];
-        m = _b[1];
-        d = _b[2];
-        h = _b[3];
-        i = _b[4];
-        s = _b[5];
-        ms = Date.UTC(y, m - 1, d, h, i, s);
-        dt = new Date(ms);
-        return $('<div class="localtime blue">').css({
-          left: e.pageX,
-          top: $(this).position().top + 25
-        }).html(("" + (dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/, '')))).appendTo(document.body);
-      });
-    }
+      dt = new Date(ms);
+      return $('<div class="localtime blue">').css({
+        left: e.pageX,
+        top: $(this).position().top + 25
+      }).html(("" + (dt.strftime('%a %b %d, %I:%M%P %Z').replace(/\b0/, '')))).appendTo(document.body);
+    });
     $('.judge img').each(function() {
       var r;
       r = 'rotate(' + new String(Math.random() * 6 - 3) + 'deg)';
       return $(this).css('-webkit-transform', r).css('-moz-transform', r);
+    });
+    $('.application .deployed .more a').click(function() {
+      $('.deploy').slideToggle('fast');
+      return false;
     });
     Stars = {
       value: function(elem) {
@@ -175,14 +176,14 @@
     });
     (function() {
       $('.votes time').each(function() {
-        var _b;
-        _b = $(this).attr('datetime').split(/[-:TZ]/);
-        y = _b[0];
-        m = _b[1];
-        d = _b[2];
-        h = _b[3];
-        i = _b[4];
-        s = _b[5];
+        var _a, d, h, i, m, ms, s, y;
+        _a = $(this).attr('datetime').split(/[-:TZ]/);
+        y = _a[0];
+        m = _a[1];
+        d = _a[2];
+        h = _a[3];
+        i = _a[4];
+        s = _a[5];
         ms = Date.UTC(y, m - 1, d, h, i, s);
         return $(this).text(prettyDate(new Date(ms)));
       });
@@ -210,8 +211,8 @@
       });
     });
     saveDraft = __bind(function(form) {
-      var _b;
-      if (!((typeof (_b = window.localStorage) !== "undefined" && _b !== null))) {
+      var _a;
+      if (!((typeof (_a = window.localStorage) !== "undefined" && _a !== null))) {
         return null;
       }
       return (localStorage['draft'] = JSON.stringify(form.serializeArray()));
@@ -254,19 +255,19 @@
       return false;
     });
     $('.teams-show #your_vote').each(function() {
-      var _b, _c, _d, _e, _f, draft, el, hash;
+      var _a, _b, _c, _d, _e, draft, el, hash;
       hash = window.location.hash;
-      draft = (typeof (_b = window.localStorage == undefined ? undefined : window.localStorage.draft) !== "undefined" && _b !== null);
+      draft = (typeof (_a = window.localStorage == undefined ? undefined : window.localStorage.draft) !== "undefined" && _a !== null);
       try {
         if (!(draft && (hash === '#save' || hash === '#draft'))) {
           return null;
         }
-        _c = []; _e = JSON.parse(draft);
-        for (_d = 0, _f = _e.length; _d < _f; _d++) {
-          el = _e[_d];
-          _c.push($(this[el.name]).val(el.value));
+        _b = []; _d = JSON.parse(draft);
+        for (_c = 0, _e = _d.length; _c < _e; _c++) {
+          el = _d[_c];
+          _b.push($(this[el.name]).val(el.value));
         }
-        return _c;
+        return _b;
       } finally {
         delete localStorage.draft;
       }

@@ -1,3 +1,7 @@
+# this entire application is pretty gross, by our own judgement. we'd love to
+# clean it up, but we'd probably just rewrite the whole thing anyway. you have
+# been warned.
+
 sys = require 'sys'
 connect = require 'connect'
 express = require 'express'
@@ -49,12 +53,14 @@ request = (type) ->
           isAdmin: person? && person.admin()
           setCurrentPerson: (person, options) ->
             @cookie 'authKey', person?.authKey(), options
-          redirectToTeam: (person, alternatePath) ->
+          redirectToTeam: (person, alternate) ->
             Team.first { 'members._id': person._id }, (error, team) =>
               if team?
                 @redirect '/teams/' + team.toParam()
+              else if alternate
+                alternate()
               else
-                @redirect (alternatePath or '/')
+                @redirect '/'
           redirectToLogin: ->
             @redirect "/login?return_to=#{@req.url}"
           logout: (fn) ->
@@ -95,7 +101,11 @@ get /.*/, ->
     @next()
 
 get '/', ->
-  @render 'index.html.haml'
+  Team.count (error, teamCount) =>
+    Team.all {}, { sort: [['lastDeployedAt', -1]], limit: 10 }, (error, teams) =>
+      @teams = teams
+      @teamCount = teamCount
+      @render 'index.html.haml'
 
 get '/me', ->
   if @currentPerson?
@@ -103,9 +113,15 @@ get '/me', ->
   else
     @redirectToLogin()
 
+get '/team', ->
+  if @currentPerson?
+    @redirectToTeam @currentPerson, __bind(@redirectToLogin, this)
+  else
+    @redirectToLogin()
+
 get '/register', ->
   if @currentPerson?
-    @redirectToTeam @currentPerson, '/'
+    @redirectToTeam @currentPerson
   else
     @redirect "/login?return_to=#{@req.url}"
 
@@ -114,9 +130,9 @@ get '/error', ->
 
 # list teams
 get '/teams', ->
-  Team.all (error, teams) =>
+  Team.all {}, { 'sort': [['lastDeployedAt', -1]] }, (error, teams) =>
     [@teams, @unverifiedTeams] = [[], []]
-    for team in _.shuffle(teams)
+    for team in teams
       if team.members.length == team.invited.length
         @unverifiedTeams.push team
       else
@@ -368,6 +384,36 @@ put '/people/:id', ->
       person.save (error, resp) =>
         @redirectToTeam person
 
+# delete person
+del '/people/:id', ->
+  Person.fromParam @req.param('id'), (error, person) =>
+    @ensurePermitted person, =>
+      person.remove (error, result) =>
+        @redirect '/'
+
+# TODO security
+post '/deploys', ->
+  # user: 'visnupx@gmail.com'
+  # head: '87eaeb6'
+  # app: 'visnup-nko'
+  # url: 'http://visnup-nko.heroku.com'
+  # git_log: ''
+  # prev_head: ''
+  # head_long: '87eaeb69d726593de6a47a5f38ff6126fd3920fa'
+  query = {}
+  deployedTo = if /\.no\.de$/.test(@req.param('url')) then 'joyent' else 'heroku'
+  query[deployedTo + 'Slug'] = @req.param('app')
+  Team.first query, (error, team) =>
+    if team
+      team.url = @req.param('url')
+      team.lastDeployedTo = deployedTo
+      team.lastDeployedAt = new Date()
+      team.lastDeployedHead = @req.param('head')
+      team.lastDeployedHeadLong = @req.param('head_long')
+      team.deployHeads.push team.lastDeployedHeadLong
+      team.save(->)
+  @render 'deploys/ok.html.haml', { layout: false }
+
 get '/prizes', ->
   @render 'prizes.html.jade', { layout: 'layout.haml' }
 
@@ -387,6 +433,9 @@ app.helpers {
 
   escapeURL: require('querystring').escape
   markdown: require('markdown').toHTML
+
+  firstParagraph: (md) ->
+    require('markdown').toHTML(md).match(/<p>.*?<\/p>/)?[0] || ''
 
   gravatar: (p, s) ->
     "<img src=\"http://www.gravatar.com/avatar/#{p.emailHash}?s=#{s || 40}&d=monsterid\" />"

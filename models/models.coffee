@@ -24,6 +24,10 @@ class Team
     @colophon = options?.colophon or ''
     @link = options?.link or ''
     @url = options?.url or ''
+    @joyentCode = options?.joyentCode or ''
+    @lastDeployedTo = options?.lastDeployedTo or ''
+    @lastDeployedAt = options?.lastDeployedAt
+    @deployHeads = options?.deployHeads or []
 
   constructor: (options, fn) ->
     @build options
@@ -49,6 +53,7 @@ class Team
 
   beforeSave: (fn) ->
     @generateSlug =>
+      @generateDeploySlugs()
       threads = @members.length
       return fn() unless threads
       for member in @members
@@ -89,6 +94,10 @@ class Team
         fn()  # no conflicts
       else
         @generateSlug fn, @slug + '-'  # try with another -
+
+  generateDeploySlugs: ->
+    @joyentSlug = @slug.replace(/^(\d)/, 'ko-$1').replace(/_/g, '-').substring(0, 30)
+    @herokuSlug = 'nko-' + @slug.replace(/_/g, '-').substring(0, 26)
 
 nko.Team = Team
 
