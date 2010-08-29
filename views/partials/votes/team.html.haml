@@ -4,6 +4,7 @@
 .details
   %time{ datetime: vote.createdAt.toISOString() }
   .remote= vote.remoteAddress
-  %a.edit{ href: '/teams/' + vote.team.toParam() + '#your_vote' }
-    %span.short change
-    %span.long Edit vote
+  - if (ctx.isCurrentPerson)
+    %a.edit{ href: '/teams/' + vote.team.toParam() + '#your_vote' }
+      %span.short change
+      %span.long Edit vote

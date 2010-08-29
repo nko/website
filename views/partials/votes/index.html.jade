@@ -10,7 +10,7 @@
   li( 'class': vote.comment ? '' : 'small', id: vote.id() )
     .voter
       - if ('showTeam' in ctx && ctx.showTeam)
-        != partial('votes/team.html.haml', { locals: { vote: vote }})
+        != partial('votes/team.html.haml', { locals: { vote: vote, ctx: ctx }})
       - else
         != partial('votes/voter.html.haml', { locals: { vote: vote }})
     .vote
