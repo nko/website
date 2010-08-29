@@ -24,11 +24,14 @@ db_teams.find().each do |t|
   puts "  #{t['url']}"
 
   begin
-    Timeout::timeout 5 do
+    Timeout::timeout 10 do
       open t['url'] do |f|
-        f.read
-        puts "\033[32m  ok!\033[0m"
-        ok += 1
+        if f.read.length == 0
+          puts "\033[31m  empty\033[0m"
+        else
+          puts "\033[32m  ok!\033[0m"
+          ok += 1
+        end
       end
     end
   rescue Timeout::Error
