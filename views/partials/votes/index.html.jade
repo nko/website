@@ -7,7 +7,7 @@
             - each dimension in ['Utility', 'Design', 'Innovation', 'Completeness']
               th
                 label= dimension
-  li( 'class': vote.comment ? '' : 'small', id: vote.id() )
+  li( 'class': vote.person.type + ' ' + (vote.comment ? '' : 'small'), id: vote.id() )
     .voter
       - if ('showTeam' in ctx && ctx.showTeam)
         != partial('votes/team.html.haml', { locals: { vote: vote, ctx: ctx }})

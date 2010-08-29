@@ -1,6 +1,10 @@
 - if (vote.person)
   != gravatar(vote.person, 50)
   %a{ href: '/people/' + vote.person.toParam() }= vote.person.displayName()
+- if (!vote.person)
+  != gravatar({email: ''}, 50)
 .details
+  .type= vote.person ? vote.person.type : 'Public'
   %time{ datetime: vote.createdAt.toISOString() }
   .remote= vote.remoteAddress
+.clear

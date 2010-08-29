@@ -6,6 +6,10 @@ $dark_green: #005A1F
 $white: #F6FFEF
 $red: #A80003
 
+// votes
+$judge: $light_green
+$participant: $light_blue
+
 =gradient($from, $to)
   :background-image -webkit-gradient(linear, left top, left bottom, from($from), to($to))
   :background-image -moz-linear-gradient(-90deg, $from, $to)
@@ -527,6 +531,16 @@ aside#pullout
   .votes li, #your_vote
     +box
     :margin 0.5em 0px 0.5em -10px
+    :padding-left 8px
+    :border-left solid 2px transparent
+    &.Participant
+      :border-left-color $participant
+      .type
+        :color $participant
+    &.Judge
+      :border-left-color $judge
+      .type
+        :color $judge
     .voter
       :float left
       :width 170px
@@ -542,7 +556,9 @@ aside#pullout
       .details
         :font-size small
         :font-style italic
+        :line-height 125%
         :color hsla(0, 0%, 0%, 0.4)
+        :margin 0.5em 0px 0px 59px
       time
         :display block
     .vote
@@ -581,7 +597,9 @@ aside#pullout
         time
           :display inline
           :font-size x-small
-        .remote
+        .details
+          :margin-left 0px
+        .type, .remote
           :display none
   .more
     :text-align center

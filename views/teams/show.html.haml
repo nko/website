@@ -122,14 +122,14 @@
 .clear
 
 %h1 Votes
-%form#your_vote{ method: (ctx.vote.isNew() ? 'POST' : 'PUT'), action: '/teams/' + ctx.team.toParam() + '/votes' + (ctx.vote.isNew() ? '' : '/' + ctx.vote.id()) }
+%form#your_vote{ method: (ctx.vote.isNew() ? 'POST' : 'PUT'), action: '/teams/' + ctx.team.toParam() + '/votes' + (ctx.vote.isNew() ? '' : '/' + ctx.vote.id()), 'class': ctx.currentPerson && ctx.currentPerson.type }
   %input{ type: 'hidden', name: 'requestAt', value: ctx.requestAt }
   != partial("errors.html.haml", { locals: { ctx: ctx } })
   .voter
     %h3 Your Vote
     != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
     .warning
-      Voting is currently in testing. ALL VOTES WILL BE CLEARED AT 8PM PDT
+      Voting is currently in testing. ALL VOTES WILL BE RESET AT 8PM PDT
       SUNDAY.
   %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
     != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
