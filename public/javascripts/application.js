@@ -320,6 +320,7 @@
           $(this[el.name]).val(el.value);
         }
         if (window.location.hash === '#save') {
+          Stars.hoverAt = Stars.hoverAt || +new Date();
           return $('#your_vote').submit();
         }
       } finally {
