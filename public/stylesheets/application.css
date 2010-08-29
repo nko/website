@@ -401,32 +401,32 @@ aside#pullout {
 .body.teams-new textarea, .body.teams-edit textarea {
   height: 10em; }
 
-.body.teams-index .screenshot, .body.teams-show .screenshot, .body.index .screenshot {
+.body.teams-index .screenshot, .body.teams-show .screenshot, .body.index .screenshot, .body.people-show .screenshot {
   float: left;
   margin-right: 10px;
   margin-bottom: 10px;
   text-align: center; }
-  .body.teams-index .screenshot img, .body.teams-show .screenshot img, .body.index .screenshot img {
+  .body.teams-index .screenshot img, .body.teams-show .screenshot img, .body.index .screenshot img, .body.people-show .screenshot img {
     -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
     width: 160px;
     height: 93px; }
-.body.teams-index .description, .body.teams-show .description, .body.index .description {
+.body.teams-index .description, .body.teams-show .description, .body.index .description, .body.people-show .description {
   margin-left: 170px; }
-  .body.teams-index .description h2, .body.teams-show .description h2, .body.index .description h2 {
+  .body.teams-index .description h2, .body.teams-show .description h2, .body.index .description h2, .body.people-show .description h2 {
     margin-top: 0px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 375px; }
-  .body.teams-index .description h4, .body.teams-show .description h4, .body.index .description h4 {
+  .body.teams-index .description h4, .body.teams-show .description h4, .body.index .description h4, .body.people-show .description h4 {
     margin: 0px 0px 0.5em; }
 
-.body.teams-index .teams, .body.index .teams {
+.body.teams-index .teams, .body.index .teams, .body.people-show .teams {
   list-style-type: none;
   padding: 0px;
   margin: 0px; }
-  .body.teams-index .teams > li, .body.index .teams > li {
+  .body.teams-index .teams > li, .body.index .teams > li, .body.people-show .teams > li {
     margin-top: 10px;
     margin-right: 10px;
     padding: 10px;
@@ -436,10 +436,10 @@ aside#pullout {
     -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px; }
-    .body.teams-index .teams > li ul.members, .body.index .teams > li ul.members {
+    .body.teams-index .teams > li ul.members, .body.index .teams > li ul.members, .body.people-show .teams > li ul.members {
       padding-left: 20px;
       font-size: small; }
-.body.teams-index .invited, .body.index .invited {
+.body.teams-index .invited, .body.index .invited, .body.people-show .invited {
   font-style: italic;
   font-size: x-small; }
 
@@ -602,20 +602,23 @@ aside#pullout {
   text-align: center;
   margin-top: 0.5em; }
 
-.body.people-edit h2, .body.teams-edit h2, .body.people-new h2, .body.teams-edit h2, .body.judges-new h2 {
+.body.people-edit h2, .body.teams-edit h2, .body.judges-new h2 {
   margin-top: 1.5em;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2); }
-.body.people-edit form > input[type=hidden] + h2, .body.teams-edit form > input[type=hidden] + h2, .body.people-new form > input[type=hidden] + h2, .body.teams-edit form > input[type=hidden] + h2, .body.judges-new form > input[type=hidden] + h2 {
+.body.people-edit form > input[type=hidden] + h2, .body.teams-edit form > input[type=hidden] + h2, .body.judges-new form > input[type=hidden] + h2 {
   margin-top: 0px; }
-.body.people-edit .note, .body.teams-edit .note, .body.people-new .note, .body.teams-edit .note, .body.judges-new .note {
+.body.people-edit .note, .body.teams-edit .note, .body.judges-new .note {
   font-size: small; }
-.body.people-edit input[type=text], .body.people-edit input[type=password], .body.people-edit textarea, .body.teams-edit input[type=text], .body.teams-edit input[type=password], .body.teams-edit textarea, .body.people-new input[type=text], .body.people-new input[type=password], .body.people-new textarea, .body.teams-edit input[type=text], .body.teams-edit input[type=password], .body.teams-edit textarea, .body.judges-new input[type=text], .body.judges-new input[type=password], .body.judges-new textarea {
+.body.people-edit input[type=text], .body.people-edit input[type=password], .body.teams-edit input[type=text], .body.teams-edit input[type=password], .body.judges-new input[type=text], .body.judges-new input[type=password] {
   font-size: large;
-  width: 24em; }
+  width: 600px; }
+.body.people-edit textarea, .body.teams-edit textarea, .body.judges-new textarea {
+  font-size: medium;
+  width: 600px; }
 
-.body.judging .judge, .body.judges-index .judge {
+.body.judging .judge, .body.judging .person, .body.judges-index .judge, .body.judges-index .person, .body.people-show .judge, .body.people-show .person {
   clear: left; }
-  .body.judging .judge img, .body.judges-index .judge img {
+  .body.judging .judge img, .body.judging .person img, .body.judges-index .judge img, .body.judges-index .person img, .body.people-show .judge img, .body.people-show .person img {
     float: left;
     margin-top: -1em;
     margin-bottom: 2em;
@@ -625,11 +628,11 @@ aside#pullout {
     -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     width: 120px; }
-  .body.judging .judge h3, .body.judges-index .judge h3 {
+  .body.judging .judge h3, .body.judging .person h3, .body.judges-index .judge h3, .body.judges-index .person h3, .body.people-show .judge h3, .body.people-show .person h3 {
     margin-left: 140px; }
-    .body.judging .judge h3 a, .body.judges-index .judge h3 a {
+    .body.judging .judge h3 a, .body.judging .person h3 a, .body.judges-index .judge h3 a, .body.judges-index .person h3 a, .body.people-show .judge h3 a, .body.people-show .person h3 a {
       font-weight: normal; }
-  .body.judging .judge p, .body.judges-index .judge p {
+  .body.judging .judge p, .body.judging .judge .signature, .body.judging .judge .type, .body.judging .person p, .body.judging .person .signature, .body.judging .person .type, .body.judges-index .judge p, .body.judges-index .judge .signature, .body.judges-index .judge .type, .body.judges-index .person p, .body.judges-index .person .signature, .body.judges-index .person .type, .body.people-show .judge p, .body.people-show .judge .signature, .body.people-show .judge .type, .body.people-show .person p, .body.people-show .person .signature, .body.people-show .person .type {
     margin-left: 140px; }
 
 .body.locations #map iframe, .body.locations .map {

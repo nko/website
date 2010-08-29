@@ -400,7 +400,7 @@ aside#pullout
   textarea
     :height 10em
 
-.body.teams-index, .body.teams-show, .body.index
+.body.teams-index, .body.teams-show, .body.index, .body.people-show
   .screenshot
     :float left
     :margin-right 10px
@@ -421,7 +421,7 @@ aside#pullout
     h4
       :margin 0px 0px 0.5em
 
-.body.teams-index, .body.index
+.body.teams-index, .body.index, .body.people-show
   .teams
     :list-style-type none
     :padding 0px
@@ -575,7 +575,7 @@ aside#pullout
     :text-align center
     :margin-top 0.5em
 
-.body.people-edit, .body.teams-edit, .body.people-new, .body.teams-edit, .body.judges-new
+.body.people-edit, .body.teams-edit, .body.judges-new
   h2
     :margin-top 1.5em
     :border-bottom solid 1px hsla(0, 0%, 0%, 0.2)
@@ -583,12 +583,15 @@ aside#pullout
     :margin-top 0px
   .note
     :font-size small
-  input[type=text], input[type=password], textarea
+  input[type=text], input[type=password]
     :font-size large
-    :width 24em
+    :width 600px
+  textarea
+    :font-size medium
+    :width 600px
 
-.body.judging, .body.judges-index
-  .judge
+.body.judging, .body.judges-index, .body.people-show
+  .judge, .person
     :clear left
     img
       :float left
@@ -602,7 +605,7 @@ aside#pullout
       :margin-left 140px
       a
         :font-weight normal
-    p
+    p, .signature, .type
       :margin-left 140px
 
 .body.locations

@@ -1,0 +1,44 @@
+%h1= ctx.person.displayName()
+.clear
+
+.person
+  %h3
+    - if (ctx.person.link)
+      %a{ href: ctx.person.link }= ctx.person.name
+    - if (!ctx.person.link)
+      = ctx.person.name
+  != gravatar(ctx.person, 120)
+  .type.more_info= ctx.person.type
+  - if (ctx.person.signature)
+    %p.note!= ctx.person.signature
+  - if (ctx.person.description)
+    != ctx.person.description
+  - if (ctx.isAdmin || ctx.isCurrentPerson)
+    %p
+      %a{ href: '/people/' + ctx.person.toParam() + '/edit' } Edit profile
+.clear
+
+- if ('personTeams' in ctx && ctx.personTeams.length > 0)
+  %h2.ribbon Entry
+  .clear
+  - each team in ctx.personTeams
+    %ul.teams
+      %li!= partial('teams/application.html.haml', { locals: { team: team, ctx: ctx } })
+
+%h2.ribbon Votes
+.clear
+
+- if (!ctx.isJudge)
+  %p
+    Voting hasn&rsquo;t started yet. Check back soon.
+- if (ctx.isJudge)
+  %p
+    - if (ctx.isCurrentPerson)
+      You haven&rsquo;t voted yet.&nbsp;
+      - if (!ctx.isJudge)
+        %a{ href: '/teams'} Get started.
+      - if (ctx.isJudge)
+        %b Check your email for your voting assignment.
+    - if (!ctx.isCurrentPerson)
+      = ctx.person.firstName() + ' '
+      hasn&rsquo;t voted yet.

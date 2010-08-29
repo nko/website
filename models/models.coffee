@@ -129,6 +129,9 @@ class Person
   displayName: ->
     @name or @email.replace(/\@.*$/,'')
 
+  firstName: ->
+    @displayName().split(' ')[0]
+
   resetPassword: (fn) ->
     @password = @randomPassword()
     @new_password = true

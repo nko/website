@@ -304,7 +304,7 @@ post '/login', ->
       if person.name
         if returnTo = @req.param('return_to')
           @redirect returnTo
-        else @redirectToTeam person
+        else @redirect '/people/' + person.toParam()
       else
         @redirect '/people/' + person.toParam() + '/edit'
     else
@@ -355,8 +355,9 @@ get '/people/:id/edit', ->
 get '/people/:id', ->
   Person.fromParam @req.param('id'), (error, person) =>
     @person = person
-    Team.all { 'members._id': @person._id }, (error, yourTeams) =>
-      @yourTeams = yourTeams
+    @isCurrentPerson = @person.id() is @currentPerson?.id()
+    Team.all { 'members._id': @person._id }, (error, personTeams) =>
+      @personTeams = personTeams
       @render 'people/show.html.haml'
 
 # update person
@@ -377,7 +378,7 @@ put '/people/:id', ->
       person.github ||= ''
       person.update attributes
       person.save (error, resp) =>
-        @redirectToTeam person
+        @redirect '/people/' + person.toParam()
 
 # delete person
 del '/people/:id', ->
@@ -433,7 +434,11 @@ app.helpers {
     require('markdown').toHTML(md).match(/<p>.*?<\/p>/)?[0] || ''
 
   gravatar: (p, s) ->
-    "<img src=\"http://www.gravatar.com/avatar/#{p.emailHash}?s=#{s || 40}&d=monsterid\" />"
+    return '' unless p?
+    if p.type is 'Judge'
+      "<img src=\"/images/judges/#{p.name.replace(/\W+/g, '_')}.jpg\" width=#{s || 40} />"
+    else
+      "<img src=\"http://www.gravatar.com/avatar/#{p.emailHash}?s=#{s || 40}&d=monsterid\" />"
 }
 
 _.shuffle = (a) ->

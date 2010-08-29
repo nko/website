@@ -114,12 +114,9 @@ h1#judges Expert Judges
   - if (judge.description)
     .judge
       h3( id: judge.name.toLowerCase().replace(/\W+/g, '_') )
-        = judge.name
-        - if (judge.signature)
-          |  &mdash;
-          != judge.signature
-        - if (ctx.currentPerson && ctx.currentPerson.admin())
-          | 
-          a( href: '/people/' + judge.toParam() + '/edit' ) Edit
-      img( src: '/images/judges/' + judge.name.replace(/\W+/g, '_') + '.jpg' )
+        a( href: '/people/' + judge.toParam() )= judge.name
+      a( href: '/people/' + judge.toParam() )
+        != gravatar(judge, 120)
+      - if (judge.signature)
+        .signature!= judge.signature
       != judge.description

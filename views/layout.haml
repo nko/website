@@ -70,12 +70,12 @@
       %aside#pullout
         #current_person
           - if (!ctx.currentPerson)
-            %a#signin{ href: '/login?return_to=' + ctx.req.url } Sign in
+            %a#signin{ href: '/login' } Sign in
           - if (ctx.currentPerson)
             %a{ href: 'http://gravatar.com' }
               != gravatar(ctx.currentPerson)
             .info
-              %a{ href: '/people/' + ctx.currentPerson.toParam() + '/edit' }= ctx.currentPerson.name || ctx.currentPerson.email
+              %a{ href: '/people/' + ctx.currentPerson.toParam() }= ctx.currentPerson.name || ctx.currentPerson.email
               %br
               %a{ href: '/logout' } Sign out
         - if (!ctx.currentPerson)
