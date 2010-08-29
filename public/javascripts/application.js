@@ -291,6 +291,19 @@
       $(this).closest('.vote').removeClass('show').addClass('edit');
       return false;
     });
+    $('#your_vote').delegate('label .tip', 'hover', function(e) {
+      var stars, t, tips;
+      tips = $('#your_vote').find('.tips div');
+      stars = $('#your_vote').find('.stars');
+      if (e.type === 'mouseout') {
+        tips.hide();
+        return stars.show();
+      } else {
+        stars.hide();
+        t = $(this).parent().next('input').attr('id');
+        return $('#your_vote .tips .' + t).show();
+      }
+    });
     $('.teams-show #your_vote').each(function() {
       var _a, _b, _c, _d, _e, draft, el, hash;
       hash = window.location.hash;

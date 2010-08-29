@@ -224,6 +224,17 @@ $ ->
     $(this).closest('.vote').removeClass('show').addClass('edit')
     false
 
+  $('#your_vote').delegate 'label .tip', 'hover', (e) ->
+    tips = $('#your_vote').find('.tips div')
+    stars = $('#your_vote').find('.stars')
+    if e.type == 'mouseout'
+      tips.hide()
+      stars.show()
+    else
+      stars.hide()
+      t = $(this).parent().next('input').attr('id')
+      $('#your_vote .tips .' + t).show()
+
   $('.teams-show #your_vote').each ->
     hash = window.location.hash
     draft = window.localStorage?.draft?
