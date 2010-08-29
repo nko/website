@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+require 'open-uri'
+require 'timeout'
+require 'rubygems'
+require 'mongo'
+
+db = Mongo::Connection.new.db 'nodeknockout'
+db_teams = db.collection 'Team'
+db_people = db.collection 'Person'
+
+ok = 0
+db_teams.find().each do |t|
+  puts t['slug']
+  if t['url'].nil? || t['url'] =~ /^\s*$/
+    puts "\033[31m  never deployed\033[0m\n\n"
+    next
+  end
+
+  puts "  #{t['url']}"
+
+  begin
+    Timeout::timeout 5 do
+      open t['url'] do |f|
+        f.read
+        puts "\033[32m  ok!\033[0m"
+        ok += 1
+      end
+    end
+  rescue Timeout::Error
+    puts "\033[31m  timeout\033[0m"
+  rescue Errno::ECONNREFUSED
+    puts "\033[31m  connection refused\033[0m"
+  rescue OpenURI::HTTPError => e
+    puts "\033[31m  #{e.message}\033[0m"
+  rescue Exception => e
+    puts e.class, e.message
+  end
+
+  puts
+end
+
+puts "\033[32m  #{ok} ok\033[0m"
