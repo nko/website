@@ -67,9 +67,8 @@
     .screenshot
       %a{ href: ctx.team.url }
         %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url + '/#' + ctx.team.lastDeployedHead) + '&out-format=png&resize=160x93' : '/images/blank.png' }
-      - if (ctx.isJudge)
-        %p
-          %a.button.important{ href: '#your_vote' } Vote &raquo;
+      %p
+        %a.button.important{ href: '#your_vote' } Vote &raquo;
     .description
       %h2
         %a{ href: ctx.team.url }= ctx.team.application
@@ -122,43 +121,42 @@
 
 .clear
 
-- if (ctx.isJudge)
-  %h1 Votes
-  %form#your_vote{ method: (ctx.vote.isNew() ? 'POST' : 'PUT'), action: '/teams/' + ctx.team.toParam() + '/votes' + (ctx.vote.isNew() ? '' : '/' + ctx.vote.id()) }
-    %input{ type: 'hidden', name: 'requestAt', value: ctx.requestAt }
-    != partial("errors.html.haml", { locals: { ctx: ctx } })
-    .voter
-      %h3 Your Vote
-      != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
-      .warning
-        Voting is currently in testing. It is only visible to judges and all
-        votes will be cleared at 7pm PDT Sunday.
-    %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
-      != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
-      .show
-        %p.comment= ctx.vote.comment || ''
-        %a.button.change{ href: '#' } Change
-      .edit
-        %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4 }= ctx.vote.comment || ''
-        - if (!ctx.currentPerson)
-          .email_input
-            %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.vote.email || '', placeholder: 'email@address.com' }
-              &nbsp;or
-              %a{ href: '/login?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Sign in
-            .note Required to confirm your vote. We don't spam.
-        - if (ctx.currentPerson)
-          .note.email_hidden
-            Voting as
-            = ' ' + ctx.vote.email + ' '
-            &mdash;
-            %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
-        %input.button.important{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save' }
-      .clear
-  %ul.votes
-    != partial('votes/index.html.jade', { locals: { ctx: ctx } })
-    - if (ctx.votes.length == 50)
-      .more
-        %img{ src: '/images/spinner.gif' }
+%h1 Votes
+%form#your_vote{ method: (ctx.vote.isNew() ? 'POST' : 'PUT'), action: '/teams/' + ctx.team.toParam() + '/votes' + (ctx.vote.isNew() ? '' : '/' + ctx.vote.id()) }
+  %input{ type: 'hidden', name: 'requestAt', value: ctx.requestAt }
+  != partial("errors.html.haml", { locals: { ctx: ctx } })
+  .voter
+    %h3 Your Vote
+    != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
+    .warning
+      Voting is currently in testing. It is only visible to judges and all
+      votes will be cleared at 7pm PDT Sunday.
+  %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
+    != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
+    .show
+      %p.comment= ctx.vote.comment || ''
+      %a.button.change{ href: '#' } Change
+    .edit
+      %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4 }= ctx.vote.comment || ''
+      - if (!ctx.currentPerson)
+        .email_input
+          %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.vote.email || '', placeholder: 'email@address.com' }
+            &nbsp;or
+            %a{ href: '/login?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Sign in
+          .note Required to confirm your vote. We don't spam.
+      - if (ctx.currentPerson)
+        .note.email_hidden
+          Voting as
+          = ' ' + ctx.vote.email + ' '
+          &mdash;
+          %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
+      %input.button.important{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save' }
+    .clear
+%ul.votes
+  != partial('votes/index.html.jade', { locals: { ctx: ctx } })
+  - if (ctx.votes.length == 50)
+    .more
+      %img{ src: '/images/spinner.gif' }
 :javascript
   var renderAt = +new Date();
   $(function() {

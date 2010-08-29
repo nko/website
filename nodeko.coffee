@@ -257,8 +257,6 @@ saveVote = ->
 
 # create vote
 post '/teams/:teamId/votes', ->
-  return @redirect '/teams/' + @req.param('teamId') unless @isJudge
-
   Team.fromParam @req.param('teamId'), (error, team) =>
     # TODO: handle error
     @vote = new Vote @req.body, @req
