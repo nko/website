@@ -50,8 +50,10 @@ pre
   :width 70ex
   :overflow auto
 
-body
+body, input, textarea
   :font-family 'helvetica neue', helvetica, arial, sans-serif
+
+body
   :padding 0
   :margin 0
   :text-align center
@@ -368,7 +370,6 @@ aside#pullout
   :border-collapse collapse
   .stars
     :display inline
-    :color $light_blue
     .star .filled
       :display none
 
@@ -660,10 +661,9 @@ aside#pullout
       :border-bottom 1px dotted $black
       :cursor pointer
   .tips
+    :text-align center
+    :font-size small
     div
-      :text-align center
-      :font-size small
-      :margin 0.2em 0px
       :display none
   .by_email
     :display none

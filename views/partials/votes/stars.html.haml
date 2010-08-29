@@ -8,5 +8,5 @@
         .stars
           - for (var val = 1; val <= 5; val++)
             %span.star{ 'data-value': val }
-              %span.empty ☆
-              %span.filled ★
+              %img.empty{ src: '/images/empty.png' }
+              %img.filled{ src: '/images/filled.png' }

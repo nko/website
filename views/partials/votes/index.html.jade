@@ -22,10 +22,10 @@
               .stars
                 - val = vote[dimension.toLowerCase()]
                 - for (var i = 0; i < val; i++)
-                  span.filled ★
+                  img.filled( src: '/images/filled.png' )
                   | 
                 - for (var i = val; i < 5; i++)
-                  span.empty ☆
+                  span.empty( src: '/images/empty.png' )
                   | 
           - });
       - if (vote.comment)

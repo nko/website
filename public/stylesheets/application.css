@@ -2,8 +2,10 @@ pre {
   width: 70ex;
   overflow: auto; }
 
+body, input, textarea {
+  font-family: "helvetica neue", helvetica, arial, sans-serif; }
+
 body {
-  font-family: "helvetica neue", helvetica, arial, sans-serif;
   padding: 0;
   margin: 0;
   text-align: center;
@@ -366,8 +368,7 @@ aside#pullout {
 .dimensions {
   border-collapse: collapse; }
   .dimensions .stars {
-    display: inline;
-    color: #7e9699; }
+    display: inline; }
     .dimensions .stars .star .filled {
       display: none; }
 
@@ -679,11 +680,11 @@ aside#pullout {
   #your_vote label .tip {
     border-bottom: 1px dotted #142229;
     cursor: pointer; }
-#your_vote .tips div {
+#your_vote .tips {
   text-align: center;
-  font-size: small;
-  margin: 0.2em 0px;
-  display: none; }
+  font-size: small; }
+  #your_vote .tips div {
+    display: none; }
 #your_vote .by_email {
   display: none; }
 #your_vote .email {
