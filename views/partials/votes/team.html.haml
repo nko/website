@@ -1,0 +1,9 @@
+- if (vote.team.url)
+  %img{ src: 'http://pinkyurl.com/i?url=' + encodeURIComponent(vote.team.url + '/#' + vote.team.lastDeployedHead) + '&out-format=png&resize=160x93' }
+%a{ href: '/teams/' + vote.team.toParam() }= vote.team.name
+.details
+  %time{ datetime: vote.createdAt.toISOString() }
+  .remote= vote.remoteAddress
+  %a.edit{ href: '/teams/' + vote.team.toParam() + '#your_vote' }
+    %span.short change
+    %span.long Edit vote

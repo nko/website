@@ -519,6 +519,8 @@ aside#pullout
     :color $red
     :margin-top 1em
     :font-size small
+
+.body.teams-show, .body.people-show
   .votes
     :list-style-type none
     :padding-left 0px
@@ -535,6 +537,7 @@ aside#pullout
         :float left
         :margin-right 5px
         :padding 2px
+        :width 50px
         +shadow
       .details
         :font-size small
@@ -555,9 +558,17 @@ aside#pullout
         :min-width 81px
     &.header
       :padding 2px 10px
+    a.edit .short
+      :display none
     &.small
       :padding 2px 10px
       :margin 0px 0px 0px -10px
+      a.edit
+        .long
+          :display none
+        .short
+          :display inline
+          :font-size x-small
       label
         :display none
       img

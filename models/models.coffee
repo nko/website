@@ -201,6 +201,20 @@ class Person
   confirmVotes: (fn) ->
     Vote.updateAll { 'person._id': @_id, confirmed: false }, { $set: { confirmed: true }}, fn
 
+  loadTeams: (fn) ->
+    Team.all { 'members._id': @_id }, (error, teams) =>
+      fn error if error?
+      @teams = teams or []
+      fn(error, @teams)
+
+  loadVotes: (fn) ->
+    Vote.all { 'person._id': @_id }, (error, votes) =>
+      fn error if error?
+      @votes = votes or []
+      Vote.loadTeams votes, (error, teams) =>
+        fn error if error?
+        fn null, @votes
+
   authKey: ->
     @id() + ':' + @token
 
@@ -334,6 +348,16 @@ class Vote
 _.extend Vote, {
   firstByTeamAndPerson: (team, person, fn) ->
     Vote.first { 'team._id': team._id, 'person._id': person._id }, fn
+
+  loadTeams: (votes, fn) ->
+    teamIds = _(votes).chain().pluck('team').pluck('_id').value()
+    Team.all { _id: { $in: teamIds }}, (error, teams) ->
+      fn error if error?
+      # TODO gross
+      teamHash = _.inject teams, {}, ((memo, team) -> memo[team._id.id] = team; memo)
+      for vote in votes
+        vote.team = teamHash[vote.team._id.id]
+      fn null, teams
 }
 
 nko.Vote = Vote

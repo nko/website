@@ -9,7 +9,10 @@
                 label= dimension
   li( 'class': vote.comment ? '' : 'small', id: vote.id() )
     .voter
-      != partial('votes/voter.html.haml', { locals: { vote: vote }})
+      - if ('showTeam' in ctx && ctx.showTeam)
+        != partial('votes/team.html.haml', { locals: { vote: vote }})
+      - else
+        != partial('votes/voter.html.haml', { locals: { vote: vote }})
     .vote
       table.dimensions
         tr

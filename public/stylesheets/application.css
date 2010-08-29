@@ -539,10 +539,11 @@ aside#pullout {
   color: #a80003;
   margin-top: 1em;
   font-size: small; }
-.body.teams-show .votes {
+
+.body.teams-show .votes, .body.people-show .votes {
   list-style-type: none;
   padding-left: 0px; }
-.body.teams-show .votes li, .body.teams-show #your_vote {
+.body.teams-show .votes li, .body.teams-show #your_vote, .body.people-show .votes li, .body.people-show #your_vote {
   background-color: white;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 10px;
@@ -551,54 +552,62 @@ aside#pullout {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   margin: 0.5em 0px 0.5em -10px; }
-  .body.teams-show .votes li .voter, .body.teams-show #your_vote .voter {
+  .body.teams-show .votes li .voter, .body.teams-show #your_vote .voter, .body.people-show .votes li .voter, .body.people-show #your_vote .voter {
     float: left;
     width: 170px;
     line-height: 125%; }
-    .body.teams-show .votes li .voter h3, .body.teams-show #your_vote .voter h3 {
+    .body.teams-show .votes li .voter h3, .body.teams-show #your_vote .voter h3, .body.people-show .votes li .voter h3, .body.people-show #your_vote .voter h3 {
       margin: 0px 0px 1em; }
-    .body.teams-show .votes li .voter img, .body.teams-show #your_vote .voter img {
+    .body.teams-show .votes li .voter img, .body.teams-show #your_vote .voter img, .body.people-show .votes li .voter img, .body.people-show #your_vote .voter img {
       float: left;
       margin-right: 5px;
       padding: 2px;
+      width: 50px;
       -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
       -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
-    .body.teams-show .votes li .voter .details, .body.teams-show #your_vote .voter .details {
+    .body.teams-show .votes li .voter .details, .body.teams-show #your_vote .voter .details, .body.people-show .votes li .voter .details, .body.people-show #your_vote .voter .details {
       font-size: small;
       font-style: italic;
       color: rgba(0, 0, 0, 0.4); }
-    .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time {
+    .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time, .body.people-show .votes li .voter time, .body.people-show #your_vote .voter time {
       display: block; }
-  .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote {
+  .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote, .body.people-show .votes li .vote, .body.people-show #your_vote .vote {
     margin-left: 180px; }
-    .body.teams-show .votes li .vote p, .body.teams-show #your_vote .vote p {
+    .body.teams-show .votes li .vote p, .body.teams-show #your_vote .vote p, .body.people-show .votes li .vote p, .body.people-show #your_vote .vote p {
       white-space: pre; }
-  .body.teams-show .votes li .dimensions, .body.teams-show #your_vote .dimensions {
+  .body.teams-show .votes li .dimensions, .body.teams-show #your_vote .dimensions, .body.people-show .votes li .dimensions, .body.people-show #your_vote .dimensions {
     font-size: small; }
-    .body.teams-show .votes li .dimensions label, .body.teams-show #your_vote .dimensions label {
+    .body.teams-show .votes li .dimensions label, .body.teams-show #your_vote .dimensions label, .body.people-show .votes li .dimensions label, .body.people-show #your_vote .dimensions label {
       display: block; }
-    .body.teams-show .votes li .dimensions td, .body.teams-show .votes li .dimensions th, .body.teams-show #your_vote .dimensions td, .body.teams-show #your_vote .dimensions th {
+    .body.teams-show .votes li .dimensions td, .body.teams-show .votes li .dimensions th, .body.teams-show #your_vote .dimensions td, .body.teams-show #your_vote .dimensions th, .body.people-show .votes li .dimensions td, .body.people-show .votes li .dimensions th, .body.people-show #your_vote .dimensions td, .body.people-show #your_vote .dimensions th {
       padding-right: 2ex;
       min-width: 81px; }
-  .body.teams-show .votes li.header, .body.teams-show #your_vote.header {
+  .body.teams-show .votes li.header, .body.teams-show #your_vote.header, .body.people-show .votes li.header, .body.people-show #your_vote.header {
     padding: 2px 10px; }
-  .body.teams-show .votes li.small, .body.teams-show #your_vote.small {
+  .body.teams-show .votes li a.edit .short, .body.teams-show #your_vote a.edit .short, .body.people-show .votes li a.edit .short, .body.people-show #your_vote a.edit .short {
+    display: none; }
+  .body.teams-show .votes li.small, .body.teams-show #your_vote.small, .body.people-show .votes li.small, .body.people-show #your_vote.small {
     padding: 2px 10px;
     margin: 0px 0px 0px -10px; }
-    .body.teams-show .votes li.small label, .body.teams-show #your_vote.small label {
+    .body.teams-show .votes li.small a.edit .long, .body.teams-show #your_vote.small a.edit .long, .body.people-show .votes li.small a.edit .long, .body.people-show #your_vote.small a.edit .long {
       display: none; }
-    .body.teams-show .votes li.small img, .body.teams-show #your_vote.small img {
-      display: none; }
-    .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter {
+    .body.teams-show .votes li.small a.edit .short, .body.teams-show #your_vote.small a.edit .short, .body.people-show .votes li.small a.edit .short, .body.people-show #your_vote.small a.edit .short {
+      display: inline;
       font-size: x-small; }
-      .body.teams-show .votes li.small .voter .details, .body.teams-show #your_vote.small .voter .details {
+    .body.teams-show .votes li.small label, .body.teams-show #your_vote.small label, .body.people-show .votes li.small label, .body.people-show #your_vote.small label {
+      display: none; }
+    .body.teams-show .votes li.small img, .body.teams-show #your_vote.small img, .body.people-show .votes li.small img, .body.people-show #your_vote.small img {
+      display: none; }
+    .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter, .body.people-show .votes li.small .voter, .body.people-show #your_vote.small .voter {
+      font-size: x-small; }
+      .body.teams-show .votes li.small .voter .details, .body.teams-show #your_vote.small .voter .details, .body.people-show .votes li.small .voter .details, .body.people-show #your_vote.small .voter .details {
         display: inline; }
-      .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time {
+      .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time, .body.people-show .votes li.small .voter time, .body.people-show #your_vote.small .voter time {
         display: inline;
         font-size: x-small; }
-      .body.teams-show .votes li.small .voter .remote, .body.teams-show #your_vote.small .voter .remote {
+      .body.teams-show .votes li.small .voter .remote, .body.teams-show #your_vote.small .voter .remote, .body.people-show .votes li.small .voter .remote, .body.people-show #your_vote.small .voter .remote {
         display: none; }
-.body.teams-show .more {
+.body.teams-show .more, .body.people-show .more {
   text-align: center;
   margin-top: 0.5em; }
 

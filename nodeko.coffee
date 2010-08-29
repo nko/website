@@ -356,9 +356,11 @@ get '/people/:id', ->
   Person.fromParam @req.param('id'), (error, person) =>
     @person = person
     @isCurrentPerson = @person.id() is @currentPerson?.id()
-    Team.all { 'members._id': @person._id }, (error, personTeams) =>
-      @personTeams = personTeams
-      @render 'people/show.html.haml'
+    @person.loadTeams =>
+      @person.loadVotes =>
+        @showTeam = true
+        @votes = @person.votes
+        @render 'people/show.html.haml'
 
 # update person
 put '/people/:id', ->
