@@ -187,6 +187,12 @@ $ ->
   $('#your_vote').submit (e) ->
     $form = $(this)
     $errors = $form.find('#errors')
+
+    # error was caught in the prior on submit
+    if $errors.find('li').length
+      $errors.slideDown()
+      return false
+
     $('<input type="hidden" name="hoverAt">').val(Stars.hoverAt).appendTo($form)
     ajaxForm $form,
       beforeSend: -> $form.find(':input').attr('disabled', true)

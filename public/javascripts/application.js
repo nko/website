@@ -244,6 +244,10 @@
       var $errors, $form;
       $form = $(this);
       $errors = $form.find('#errors');
+      if ($errors.find('li').length) {
+        $errors.slideDown();
+        return false;
+      }
       $('<input type="hidden" name="hoverAt">').val(Stars.hoverAt).appendTo($form);
       ajaxForm($form, {
         beforeSend: function() {
