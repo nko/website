@@ -3,7 +3,7 @@
     return function(){ return func.apply(context, arguments); };
   };
   $(function() {
-    var Stars, ajaxForm, changeForm, prependVote, saveDraft, updateVote;
+    var Stars, ajaxForm, changeForm, prependVote, saveDraft, showVote, updateVote;
     $('a.resend').click(function() {
       var a;
       a = $(this);
@@ -169,9 +169,9 @@
         });
       }
     };
-    $('.votes-new, #your_vote').delegate('.star', 'hover', function(e) {
+    $('#your_vote').delegate('.edit .star', 'hover', function(e) {
       return Stars.highlight($(this), e.type === 'mouseover');
-    }).delegate('.star', 'click', function(e) {
+    }).delegate('.edit .star', 'click', function(e) {
       return Stars.set($(this));
     });
     (function() {
@@ -227,10 +227,16 @@
       var $newVote, id;
       $newVote = $(data);
       id = $newVote.attr('id');
-      return $('#' + id).replaceWith($newVote);
+      $('#' + id).replaceWith($newVote);
+      return $newVote;
+    };
+    showVote = function($form, $vote) {
+      $form.find('.show .comment').html($vote.find('.comment').html());
+      return $form.find('.vote').removeClass('edit').addClass('show');
     };
     changeForm = function($form, $vote) {
-      return $form.attr('method', 'PUT').attr('action', window.location.pathname + '/votes/' + $vote.attr('id')).find('input[type=submit]').val('Save');
+      $form.attr('method', 'PUT').attr('action', window.location.pathname + '/votes/' + $vote.attr('id')).find('input[type=submit]').val('Save');
+      return showVote($form, $vote);
     };
     $('#your_vote').submit(function(e) {
       var $errors, $form;
@@ -243,10 +249,11 @@
             return window.location.reload();
           } else {
             if ($form.attr('method') === 'POST') {
-              $vote = prependVote(data);
-              return changeForm($form, $vote.eq(-1));
+              $vote = prependVote(data).eq(-1);
+              return changeForm($form, $vote);
             } else {
-              return updateVote(data);
+              $vote = updateVote(data);
+              return showVote($form, $vote);
             }
           }
         },
@@ -265,6 +272,10 @@
           }
         }
       });
+      return false;
+    });
+    $('#your_vote .vote.show .show a.change').click(function() {
+      $(this).closest('.vote').removeClass('show').addClass('edit');
       return false;
     });
     $('.teams-show #your_vote').each(function() {

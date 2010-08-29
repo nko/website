@@ -125,9 +125,9 @@ $ ->
         $star.find('.empty').toggle(!fill)
   }
 
-  $('.votes-new, #your_vote')
-    .delegate('.star', 'hover', (e) -> Stars.highlight $(this), e.type == 'mouseover')
-    .delegate('.star', 'click', (e) -> Stars.set $(this))
+  $('#your_vote')
+    .delegate('.edit .star', 'hover', (e) -> Stars.highlight $(this), e.type == 'mouseover')
+    .delegate('.edit .star', 'click', (e) -> Stars.set $(this))
 
   (->
     $('.votes time').each ->
@@ -169,12 +169,18 @@ $ ->
     $newVote = $(data)
     id = $newVote.attr('id')
     $('#'+id).replaceWith($newVote)
+    $newVote
+
+  showVote = ($form, $vote) ->
+    $form.find('.show .comment').html($vote.find('.comment').html())
+    $form.find('.vote').removeClass('edit').addClass('show')
 
   changeForm = ($form, $vote) ->
     $form
       .attr('method', 'PUT')
       .attr('action', window.location.pathname + '/votes/' + $vote.attr('id'))
       .find('input[type=submit]').val('Save')
+    showVote($form, $vote)
 
   $('#your_vote').submit (e) ->
     $form = $(this)
@@ -185,10 +191,11 @@ $ ->
           window.location.reload()
         else
           if $form.attr('method') is 'POST'
-            $vote = prependVote(data)
-            changeForm($form, $vote.eq(-1))
+            $vote = prependVote(data).eq(-1)
+            changeForm($form, $vote)
           else
-            updateVote(data)
+            $vote = updateVote(data)
+            showVote($form, $vote)
       error: (xhr) ->
         if xhr.status is 403 # unauthorized
           # TODO flash you tried to use an email
@@ -200,6 +207,10 @@ $ ->
           errors = JSON.parse(xhr.responseText)
           $errors.html(errors.map((error) -> "<li>#{error}</li>").join("\n"))
             .slideDown()
+    false
+
+  $('#your_vote .vote.show .show a.change').click ->
+    $(this).closest('.vote').removeClass('show').addClass('edit')
     false
 
   $('.teams-show #your_vote').each ->

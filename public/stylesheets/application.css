@@ -637,13 +637,16 @@ aside#pullout {
   width: 180px;
   height: 140px; }
 
-.body.votes-new .by_email, #your_vote .by_email {
+#your_vote .by_email {
   display: none; }
-.body.votes-new .email, #your_vote .email {
+#your_vote .email {
   font-size: small; }
-.body.votes-new .star, #your_vote .star {
+#your_vote .show .edit {
+  display: none; }
+#your_vote .edit .show {
+  display: none; }
+#your_vote .edit .star {
   cursor: pointer; }
-
 #your_vote .voter h2 {
   margin: 0.5ex 0px; }
 #your_vote .dimensions {
