@@ -582,9 +582,13 @@ aside#pullout {
       display: none; }
     .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter {
       font-size: x-small; }
+      .body.teams-show .votes li.small .voter .details, .body.teams-show #your_vote.small .voter .details {
+        display: inline; }
       .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time {
         display: inline;
         font-size: x-small; }
+      .body.teams-show .votes li.small .voter .remote, .body.teams-show #your_vote.small .voter .remote {
+        display: none; }
 .body.teams-show .more {
   text-align: center;
   margin-top: 0.5em; }

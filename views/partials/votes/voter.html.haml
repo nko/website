@@ -3,4 +3,4 @@
   = vote.person.displayName()
 .details
   %time{ datetime: vote.createdAt.toISOString() }
-  = vote.remoteAddress
+  .remote= vote.remoteAddress
