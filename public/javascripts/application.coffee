@@ -245,7 +245,9 @@ $ ->
     try
       return unless draft and (hash is '#save' or hash is '#draft')
       $(this[el.name]).val el.value for el in JSON.parse draft
-      $('#your_vote').submit() if window.location.hash is '#save'
+      if window.location.hash is '#save'
+        Stars.hoverAt or= +new Date()
+        $('#your_vote').submit()
     finally
       delete localStorage.draft
   $('.votes-new .stars, #your_vote .stars').each -> Stars.highlight $(this)

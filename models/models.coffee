@@ -343,7 +343,7 @@ class Vote
 
   validate: ->
     errors = []
-    errors.push 'Invalid vote. Ballot stuffing attempt?' if @looksFishy()
+    errors.push 'Invalid vote. Ballot stuffing attempt?' if @isNew() and @looksFishy()
     for dimension in [ 'Utility', 'Design', 'Innovation', 'Completeness' ]
       errors.push "#{dimension} should be between 1 and 5 stars" unless 1 <= this[dimension.toLowerCase()] <= 5
     errors.push 'Invalid email address' unless validEmail @email
