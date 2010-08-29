@@ -404,7 +404,6 @@ aside#pullout {
 
 .body.teams-index .screenshot, .body.teams-show .screenshot, .body.index .screenshot, .body.people-show .screenshot {
   float: left;
-  margin-right: 10px;
   margin-bottom: 10px;
   text-align: center; }
   .body.teams-index .screenshot img, .body.teams-show .screenshot img, .body.index .screenshot img, .body.people-show .screenshot img {
@@ -598,16 +597,9 @@ aside#pullout {
       min-width: 81px; }
   .body.teams-show .votes li.header, .body.teams-show #your_vote.header, .body.people-show .votes li.header, .body.people-show #your_vote.header {
     padding: 2px 10px 2px 8px; }
-  .body.teams-show .votes li a.edit .short, .body.teams-show #your_vote a.edit .short, .body.people-show .votes li a.edit .short, .body.people-show #your_vote a.edit .short {
-    display: none; }
   .body.teams-show .votes li.small, .body.teams-show #your_vote.small, .body.people-show .votes li.small, .body.people-show #your_vote.small {
     padding: 2px 10px 2px 8px;
     margin: 0px 0px 0px -10px; }
-    .body.teams-show .votes li.small a.edit .long, .body.teams-show #your_vote.small a.edit .long, .body.people-show .votes li.small a.edit .long, .body.people-show #your_vote.small a.edit .long {
-      display: none; }
-    .body.teams-show .votes li.small a.edit .short, .body.teams-show #your_vote.small a.edit .short, .body.people-show .votes li.small a.edit .short, .body.people-show #your_vote.small a.edit .short {
-      display: inline;
-      font-size: x-small; }
     .body.teams-show .votes li.small label, .body.teams-show #your_vote.small label, .body.people-show .votes li.small label, .body.people-show #your_vote.small label {
       display: none; }
     .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter, .body.people-show .votes li.small .voter, .body.people-show #your_vote.small .voter {
@@ -621,7 +613,8 @@ aside#pullout {
         display: inline;
         font-size: x-small; }
       .body.teams-show .votes li.small .voter .details, .body.teams-show #your_vote.small .voter .details, .body.people-show .votes li.small .voter .details, .body.people-show #your_vote.small .voter .details {
-        margin-left: 0px; }
+        margin-left: 0px;
+        font-size: x-small; }
       .body.teams-show .votes li.small .voter .type, .body.teams-show .votes li.small .voter .remote, .body.teams-show #your_vote.small .voter .type, .body.teams-show #your_vote.small .voter .remote, .body.people-show .votes li.small .voter .type, .body.people-show .votes li.small .voter .remote, .body.people-show #your_vote.small .voter .type, .body.people-show #your_vote.small .voter .remote {
         display: none; }
 .body.teams-show .more, .body.people-show .more {
