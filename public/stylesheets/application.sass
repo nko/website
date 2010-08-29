@@ -408,7 +408,6 @@ aside#pullout
 .body.teams-index, .body.teams-show, .body.index, .body.people-show
   .screenshot
     :float left
-    :margin-right 10px
     :margin-bottom 10px
     :text-align center
     img
@@ -576,17 +575,9 @@ aside#pullout
         :min-width 81px
     &.header
       :padding 2px 10px 2px 8px
-    a.edit .short
-      :display none
     &.small
       :padding 2px 10px 2px 8px
       :margin 0px 0px 0px -10px
-      a.edit
-        .long
-          :display none
-        .short
-          :display inline
-          :font-size x-small
       label
         :display none
       .voter
@@ -601,6 +592,7 @@ aside#pullout
           :font-size x-small
         .details
           :margin-left 0px
+          :font-size x-small
         .type, .remote
           :display none
   .more
@@ -697,5 +689,6 @@ aside#pullout
     :float right
   #errors
     :display none
+
 .clear
   :clear both

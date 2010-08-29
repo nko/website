@@ -140,7 +140,7 @@
       .completeness How &ldquo;fully baked&rdquo; is the site? Are there bugs or dead ends?
     .show
       %p.comment= ctx.vote.comment || ''
-      %a.button.change{ href: '#' } Change
+      %a.button.change{ href: '#' } Edit
     .edit
       %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4 }= ctx.vote.comment || ''
       - if (!ctx.currentPerson)
