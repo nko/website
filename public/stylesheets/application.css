@@ -414,7 +414,7 @@ aside#pullout {
     width: 164px;
     height: 97px; }
 .body.teams-index .description, .body.teams-show .description, .body.index .description, .body.people-show .description {
-  margin-left: 170px; }
+  margin-left: 178px; }
   .body.teams-index .description h2, .body.teams-show .description h2, .body.index .description h2, .body.people-show .description h2 {
     margin-top: 0px;
     overflow: hidden;
@@ -597,11 +597,11 @@ aside#pullout {
       padding-right: 2ex;
       min-width: 81px; }
   .body.teams-show .votes li.header, .body.teams-show #your_vote.header, .body.people-show .votes li.header, .body.people-show #your_vote.header {
-    padding: 2px 10px; }
+    padding: 2px 10px 2px 8px; }
   .body.teams-show .votes li a.edit .short, .body.teams-show #your_vote a.edit .short, .body.people-show .votes li a.edit .short, .body.people-show #your_vote a.edit .short {
     display: none; }
   .body.teams-show .votes li.small, .body.teams-show #your_vote.small, .body.people-show .votes li.small, .body.people-show #your_vote.small {
-    padding: 2px 10px;
+    padding: 2px 10px 2px 8px;
     margin: 0px 0px 0px -10px; }
     .body.teams-show .votes li.small a.edit .long, .body.teams-show #your_vote.small a.edit .long, .body.people-show .votes li.small a.edit .long, .body.people-show #your_vote.small a.edit .long {
       display: none; }
@@ -610,11 +610,11 @@ aside#pullout {
       font-size: x-small; }
     .body.teams-show .votes li.small label, .body.teams-show #your_vote.small label, .body.people-show .votes li.small label, .body.people-show #your_vote.small label {
       display: none; }
-    .body.teams-show .votes li.small img, .body.teams-show #your_vote.small img, .body.people-show .votes li.small img, .body.people-show #your_vote.small img {
-      display: none; }
     .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter, .body.people-show .votes li.small .voter, .body.people-show #your_vote.small .voter {
-      float: none;
-      font-size: x-small; }
+      font-size: x-small;
+      line-height: inherit; }
+      .body.teams-show .votes li.small .voter img, .body.teams-show #your_vote.small .voter img, .body.people-show .votes li.small .voter img, .body.people-show #your_vote.small .voter img {
+        display: none; }
       .body.teams-show .votes li.small .voter .details, .body.teams-show #your_vote.small .voter .details, .body.people-show .votes li.small .voter .details, .body.people-show #your_vote.small .voter .details {
         display: inline; }
       .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time, .body.people-show .votes li.small .voter time, .body.people-show #your_vote.small .voter time {
