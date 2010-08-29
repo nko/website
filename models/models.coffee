@@ -318,7 +318,8 @@ class Vote
         return fn ['Unauthorized'] unless voter.isNew()
         @person = voter
         @person.type = 'Voter'
-        @person.save =>
+        @person.save (error, person) =>
+          return fn error if error?
           @person.welcomeVoter fn
     else
       if @isNew()
@@ -335,7 +336,7 @@ class Vote
       fn()
 
   beforeInstantiate: (fn) ->
-    Person.first @person.id(), (error, voter) =>
+    Person.first { _id: @person._id }, (error, voter) =>
       @person = voter
       fn()
 
@@ -343,6 +344,7 @@ class Vote
     errors = []
     for dimension in [ 'Utility', 'Design', 'Innovation', 'Completeness' ]
       errors.push "#{dimension} should be between 1 and 5 stars" unless 1 <= this[dimension.toLowerCase()] <= 5
+    errors.push 'Invalid email address' unless validEmail @email
     errors
 
 _.extend Vote, {
