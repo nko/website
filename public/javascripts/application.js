@@ -3,7 +3,7 @@
     return function(){ return func.apply(context, arguments); };
   };
   $(function() {
-    var Stars, ajaxForm, prependVote, saveDraft, updateVote;
+    var Stars, ajaxForm, changeForm, prependVote, saveDraft, updateVote;
     $('a.resend').click(function() {
       var a;
       a = $(this);
@@ -229,13 +229,26 @@
       id = $newVote.attr('id');
       return $('#' + id).replaceWith($newVote);
     };
+    changeForm = function($form, $vote) {
+      return $form.attr('method', 'PUT').attr('action', window.location.pathname + '/votes/' + $vote.attr('id')).find('input[type=submit]').val('Save');
+    };
     $('#your_vote').submit(function(e) {
       var $errors, $form;
       $form = $(this);
       $errors = $form.find('#errors');
       ajaxForm($form, {
         success: function(data) {
-          return $('#your_vote .email_input').length ? window.location.reload() : $form.attr('method') === 'POST' ? prependVote(data) : updateVote(data);
+          var $vote;
+          if ($('#your_vote .email_input').length) {
+            return window.location.reload();
+          } else {
+            if ($form.attr('method') === 'POST') {
+              $vote = prependVote(data);
+              return changeForm($form, $vote.eq(-1));
+            } else {
+              return updateVote(data);
+            }
+          }
         },
         error: function(xhr) {
           var email, errors, path;

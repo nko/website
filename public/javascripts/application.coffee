@@ -170,6 +170,12 @@ $ ->
     id = $newVote.attr('id')
     $('#'+id).replaceWith($newVote)
 
+  changeForm = ($form, $vote) ->
+    $form
+      .attr('method', 'PUT')
+      .attr('action', window.location.pathname + '/votes/' + $vote.attr('id'))
+      .find('input[type=submit]').val('Save')
+
   $('#your_vote').submit (e) ->
     $form = $(this)
     $errors = $form.find('#errors')
@@ -179,7 +185,8 @@ $ ->
           window.location.reload()
         else
           if $form.attr('method') is 'POST'
-            prependVote(data)
+            $vote = prependVote(data)
+            changeForm($form, $vote.eq(-1))
           else
             updateVote(data)
       error: (xhr) ->
