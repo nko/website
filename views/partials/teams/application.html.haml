@@ -2,6 +2,9 @@
   .screenshot
     %a{ href: team.url }
       %img{ src: team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(team.url + '/#' + team.lastDeployedHead) + '&out-format=png&resize=160' : '/images/blank.png' }
+    - if (ctx.isJudge)
+      .vote
+        %a.button{ href: '/teams/' + team.toParam() + '#your_vote' } Vote &raquo;
   .description
     %h2
       %a{ href: team.url }= team.application
@@ -11,7 +14,4 @@
     .markdown!= firstParagraph(team.description)
     - if (team.link)
       %a{ href: team.link } More info &raquo;
-    - if (ctx.isJudge)
-      %p
-        %a.button{ href: '#your_vote' } Vote &raquo;
   .clear

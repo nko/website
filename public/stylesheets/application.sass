@@ -69,10 +69,6 @@ a img
   :display table-cell
   :vertical-align top
 
-.warning
-  :font-weight bold
-  :color $red
-
 input[type=password], input[type=email], input[type=text], textarea
   :font-size xx-large
   :padding 5px 5px
@@ -511,6 +507,11 @@ aside#pullout
       :padding 2px
       :background-color #fff
       +shadow
+  .warning
+    :clear left
+    :color $red
+    :margin 1em 10px 0px 0px
+    :font-size small
   .votes
     :list-style-type none
     :padding-left 0px
