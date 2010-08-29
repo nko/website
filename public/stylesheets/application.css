@@ -537,7 +537,7 @@ aside#pullout {
 .body.teams-show .warning {
   clear: left;
   color: #a80003;
-  margin: 1em 10px 0px 0px;
+  margin-top: 1em;
   font-size: small; }
 .body.teams-show .votes {
   list-style-type: none;
@@ -553,7 +553,8 @@ aside#pullout {
   margin: 0.5em 0px 0.5em -10px; }
   .body.teams-show .votes li .voter, .body.teams-show #your_vote .voter {
     float: left;
-    width: 180px; }
+    width: 170px;
+    line-height: 125%; }
     .body.teams-show .votes li .voter h3, .body.teams-show #your_vote .voter h3 {
       margin: 0px 0px 1em; }
     .body.teams-show .votes li .voter img, .body.teams-show #your_vote .voter img {
@@ -565,7 +566,6 @@ aside#pullout {
     .body.teams-show .votes li .voter .details, .body.teams-show #your_vote .voter .details {
       font-size: small;
       font-style: italic;
-      line-height: 125%;
       color: rgba(0, 0, 0, 0.4); }
     .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time {
       display: block; }

@@ -125,6 +125,7 @@
 - if (ctx.isJudge)
   %h1 Votes
   %form#your_vote{ method: (ctx.vote.isNew() ? 'POST' : 'PUT'), action: '/teams/' + ctx.team.toParam() + '/votes' + (ctx.vote.isNew() ? '' : '/' + ctx.vote.id()) }
+    %input{ type: 'hidden', name: 'requestAt', value: ctx.requestAt }
     != partial("errors.html.haml", { locals: { ctx: ctx } })
     .voter
       %h3 Your Vote
@@ -158,3 +159,10 @@
     - if (ctx.votes.length == 50)
       .more
         %img{ src: '/images/spinner.gif' }
+:javascript
+  var renderAt = +new Date();
+  $(function() {
+    $('<input type="hidden" name="renderAt">')
+      .val(renderAt)
+      .appendTo('form#your_vote');
+  });

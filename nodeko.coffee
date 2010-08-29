@@ -163,6 +163,7 @@ post '/teams', ->
 
 # show team
 get '/teams/:id', ->
+  @requestAt = Date.now()
   Team.fromParam @req.param('id'), (error, team) =>
     if team?
       @team = team
@@ -264,6 +265,7 @@ post '/teams/:teamId/votes', ->
     @vote = new Vote @req.body, @req
     @vote.team = @team = team
     @vote.person = @currentPerson
+    @vote.responseAt = Date.now()
     saveVote.call(this)
 
 put '/teams/:teamId/votes/:voteId', ->

@@ -145,6 +145,7 @@
       return false;
     });
     Stars = {
+      hoverAt: null,
       value: function(elem) {
         return elem.attr('data-value');
       },
@@ -159,6 +160,7 @@
       },
       highlight: function(elem, hover) {
         var score;
+        Stars.hoverAt = Stars.hoverAt || +new Date();
         score = parseInt(hover ? this.value(elem) : this.input(elem).val());
         return elem.closest('.stars').children().each(function(i, star) {
           var $star, fill;
@@ -242,6 +244,7 @@
       var $errors, $form;
       $form = $(this);
       $errors = $form.find('#errors');
+      $('<input type="hidden" name="hoverAt">').val(Stars.hoverAt).appendTo($form);
       ajaxForm($form, {
         beforeSend: function() {
           return $form.find(':input').attr('disabled', true);

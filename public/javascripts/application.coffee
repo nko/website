@@ -108,6 +108,7 @@ $ ->
     false
 
   Stars = {
+    hoverAt: null
     value: (elem) ->
       elem.attr('data-value')
     input: (elem) ->
@@ -117,6 +118,7 @@ $ ->
       oldVal = @input(elem).val()
       @input(elem).val(if newVal is oldVal then 0 else newVal)
     highlight: (elem, hover) ->
+      Stars.hoverAt or= +new Date()
       score = parseInt(if hover then @value(elem) else @input(elem).val())
       elem.closest('.stars').children().each (i, star) ->
         $star = $(star)
@@ -185,6 +187,7 @@ $ ->
   $('#your_vote').submit (e) ->
     $form = $(this)
     $errors = $form.find('#errors')
+    $('<input type="hidden" name="hoverAt">').val(Stars.hoverAt).appendTo($form)
     ajaxForm $form,
       beforeSend: -> $form.find(':input').attr('disabled', true)
       complete: -> $form.find(':input').attr('disabled', false)

@@ -286,10 +286,11 @@ class Vote
     @remotePort = request?.socket?.remotePort
     @userAgent = request?.headers?['user-agent']
     @referer = request?.headers?['referer']
-    #@accept = request?.headers?['accept']
+    @accept = request?.headers?['accept']
 
     @requestAt = options?.requestAt
     @renderAt = options?.renderAt
+    @hoverAt = options?.hoverAt
     @responseAt = options?.responseAt
 
     @createdAt = @updatedAt = new Date()
