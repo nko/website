@@ -5,6 +5,10 @@ require 'timeout'
 require 'rubygems'
 require 'mongo'
 
+# record sha1 after 30 minutes
+# check dns of final url
+# set final url
+
 db = Mongo::Connection.new.db 'nodeknockout'
 db_teams = db.collection 'Team'
 db_people = db.collection 'Person'
