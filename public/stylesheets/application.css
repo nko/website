@@ -568,7 +568,8 @@ aside#pullout {
     .body.teams-show .votes li .voter .details, .body.teams-show #your_vote .voter .details, .body.people-show .votes li .voter .details, .body.people-show #your_vote .voter .details {
       font-size: small;
       font-style: italic;
-      color: rgba(0, 0, 0, 0.4); }
+      color: rgba(0, 0, 0, 0.4);
+      margin-left: 57px; }
     .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time, .body.people-show .votes li .voter time, .body.people-show #your_vote .voter time {
       display: block; }
   .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote, .body.people-show .votes li .vote, .body.people-show #your_vote .vote {
@@ -606,6 +607,8 @@ aside#pullout {
       .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time, .body.people-show .votes li.small .voter time, .body.people-show #your_vote.small .voter time {
         display: inline;
         font-size: x-small; }
+      .body.teams-show .votes li.small .voter .details, .body.teams-show #your_vote.small .voter .details, .body.people-show .votes li.small .voter .details, .body.people-show #your_vote.small .voter .details {
+        margin-left: 0px; }
       .body.teams-show .votes li.small .voter .remote, .body.teams-show #your_vote.small .voter .remote, .body.people-show .votes li.small .voter .remote, .body.people-show #your_vote.small .voter .remote {
         display: none; }
 .body.teams-show .more, .body.people-show .more {
