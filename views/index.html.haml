@@ -17,7 +17,7 @@
 
 %ul.teams
   - each team in ctx.teams
-    %li!= partial('teams/application.html.haml', { locals: { team: team } })
+    %li!= partial('teams/application.html.haml', { locals: { team: team, ctx: ctx } })
 
 %p
   %a{ href: '/teams' } See all entries

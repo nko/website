@@ -27,10 +27,6 @@ a img {
   display: table-cell;
   vertical-align: top; }
 
-.warning {
-  font-weight: bold;
-  color: #a80003; }
-
 input[type=password], input[type=email], input[type=text], textarea {
   font-size: xx-large;
   padding: 5px 5px;
@@ -530,6 +526,11 @@ aside#pullout {
     background-color: white;
     -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
+.body.teams-show .warning {
+  clear: left;
+  color: #a80003;
+  margin: 1em 10px 0px 0px;
+  font-size: small; }
 .body.teams-show .votes {
   list-style-type: none;
   padding-left: 0px; }

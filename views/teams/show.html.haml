@@ -129,6 +129,9 @@
     .voter
       %h3 Your Vote
       != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
+      .warning
+        Voting is currently in testing. It is only visible to judges and all
+        votes will be cleared at 7pm PST Sunday.
     %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
       != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
       .show
@@ -150,9 +153,6 @@
             %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
         %input.button.important{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save' }
       .clear
-      .warning
-        Voting is currently in testing. It is only visible to judges and all
-        votes will be cleared at 7pm PST Sunday.
   %ul.votes
     != partial('votes/index.html.jade', { locals: { ctx: ctx } })
     - if (ctx.votes.length == 50)

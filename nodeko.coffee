@@ -132,12 +132,7 @@ get '/error', ->
 # list teams
 get '/teams', ->
   Team.all {}, { 'sort': [['lastDeployedAt', -1]] }, (error, teams) =>
-    [@teams, @unverifiedTeams] = [[], []]
-    for team in teams
-      if team.members.length == team.invited.length
-        @unverifiedTeams.push team
-      else
-        @teams.push team
+    @teams = teams.filter (t) -> t.members.length != t.invited.length
     @yourTeams = if @currentPerson?
       _.select teams, (team) =>
         # TODO this is gross
