@@ -14,6 +14,7 @@ validEmail = (email) ->
   /^[a-zA-Z0-9+._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test email
 
 escapeURL = require('querystring').escape
+parseURL = require('url').parse
 
 class Team
   build: (options) ->
@@ -341,10 +342,16 @@ class Vote
 
   validate: ->
     errors = []
+    errors.push 'Invalid vote. Ballot stuffing attempt?' if @looksFishy()
     for dimension in [ 'Utility', 'Design', 'Innovation', 'Completeness' ]
       errors.push "#{dimension} should be between 1 and 5 stars" unless 1 <= this[dimension.toLowerCase()] <= 5
     errors.push 'Invalid email address' unless validEmail @email
     errors
+
+  looksFishy: ->
+    (!@userAgent or
+      !(parseURL(@referer).hostname in ['nodeknockout.com', 'localhost']) or
+      !(@requestAt < @responseAt) or !(@renderAt < @hoverAt))
 
 _.extend Vote, {
   firstByTeamAndPerson: (team, person, fn) ->

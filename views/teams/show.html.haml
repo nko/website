@@ -157,14 +157,24 @@
           %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
       %input.button.important{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save' }
     .clear
-- if (ctx.votes.length)
-  %ul.votes
+%ul.votes{ style: (ctx.vote.isNew() ? 'display:none' : '') }
+  - if (ctx.votes.length)
     != partial('votes/index.html.jade', { locals: { ctx: ctx } })
     - if (ctx.votes.length == 50)
       .more
         %img{ src: '/images/spinner.gif' }
+
 - if (!ctx.votes.length)
-  %p.note No votes yet. Check back soon.
+  %p#no_votes.note
+    No votes yet. Why don&rsquo;t you
+    != ' <a href="#your_vote">start it off</a>?'
+
+- if (ctx.votes.length && ctx.vote.isNew())
+  %p#hidden_votes.note
+    Votes are hidden.
+    %a{ href: '#your_vote' } Leave a vote
+    to reveal them.
+
 :javascript
   var renderAt = +new Date();
   $(function() {

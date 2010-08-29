@@ -223,6 +223,7 @@
       return saveDraft($(this).closest('form'));
     });
     prependVote = function(data) {
+      $('#no_votes').hide();
       return $(data).prependTo('ul.votes').hide().next('li.header').remove().end().slideDown('fast');
     };
     updateVote = function(data) {
@@ -233,6 +234,8 @@
       return $newVote;
     };
     showVote = function($form, $vote) {
+      $('ul.votes').show();
+      $('#hidden_votes').hide();
       $form.find('.show .comment').html($vote.find('.comment').html());
       return $form.find('.vote').removeClass('edit').addClass('show');
     };
