@@ -1,7 +1,7 @@
 .application
   .screenshot
     %a{ href: team.url }
-      %img{ src: team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(team.url + '/#' + team.lastDeployedHead) + '&out-format=png&resize=160' : '/images/blank.png' }
+      %img{ src: team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(team.url + '/#' + team.lastDeployedHead) + '&out-format=png&resize=160x93' : '/images/blank.png' }
     - if (ctx.isJudge)
       .vote
         %a.button{ href: '/teams/' + team.toParam() + '#your_vote' } Vote &raquo;

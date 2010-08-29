@@ -66,7 +66,7 @@
         %a{ href: ctx.team.url }= ctx.team.url
     .screenshot
       %a{ href: ctx.team.url }
-        %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url + '/#' + ctx.team.lastDeployedHead) + '&out-format=png&resize=160' : '/images/blank.png' }
+        %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url + '/#' + ctx.team.lastDeployedHead) + '&out-format=png&resize=160x93' : '/images/blank.png' }
       - if (ctx.isJudge)
         %p
           %a.button.important{ href: '#your_vote' } Vote &raquo;
