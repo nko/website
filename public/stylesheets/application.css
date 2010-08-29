@@ -586,8 +586,6 @@ aside#pullout {
       display: block; }
   .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote, .body.people-show .votes li .vote, .body.people-show #your_vote .vote {
     margin-left: 180px; }
-    .body.teams-show .votes li .vote p, .body.teams-show #your_vote .vote p, .body.people-show .votes li .vote p, .body.people-show #your_vote .vote p {
-      white-space: pre; }
   .body.teams-show .votes li .dimensions, .body.teams-show #your_vote .dimensions, .body.people-show .votes li .dimensions, .body.people-show #your_vote .dimensions {
     font-size: small; }
     .body.teams-show .votes li .dimensions label, .body.teams-show #your_vote .dimensions label, .body.people-show .votes li .dimensions label, .body.people-show #your_vote .dimensions label {
