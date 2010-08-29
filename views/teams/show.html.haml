@@ -131,7 +131,7 @@
       != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
       .warning
         Voting is currently in testing. It is only visible to judges and all
-        votes will be cleared at 7pm PST Sunday.
+        votes will be cleared at 7pm PDT Sunday.
     %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
       != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
       .show
