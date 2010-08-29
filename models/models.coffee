@@ -267,12 +267,12 @@ _.extend Person, {
 nko.Person = Person
 
 class Vote
-  updateable_attributes: ['usefulness', 'design', 'innovation', 'completeness', 'comment']
+  updateable_attributes: ['utility', 'design', 'innovation', 'completeness', 'comment']
 
   constructor: (options, request) ->
     @team = options?.team
 
-    @usefulness = parseInt options?.usefulness
+    @utility = parseInt options?.utility
     @design = parseInt options?.design
     @innovation = parseInt options?.innovation
     @completeness = parseInt options?.completeness
@@ -323,7 +323,7 @@ class Vote
 
   validate: ->
     errors = []
-    for dimension in [ 'Usefulness', 'Design', 'Innovation', 'Completeness' ]
+    for dimension in [ 'Utility', 'Design', 'Innovation', 'Completeness' ]
       errors.push "#{dimension} should be between 1 and 5 stars" unless 1 <= this[dimension.toLowerCase()] <= 5
     errors
 

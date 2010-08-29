@@ -1,6 +1,6 @@
 %table.dimensions
   %tr
-    - each dimension in ['Usefulness', 'Design', 'Innovation', 'Completeness']
+    - each dimension in ['Utility', 'Design', 'Innovation', 'Completeness']
       %td
         %label= dimension
         %input{ type: 'hidden', id: dimension.toLowerCase(), name: dimension.toLowerCase(), value: vote[dimension.toLowerCase()] || 0 }
