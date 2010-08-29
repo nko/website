@@ -317,6 +317,7 @@ class Vote
     if !@person?
       Person.firstOrNew { email: @email }, (error, voter) =>
         return fn ['Unauthorized'] unless voter.isNew()
+        return fn ['"+" not allowed in voter email address'] if @email.split('@')[0].match /\+/
         @person = voter
         @person.type = 'Voter'
         @person.save (error, person) =>
