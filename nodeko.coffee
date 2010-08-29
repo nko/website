@@ -246,17 +246,6 @@ get '/teams/:teamId/invite/:personId', ->
             # TODO flash "Sent a new invitation to $@person.email"
             @redirect '/teams/' + team.toParam()
 
-# new vote
-get '/teams/:teamId/votes/new', ->
-  return @redirect '/teams/' + @req.param('teamId') unless @isAdmin
-
-  Team.fromParam @req.param('teamId'), (error, team) =>
-    # TODO: handle error
-    @team = team
-    @vote = new Vote
-    @email = @currentPerson?.email
-    @render 'votes/new.html.jade', { layout: 'layout.haml' }
-
 saveVote = ->
   @vote.save (errors, res) =>
     if errors?
