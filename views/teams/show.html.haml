@@ -133,6 +133,11 @@
       SUNDAY.
   %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
     != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
+    .tips
+      .utility Would you come back to this site again and again?
+      .design How good does it look and feel to use?
+      .innovation How original is the idea and execution?
+      .completeness How &ldquo;fully baked&rdquo; is the site? Are there bugs or dead ends?
     .show
       %p.comment= ctx.vote.comment || ''
       %a.button.change{ href: '#' } Change

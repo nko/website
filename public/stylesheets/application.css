@@ -673,6 +673,16 @@ aside#pullout {
   width: 180px;
   height: 140px; }
 
+#your_vote label {
+  margin-bottom: 0.25em; }
+  #your_vote label .tip {
+    border-bottom: 1px dotted #142229;
+    cursor: pointer; }
+#your_vote .tips div {
+  text-align: center;
+  font-size: small;
+  margin: 0.2em 0px;
+  display: none; }
 #your_vote .by_email {
   display: none; }
 #your_vote .email {
