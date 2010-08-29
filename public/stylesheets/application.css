@@ -2,8 +2,10 @@ pre {
   width: 70ex;
   overflow: auto; }
 
+body, input, textarea {
+  font-family: "helvetica neue", helvetica, arial, sans-serif; }
+
 body {
-  font-family: "helvetica neue", helvetica, arial, sans-serif;
   padding: 0;
   margin: 0;
   text-align: center;
@@ -366,8 +368,7 @@ aside#pullout {
 .dimensions {
   border-collapse: collapse; }
   .dimensions .stars {
-    display: inline;
-    color: #7e9699; }
+    display: inline; }
     .dimensions .stars .star .filled {
       display: none; }
 
@@ -407,10 +408,11 @@ aside#pullout {
   margin-bottom: 10px;
   text-align: center; }
   .body.teams-index .screenshot img, .body.teams-show .screenshot img, .body.index .screenshot img, .body.people-show .screenshot img {
-    -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
-    width: 160px;
-    height: 93px; }
+    -webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+    padding: 2px;
+    width: 164px;
+    height: 97px; }
 .body.teams-index .description, .body.teams-show .description, .body.index .description, .body.people-show .description {
   margin-left: 170px; }
   .body.teams-index .description h2, .body.teams-show .description h2, .body.index .description h2, .body.people-show .description h2 {
@@ -611,8 +613,8 @@ aside#pullout {
     .body.teams-show .votes li.small img, .body.teams-show #your_vote.small img, .body.people-show .votes li.small img, .body.people-show #your_vote.small img {
       display: none; }
     .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter, .body.people-show .votes li.small .voter, .body.people-show #your_vote.small .voter {
-      font-size: x-small;
-      line-height: inherit; }
+      float: none;
+      font-size: x-small; }
       .body.teams-show .votes li.small .voter .details, .body.teams-show #your_vote.small .voter .details, .body.people-show .votes li.small .voter .details, .body.people-show #your_vote.small .voter .details {
         display: inline; }
       .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time, .body.people-show .votes li.small .voter time, .body.people-show #your_vote.small .voter time {
@@ -678,11 +680,11 @@ aside#pullout {
   #your_vote label .tip {
     border-bottom: 1px dotted #142229;
     cursor: pointer; }
-#your_vote .tips div {
+#your_vote .tips {
   text-align: center;
-  font-size: small;
-  margin: 0.2em 0px;
-  display: none; }
+  font-size: small; }
+  #your_vote .tips div {
+    display: none; }
 #your_vote .by_email {
   display: none; }
 #your_vote .email {
