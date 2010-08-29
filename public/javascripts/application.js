@@ -253,11 +253,9 @@
         beforeSend: function() {
           return $form.find(':input').attr('disabled', true);
         },
-        complete: function() {
-          return $form.find(':input').attr('disabled', false);
-        },
         success: function(data) {
           var $vote;
+          $form.find(':input').attr('disabled', false);
           if ($('#your_vote .email_input').length) {
             return window.location.reload();
           } else {
@@ -272,11 +270,12 @@
         },
         error: function(xhr) {
           var email, errors, path;
+          $form.find(':input').attr('disabled', false);
           if (xhr.status === 403) {
             saveDraft($form);
             email = encodeURIComponent($form.find('#email').val());
             path = encodeURIComponent(window.location.pathname + '#save');
-            return (window.location = ("/login?return_to=" + (path) + "&email=" + (email)));
+            return (window.location = ("/login?email=" + (email) + "&return_to=" + (path)));
           } else {
             errors = JSON.parse(xhr.responseText);
             return $errors.html(errors.map(function(error) {
@@ -305,19 +304,21 @@
       }
     });
     $('.teams-show #your_vote').each(function() {
-      var _a, _b, _c, _d, _e, draft, el, hash;
+      var _a, _b, _c, draft, el, hash;
       hash = window.location.hash;
-      draft = (typeof (_a = window.localStorage == undefined ? undefined : window.localStorage.draft) !== "undefined" && _a !== null);
+      draft = window.localStorage == undefined ? undefined : window.localStorage.draft;
       try {
         if (!(draft && (hash === '#save' || hash === '#draft'))) {
           return null;
         }
-        _b = []; _d = JSON.parse(draft);
-        for (_c = 0, _e = _d.length; _c < _e; _c++) {
-          el = _d[_c];
-          _b.push($(this[el.name]).val(el.value));
+        _b = JSON.parse(draft);
+        for (_a = 0, _c = _b.length; _a < _c; _a++) {
+          el = _b[_a];
+          $(this[el.name]).val(el.value);
         }
-        return _b;
+        if (window.location.hash === '#save') {
+          return $('#your_vote').submit();
+        }
       } finally {
         delete localStorage.draft;
       }

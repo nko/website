@@ -196,8 +196,8 @@ $ ->
     $('<input type="hidden" name="hoverAt">').val(Stars.hoverAt).appendTo($form)
     ajaxForm $form,
       beforeSend: -> $form.find(':input').attr('disabled', true)
-      complete: -> $form.find(':input').attr('disabled', false)
       success: (data) ->
+        $form.find(':input').attr('disabled', false)
         if $('#your_vote .email_input').length # not logged in
           window.location.reload()
         else
@@ -208,12 +208,13 @@ $ ->
             $vote = updateVote(data)
             showVote($form, $vote)
       error: (xhr) ->
+        $form.find(':input').attr('disabled', false) # <- saveDraft fails if on complete
         if xhr.status is 403 # unauthorized
           # TODO flash you tried to use an email
           saveDraft $form
           email = encodeURIComponent $form.find('#email').val()
           path = encodeURIComponent window.location.pathname + '#save'
-          window.location = "/login?return_to=#{path}&email=#{email}"
+          window.location = "/login?email=#{email}&return_to=#{path}"
         else
           errors = JSON.parse(xhr.responseText)
           $errors.html(errors.map((error) -> "<li>#{error}</li>").join("\n"))
@@ -237,11 +238,11 @@ $ ->
 
   $('.teams-show #your_vote').each ->
     hash = window.location.hash
-    draft = window.localStorage?.draft?
+    draft = window.localStorage?.draft
     try
       return unless draft and (hash is '#save' or hash is '#draft')
       $(this[el.name]).val el.value for el in JSON.parse draft
-      # $('#your_vote').submit() if window.location.hash is '#save'
+      $('#your_vote').submit() if window.location.hash is '#save'
     finally
       delete localStorage.draft
   $('.votes-new .stars, #your_vote .stars').each -> Stars.highlight $(this)
