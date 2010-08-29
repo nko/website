@@ -599,7 +599,8 @@ aside#pullout {
     .body.teams-show .votes li.small img, .body.teams-show #your_vote.small img, .body.people-show .votes li.small img, .body.people-show #your_vote.small img {
       display: none; }
     .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter, .body.people-show .votes li.small .voter, .body.people-show #your_vote.small .voter {
-      font-size: x-small; }
+      font-size: x-small;
+      line-height: inherit; }
       .body.teams-show .votes li.small .voter .details, .body.teams-show #your_vote.small .voter .details, .body.people-show .votes li.small .voter .details, .body.people-show #your_vote.small .voter .details {
         display: inline; }
       .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time, .body.people-show .votes li.small .voter time, .body.people-show #your_vote.small .voter time {

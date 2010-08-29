@@ -129,8 +129,8 @@
     %h3 Your Vote
     != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
     .warning
-      Voting is currently in testing. It is only visible to judges and all
-      votes will be cleared at 7pm PDT Sunday.
+      Voting is currently in testing. ALL VOTES WILL BE CLEARED AT 8PM PDT
+      SUNDAY.
   %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
     != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
     .show
