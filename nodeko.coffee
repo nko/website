@@ -262,6 +262,7 @@ post '/teams/:teamId/votes', ->
     @vote = new Vote @req.body, @req
     @vote.team = @team = team
     @vote.person = @currentPerson
+    @vote.email ?= @vote.person?.email
     @vote.responseAt = Date.now()
     saveVote.call(this)
 

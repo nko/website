@@ -295,9 +295,9 @@ class Vote
     @completeness = parseInt options?.completeness
 
     @comment = options?.comment
-    @email = options?.email?.trim()?.toLowerCase()
     @person = options?.person
-    @confirmed = !! options?.person?.confirmed
+    @email = options?.email?.trim()?.toLowerCase() || @person?.email
+    @confirmed = !! @person?.confirmed
 
     @remoteAddress = request?.socket?.remoteAddress
     @remotePort = request?.socket?.remotePort
@@ -323,7 +323,6 @@ class Vote
           @person.welcomeVoter fn
     else
       if @isNew()
-        @email ?= @person?.email
         @checkDuplicate fn
       else
         @updatedAt = new Date()
