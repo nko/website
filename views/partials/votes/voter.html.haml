@@ -6,5 +6,5 @@
 .details
   .type= vote.person ? vote.person.type : 'Public'
   %time{ datetime: vote.createdAt.toISOString() }
-  .remote= vote.remoteAddress
+  .remote= vote.remoteAddress.replace(/\d+\.\d+/, '*.*')
 .clear
