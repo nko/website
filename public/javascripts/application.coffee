@@ -186,6 +186,8 @@ $ ->
     $form = $(this)
     $errors = $form.find('#errors')
     ajaxForm $form,
+      beforeSend: -> $form.find(':input').attr('disabled', true)
+      complete: -> $form.find(':input').attr('disabled', false)
       success: (data) ->
         if $('#your_vote .email_input').length # not logged in
           window.location.reload()
@@ -209,7 +211,7 @@ $ ->
             .slideDown()
     false
 
-  $('#your_vote .vote.show .show a.change').click ->
+  $('#your_vote').delegate '.vote.show .show a.change', 'click', ->
     $(this).closest('.vote').removeClass('show').addClass('edit')
     false
 

@@ -80,10 +80,16 @@ input[type=password], input[type=email], input[type=text], textarea
   //:background-image -moz-linear-gradient(-90deg, hsla(0, 0%, 0%, 0.1), transparent 10%, transparent)
   +rounded
   +shadow
-input[type=text][disabled]
+input[type=text][disabled], textarea[disabled]
   :color #999
 textarea
   :line-height 150%
+input[type=submit][disabled]
+  :background-image none
+  :background-color #ccc
+  &:hover
+    :-webkit-box-shadow none
+    :-moz-box-shadow none
 
 input.error
   +shadow(0px, 0px, 10px, hsla(359, 100%, 33%, 0.8))

@@ -39,11 +39,18 @@ input[type=password], input[type=email], input[type=text], textarea {
   -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
 
-input[type=text][disabled] {
+input[type=text][disabled], textarea[disabled] {
   color: #999999; }
 
 textarea {
   line-height: 150%; }
+
+input[type=submit][disabled] {
+  background-image: none;
+  background-color: #cccccc; }
+  input[type=submit][disabled]:hover {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none; }
 
 input.error {
   -webkit-box-shadow: 0px 0px 10px rgba(168, 0, 3, 0.8);

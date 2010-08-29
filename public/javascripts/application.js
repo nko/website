@@ -243,6 +243,12 @@
       $form = $(this);
       $errors = $form.find('#errors');
       ajaxForm($form, {
+        beforeSend: function() {
+          return $form.find(':input').attr('disabled', true);
+        },
+        complete: function() {
+          return $form.find(':input').attr('disabled', false);
+        },
         success: function(data) {
           var $vote;
           if ($('#your_vote .email_input').length) {
@@ -274,7 +280,7 @@
       });
       return false;
     });
-    $('#your_vote .vote.show .show a.change').click(function() {
+    $('#your_vote').delegate('.vote.show .show a.change', 'click', function() {
       $(this).closest('.vote').removeClass('show').addClass('edit');
       return false;
     });

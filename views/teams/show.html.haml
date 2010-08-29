@@ -136,7 +136,7 @@
       != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
       .show
         %p.comment= ctx.vote.comment || ''
-        %a.change{ href: '#' }= 'Change your vote'
+        %a.button.change{ href: '#' } Change
       .edit
         %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4 }= ctx.vote.comment || ''
         - if (!ctx.currentPerson)
