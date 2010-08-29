@@ -131,15 +131,14 @@ get '/error', ->
 
 # list teams
 get '/teams', ->
-  Team.all {}, { 'sort': [['lastDeployedAt', -1]] }, (error, teams) =>
-    @teams = teams.filter (t) -> t.members.length != t.invited.length
-    @yourTeams = if @currentPerson?
-      _.select teams, (team) =>
-        # TODO this is gross
-        _ids = _.pluck(team.members, '_id')
-        _.include _.pluck(_ids, 'id'), @currentPerson._id.id
-    else []
-    @render 'teams/index.html.haml'
+  Team.all { url: /\w/ }, { sort: [['lastDeployedAt', -1]] }, (error, teams) =>
+    @teams = teams
+    if @currentPerson?
+      Team.all { 'members._id': @currentPerson._id }, (error, yourTeams) =>
+        @yourTeams = yourTeams
+        @render 'teams/index.html.haml'
+    else
+      @render 'teams/index.html.haml'
 
 # new team
 get '/teams/new', ->
@@ -351,6 +350,14 @@ get '/people/:id/edit', ->
     @ensurePermitted person, =>
       @person = person
       @render 'people/edit.html.haml'
+
+# show person
+get '/people/:id', ->
+  Person.fromParam @req.param('id'), (error, person) =>
+    @person = person
+    Team.all { 'members._id': @person._id }, (error, yourTeams) =>
+      @yourTeams = yourTeams
+      @render 'people/show.html.haml'
 
 # update person
 put '/people/:id', ->

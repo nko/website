@@ -1,8 +1,6 @@
 %h1 Teams
 
 - if ('yourTeams' in ctx && ctx.yourTeams.length > 0)
-  %h2
-    Your Team
   - each team in ctx.yourTeams
     %ul.teams
       %li!= partial('teams/application.html.haml', { locals: { team: team, ctx: ctx } })
