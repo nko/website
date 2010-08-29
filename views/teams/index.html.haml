@@ -5,17 +5,14 @@
     Your Team
   - each team in ctx.yourTeams
     %ul.teams
-      %li!= partial('teams/application.html.haml', { locals: { team: team } })
+      %li!= partial('teams/application.html.haml', { locals: { team: team, ctx: ctx } })
 
-%h2
-  Verified Teams
-  = ' (' + ctx.teams.length + ')'
 %ul.teams
   - each team in ctx.teams
-    %li!= partial('teams/application.html.haml', { locals: { team: team } })
+    %li!= partial('teams/application.html.haml', { locals: { team: team, ctx: ctx } })
 .clear
 
-- if (false && 'unverifiedTeams' in ctx)
+- if ('unverifiedTeams' in ctx)
   %h2
     Pending Teams
     = ' (' + ctx.unverifiedTeams.length + ')'

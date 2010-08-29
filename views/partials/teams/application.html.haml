@@ -11,4 +11,7 @@
     .markdown!= firstParagraph(team.description)
     - if (team.link)
       %a{ href: team.link } More info &raquo;
+    - if (ctx.isJudge)
+      %p
+        %a.button{ href: '#your_vote' } Vote &raquo;
   .clear
