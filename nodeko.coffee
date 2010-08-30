@@ -131,8 +131,8 @@ get '/error', ->
 
 # list teams
 get '/teams', ->
-  Team.all { url: /\w/, validDeploy: true }, { sort: [['lastDeployedAt', -1]] }, (error, teams) =>
-    @teams = teams
+  Team.all { validDeploy: true }, (error, teams) =>
+    @teams = _.shuffle teams
     if @currentPerson?
       Team.all { 'members._id': @currentPerson._id }, (error, yourTeams) =>
         @yourTeams = yourTeams

@@ -419,7 +419,7 @@ aside#pullout {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 375px; }
+    width: 370px; }
   .body.teams-index .description h4, .body.teams-show .description h4, .body.index .description h4, .body.people-show .description h4 {
     margin: 0px 0px 0.5em; }
 
