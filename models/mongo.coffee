@@ -45,9 +45,9 @@ _.extend Mongo,
       _id: MongoId.createFromHexString(query)
     else query
 
-  instantiate: (data, fn) ->
+  instantiate: (data, options, fn) ->
     unpacked = Serializer.unpack data
-    if unpacked?.beforeInstantiate?
+    if !options?.deep? and unpacked?.beforeInstantiate?
       unpacked.beforeInstantiate ->
         fn null, unpacked
     else
@@ -83,7 +83,7 @@ _.extend Mongo,
         return fn error if error?
         collection.findOne Mongo.queryify(query), options, (error, item) ->
           return fn error if error?
-          Mongo.instantiate item, fn
+          Mongo.instantiate item, options, fn
 
     fromParam: (id, options, fn) -> @first(id, options, fn)
 
@@ -103,7 +103,7 @@ _.extend Mongo,
             return fn null, array if array.length == 0
             items = []
             for item in array
-              Mongo.instantiate item, (error, unpacked) =>
+              Mongo.instantiate item, options, (error, unpacked) =>
                 return fn error if error?
                 items.push unpacked
                 fn null, items if items.length == array.length

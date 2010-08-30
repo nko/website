@@ -103,7 +103,7 @@ get /.*/, ->
 
 get '/', ->
   Team.count (error, teamCount) =>
-    Team.all { validDeploy: true }, (error, teams) =>
+    Team.all { validDeploy: true }, { deep: false }, (error, teams) =>
       @teams = _.shuffle(teams).slice(0, 10)
       @teamCount = teamCount
       @render 'index.html.haml'
@@ -132,7 +132,7 @@ get '/error', ->
 # list teams
 get '/teams', ->
   q = if @req.param('invalid') then { url: /\w/, validDeploy: false } else { validDeploy: true }
-  Team.all q, (error, teams) =>
+  Team.all q, { deep: false }, (error, teams) =>
     @teams = _.shuffle teams
     @render 'teams/index.html.haml'
 
