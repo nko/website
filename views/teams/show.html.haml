@@ -139,7 +139,7 @@
       %p.comment= ctx.vote.comment || ''
       %a.button.change{ href: '#' } Edit
     .edit
-      %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4 }= ctx.vote.comment || ''
+      %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4, rel: 'nofollow' }= ctx.vote.comment || ''
       - if (!ctx.currentPerson)
         .email_input
           %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.vote.email || '', placeholder: 'email@address.com' }
