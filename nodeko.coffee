@@ -130,7 +130,7 @@ get '/error', ->
   throw new Error('Foo')
 
 # list teams
-get '/teams', ->
+get '/teams|/entries', ->
   Team.all { validDeploy: true }, (error, teams) =>
     @teams = _.shuffle teams
     if @currentPerson?
