@@ -29,7 +29,6 @@ class Team
     @lastDeployedTo = options?.lastDeployedTo or ''
     @lastDeployedAt = options?.lastDeployedAt
     @deployHeads = options?.deployHeads or []
-    @validDeploy = options?.validDeploy
 
   constructor: (options, fn) ->
     @build options

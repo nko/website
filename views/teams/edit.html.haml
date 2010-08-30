@@ -30,8 +30,10 @@
   %input{ type: 'text', name: 'link', id: 'link', value: ctx.team.link }
   - if (ctx.isAdmin)
     %p
-      %input{ type: 'checkbox', name: 'invalidDeploy', id: 'invalidDeploy', checked: ctx.team.validDeploy ? '' : 'checked', value: 1 }
-      %label{ for: 'invalidDeploy' } Invalid deploy?
+      %input{ type: 'checkbox', name: 'validDeploy', id: 'validDeploy', checked: ctx.team.validDeploy ? 'checked' : '', value: '1' }
+      %label{ for: 'validDeploy' } Valid deploy?
+  - if (!ctx.isAdmin)
+    %input{ type: 'hidden', name: 'validDeploy', id: 'validDeploy', value: ctx.team.validDeploy ? '1' : '0' }
   %p
     %input.button{ type: 'submit', value: 'Save' }
   %h2 Team
