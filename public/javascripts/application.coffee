@@ -175,8 +175,6 @@ $ ->
     $newVote
 
   showVote = ($form, $vote) ->
-    $('ul.votes').show()
-    $('#hidden_votes').hide()
     $form.find('.show .comment').html($vote.find('.comment').html())
     $form.find('.vote').removeClass('edit').addClass('show')
 
