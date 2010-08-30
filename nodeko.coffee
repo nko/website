@@ -133,12 +133,7 @@ get '/error', ->
 get '/teams', ->
   Team.all { validDeploy: true }, (error, teams) =>
     @teams = _.shuffle teams
-    if @currentPerson?
-      Team.all { 'members._id': @currentPerson._id }, (error, yourTeams) =>
-        @yourTeams = yourTeams
-        @render 'teams/index.html.haml'
-    else
-      @render 'teams/index.html.haml'
+    @render 'teams/index.html.haml'
 
 # new team
 get '/teams/new', ->
