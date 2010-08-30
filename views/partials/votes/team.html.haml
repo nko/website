@@ -3,7 +3,7 @@
 %a{ href: '/teams/' + vote.team.toParam() }= vote.team.name
 .details
   %time{ datetime: vote.createdAt.toISOString() }
-  .remote= vote.remoteAddress
+  .remote= vote.remoteAddress.replace(/\d+\.\d+/, '*.*')
   - if (ctx.isCurrentPerson)
     %a.edit{ href: '/teams/' + vote.team.toParam() + '#your_vote' }
       Edit
