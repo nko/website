@@ -103,7 +103,7 @@ input.error {
   display: inline-block;
   margin-bottom: 0.5ex;
   font-size: large;
-  padding: 5px 10px;
+  padding: 0.125em 0.5em;
   text-decoration: none;
   -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
