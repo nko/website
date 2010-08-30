@@ -338,7 +338,7 @@ post '/people', ->
   @ensurePermitted @person, =>
     @person.save (error, res) =>
       # TODO send confirmation email
-      @redirect '/people/' + @person.toParam() + '/edit'
+      @redirect '/people/' + @person.toParam()
 
 # edit person
 get '/people/:id/edit', ->

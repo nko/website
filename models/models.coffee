@@ -112,8 +112,8 @@ class Person
     @heroku = options?.heroku or ''
     @joyent = options?.joyent or ''
 
-    @password = options?.password or @randomPassword()
-    @new_password = !options?.password?
+    @password = @randomPassword()
+    @new_password = true
     @confirmed = options?.confirmed or false
 
     @type = options?.type # 'Judge', 'Voter', 'Participant'
