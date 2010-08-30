@@ -103,7 +103,7 @@ input.error {
   display: inline-block;
   margin-bottom: 0.5ex;
   font-size: large;
-  padding: 5px 10px;
+  padding: 0.125em 0.5em;
   text-decoration: none;
   -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
@@ -540,6 +540,11 @@ aside#pullout {
   color: #a80003;
   margin-top: 1em;
   font-size: small; }
+.body.teams-show hr {
+  border: none;
+  border-bottom: 1px solid #dddddd;
+  width: 50%;
+  margin: 1em auto; }
 
 .body.teams-show .votes, .body.people-show .votes {
   list-style-type: none;
