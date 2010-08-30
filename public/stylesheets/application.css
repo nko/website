@@ -378,8 +378,10 @@ aside#pullout {
   border-collapse: collapse; }
   .dimensions .stars {
     display: inline; }
-    .dimensions .stars .star .filled {
-      display: none; }
+    .dimensions .stars .star {
+      padding: 0px 2px 0px 0px; }
+      .dimensions .stars .star .filled {
+        display: none; }
 
 .body.index #twitter {
   border: none;
@@ -685,6 +687,9 @@ aside#pullout {
   #your_vote label .tip {
     border-bottom: 1px dotted #142229;
     cursor: pointer; }
+#your_vote .stars, #your_vote .tips div {
+  display: inline-block;
+  height: 1.6em; }
 #your_vote .tips {
   text-align: center;
   font-size: small; }

@@ -2,11 +2,9 @@
   %tr
     - each dimension in ['Utility', 'Design', 'Innovation', 'Completeness']
       %td
-        %label
+        %label{ 'for': dimension.toLowerCase() }
           %span.tip= dimension === 'Utility' ? 'Utility / Fun' : dimension
         %input{ type: 'hidden', id: dimension.toLowerCase(), name: dimension.toLowerCase(), value: vote[dimension.toLowerCase()] || 0 }
         .stars
           - for (var val = 1; val <= 5; val++)
-            %span.star{ 'data-value': val }
-              %img.empty{ src: '/images/empty.png' }
-              %img.filled{ src: '/images/filled.png' }
+            != '<span class="star" data-value="' + val + '"><img class="empty" src="/images/empty.png"/><img class="filled" src="/images/filled.png"/></span>'

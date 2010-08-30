@@ -377,8 +377,10 @@ aside#pullout
   :border-collapse collapse
   .stars
     :display inline
-    .star .filled
-      :display none
+    .star
+      :padding 0px 2px 0px 0px
+      .filled
+        :display none
 
 .body.index
   #twitter
@@ -662,6 +664,9 @@ aside#pullout
     .tip
       :border-bottom 1px dotted $black
       :cursor pointer
+  .stars, .tips div
+    :display inline-block
+    :height 1.6em
   .tips
     :text-align center
     :font-size small

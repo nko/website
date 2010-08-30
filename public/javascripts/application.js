@@ -296,7 +296,7 @@
       return false;
     });
     $('#your_vote').delegate('label .tip', 'hover', function(e) {
-      var stars, t, tips;
+      var stars, tips;
       tips = $('#your_vote').find('.tips div');
       stars = $('#your_vote').find('.stars');
       if (e.type === 'mouseout') {
@@ -304,8 +304,7 @@
         return stars.show();
       } else {
         stars.hide();
-        t = $(this).parent().next('input').attr('id');
-        return $('#your_vote .tips .' + t).show();
+        return tips.filter('.' + $(this).parent().attr('for')).show();
       }
     });
     $('.teams-show #your_vote').each(function() {

@@ -240,8 +240,7 @@ $ ->
       stars.show()
     else
       stars.hide()
-      t = $(this).parent().next('input').attr('id')
-      $('#your_vote .tips .' + t).show()
+      tips.filter('.' + $(this).parent().attr('for')).show()
 
   $('.teams-show #your_vote').each ->
     hash = window.location.hash
