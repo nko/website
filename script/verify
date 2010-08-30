@@ -1,50 +1,92 @@
 #!/usr/bin/env ruby
 
-require 'open-uri'
 require 'timeout'
 require 'rubygems'
+require 'mechanize'
 require 'mongo'
+require 'json'
+require 'open-uri'
 
 # record sha1 after 30 minutes
 # check dns of final url
 # set final url
 
+agent = Mechanize.new
+agent.open_timeout = 10
+agent.read_timeout = 5
+
+github = Mechanize.new
+github.auth 'visnup/token', ''
+
+stop = Time.parse '2010-08-30T00:00Z'
+
 db = Mongo::Connection.new.db 'nodeknockout'
 db_teams = db.collection 'Team'
 db_people = db.collection 'Person'
 
-ok = 0
-db_teams.find().each do |t|
-  puts t['slug']
+Status = { :ok => 0, :not_ok => 0 }
+
+def error t, e
+  t['lastDeployError'] = "#{e.class}: #{e.message}"
+  #db_teams.save t
+  puts "\033[31m  #{t['lastDeployError']}\033[0m"
+  Status[:not_ok] += 1
+end
+
+def success t
+  t['lastDeployError'] = nil
+  #db_teams.save t
+  puts "\033[32m  ok\033[0m"
+  Status[:ok] += 1
+end
+
+query = ARGV.length > 0 ? { :slug => ARGV.shift } : nil
+
+db_teams.find(query).each do |t|
   if t['url'].nil? || t['url'] =~ /^\s*$/
-    puts "\033[31m  never deployed\033[0m\n\n"
+    #puts "\033[31m  never deployed\033[0m\n\n"
     next
   end
 
+  puts t['slug']
   puts "  #{t['url']}"
 
   begin
-    Timeout::timeout 10 do
-      open t['url'] do |f|
-        if f.read.length == 0
-          puts "\033[31m  empty\033[0m"
-        else
-          puts "\033[32m  ok!\033[0m"
-          ok += 1
-        end
+    agent.get t['url']
+    puts "\033[32m  request ok\033[0m"
+
+    # git
+    target = t['lastDeployedTo']
+    repo =
+      case target
+      when 'joyent'
+        "ssh://node@#{t['joyentSlug']}.no.de/repo"
+      when 'heroku'
+        "git@heroku.com/#{t['herokuSlug']}.git"
       end
+    puts "  #{target}: #{repo}"
+    rev = `git ls-remote #{repo} HEAD 2>/dev/null | awk '{print $1}'`
+    github_url = "http://visnup:donut132@github.com/api/v2/json/commits/show/nko/#{t['slug']}/#{rev}"
+    puts "  #{rev}" # (#{github_url})"
+    commit = JSON.parse(github.get(github_url).body)['commit']
+    commit_date = Time.parse commit['authored_date']
+    if commit_date > stop
+      error t, "rev deployed is late: #{commit_date} > #{stop}"
+    else
+      puts "\033[32m  rev deployed is ok: #{commit_date}\033[0m"
     end
-  rescue Timeout::Error
-    puts "\033[31m  timeout\033[0m"
-  rescue Errno::ECONNREFUSED
-    puts "\033[31m  connection refused\033[0m"
-  rescue OpenURI::HTTPError => e
-    puts "\033[31m  #{e.message}\033[0m"
+
+    success t
+  rescue Timeout::Error => e
+    error t, e
+  rescue Interrupt => e
+    raise e
   rescue Exception => e
-    puts e.class, e.message
+    error t, e
   end
 
   puts
 end
 
-puts "\033[32m  #{ok} ok\033[0m"
+puts "\033[32m  #{Status[:ok]} ok\033[0m"
+puts "\033[31m  #{Status[:not_ok]} not ok\033[0m"
