@@ -134,7 +134,7 @@ get '/teams', ->
   Team.all { url: /\w/ }, { sort: [['lastDeployedAt', -1]] }, (error, teams) =>
     @teams = teams
     if @currentPerson?
-      Team.all { 'members._id': @currentPerson._id }, (error, yourTeams) =>
+      Team.all { 'members._id': @currentPerson._id, validDeploy: true }, (error, yourTeams) =>
         @yourTeams = yourTeams
         @render 'teams/index.html.haml'
     else
