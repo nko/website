@@ -103,8 +103,8 @@ get /.*/, ->
 
 get '/', ->
   Team.count (error, teamCount) =>
-    Team.all {}, { sort: [['lastDeployedAt', -1]], limit: 10 }, (error, teams) =>
-      @teams = teams
+    Team.all { validDeploy: true }, (error, teams) =>
+      @teams = _.shuffle(teams).slice(0, 10)
       @teamCount = teamCount
       @render 'index.html.haml'
 
@@ -130,9 +130,9 @@ get '/error', ->
   throw new Error('Foo')
 
 # list teams
-get '/teams', ->
-  Team.all { url: /\w/, validDeploy: true }, { sort: [['lastDeployedAt', -1]] }, (error, teams) =>
-    @teams = teams
+get '/teams|/entries', ->
+  Team.all { validDeploy: true }, (error, teams) =>
+    @teams = _.shuffle teams
     if @currentPerson?
       Team.all { 'members._id': @currentPerson._id }, (error, yourTeams) =>
         @yourTeams = yourTeams
