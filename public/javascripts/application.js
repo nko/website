@@ -234,8 +234,6 @@
       return $newVote;
     };
     showVote = function($form, $vote) {
-      $('ul.votes').show();
-      $('#hidden_votes').hide();
       $form.find('.show .comment').html($vote.find('.comment').html());
       return $form.find('.vote').removeClass('edit').addClass('show');
     };

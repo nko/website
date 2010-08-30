@@ -103,8 +103,8 @@ get /.*/, ->
 
 get '/', ->
   Team.count (error, teamCount) =>
-    Team.all {}, { sort: [['lastDeployedAt', -1]], limit: 10 }, (error, teams) =>
-      @teams = teams
+    Team.all { validDeploy: true }, (error, teams) =>
+      @teams = _.shuffle(teams).slice(0, 10)
       @teamCount = teamCount
       @render 'index.html.haml'
 
