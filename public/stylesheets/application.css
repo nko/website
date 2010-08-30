@@ -642,10 +642,10 @@ aside#pullout {
   font-size: small; }
 .body.people-edit input[type=text], .body.people-edit input[type=password], .body.teams-edit input[type=text], .body.teams-edit input[type=password], .body.judges-new input[type=text], .body.judges-new input[type=password] {
   font-size: large;
-  width: 600px; }
+  width: 98%; }
 .body.people-edit textarea, .body.teams-edit textarea, .body.judges-new textarea {
   font-size: medium;
-  width: 600px; }
+  width: 98%; }
 
 .body.judging .judge, .body.judging .person, .body.judges-index .judge, .body.judges-index .person, .body.people-show .judge, .body.people-show .person {
   clear: left; }
