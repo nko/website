@@ -110,7 +110,7 @@
           hours = Math.floor(diff % 86400 / 3600);
           minutes = Math.floor(diff % 3600 / 60);
           secs = Math.floor(diff % 60);
-          countdown.html((days > 0 ? days + ' days ' : '') + (hours > 0 ? hours + ' hours ' : '') + (minutes > 0 || hours > 0 ? minutes + ' minutes ' : minutes) + secs + ' seconds');
+          countdown.html((days > 0 ? days + ' days ' : '') + (hours > 0 ? hours + ' hours ' : '') + (minutes > 0 || hours > 0 ? minutes + ' minutes ' : minutes) + secs + ' seconds' + ' left');
           return setTimeout(tick, 1000);
         }
       };
