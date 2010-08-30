@@ -131,7 +131,8 @@ get '/error', ->
 
 # list teams
 get '/teams', ->
-  Team.all { validDeploy: true }, (error, teams) =>
+  q = if @req.param('all') then { url: /\w/ } else { validDeploy: true }
+  Team.all q, (error, teams) =>
     @teams = _.shuffle teams
     @render 'teams/index.html.haml'
 
