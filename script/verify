@@ -16,47 +16,52 @@ agent.open_timeout = 10
 agent.read_timeout = 5
 
 github = Mechanize.new
-github.auth 'visnup/token', ''
+# github.auth 'visnup/token', ''
+github.auth 'visnup/token', 'XXXXXXXXXXXX'
 
 stop = Time.parse '2010-08-30T00:00Z'
 
-db = Mongo::Connection.new.db 'nodeknockout'
-db_teams = db.collection 'Team'
-db_people = db.collection 'Person'
+db = Mongo::Connection.from_uri('mongodb://app196785:XXXXXXXX@flame.local.mongohq.com:27026/app196785').db "app196785"
+@db_teams = db.collection 'Team'
+@db_people = db.collection 'Person'
 
 Status = { :ok => 0, :not_ok => 0 }
 
-def error t, e
-  t['lastDeployError'] = "#{e.class}: #{e.message}"
-  #db_teams.save t
-  puts "\033[31m  #{t['lastDeployError']}\033[0m"
+def error t, e=nil
+  t['validDeploy'] = false
+  # t['lastDeployError'] =
+  @db_teams.save t
+  puts "\033[31m  #{e.class}: #{e.message}\033[0m"
   Status[:not_ok] += 1
 end
 
 def success t
-  t['lastDeployError'] = nil
-  #db_teams.save t
+  t['validDeploy'] = true
+  # t['lastDeployError'] = nil
+  @db_teams.save t
   puts "\033[32m  ok\033[0m"
   Status[:ok] += 1
 end
 
 query = ARGV.length > 0 ? { :slug => ARGV.shift } : nil
 
-db_teams.find(query).each do |t|
+@db_teams.find(query).each do |t|
+  puts t['slug']
+
   if t['url'].nil? || t['url'] =~ /^\s*$/
-    #puts "\033[31m  never deployed\033[0m\n\n"
+    puts "\033[31m  never deployed\033[0m\n\n"
+    error t, Exception.new("never deployed")
     next
   end
 
-  puts t['slug']
   puts "  #{t['url']}"
-
   begin
     agent.get t['url']
     puts "\033[32m  request ok\033[0m"
 
     # git
     target = t['lastDeployedTo']
+=begin
     repo =
       case target
       when 'joyent'
@@ -75,7 +80,7 @@ db_teams.find(query).each do |t|
     else
       puts "\033[32m  rev deployed is ok: #{commit_date}\033[0m"
     end
-
+=end
     success t
   rescue Timeout::Error => e
     error t, e
