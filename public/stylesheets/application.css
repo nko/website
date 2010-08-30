@@ -540,6 +540,11 @@ aside#pullout {
   color: #a80003;
   margin-top: 1em;
   font-size: small; }
+.body.teams-show hr {
+  border: none;
+  border-bottom: 1px solid #dddddd;
+  width: 50%;
+  margin: 1em auto; }
 
 .body.teams-show .votes, .body.people-show .votes {
   list-style-type: none;

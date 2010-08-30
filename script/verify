@@ -16,34 +16,29 @@ agent.open_timeout = 10
 agent.read_timeout = 5
 
 github = Mechanize.new
-# github.auth 'visnup/token', ''
 github.auth 'visnup/token', 'XXXXXXXXXXXX'
 
 stop = Time.parse '2010-08-30T00:00Z'
 
-db = Mongo::Connection.from_uri('mongodb://app196785:XXXXXXXX@flame.local.mongohq.com:27026/app196785').db "app196785"
+db = Mongo::Connection.new.db "nodeknockout"
 @db_teams = db.collection 'Team'
 @db_people = db.collection 'Person'
 
-Status = { :ok => 0, :not_ok => 0 }
+@status = { :ok => 0, :not_ok => 0 }
 
-def error t, e=nil
+def error t, e
   t['validDeploy'] = false
-  # t['lastDeployError'] =
-  @db_teams.save t
   puts "\033[31m  #{e.class}: #{e.message}\033[0m"
-  Status[:not_ok] += 1
+  @status[:not_ok] += 1
 end
 
 def success t
   t['validDeploy'] = true
-  # t['lastDeployError'] = nil
-  @db_teams.save t
   puts "\033[32m  ok\033[0m"
-  Status[:ok] += 1
+  @status[:ok] += 1
 end
 
-query = ARGV.length > 0 ? { :slug => ARGV.shift } : nil
+query = ARGV.length > 0 ? { :slug => ARGV.shift } : { :validDeploy => false, :url => /\w/ }
 
 @db_teams.find(query).each do |t|
   puts t['slug']
@@ -56,12 +51,18 @@ query = ARGV.length > 0 ? { :slug => ARGV.shift } : nil
 
   puts "  #{t['url']}"
   begin
-    agent.get t['url']
+    page = agent.get t['url']
     puts "\033[32m  request ok\033[0m"
 
+    if page.body.length < 20
+      puts "    #{page.body}"
+      error t, Exception.new("body too small")
+      next
+    end
+
     # git
-    target = t['lastDeployedTo']
 =begin
+    target = t['lastDeployedTo']
     repo =
       case target
       when 'joyent'
@@ -93,5 +94,5 @@ query = ARGV.length > 0 ? { :slug => ARGV.shift } : nil
   puts
 end
 
-puts "\033[32m  #{Status[:ok]} ok\033[0m"
-puts "\033[31m  #{Status[:not_ok]} not ok\033[0m"
+puts "\033[32m  #{@status[:ok]} ok\033[0m"
+puts "\033[31m  #{@status[:not_ok]} not ok\033[0m"
