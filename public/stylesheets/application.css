@@ -416,7 +416,6 @@ aside#pullout {
 
 .body.teams-index .screenshot, .body.teams-show .screenshot, .body.index .screenshot, .body.people-show .screenshot {
   float: left;
-  margin-bottom: 10px;
   text-align: center; }
   .body.teams-index .screenshot img, .body.teams-show .screenshot img, .body.index .screenshot img, .body.people-show .screenshot img {
     -webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);

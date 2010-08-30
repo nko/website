@@ -2,8 +2,8 @@
   .screenshot
     %a{ href: team.url }
       %img{ src: team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(team.url + '/#' + team.lastDeployedHead) + '&out-format=png&resize=160x93' : '/images/blank.png' }
-      .vote
-        %a.button{ href: '/teams/' + team.toParam() + '#your_vote' } Vote &raquo;
+    .vote
+      %a.button.important{ href: '/teams/' + team.toParam() + '#your_vote' } Vote &raquo;
   .description
     %h2
       %a{ href: team.url }= team.application

@@ -67,16 +67,15 @@
     .screenshot
       %a{ href: ctx.team.url }
         %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url + '/#' + ctx.team.lastDeployedHead) + '&out-format=png&resize=160x93' : '/images/blank.png' }
-      %p
-        %a.button.important{ href: '#your_vote' } Vote &raquo;
     .description
       %h2
         %a{ href: ctx.team.url }= ctx.team.application
       %h4= 'by ' + ctx.team.name
-      .markdown!= markdown(ctx.team.description)
+      %a.button.important{ href: '#your_vote' } Vote &raquo;
+    .clear
+    .markdown!= markdown(ctx.team.description)
     - if (ctx.team.link)
       %a{ href: ctx.team.link } More info &raquo;
-    .clear
 - if (!ctx.team.description && ctx.editAllowed)
   .application
     .note
