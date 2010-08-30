@@ -78,9 +78,6 @@
               %a{ href: '/people/' + ctx.currentPerson.toParam() }= ctx.currentPerson.name || ctx.currentPerson.email
               %br
               %a{ href: '/logout' } Sign out
-        - if (!ctx.currentPerson)
-          .spots_left
-            != '(<a href="http://nodeknockout.posterous.com/registration-is-closed">registration is closed</a>)'
         #sponsors
           %p.joyent
             %a{ href: 'http://www.joyent.com/?utm_source=web&utm_medium=sponsorship&utm_campaign=nodeknockout' }

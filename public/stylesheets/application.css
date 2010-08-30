@@ -383,8 +383,9 @@ aside#pullout {
   color: #da6a6c; }
 .body.index #date {
   text-align: center;
-  font-size: x-large;
   font-weight: normal; }
+  .body.index #date a {
+    font-size: x-large; }
   .body.index #date .about {
     font-size: small;
     margin-top: 0.5ex; }

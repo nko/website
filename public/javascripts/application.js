@@ -98,18 +98,19 @@
     });
     $('.body.index .countdown').each(function() {
       var countdown, start, tick;
-      start = Date.UTC(2010, 7, 30, 0, 0, 0);
+      start = Date.UTC(2010, 8, 2, 23, 59, 59);
       countdown = $('#date .countdown');
       tick = function() {
-        var diff, hours, minutes, secs;
-        diff = (start - new Date().getTime()) / 1000;
+        var days, diff, hours, minutes, secs;
+        diff = (start - new Date()) / 1000;
         if (diff <= 0) {
           return countdown.html("TIME'S UP!");
         } else {
-          hours = Math.floor(diff / 3600);
+          days = Math.floor(diff % 604800 / 86400);
+          hours = Math.floor(diff % 86400 / 3600);
           minutes = Math.floor(diff % 3600 / 60);
           secs = Math.floor(diff % 60);
-          countdown.html((hours > 0 ? hours + ' hours ' : '') + (minutes > 0 || hours > 0 ? minutes + ' minutes ' : minutes) + secs + ' seconds');
+          countdown.html((days > 0 ? days + ' days ' : '') + (hours > 0 ? hours + ' hours ' : '') + (minutes > 0 || hours > 0 ? minutes + ' minutes ' : minutes) + secs + ' seconds');
           return setTimeout(tick, 1000);
         }
       };

@@ -71,17 +71,18 @@ $ ->
     not hasError
 
   $('.body.index .countdown').each ->
-    start = Date.UTC 2010, 7, 30, 0, 0, 0
+    start = Date.UTC 2010, 8, 2, 23, 59, 59
     countdown = $('#date .countdown')
     tick = ->
-      diff = (start - new Date().getTime()) / 1000
+      diff = (start - new Date()) / 1000
       if diff <= 0
         countdown.html "TIME'S UP!"
       else
-        hours = Math.floor diff / 3600
+        days = Math.floor diff % 604800 / 86400
+        hours = Math.floor diff % 86400 / 3600
         minutes = Math.floor diff % 3600 / 60
         secs = Math.floor diff % 60
-        countdown.html (if hours > 0 then hours + ' hours ' else '') + (if minutes > 0 || hours > 0 then minutes + ' minutes ' else minutes) + secs + ' seconds'
+        countdown.html (if days > 0 then days + ' days ' else '') + (if hours > 0 then hours + ' hours ' else '') + (if minutes > 0 || hours > 0 then minutes + ' minutes ' else minutes) + secs + ' seconds'
         setTimeout tick, 1000
     tick()
 
