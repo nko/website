@@ -429,7 +429,10 @@ app.helpers {
   markdown: require('markdown').toHTML
 
   firstParagraph: (md) ->
-    require('markdown').toHTML(md).match(/<p>.*?<\/p>/)?[0] || ''
+    markdown = require 'markdown'
+    tree = markdown.parse md
+    p = _.detect tree, (e) -> e[0] == 'para'
+    if p then markdown.toHTML p else ''
 
   gravatar: (p, s) ->
     return '' unless p?
