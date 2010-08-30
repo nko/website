@@ -155,7 +155,7 @@
           = ' ' + ctx.vote.email + ' '
           &mdash;
           %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
-      %input.button.important{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save' }
+      %input.button.important{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save', disabled: 'disabled' }
     .clear
 %ul.votes{ style: (ctx.vote.isNew() ? 'display:none' : '') }
   - if (ctx.votes.length)
