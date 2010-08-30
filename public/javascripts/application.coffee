@@ -12,7 +12,7 @@ $ ->
     confirm 'Are you sure?'
 
   $('a.reveal').click ->
-    $(this).hide().next('.hidden').slideDown ->
+    $(this).hide().next('.hidden').slideDown 'fast', ->
       $(this).find('input').select()
     false
 
@@ -36,21 +36,23 @@ $ ->
           <h2>#email has been sent a new password</h2>
           <p>It should arrive shortly.</p>"""
       error: (xhr) ->
-        $('#errors').append "<li>#xhr.responseText</li>")
+        $('#errors').append "<li>#xhr.responseText</li>").slideDown('fast')
     false
 
   $('form').submit (evt) ->
     form = $(this).closest('form')
-    errors = $('#errors').html('')
+    errors = $('#errors')
     form.find('input').removeClass 'error'
 
     hasError = false
     highlightError = (selector, message, fn) ->
       invalid = form.find(selector).filter fn
       if invalid.length
+        if not hasError
+          errors.html ''
+          invalid.focus()
         errors.append "<li>#{message}</li>"
         invalid.addClass 'error'
-        invalid.blur()
         hasError = true
 
     highlightError 'input.email', 'Invalid email address', ->
@@ -65,9 +67,12 @@ $ ->
       val = $(this).val()
       val and val isnt @defaultValue and not /^https?:\/\/.*\./.test val
 
-    unless hasError
+    if hasError
+      errors.slideDown 'fast'
+    else
       $('input.url').each ->
         @value = '' if @value is @defaultValue
+
     not hasError
 
   $('.body.index .countdown').each ->
@@ -191,8 +196,8 @@ $ ->
     $errors = $form.find('#errors')
 
     # error was caught in the prior on submit
-    if $errors.find('li').length
-      $errors.slideDown()
+    if $errors.find('li').length > 0
+      $errors.slideDown('fast')
       return false
 
     $('<input type="hidden" name="hoverAt">').val(Stars.hoverAt).appendTo($form)
@@ -220,7 +225,7 @@ $ ->
         else
           errors = JSON.parse(xhr.responseText)
           $errors.html(errors.map((error) -> "<li>#{error}</li>").join("\n"))
-            .slideDown()
+            .slideDown('fast')
     false
 
   $('#your_vote').delegate '.vote.show .show a.change', 'click', ->

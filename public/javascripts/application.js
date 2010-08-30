@@ -20,7 +20,7 @@
       return confirm('Are you sure?');
     });
     $('a.reveal').click(function() {
-      $(this).hide().next('.hidden').slideDown(function() {
+      $(this).hide().next('.hidden').slideDown('fast', function() {
         return $(this).find('input').select();
       });
       return false;
@@ -48,22 +48,25 @@
         error: function(xhr) {
           return $('#errors').append("<li>" + xhr.responseText + "</li>");
         }
-      });
+      }).slideDown('fast');
       return false;
     });
     $('form').submit(function(evt) {
       var errors, form, hasError, highlightError;
       form = $(this).closest('form');
-      errors = $('#errors').html('');
+      errors = $('#errors');
       form.find('input').removeClass('error');
       hasError = false;
       highlightError = function(selector, message, fn) {
         var invalid;
         invalid = form.find(selector).filter(fn);
         if (invalid.length) {
+          if (!hasError) {
+            errors.html('');
+            invalid.focus();
+          }
           errors.append(("<li>" + (message) + "</li>"));
           invalid.addClass('error');
-          invalid.blur();
           return (hasError = true);
         }
       };
@@ -89,11 +92,11 @@
         val = $(this).val();
         return val && val !== this.defaultValue && !/^https?:\/\/.*\./.test(val);
       });
-      !(hasError) ? $('input.url').each(function() {
+      hasError ? errors.slideDown('fast') : $('input.url').each(function() {
         if (this.value === this.defaultValue) {
           return (this.value = '');
         }
-      }) : null;
+      });
       return !hasError;
     });
     $('.body.index .countdown').each(function() {
@@ -246,8 +249,8 @@
       var $errors, $form;
       $form = $(this);
       $errors = $form.find('#errors');
-      if ($errors.find('li').length) {
-        $errors.slideDown();
+      if ($errors.find('li').length > 0) {
+        $errors.slideDown('fast');
         return false;
       }
       $('<input type="hidden" name="hoverAt">').val(Stars.hoverAt).appendTo($form);
@@ -282,7 +285,7 @@
             errors = JSON.parse(xhr.responseText);
             return $errors.html(errors.map(function(error) {
               return "<li>" + (error) + "</li>";
-            }).join("\n")).slideDown();
+            }).join("\n")).slideDown('fast');
           }
         }
       });

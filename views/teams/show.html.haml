@@ -128,6 +128,7 @@
   .voter
     %h3 Your Vote
     != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
+    .note Email is required to confirm your vote. We don't spam.
   %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
     != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
     .tips
@@ -143,9 +144,6 @@
       - if (!ctx.currentPerson)
         .email_input
           %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.vote.email || '', placeholder: 'email@address.com' }
-            &nbsp;or
-            %a{ href: '/login?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Sign in
-          .note Required to confirm your vote. We don't spam.
       - if (ctx.currentPerson)
         .note.email_hidden
           Voting as

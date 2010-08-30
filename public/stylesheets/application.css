@@ -222,10 +222,19 @@ input.error {
       border: none; }
   #page h2, #page h3 {
     margin-bottom: 0px; }
-  #page ul#errors li {
-    color: #a80003;
-    font-weight: bold;
-    line-height: 150%; }
+  #page ul#errors {
+    display: none;
+    list-style-type: none;
+    background-color: #a80003;
+    color: #f6ffef;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0px 0px 0.5em;
+    padding: 5px 10px;
+    font-size: medium;
+    line-height: 150%;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px; }
   #page p, #page .body ul {
     line-height: 150%; }
   #page p.footnote {
@@ -536,9 +545,8 @@ aside#pullout {
     background-color: white;
     -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
-.body.teams-show .warning {
+.body.teams-show .note {
   clear: left;
-  color: #a80003;
   margin-top: 1em;
   font-size: small; }
 .body.teams-show hr {
@@ -710,8 +718,6 @@ aside#pullout {
   width: 97%; }
 #your_vote input.button {
   float: right; }
-#your_vote #errors {
-  display: none; }
 
 .clear {
   clear: both; }

@@ -1,4 +1,4 @@
-%ul#errors
+%ul#errors{ style: (ctx.errors && ctx.errors.length > 0) ? 'display:block' : '' }
   - if (ctx.errors)
     - each error in ctx.errors
       %li= error
