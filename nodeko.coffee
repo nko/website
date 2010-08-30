@@ -103,9 +103,10 @@ get /.*/, ->
 
 get '/', ->
   Team.count (error, teamCount) =>
+    @teamCount = teamCount
     Team.all { validDeploy: true }, { deep: false }, (error, teams) =>
       @teams = _.shuffle(teams).slice(0, 10)
-      @teamCount = teamCount
+      @entryCount = teams.length
       @render 'index.html.haml'
 
 get '/me', ->
