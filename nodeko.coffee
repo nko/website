@@ -203,6 +203,7 @@ put '/teams/:id', ->
   Team.fromParam @req.param('id'), (error, team) =>
     @ensurePermitted team, =>
       team.update @req.body
+      team.validDeploy = @req.body.validDeploy?
       save = =>
         team.save (errors, result) =>
           if errors?
