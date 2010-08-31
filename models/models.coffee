@@ -99,8 +99,52 @@ class Team
   generateDeploySlugs: ->
     @joyentSlug or= @slug.replace(/^(\d)/, 'ko-$1').replace(/_/g, '-').substring(0, 30)
     @herokuSlug or= 'nko-' + @slug.replace(/_/g, '-').substring(0, 26)
-
 nko.Team = Team
+
+class ScoreCalculator
+  calculate: (fn) ->
+    @select => @merge fn
+
+  select: (fn) ->
+    threads = 4
+    @where { confirmed: false }, (error, unconfirmed) =>
+      @unconfirmed = unconfirmed
+      fn() if --threads is 0
+    @where { confirmed: true }, (error, confirmed) =>
+      @confirmed = confirmed
+      fn() if --threads is 0
+
+    Person.all { type: 'Judge' }, (error, judges) =>
+      judge_ids = _.pluck(judges, '_id');
+      @where { 'person._id': { $in: judge_ids }}, (error, judged) =>
+        @judged = judged
+        fn() if --threads is 0
+
+  merge: (fn) ->
+    scores = {}
+    for type in ['unconfirmed', 'confirmed', 'judged']
+      for score in this[type]
+        scores[score['team._id']] ||= {}
+        scores[score['team._id']][type] = score
+    fn(scores)
+
+  where: (cond, fn) ->
+    Vote.group {
+      cond: cond
+      keys: ['team._id']
+      initial: { popularity: 0, utility: 0, design: 0, innovation: 0, completeness: 0 }
+      reduce: (row, memo) ->
+        memo.popularity += 1
+        for dimension in ['utility', 'design', 'innovation', 'completeness']
+          memo[dimension] += parseInt row[dimension]
+      }, fn
+
+_.extend ScoreCalculator, {
+  calculate: (fn) ->
+    (new ScoreCalculator).calculate fn
+}
+
+nko.ScoreCalculator = ScoreCalculator
 
 class Person
   constructor: (options) ->

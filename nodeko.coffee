@@ -7,7 +7,7 @@ connect = require 'connect'
 express = require 'express'
 
 models = require './models/models'
-[Team, Person, Vote] = [models.Team, models.Person, models.Vote]
+[Team, Person, Vote, ScoreCalculator] = [models.Team, models.Person, models.Vote, models.ScoreCalculator]
 
 pub = __dirname + '/public'
 app = express.createServer(
@@ -129,6 +129,15 @@ get '/register', ->
 
 get '/error', ->
   throw new Error('Foo')
+
+get '/scores', ->
+  ScoreCalculator.calculate (scores) =>
+    Team.all (error, teams) =>
+      for team in teams
+        team.score = scores[team.id()]
+      sys.log sys.inspect teams
+      @teams = teams
+      @render 'teams/scores.html.haml'
 
 # list teams
 get '/teams', ->

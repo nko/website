@@ -113,6 +113,11 @@ _.extend Mongo,
         return fn error if error?
         collection.update Mongo.queryify(query), cmd, {upsert: false, multi: true}, fn
 
+    group: (opts, fn) ->
+      @prototype.collection (error, collection) ->
+        return fn error if error?
+        collection.group(opts.keys, opts.cond, (opts.initial || {}), opts.reduce, true, fn)
+
   InstanceMethods:
     collection: (fn) ->
       Mongo.db.collection @serializer.name, fn
