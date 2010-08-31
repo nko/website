@@ -324,6 +324,7 @@ class Vote
           return fn error if error?
           @person.welcomeVoter fn
     else
+      @confirmed = !! @person?.confirmed
       if @isNew()
         @checkDuplicate fn
       else
