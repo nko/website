@@ -132,12 +132,12 @@ get '/error', ->
 
 get '/scores', ->
   ScoreCalculator.calculate (scores) =>
-    Team.all (error, teams) =>
+    Team.all { validDeploy: true }, { deep: false }, (error, teams) =>
       for team in teams
         team.score = scores[team.id()]
-      sys.log sys.inspect teams
       @teams = teams
-      @render 'teams/scores.html.haml'
+      @teams.sort (a, b) -> (b?.score?.overall || 0) - (a?.score?.overall || 0)
+      @render 'scores.html.haml'
 
 # list teams
 get '/teams', ->

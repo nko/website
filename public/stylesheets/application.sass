@@ -702,5 +702,26 @@ aside#pullout
   input.button
     :float right
 
+.body.scores
+  table
+    :border-collapse collapse
+    :table-layout fixed
+    td, th
+      :margin 0px
+      :width 15%
+    th
+      :font-size small
+      :overflow hidden
+      :text-overflow ellipsis
+    th
+      :text-align center
+    td
+      :text-align right
+    tr *:first-child
+      :text-align left
+    tr.final td
+      :border-top 1px solid black
+      :padding-bottom 1em
+
 .clear
   :clear both

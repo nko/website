@@ -103,10 +103,21 @@ nko.Team = Team
 
 class ScoreCalculator
   calculate: (fn) ->
-    @select => @merge fn
+    @select =>
+      @merge()
+      @zero()
+      @calcConfirmed()
+      @average()
+      @calcFinal()
+      @calcPopularity()
+      @calcOverall()
+      fn @scores
 
   select: (fn) ->
     threads = 4
+    @where {}, (error, all) =>
+      @all = all
+      fn() if --threads is 0
     @where { confirmed: false }, (error, unconfirmed) =>
       @unconfirmed = unconfirmed
       fn() if --threads is 0
@@ -120,24 +131,70 @@ class ScoreCalculator
         @judged = judged
         fn() if --threads is 0
 
-  merge: (fn) ->
-    scores = {}
-    for type in ['unconfirmed', 'confirmed', 'judged']
+  merge: ->
+    @scores = {}
+    for type in @types
       for score in this[type]
-        scores[score['team._id']] ||= {}
-        scores[score['team._id']][type] = score
-    fn(scores)
+        @scores[score['team._id']] ||= {}
+        @scores[score['team._id']][type] = score
+
+  zero: ->
+    for k, score of @scores
+      for type in @types
+        score[type] ?= {}
+        for dimension in @dimensions
+          score[type][dimension] ?= 0
+
+  calcConfirmed: ->
+    for k, score of @scores
+      for dimension in @dimensions
+        score.confirmed[dimension] -= score.judged[dimension]
+
+  average: ->
+    for k, score of @scores
+      for type in @types
+        for dimension in @dimensions[0..3]
+          score[type][dimension] = score[type][dimension] / score[type].popularity
+
+  calcFinal: ->
+    for k, score of @scores
+      score.final = {}
+      for dimension in @dimensions[0..3]
+        score.final[dimension] = (score.confirmed[dimension] || 0) + (score.judged[dimension] || 0)
+
+  calcPopularity: (scores) ->
+    popularities = for k, score of @scores
+      { key: k, popularity: (score.confirmed?.popularity || 0) }
+    popularities.sort (a, b) -> b.popularity - a.popularity
+
+    rank = popularities.length
+    for popularity in popularities
+      score = @scores[popularity.key]
+      score.final.popularity = 2 + 8 * (rank-- / popularities.length)
+
+  calcOverall: ->
+    for k, score of @scores
+      score.overall = 0
+      for dimension in @dimensions
+        score.overall += score.final[dimension]
 
   where: (cond, fn) ->
+    initial = {}
+    for k in @dimensions
+      initial[k] = 0
     Vote.group {
       cond: cond
       keys: ['team._id']
-      initial: { popularity: 0, utility: 0, design: 0, innovation: 0, completeness: 0 }
+      initial: initial
       reduce: (row, memo) ->
         memo.popularity += 1
+        # must be hard coded (passed as a string to mongo)
         for dimension in ['utility', 'design', 'innovation', 'completeness']
           memo[dimension] += parseInt row[dimension]
       }, fn
+
+  dimensions: ['utility', 'design', 'innovation', 'completeness', 'popularity']
+  types: ['unconfirmed', 'confirmed', 'judged', 'all']
 
 _.extend ScoreCalculator, {
   calculate: (fn) ->
