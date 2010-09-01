@@ -257,7 +257,7 @@ $ ->
   $('.votes-new .stars, #your_vote .stars').each -> Stars.highlight $(this)
 
   $('.votes').delegate 'a.reply', 'click', ->
-    $.scrollTo($($(this).attr('href')).slideDown('fast'), { offset: { top: -100 }});
+    $.scrollTo($($(this).attr('href')).slideDown('fast'), { offset: { top: -50 }});
     false
 
   $('.votes').delegate '.reply form', 'submit', (e) ->

@@ -312,6 +312,7 @@ post '/teams/:teamId/votes/:voteId/replies', ->
             @res.send JSON.stringify(errors), 400
           else
             vote.replies.push @reply
+            vote.notifyPeopleAboutReply @reply
             @render 'partials/replies/reply.html.jade', { locals: { reply: @reply, vote: vote, ctx: this }, layout: false }
 
 # list votes

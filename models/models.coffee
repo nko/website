@@ -294,6 +294,21 @@ class Person
       http://nodeknockout.com/
       """, fn
 
+  notifyAboutReply: (vote, reply, fn) ->
+    @sendEmail "#{reply.person.name} Replied to your Node.js Knockout Vote", """
+      Hi,
+
+      #{reply.person.name} replied to #{if @id() is vote.person.id() then 'your' else 'a'} vote for #{vote.team.name}, writing:
+
+      "#{reply.body}"
+
+      You can respond at: http://nodeknockout.com/teams/#{vote.team.toParam()}##{vote.id()}
+
+      Thanks!
+      The Node.js Knockout Organizers
+      http://nodeknockout.com/
+      """
+
   sendEmail: (subject, message, fn) ->
     http.post 'http://www.postalgone.com/mail',
       { sender: '"Node.js Knockout" <mail@nodeknockout.com>',
@@ -454,6 +469,12 @@ class Vote
     @replies ||= []
     for reply in @replies
       reply.person = pool[reply.person.id()]
+
+  notifyPeopleAboutReply: (reply) ->
+    for m in @team.members when m.id() isnt reply.person.id()
+      m.notifyAboutReply this, reply, ->
+    if reply.person.id() isnt @person.id()
+      @person.notifyAboutReply this, reply, ->
 
   validate: ->
     errors = []

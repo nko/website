@@ -336,7 +336,7 @@
     $('.votes').delegate('a.reply', 'click', function() {
       $.scrollTo($($(this).attr('href')).slideDown('fast'), {
         offset: {
-          top: -100
+          top: -50
         }
       });
       return false;
