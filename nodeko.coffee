@@ -104,9 +104,8 @@ get /.*/, ->
 get '/', ->
   Team.count (error, teamCount) =>
     @teamCount = teamCount
-    Team.all { validDeploy: true }, { deep: false }, (error, teams) =>
-      @teams = _.shuffle(teams).slice(0, 10)
-      @entryCount = teams.length
+    Team.all { validDeploy: true }, { deep: false, sort: [['score.overall', -1]], limit: 10 }, (error, teams) =>
+      @teams = teams
       @render 'index.html.haml'
 
 get '/me', ->
@@ -131,9 +130,8 @@ get '/error', ->
   throw new Error('Foo')
 
 get '/scores', ->
-  Team.all { validDeploy: true }, { deep: false }, (error, teams) =>
+  Team.all { validDeploy: true }, { deep: false, sort: [['score.overall', -1]] }, (error, teams) =>
     @teams = teams
-    @teams.sort (a, b) -> (b?.score?.overall || 0) - (a?.score?.overall || 0)
     @render 'scores.html.haml'
 
 post '/scores/refresh', ->
@@ -151,8 +149,8 @@ post '/scores/refresh', ->
 # list teams
 get '/teams', ->
   q = if @req.param('invalid') then { url: /\w/, validDeploy: false } else { validDeploy: true }
-  Team.all q, { deep: false }, (error, teams) =>
-    @teams = _.shuffle teams
+  Team.all q, { deep: false, sort: [['score.overall', -1]] }, (error, teams) =>
+    @teams = teams
     @render 'teams/index.html.haml'
 
 # new team

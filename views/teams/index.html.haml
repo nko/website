@@ -1,8 +1,6 @@
-%h1 Entries
-%p
-  These are the entries that have been verified. A full list of teams that
-  participated will appear after voting has finished. Entries are currently
-  sorted randomly.
+%h1 Leaderboard
+
+.note Ranked by overall score.
 
 - if ('yourTeams' in ctx && ctx.yourTeams.length > 0)
   - each team in ctx.yourTeams
@@ -24,3 +22,7 @@
         %a{ href: '/teams/' + team.toParam() }= team.name
         %span.invited
           = pluralize(team.invited.length, ' oustanding invite')
+
+%p.note
+  These are the entries that have been verified. A full list of teams that
+  participated will appear after voting has finished.

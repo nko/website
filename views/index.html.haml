@@ -1,15 +1,19 @@
-%h1 Voting
-%p
-  Some amazing projects were completed for Node.js Knockout.
+%p.note
+  Voting is open and will continue until
+  != ' <time datetime="2010-09-02T23:59:59Z">23:59 UTC on Thursday, September 2</time>. '
+  Winners will be announced at the end of the week.
+
 %h3#date
   %a.button.important{ href: '/teams' } Vote now &raquo;
   .about.countdown &nbsp;
+
+%h1 Current Top 10
+%ul.teams
+  - each team in ctx.teams
+    %li!= partial('teams/application.html.haml', { locals: { team: team, ctx: ctx } })
 %p
-  Voting is open and will continue until
-  != ' <time datetime="2010-09-02T23:59:59Z">23:59 UTC on Thursday, September 2</time>. '
-  Enjoy the entries, and don&rsquo;t forget to cast your vote.
-%p
-  Winners will be announced at the end of the week.
+  != 'Make sure to check out <a href="/teams">the full list</a> and vote!'
+
 %h1 What
 %p
   Node.js Knockout is a 48-hour coding contest using
@@ -20,13 +24,3 @@
   teams
   %a{ href: '/locations' } around the world
   wrote code between August 28 &amp; 29, 2010 UTC.
-  = ' ' + ctx.entryCount + ' '
-  entries have been submitted for voting.
-%h1 Entries
-%p
-  Here are a few random entries from this weekend. Make sure to check out
-  != ' <a href="/teams">the full list</a>.'
-
-%ul.teams
-  - each team in ctx.teams
-    %li!= partial('teams/application.html.haml', { locals: { team: team, ctx: ctx } })
