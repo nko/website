@@ -1,4 +1,4 @@
-.ribbon, .localtime {
+.ribbon, .localtime, .body h1 {
   background: transparent;
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCBBDB70,endColorstr=#CCBBDB70)";
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCBBDB70,endColorstr=#CCBBDB70);

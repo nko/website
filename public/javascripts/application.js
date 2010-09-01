@@ -113,7 +113,7 @@
           hours = Math.floor(diff % 86400 / 3600);
           minutes = Math.floor(diff % 3600 / 60);
           secs = Math.floor(diff % 60);
-          countdown.html((days > 0 ? days + ' days ' : '') + (hours > 0 ? hours + ' hours ' : '') + (minutes > 0 || hours > 0 ? minutes + ' minutes ' : minutes) + secs + ' seconds' + ' left');
+          countdown.html((days > 0 ? days + ' day ' : '') + (hours > 0 ? hours + ' hours ' : '') + (minutes > 0 || hours > 0 ? minutes + ' minutes ' : minutes) + secs + ' seconds' + ' left');
           return setTimeout(tick, 1000);
         }
       };
@@ -283,7 +283,7 @@
             return (window.location = ("/login?email=" + (email) + "&return_to=" + (path)));
           } else {
             errors = JSON.parse(xhr.responseText);
-            return $errors.html(errors.map(function(error) {
+            return $errors.html(_.map(errors, function(error) {
               return "<li>" + (error) + "</li>";
             }).join("\n")).slideDown('fast');
           }
@@ -308,16 +308,19 @@
       }
     });
     $('.teams-show #your_vote').each(function() {
-      var _a, _b, _c, draft, el, hash;
+      var _a, _b, _c, _d, draft, el, hash;
+      if (!((typeof (_a = window.localStorage) !== "undefined" && _a !== null))) {
+        return null;
+      }
       hash = window.location.hash;
       draft = window.localStorage == undefined ? undefined : window.localStorage.draft;
       try {
         if (!(draft && (hash === '#save' || hash === '#draft'))) {
           return null;
         }
-        _b = JSON.parse(draft);
-        for (_a = 0, _c = _b.length; _a < _c; _a++) {
-          el = _b[_a];
+        _c = JSON.parse(draft);
+        for (_b = 0, _d = _c.length; _b < _d; _b++) {
+          el = _c[_b];
           $(this[el.name]).val(el.value);
         }
         if (window.location.hash === '#save') {
@@ -325,7 +328,7 @@
           return $('#your_vote').submit();
         }
       } finally {
-        delete localStorage.draft;
+        localStorage.draft = null;
       }
     });
     return $('.votes-new .stars, #your_vote .stars').each(function() {
