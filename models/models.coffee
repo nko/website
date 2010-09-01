@@ -479,6 +479,7 @@ _.extend Vote, {
       teamHash = _.inject teams, {}, ((memo, team) -> memo[team._id.id] = team; memo)
       for vote in votes
         vote.team = teamHash[vote.team._id.id]
+        vote.instantiateReplyers()
       fn null, teams
 }
 
