@@ -196,8 +196,7 @@ $ ->
     $errors = $form.find('#errors')
 
     # error was caught in the prior on submit
-    if $errors.find('li').length > 0
-      $errors.slideDown('fast')
+    if (e.isPropagationStopped())
       return false
 
     $('<input type="hidden" name="hoverAt">').val(Stars.hoverAt).appendTo($form)
