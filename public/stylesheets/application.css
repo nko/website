@@ -240,12 +240,6 @@ input.error {
   #page p.footnote {
     text-align: center;
     font-size: small; }
-  #page span.large {
-    display: inline-block;
-    padding: 15px;
-    font-size: x-large;
-    font-weight: bold;
-    color: #a80003; }
   #page .hidden {
     display: none; }
   #page footer {
@@ -745,20 +739,21 @@ aside#pullout {
 #your_vote input.button {
   float: right; }
 
+.body.scores h3 {
+  color: #a80003;
+  margin: 0.5em 0px !important; }
 .body.scores table {
   border-collapse: collapse;
   table-layout: fixed; }
   .body.scores table td, .body.scores table th {
     margin: 0px;
-    width: 15%; }
+    width: 15%;
+    text-align: right; }
   .body.scores table th {
     font-size: small;
     overflow: hidden;
-    text-overflow: ellipsis; }
-  .body.scores table th {
-    text-align: center; }
-  .body.scores table td {
-    text-align: right; }
+    text-overflow: ellipsis;
+    vertical-align: bottom; }
   .body.scores table tr *:first-child {
     text-align: left; }
   .body.scores table tr.final td {

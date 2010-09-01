@@ -6,21 +6,23 @@
   The actual implementation of scoring is
   != ' <a href="http://github.com/nko/website/blob/master/models/models.coffee#L105">available on GitHub</a>.'
 
-%p.note
-  %span.large These results are preliminary.
+%h3 These results are preliminary.
 
 %table
   - each team in ctx.teams
     %tr
       %th
         %a{ href: '/teams/' + team.toParam(), id: team.slug }= team.name
-      - each dimension in ['Utility', 'Design', 'Innovation', 'Completeness', 'Count / Popularity']
+      - each dimension in ['Overall', 'Utility', 'Design', 'Innovation', 'Completeness', 'Count / Popularity']
         %th= dimension
     - if (team.score)
       - each type in ['All', 'Unconfirmed', 'Confirmed', 'Judged', 'Final']
         -if (team.score[type.toLowerCase()])
           %tr{ 'class': type.toLowerCase() }
             %td= type
+            %td
+              - if (type === 'Final')
+                = (team.score.overall / 5).toFixed(2)
             - each dimension in ['utility', 'design', 'innovation', 'completeness', 'popularity']
               - score = team.score[type.toLowerCase()][dimension]
                 - if (isNaN(score))
