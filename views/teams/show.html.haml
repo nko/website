@@ -68,10 +68,11 @@
       %a{ href: ctx.team.url }
         %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url + '/#' + ctx.team.lastDeployedHead) + '&out-format=png&resize=160x93' : '/images/blank.png' }
     .description
-      .score
-        %a{ href: '/scores#' + ctx.team.slug }
-          %h2= (ctx.team.score.overall / 5).toFixed(2)
-          %h6 score
+      - if (ctx.team.score)
+        .score
+          %a{ href: '/scores#' + ctx.team.slug }
+            %h2= (ctx.team.score.overall / 5).toFixed(2)
+            %h6 score
       %h2
         %a{ href: ctx.team.url }= ctx.team.application
       %h4= 'by ' + ctx.team.name
