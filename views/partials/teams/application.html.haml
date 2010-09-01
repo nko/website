@@ -5,10 +5,11 @@
     .vote
       %a.button.important{ href: '/teams/' + team.toParam() + '#your_vote' } Vote &raquo;
   .description
-    .score
-      %a{ href: '/scores#' + team.slug }
-        %h2= (team.score.overall / 5).toFixed(2)
-        %h6 score
+    - if (team.score)
+      .score
+        %a{ href: '/scores#' + team.slug }
+          %h2= (team.score.overall / 5).toFixed(2)
+          %h6 score
     %h2
       %a{ href: team.url }= team.application
     %h4
