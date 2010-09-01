@@ -453,7 +453,7 @@ class Vote
 
   looksFishy: ->
     (!@userAgent or
-      !(parseURL(@referer).hostname in ['nodeknockout.com', 'localhost', 'knockout.no.de']) or
+      !(parseURL(@referer).hostname in ['nodeknockout.com', 'localhost', 'knockout.no.de', 'pulp.local']) or
       !(@requestAt < @responseAt) or !(@renderAt < @hoverAt))
 
 _.extend Vote, {

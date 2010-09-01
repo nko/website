@@ -224,7 +224,7 @@ $ ->
           window.location = "/login?email=#{email}&return_to=#{path}"
         else
           errors = JSON.parse(xhr.responseText)
-          $errors.html(errors.map((error) -> "<li>#{error}</li>").join("\n"))
+          $errors.html(_.map(errors, (error) -> "<li>#{error}</li>").join("\n"))
             .slideDown('fast')
     false
 
@@ -243,6 +243,8 @@ $ ->
       tips.filter('.' + $(this).parent().attr('for')).show()
 
   $('.teams-show #your_vote').each ->
+    return unless window.localStorage?
+
     hash = window.location.hash
     draft = window.localStorage?.draft
     try
@@ -252,5 +254,5 @@ $ ->
         Stars.hoverAt or= +new Date()
         $('#your_vote').submit()
     finally
-      delete localStorage.draft
+      localStorage.draft = null
   $('.votes-new .stars, #your_vote .stars').each -> Stars.highlight $(this)
