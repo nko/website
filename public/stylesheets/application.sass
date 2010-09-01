@@ -722,15 +722,20 @@ aside#pullout
     :table-layout fixed
     td, th
       :margin 0px
-      :width 15%
+      :width 13%
       :text-align right
+      :padding 2px 0px
+      :vertical-align bottom
     th
       :font-size small
+      :font-weight normal
       :overflow hidden
       :text-overflow ellipsis
-      :vertical-align bottom
+    tr.all, tr.unconfirmed
+      :color #ccc
     tr *:first-child
       :text-align left
+      :width 20%
     tr.final td
       :border-top 1px solid black
       :padding-bottom 1em

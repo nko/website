@@ -11,9 +11,9 @@
 %table
   - each team in ctx.teams
     %tr
-      %th
+      %td
         %a{ href: '/teams/' + team.toParam(), id: team.slug }= team.name
-      - each dimension in ['Overall', 'Utility', 'Design', 'Innovation', 'Completeness', 'Count / Popularity']
+      - each dimension in ['Overall', 'Utility', 'Design', 'Innovation', 'Complete', 'Count / Popularity']
         %th= dimension
     - if (team.score)
       - each type in ['All', 'Unconfirmed', 'Confirmed', 'Judged', 'Final']
@@ -22,7 +22,7 @@
             %td= type
             %td
               - if (type === 'Final')
-                = (team.score.overall / 5).toFixed(2)
+                %strong= (team.score.overall / 5).toFixed(2)
             - each dimension in ['utility', 'design', 'innovation', 'completeness', 'popularity']
               - score = team.score[type.toLowerCase()][dimension]
                 - if (isNaN(score))

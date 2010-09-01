@@ -747,15 +747,20 @@ aside#pullout {
   table-layout: fixed; }
   .body.scores table td, .body.scores table th {
     margin: 0px;
-    width: 15%;
-    text-align: right; }
+    width: 13%;
+    text-align: right;
+    padding: 2px 0px;
+    vertical-align: bottom; }
   .body.scores table th {
     font-size: small;
+    font-weight: normal;
     overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: bottom; }
+    text-overflow: ellipsis; }
+  .body.scores table tr.all, .body.scores table tr.unconfirmed {
+    color: #cccccc; }
   .body.scores table tr *:first-child {
-    text-align: left; }
+    text-align: left;
+    width: 20%; }
   .body.scores table tr.final td {
     border-top: 1px solid black;
     padding-bottom: 1em; }
