@@ -75,8 +75,7 @@ request = (type) ->
               team.hasMember(@currentPerson) or @isAdmin
           canReplyTo: (vote) ->
             return false unless @currentPerson?
-            @canEditTeam(vote.team) or
-              (vote.person.id() is @currentPerson.id())
+            vote.team.hasMember(@currentPerson) or (vote.person.id() is @currentPerson.id())
           ensurePermitted: (other, fn) ->
             permitted = @isAdmin
             if other.hasMember?
@@ -274,6 +273,7 @@ saveVote = ->
     else
       # TODO flash "You are now logged into Node Knockout as #{@vote.email}."
       @setCurrentPerson @vote.person if @vote.person? and !@currentPerson?
+      @vote.instantiateReplyers()
       @votes = [@vote]
       @render 'partials/votes/index.html.jade', { layout: false }
 
@@ -294,6 +294,7 @@ put '/teams/:teamId/votes/:voteId', ->
       @ensurePermitted vote, =>
         @noHeader = true
         @vote = vote
+        @vote.team = team
         vote.update @req.body
         saveVote.call(this)
 
@@ -301,6 +302,7 @@ post '/teams/:teamId/votes/:voteId/replies', ->
   Team.fromParam @req.param('teamId'), (error, team) =>
     Vote.fromParam @req.param('voteId'), (error, vote) =>
       vote.team = team
+      vote.instantiateReplyers()
       unless @canReplyTo(vote)
         return @res.send 'Unauthorized: only the voter and team members may comment on a vote.', 403
       else
@@ -309,7 +311,8 @@ post '/teams/:teamId/votes/:voteId/replies', ->
           if errors?
             @res.send JSON.stringify(errors), 400
           else
-            @render 'partials/replies/reply.html.jade', { locals: { reply: @reply }, layout: false }
+            vote.replies.push @reply
+            @render 'partials/replies/reply.html.jade', { locals: { reply: @reply, vote: vote, ctx: this }, layout: false }
 
 # list votes
 get '/teams/:teamId/votes', ->

@@ -333,7 +333,15 @@
     $('.votes-new .stars, #your_vote .stars').each(function() {
       return Stars.highlight($(this));
     });
-    return $('.reply form').submit(function(e) {
+    $('.votes').delegate('a.reply', 'click', function() {
+      $.scrollTo($($(this).attr('href')).slideDown('fast'), {
+        offset: {
+          top: -100
+        }
+      });
+      return false;
+    });
+    return $('.votes').delegate('.reply form', 'submit', function(e) {
       var $errors, $form;
       $form = $(this);
       $errors = $form.find('.errors');
@@ -345,7 +353,7 @@
           return $form.find(':input').attr('disabled', false);
         },
         success: function(data) {
-          return $form.prev('ul.replies').append($(data));
+          return $form.slideUp('fast').prev('ul.replies').append($(data)).end().find('textarea').val('');
         },
         error: function(xhr) {
           var errors;

@@ -256,7 +256,11 @@ $ ->
       localStorage.draft = null
   $('.votes-new .stars, #your_vote .stars').each -> Stars.highlight $(this)
 
-  $('.reply form').submit (e) ->
+  $('.votes').delegate 'a.reply', 'click', ->
+    $.scrollTo($($(this).attr('href')).slideDown('fast'), { offset: { top: -100 }});
+    false
+
+  $('.votes').delegate '.reply form', 'submit', (e) ->
     $form = $(this)
     $errors = $form.find('.errors')
 
@@ -264,7 +268,8 @@ $ ->
       beforeSend: -> $form.find(':input').attr('disabled', true)
       complete: -> $form.find(':input').attr('disabled', false)
       success: (data) ->
-        $form.prev('ul.replies').append($(data))
+        $form.slideUp('fast').prev('ul.replies').append($(data)).end()
+          .find('textarea').val('')
       error: (xhr) ->
         errors = JSON.parse(xhr.responseText)
         $errors.html(_.map(errors, (error) -> "<li>#{error}</li>").join("\n"))

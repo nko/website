@@ -1,8 +1,12 @@
-li
+li( 'class': reply.person.type + ' small')
+  .reply= reply.body
   .replyer
-    != gravatar(reply.person, 50)
     a( href: '/people/' + reply.person.toParam() )
       = reply.person.displayName()
-    .details
-      .type= reply.person.type
-  .reply= reply.body
+    | 
+    time( datetime: reply.createdAt.toISOString() )
+    | 
+    - if (ctx.canReplyTo(vote))
+      - replyAnchor = '#reply-' + vote.id()
+      a.reply( href: replyAnchor ) reply
+

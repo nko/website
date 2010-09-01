@@ -5,6 +5,10 @@
   != gravatar({email: ''}, 50)
 .details
   .type= vote.person ? vote.person.type : 'Public'
-  %time{ datetime: vote.createdAt.toISOString() }
   .remote= vote.remoteAddress.replace(/\d+\.\d+/, '*.*')
+  %time{ datetime: vote.createdAt.toISOString() }
+  - if (typeof(hideReply) === 'undefined' && ctx.canReplyTo(vote))
+    - replyAnchor = '#reply-' + vote.id()
+    %a.reply{ href: replyAnchor }
+      Reply
 .clear

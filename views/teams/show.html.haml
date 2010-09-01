@@ -131,7 +131,7 @@
   != partial("errors.html.haml", { locals: { ctx: ctx } })
   .voter
     %h3 Your Vote
-    != partial('votes/voter.html.haml', { locals: { vote: ctx.vote }})
+    != partial('votes/voter.html.haml', { locals: { vote: ctx.vote, ctx: ctx, hideReply: true }})
     .note Email is required to confirm your vote. We don't spam.
   %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
     != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})

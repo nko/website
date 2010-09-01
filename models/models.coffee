@@ -451,6 +451,7 @@ class Vote
   instantiateReplyers: ->
     pool = _.inject @team.members, {}, ((memo, person) -> memo[person.id()] = person; memo)
     pool[@person.id()] = @person
+    @replies ||= []
     for reply in @replies
       reply.person = pool[reply.person.id()]
 

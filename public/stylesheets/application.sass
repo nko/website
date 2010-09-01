@@ -553,7 +553,17 @@ aside#pullout
   .votes
     :list-style-type none
     :padding-left 0px
-  .votes li, #your_vote
+    ul.replies
+      :margin 0px
+      :padding 0px 0px 0px 0.5em
+      :list-style-type none
+    .reply form
+      :display none
+      textarea
+        :font-size medium
+        :display block
+        :width 40em
+  .votes li, #your_vote, .replies li
     +box
     :margin 0.5em 0px 0.5em -10px
     :padding-left 8px
@@ -603,7 +613,9 @@ aside#pullout
       :margin 0px 0px 0px -10px
       label
         :display none
-      .voter
+      .voter .details .reply
+        :display none
+      .voter, .replyer
         :font-size x-small
         :line-height inherit
         img
@@ -713,6 +725,8 @@ aside#pullout
     :width 97%
   input.button
     :float right
+  .details .reply
+    :display none
 
 .body.scores
   h3

@@ -575,7 +575,17 @@ aside#pullout {
 .body.teams-show .votes, .body.people-show .votes {
   list-style-type: none;
   padding-left: 0px; }
-.body.teams-show .votes li, .body.teams-show #your_vote, .body.people-show .votes li, .body.people-show #your_vote {
+  .body.teams-show .votes ul.replies, .body.people-show .votes ul.replies {
+    margin: 0px;
+    padding: 0px 0px 0px 0.5em;
+    list-style-type: none; }
+  .body.teams-show .votes .reply form, .body.people-show .votes .reply form {
+    display: none; }
+    .body.teams-show .votes .reply form textarea, .body.people-show .votes .reply form textarea {
+      font-size: medium;
+      display: block;
+      width: 40em; }
+.body.teams-show .votes li, .body.teams-show #your_vote, .body.teams-show .replies li, .body.people-show .votes li, .body.people-show #your_vote, .body.people-show .replies li {
   background-color: white;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 10px;
@@ -586,21 +596,21 @@ aside#pullout {
   margin: 0.5em 0px 0.5em -10px;
   padding-left: 8px;
   border-left: solid 2px transparent; }
-  .body.teams-show .votes li.Participant, .body.teams-show #your_vote.Participant, .body.people-show .votes li.Participant, .body.people-show #your_vote.Participant {
+  .body.teams-show .votes li.Participant, .body.teams-show #your_vote.Participant, .body.teams-show .replies li.Participant, .body.people-show .votes li.Participant, .body.people-show #your_vote.Participant, .body.people-show .replies li.Participant {
     border-left-color: #7e9699; }
-    .body.teams-show .votes li.Participant .type, .body.teams-show #your_vote.Participant .type, .body.people-show .votes li.Participant .type, .body.people-show #your_vote.Participant .type {
+    .body.teams-show .votes li.Participant .type, .body.teams-show #your_vote.Participant .type, .body.teams-show .replies li.Participant .type, .body.people-show .votes li.Participant .type, .body.people-show #your_vote.Participant .type, .body.people-show .replies li.Participant .type {
       color: #7e9699; }
-  .body.teams-show .votes li.Judge, .body.teams-show #your_vote.Judge, .body.people-show .votes li.Judge, .body.people-show #your_vote.Judge {
+  .body.teams-show .votes li.Judge, .body.teams-show #your_vote.Judge, .body.teams-show .replies li.Judge, .body.people-show .votes li.Judge, .body.people-show #your_vote.Judge, .body.people-show .replies li.Judge {
     border-left-color: #bbdb70; }
-    .body.teams-show .votes li.Judge .type, .body.teams-show #your_vote.Judge .type, .body.people-show .votes li.Judge .type, .body.people-show #your_vote.Judge .type {
+    .body.teams-show .votes li.Judge .type, .body.teams-show #your_vote.Judge .type, .body.teams-show .replies li.Judge .type, .body.people-show .votes li.Judge .type, .body.people-show #your_vote.Judge .type, .body.people-show .replies li.Judge .type {
       color: #bbdb70; }
-  .body.teams-show .votes li .voter, .body.teams-show #your_vote .voter, .body.people-show .votes li .voter, .body.people-show #your_vote .voter {
+  .body.teams-show .votes li .voter, .body.teams-show #your_vote .voter, .body.teams-show .replies li .voter, .body.people-show .votes li .voter, .body.people-show #your_vote .voter, .body.people-show .replies li .voter {
     float: left;
     width: 170px;
     line-height: 125%; }
-    .body.teams-show .votes li .voter h3, .body.teams-show #your_vote .voter h3, .body.people-show .votes li .voter h3, .body.people-show #your_vote .voter h3 {
+    .body.teams-show .votes li .voter h3, .body.teams-show #your_vote .voter h3, .body.teams-show .replies li .voter h3, .body.people-show .votes li .voter h3, .body.people-show #your_vote .voter h3, .body.people-show .replies li .voter h3 {
       margin: 0px 0px 1em; }
-    .body.teams-show .votes li .voter img, .body.teams-show #your_vote .voter img, .body.people-show .votes li .voter img, .body.people-show #your_vote .voter img {
+    .body.teams-show .votes li .voter img, .body.teams-show #your_vote .voter img, .body.teams-show .replies li .voter img, .body.people-show .votes li .voter img, .body.people-show #your_vote .voter img, .body.people-show .replies li .voter img {
       float: left;
       margin-right: 5px;
       margin-bottom: 10px;
@@ -608,44 +618,46 @@ aside#pullout {
       width: 50px;
       -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
       -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
-    .body.teams-show .votes li .voter .details, .body.teams-show #your_vote .voter .details, .body.people-show .votes li .voter .details, .body.people-show #your_vote .voter .details {
+    .body.teams-show .votes li .voter .details, .body.teams-show #your_vote .voter .details, .body.teams-show .replies li .voter .details, .body.people-show .votes li .voter .details, .body.people-show #your_vote .voter .details, .body.people-show .replies li .voter .details {
       font-size: small;
       font-style: italic;
       line-height: 125%;
       color: rgba(0, 0, 0, 0.4);
       margin: 0.5em 0px 0px 59px; }
-    .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time, .body.people-show .votes li .voter time, .body.people-show #your_vote .voter time {
+    .body.teams-show .votes li .voter time, .body.teams-show #your_vote .voter time, .body.teams-show .replies li .voter time, .body.people-show .votes li .voter time, .body.people-show #your_vote .voter time, .body.people-show .replies li .voter time {
       display: block; }
-  .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote, .body.people-show .votes li .vote, .body.people-show #your_vote .vote {
+  .body.teams-show .votes li .vote, .body.teams-show #your_vote .vote, .body.teams-show .replies li .vote, .body.people-show .votes li .vote, .body.people-show #your_vote .vote, .body.people-show .replies li .vote {
     margin-left: 180px; }
-  .body.teams-show .votes li .dimensions, .body.teams-show #your_vote .dimensions, .body.people-show .votes li .dimensions, .body.people-show #your_vote .dimensions {
+  .body.teams-show .votes li .dimensions, .body.teams-show #your_vote .dimensions, .body.teams-show .replies li .dimensions, .body.people-show .votes li .dimensions, .body.people-show #your_vote .dimensions, .body.people-show .replies li .dimensions {
     font-size: small; }
-    .body.teams-show .votes li .dimensions label, .body.teams-show #your_vote .dimensions label, .body.people-show .votes li .dimensions label, .body.people-show #your_vote .dimensions label {
+    .body.teams-show .votes li .dimensions label, .body.teams-show #your_vote .dimensions label, .body.teams-show .replies li .dimensions label, .body.people-show .votes li .dimensions label, .body.people-show #your_vote .dimensions label, .body.people-show .replies li .dimensions label {
       display: block; }
-    .body.teams-show .votes li .dimensions td, .body.teams-show .votes li .dimensions th, .body.teams-show #your_vote .dimensions td, .body.teams-show #your_vote .dimensions th, .body.people-show .votes li .dimensions td, .body.people-show .votes li .dimensions th, .body.people-show #your_vote .dimensions td, .body.people-show #your_vote .dimensions th {
+    .body.teams-show .votes li .dimensions td, .body.teams-show .votes li .dimensions th, .body.teams-show #your_vote .dimensions td, .body.teams-show #your_vote .dimensions th, .body.teams-show .replies li .dimensions td, .body.teams-show .replies li .dimensions th, .body.people-show .votes li .dimensions td, .body.people-show .votes li .dimensions th, .body.people-show #your_vote .dimensions td, .body.people-show #your_vote .dimensions th, .body.people-show .replies li .dimensions td, .body.people-show .replies li .dimensions th {
       padding-right: 2ex;
       min-width: 81px; }
-  .body.teams-show .votes li.header, .body.teams-show #your_vote.header, .body.people-show .votes li.header, .body.people-show #your_vote.header {
+  .body.teams-show .votes li.header, .body.teams-show #your_vote.header, .body.teams-show .replies li.header, .body.people-show .votes li.header, .body.people-show #your_vote.header, .body.people-show .replies li.header {
     padding: 2px 10px 2px 8px; }
-  .body.teams-show .votes li.small, .body.teams-show #your_vote.small, .body.people-show .votes li.small, .body.people-show #your_vote.small {
+  .body.teams-show .votes li.small, .body.teams-show #your_vote.small, .body.teams-show .replies li.small, .body.people-show .votes li.small, .body.people-show #your_vote.small, .body.people-show .replies li.small {
     padding: 2px 10px 2px 8px;
     margin: 0px 0px 0px -10px; }
-    .body.teams-show .votes li.small label, .body.teams-show #your_vote.small label, .body.people-show .votes li.small label, .body.people-show #your_vote.small label {
+    .body.teams-show .votes li.small label, .body.teams-show #your_vote.small label, .body.teams-show .replies li.small label, .body.people-show .votes li.small label, .body.people-show #your_vote.small label, .body.people-show .replies li.small label {
       display: none; }
-    .body.teams-show .votes li.small .voter, .body.teams-show #your_vote.small .voter, .body.people-show .votes li.small .voter, .body.people-show #your_vote.small .voter {
+    .body.teams-show .votes li.small .voter .details .reply, .body.teams-show #your_vote.small .voter .details .reply, .body.teams-show .replies li.small .voter .details .reply, .body.people-show .votes li.small .voter .details .reply, .body.people-show #your_vote.small .voter .details .reply, .body.people-show .replies li.small .voter .details .reply {
+      display: none; }
+    .body.teams-show .votes li.small .voter, .body.teams-show .votes li.small .replyer, .body.teams-show #your_vote.small .voter, .body.teams-show #your_vote.small .replyer, .body.teams-show .replies li.small .voter, .body.teams-show .replies li.small .replyer, .body.people-show .votes li.small .voter, .body.people-show .votes li.small .replyer, .body.people-show #your_vote.small .voter, .body.people-show #your_vote.small .replyer, .body.people-show .replies li.small .voter, .body.people-show .replies li.small .replyer {
       font-size: x-small;
       line-height: inherit; }
-      .body.teams-show .votes li.small .voter img, .body.teams-show #your_vote.small .voter img, .body.people-show .votes li.small .voter img, .body.people-show #your_vote.small .voter img {
+      .body.teams-show .votes li.small .voter img, .body.teams-show .votes li.small .replyer img, .body.teams-show #your_vote.small .voter img, .body.teams-show #your_vote.small .replyer img, .body.teams-show .replies li.small .voter img, .body.teams-show .replies li.small .replyer img, .body.people-show .votes li.small .voter img, .body.people-show .votes li.small .replyer img, .body.people-show #your_vote.small .voter img, .body.people-show #your_vote.small .replyer img, .body.people-show .replies li.small .voter img, .body.people-show .replies li.small .replyer img {
         display: none; }
-      .body.teams-show .votes li.small .voter .details, .body.teams-show #your_vote.small .voter .details, .body.people-show .votes li.small .voter .details, .body.people-show #your_vote.small .voter .details {
+      .body.teams-show .votes li.small .voter .details, .body.teams-show .votes li.small .replyer .details, .body.teams-show #your_vote.small .voter .details, .body.teams-show #your_vote.small .replyer .details, .body.teams-show .replies li.small .voter .details, .body.teams-show .replies li.small .replyer .details, .body.people-show .votes li.small .voter .details, .body.people-show .votes li.small .replyer .details, .body.people-show #your_vote.small .voter .details, .body.people-show #your_vote.small .replyer .details, .body.people-show .replies li.small .voter .details, .body.people-show .replies li.small .replyer .details {
         display: inline; }
-      .body.teams-show .votes li.small .voter time, .body.teams-show #your_vote.small .voter time, .body.people-show .votes li.small .voter time, .body.people-show #your_vote.small .voter time {
+      .body.teams-show .votes li.small .voter time, .body.teams-show .votes li.small .replyer time, .body.teams-show #your_vote.small .voter time, .body.teams-show #your_vote.small .replyer time, .body.teams-show .replies li.small .voter time, .body.teams-show .replies li.small .replyer time, .body.people-show .votes li.small .voter time, .body.people-show .votes li.small .replyer time, .body.people-show #your_vote.small .voter time, .body.people-show #your_vote.small .replyer time, .body.people-show .replies li.small .voter time, .body.people-show .replies li.small .replyer time {
         display: inline;
         font-size: x-small; }
-      .body.teams-show .votes li.small .voter .details, .body.teams-show #your_vote.small .voter .details, .body.people-show .votes li.small .voter .details, .body.people-show #your_vote.small .voter .details {
+      .body.teams-show .votes li.small .voter .details, .body.teams-show .votes li.small .replyer .details, .body.teams-show #your_vote.small .voter .details, .body.teams-show #your_vote.small .replyer .details, .body.teams-show .replies li.small .voter .details, .body.teams-show .replies li.small .replyer .details, .body.people-show .votes li.small .voter .details, .body.people-show .votes li.small .replyer .details, .body.people-show #your_vote.small .voter .details, .body.people-show #your_vote.small .replyer .details, .body.people-show .replies li.small .voter .details, .body.people-show .replies li.small .replyer .details {
         margin-left: 0px;
         font-size: x-small; }
-      .body.teams-show .votes li.small .voter .type, .body.teams-show .votes li.small .voter .remote, .body.teams-show #your_vote.small .voter .type, .body.teams-show #your_vote.small .voter .remote, .body.people-show .votes li.small .voter .type, .body.people-show .votes li.small .voter .remote, .body.people-show #your_vote.small .voter .type, .body.people-show #your_vote.small .voter .remote {
+      .body.teams-show .votes li.small .voter .type, .body.teams-show .votes li.small .voter .remote, .body.teams-show .votes li.small .replyer .type, .body.teams-show .votes li.small .replyer .remote, .body.teams-show #your_vote.small .voter .type, .body.teams-show #your_vote.small .voter .remote, .body.teams-show #your_vote.small .replyer .type, .body.teams-show #your_vote.small .replyer .remote, .body.teams-show .replies li.small .voter .type, .body.teams-show .replies li.small .voter .remote, .body.teams-show .replies li.small .replyer .type, .body.teams-show .replies li.small .replyer .remote, .body.people-show .votes li.small .voter .type, .body.people-show .votes li.small .voter .remote, .body.people-show .votes li.small .replyer .type, .body.people-show .votes li.small .replyer .remote, .body.people-show #your_vote.small .voter .type, .body.people-show #your_vote.small .voter .remote, .body.people-show #your_vote.small .replyer .type, .body.people-show #your_vote.small .replyer .remote, .body.people-show .replies li.small .voter .type, .body.people-show .replies li.small .voter .remote, .body.people-show .replies li.small .replyer .type, .body.people-show .replies li.small .replyer .remote {
         display: none; }
 .body.teams-show .more, .body.people-show .more {
   text-align: center;
@@ -739,6 +751,8 @@ aside#pullout {
   width: 97%; }
 #your_vote input.button {
   float: right; }
+#your_vote .details .reply {
+  display: none; }
 
 .body.scores h3 {
   color: #a80003;
