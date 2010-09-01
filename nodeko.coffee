@@ -141,7 +141,7 @@ post '/scores/refresh', ->
     res = @res
     team_ids = k for k, v of scores
     save = (error, saved) ->
-      return res.send error.join("\n"), 500 if error?
+      return res.send sys.inspect(error), 500 if error?
       if team_id = team_ids.pop()
         Team.updateAll team_id, { $set: { score: scores[team_id] }}, save
       else
