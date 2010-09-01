@@ -131,13 +131,27 @@ get '/error', ->
   throw new Error('Foo')
 
 get '/scores', ->
+  Team.all { validDeploy: true }, { deep: false }, (error, teams) =>
+    @teams = teams
+    @teams.sort (a, b) -> (b?.score?.overall || 0) - (a?.score?.overall || 0)
+    @render 'scores.html.haml'
+
+post '/scores/refresh', ->
   ScoreCalculator.calculate (scores) =>
-    Team.all { validDeploy: true }, { deep: false }, (error, teams) =>
-      for team in teams
-        team.score = scores[team.id()]
-      @teams = teams
-      @teams.sort (a, b) -> (b?.score?.overall || 0) - (a?.score?.overall || 0)
-      @render 'scores.html.haml'
+    Team.all (error, teams) =>
+      return @res.send error.join("\n"), 500 if error?
+      res = @res
+      save = (error, saved) ->
+        return res.send error.join("\n"), 500 if error?
+        team = teams.pop()
+        if team
+          sys.puts 'updating ' + team.name
+          team.score = scores[team.id()]
+          sys.puts sys.inspect team.score
+          team.save save
+        else
+          res.send 'OK', 200
+      save()
 
 # list teams
 get '/teams', ->
@@ -208,6 +222,7 @@ get '/teams/:id/edit', ->
 put '/teams/:id', ->
   Team.fromParam @req.param('id'), (error, team) =>
     @ensurePermitted team, =>
+      delete @req.body.score
       team.update @req.body
       team.validDeploy = @req.body.validDeploy == '1'
       save = =>

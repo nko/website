@@ -17,6 +17,8 @@ escapeURL = require('querystring').escape
 parseURL = require('url').parse
 
 class Team
+  serializable_attributes: ['score']
+
   build: (options) ->
     @name = options?.name or ''
     @createdAt = new Date()
@@ -142,6 +144,7 @@ class ScoreCalculator
     for k, score of @scores
       for type in @types
         score[type] ?= {}
+        delete score[type]['team._id']
         for dimension in @dimensions
           score[type][dimension] ?= 0
 

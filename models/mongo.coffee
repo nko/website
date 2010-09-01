@@ -142,6 +142,9 @@ _.extend Mongo,
       @collection (error, collection) =>
         return fn error if error?
         serialized = Serializer.pack this
+        if @serializable_attributes?
+          for attr in @serializable_attributes
+            serialized[attr] = this[attr]
         collection.save serialized, (error, saved) =>
           @_id = saved._id
           fn error, saved
