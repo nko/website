@@ -5,11 +5,10 @@
     .vote
       %a.button.important{ href: '/teams/' + team.toParam() + '#your_vote' } Vote &raquo;
   .description
-    - if (typeof(score) != 'undefined')
-      .score
-        %a{ href: '/scores#' + team.slug }
-          %h2= Math.round(score.overall * 20) / 100
-          %h6 score
+    .score
+      %a{ href: '/scores#' + team.slug }
+        %h2= Math.round(team.score.overall * 20) / 100
+        %h6 score
     %h2
       %a{ href: team.url }= team.application
     %h4

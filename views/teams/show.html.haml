@@ -68,6 +68,10 @@
       %a{ href: ctx.team.url }
         %img{ src: ctx.team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(ctx.team.url + '/#' + ctx.team.lastDeployedHead) + '&out-format=png&resize=160x93' : '/images/blank.png' }
     .description
+      .score
+        %a{ href: '/scores#' + ctx.team.slug }
+          %h2= Math.round(ctx.team.score.overall * 20) / 100
+          %h6 score
       %h2
         %a{ href: ctx.team.url }= ctx.team.application
       %h4= 'by ' + ctx.team.name

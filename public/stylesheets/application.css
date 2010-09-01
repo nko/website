@@ -431,13 +431,10 @@ aside#pullout {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 370px; }
+    width: 300px; }
   .body.teams-index .description h4, .body.teams-show .description h4, .body.index .description h4, .body.people-show .description h4 {
     margin: 0px 0px 0.5em; }
-
-.body.teams-index .description h2 {
-  width: 300px; }
-.body.teams-index .score {
+.body.teams-index .score, .body.teams-show .score, .body.index .score, .body.people-show .score {
   float: right;
   text-align: center;
   padding: 12px 10px 10px;
@@ -449,14 +446,16 @@ aside#pullout {
   border: solid 1px rgba(0, 0, 0, 0.05);
   -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
-  .body.teams-index .score a {
+  .body.teams-index .score a, .body.teams-show .score a, .body.index .score a, .body.people-show .score a {
     color: #f6ffef; }
-  .body.teams-index .score h2 {
+  .body.teams-index .score a, .body.teams-show .score a, .body.index .score a, .body.people-show .score a {
+    text-decoration: none; }
+  .body.teams-index .score h2, .body.teams-show .score h2, .body.index .score h2, .body.people-show .score h2 {
     width: auto; }
-  .body.teams-index .score h6 {
+  .body.teams-index .score h6, .body.teams-show .score h6, .body.index .score h6, .body.people-show .score h6 {
     margin: 0px;
     line-height: normal;
-    text-decoration: none; }
+    text-decoration: underline; }
 
 .body.teams-index .teams, .body.index .teams, .body.people-show .teams {
   list-style-type: none;
