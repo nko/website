@@ -31,3 +31,4 @@
       - if (vote.comment)
         p.comment= vote.comment
         .clear
+  != partial('votes/replies.html.jade', { locals: { vote: vote, ctx: ctx } })

@@ -444,7 +444,15 @@ class Vote
   beforeInstantiate: (fn) ->
     Person.first { _id: @person._id }, (error, voter) =>
       @person = voter
-      fn()
+      Reply.all { 'vote._id': @_id }, { sort: [['createdAt', 1]]}, (error, replies) =>
+        @replies = replies || []
+        fn()
+
+  instantiateReplyers: ->
+    pool = _.inject @team.members, {}, ((memo, person) -> memo[person.id()] = person; memo)
+    pool[@person.id()] = @person
+    for reply in @replies
+      reply.person = pool[reply.person.id()]
 
   validate: ->
     errors = []
@@ -475,6 +483,17 @@ _.extend Vote, {
 }
 
 nko.Vote = Vote
+
+class Reply
+  constructor: (options) ->
+    @person = options?.person
+    @vote = options?.vote
+    @body = options.body || ''
+    @createdAt = @updatedAt = new Date()
+
+  validate: ->
+    ['Reply cannot be blank'] unless @body
+nko.Reply = Reply
 
 Mongo.blessAll nko
 nko.Mongo = Mongo

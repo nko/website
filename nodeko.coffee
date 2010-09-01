@@ -7,7 +7,7 @@ connect = require 'connect'
 express = require 'express'
 
 models = require './models/models'
-[Team, Person, Vote, ScoreCalculator] = [models.Team, models.Person, models.Vote, models.ScoreCalculator]
+[Team, Person, Vote, ScoreCalculator, Reply] = [models.Team, models.Person, models.Vote, models.ScoreCalculator, models.Reply]
 
 pub = __dirname + '/public'
 app = express.createServer(
@@ -73,6 +73,10 @@ request = (type) ->
           canEditTeam: (team) ->
             req.cookies.teamauthkey is team.authKey() or
               team.hasMember(@currentPerson) or @isAdmin
+          canReplyTo: (vote) ->
+            return false unless @currentPerson?
+            @canEditTeam(vote.team) or
+              (vote.person.id() is @currentPerson.id())
           ensurePermitted: (other, fn) ->
             permitted = @isAdmin
             if other.hasMember?
@@ -189,6 +193,9 @@ get '/teams/:id', ->
       renderVotes = =>
         Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]], limit: 50 }, (error, votes) =>
           @votes = votes
+          for vote in @votes
+            vote.team = @team
+            vote.instantiateReplyers()
           @render 'teams/show.html.haml'
 
       if @currentPerson
@@ -289,6 +296,20 @@ put '/teams/:teamId/votes/:voteId', ->
         @vote = vote
         vote.update @req.body
         saveVote.call(this)
+
+post '/teams/:teamId/votes/:voteId/replies', ->
+  Team.fromParam @req.param('teamId'), (error, team) =>
+    Vote.fromParam @req.param('voteId'), (error, vote) =>
+      vote.team = team
+      unless @canReplyTo(vote)
+        return @res.send 'Unauthorized: only the voter and team members may comment on a vote.', 403
+      else
+        @reply = new Reply { person: @currentPerson, vote: vote, body: @req.body.body }
+        @reply.save (errors, reply) =>
+          if errors?
+            @res.send JSON.stringify(errors), 400
+          else
+            @render 'partials/replies/reply.html.jade', { locals: { reply: @reply }, layout: false }
 
 # list votes
 get '/teams/:teamId/votes', ->

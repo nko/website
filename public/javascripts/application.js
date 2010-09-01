@@ -330,8 +330,32 @@
         localStorage.draft = null;
       }
     });
-    return $('.votes-new .stars, #your_vote .stars').each(function() {
+    $('.votes-new .stars, #your_vote .stars').each(function() {
       return Stars.highlight($(this));
+    });
+    return $('.reply form').submit(function(e) {
+      var $errors, $form;
+      $form = $(this);
+      $errors = $form.find('.errors');
+      ajaxForm($form, {
+        beforeSend: function() {
+          return $form.find(':input').attr('disabled', true);
+        },
+        complete: function() {
+          return $form.find(':input').attr('disabled', false);
+        },
+        success: function(data) {
+          return $form.prev('ul.replies').append($(data));
+        },
+        error: function(xhr) {
+          var errors;
+          errors = JSON.parse(xhr.responseText);
+          return $errors.html(_.map(errors, function(error) {
+            return "<li>" + (error) + "</li>";
+          }).join("\n")).slideDown('fast');
+        }
+      });
+      return false;
     });
   });
 })();

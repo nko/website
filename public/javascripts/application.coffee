@@ -255,3 +255,18 @@ $ ->
     finally
       localStorage.draft = null
   $('.votes-new .stars, #your_vote .stars').each -> Stars.highlight $(this)
+
+  $('.reply form').submit (e) ->
+    $form = $(this)
+    $errors = $form.find('.errors')
+
+    ajaxForm $form,
+      beforeSend: -> $form.find(':input').attr('disabled', true)
+      complete: -> $form.find(':input').attr('disabled', false)
+      success: (data) ->
+        $form.prev('ul.replies').append($(data))
+      error: (xhr) ->
+        errors = JSON.parse(xhr.responseText)
+        $errors.html(_.map(errors, (error) -> "<li>#{error}</li>").join("\n"))
+          .slideDown('fast')
+    false
