@@ -4,7 +4,7 @@
 
 %ul.teams
   - each team in ctx.teams
-    %li!= partial('teams/application.html.haml', { locals: { team: team } })
+    %li!= partial('teams/application.html.haml', { locals: { team: team, score: team.score } })
 .clear
 
 %p.note

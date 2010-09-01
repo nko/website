@@ -435,6 +435,29 @@ aside#pullout {
   .body.teams-index .description h4, .body.teams-show .description h4, .body.index .description h4, .body.people-show .description h4 {
     margin: 0px 0px 0.5em; }
 
+.body.teams-index .description h2 {
+  width: 300px; }
+.body.teams-index .score {
+  float: right;
+  text-align: center;
+  padding: 12px 10px 10px;
+  margin-top: -13px;
+  background-color: #7e9699;
+  color: #f6ffef !important;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.15);
+  background-color: rgba(126, 151, 154, 0.6);
+  border: solid 1px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
+  .body.teams-index .score a {
+    color: #f6ffef; }
+  .body.teams-index .score h2 {
+    width: auto; }
+  .body.teams-index .score h6 {
+    margin: 0px;
+    line-height: normal;
+    text-decoration: none; }
+
 .body.teams-index .teams, .body.index .teams, .body.people-show .teams {
   list-style-type: none;
   padding: 0px;

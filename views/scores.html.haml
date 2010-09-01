@@ -13,7 +13,7 @@
   - each team in ctx.teams
     %tr
       %th
-        %a{ href: '/teams/' + team.toParam() }= team.name
+        %a{ href: '/teams/' + team.toParam(), id: team.slug }= team.name
       - each dimension in ['Utility', 'Design', 'Innovation', 'Completeness', 'Count / Popularity']
         %th= dimension
     - if (team.score)
