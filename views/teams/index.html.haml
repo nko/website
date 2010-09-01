@@ -1,6 +1,6 @@
 %h1 Leaderboard
 
-.note Ranked by overall score.
+.note!= 'Ranked by <a href="/scores">overall score</a>.'
 
 - if ('yourTeams' in ctx && ctx.yourTeams.length > 0)
   - each team in ctx.yourTeams
