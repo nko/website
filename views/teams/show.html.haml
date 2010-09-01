@@ -125,6 +125,7 @@
 .clear
 
 %h1 Votes
+
 %form#your_vote{ method: (ctx.vote.isNew() ? 'POST' : 'PUT'), action: '/teams/' + ctx.team.toParam() + '/votes' + (ctx.vote.isNew() ? '' : '/' + ctx.vote.id()), 'class': ctx.currentPerson && ctx.currentPerson.type }
   %input{ type: 'hidden', name: 'requestAt', value: ctx.requestAt }
   != partial("errors.html.haml", { locals: { ctx: ctx } })
@@ -155,7 +156,8 @@
           %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
       %input.button.important{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save' }
     .clear
-%hr
+
+%h3 All Votes
 
 %ul.votes
   - if (ctx.votes.length)
