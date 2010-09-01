@@ -2,26 +2,10 @@
 
 .note!= 'Ranked by <a href="/scores">overall score</a>.'
 
-- if ('yourTeams' in ctx && ctx.yourTeams.length > 0)
-  - each team in ctx.yourTeams
-    %ul.teams
-      %li!= partial('teams/application.html.haml', { locals: { team: team, ctx: ctx } })
-
 %ul.teams
   - each team in ctx.teams
-    %li!= partial('teams/application.html.haml', { locals: { team: team, ctx: ctx } })
+    %li!= partial('teams/application.html.haml', { locals: { team: team } })
 .clear
-
-- if ('unverifiedTeams' in ctx)
-  %h2
-    Pending Teams
-    = ' (' + ctx.unverifiedTeams.length + ')'
-  %ul
-    - each team in ctx.unverifiedTeams
-      %li
-        %a{ href: '/teams/' + team.toParam() }= team.name
-        %span.invited
-          = pluralize(team.invited.length, ' oustanding invite')
 
 %p.note
   These are the entries that have been verified. A full list of teams that

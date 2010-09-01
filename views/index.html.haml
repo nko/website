@@ -1,16 +1,17 @@
-%p.note
+%h1 Current Top 10
+
+%p
   Voting is open and will continue until
   != ' <time datetime="2010-09-02T23:59:59Z">23:59 UTC on Thursday, September 2</time>. '
   Winners will be announced at the end of the week.
 
-%h3#date
+%h2#date
   %a.button.important{ href: '/teams' } Vote now &raquo;
   .about.countdown &nbsp;
 
-%h1 Current Top 10
 %ul.teams
   - each team in ctx.teams
-    %li!= partial('teams/application.html.haml', { locals: { team: team, ctx: ctx } })
+    %li!= partial('teams/application.html.haml', { locals: { team: team } })
 %p
   != 'Make sure to check out <a href="/teams">the full list</a> and vote!'
 
