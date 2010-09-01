@@ -138,20 +138,15 @@ get '/scores', ->
 
 post '/scores/refresh', ->
   ScoreCalculator.calculate (scores) =>
-    Team.all (error, teams) =>
-      return @res.send error.join("\n"), 500 if error?
-      res = @res
-      save = (error, saved) ->
-        return res.send error.join("\n"), 500 if error?
-        team = teams.pop()
-        if team
-          sys.puts 'updating ' + team.name
-          team.score = scores[team.id()]
-          sys.puts sys.inspect team.score
-          team.save save
-        else
-          res.send 'OK', 200
-      save()
+    res = @res
+    team_ids = k for k, v of scores
+    save = (error, saved) ->
+      return res.send error.join("\n"), 500 if error?
+      if team_id = team_ids.pop()
+        Team.updateAll team_id, { $set: { score: scores[team_id] }}, save
+      else
+        res.send 'OK', 200
+    save()
 
 # list teams
 get '/teams', ->

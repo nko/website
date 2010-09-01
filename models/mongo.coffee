@@ -111,7 +111,7 @@ _.extend Mongo,
     updateAll: (query, cmd, fn) ->
       @prototype.collection (error, collection) ->
         return fn error if error?
-        collection.update Mongo.queryify(query), cmd, {upsert: false, multi: true}, fn
+        collection.update Mongo.queryify(query), cmd, ({ upsert: false, multi: true }), fn
 
     group: (opts, fn) ->
       @prototype.collection (error, collection) ->
