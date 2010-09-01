@@ -70,7 +70,7 @@
     .description
       .score
         %a{ href: '/scores#' + ctx.team.slug }
-          %h2= Math.round(ctx.team.score.overall * 20) / 100
+          %h2= (ctx.team.score.overall / 5).toFixed(2)
           %h6 score
       %h2
         %a{ href: ctx.team.url }= ctx.team.application
