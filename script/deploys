@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'fileutils'
+require 'mongo'
+require 'open-uri'
+require 'cgi'
+
+def OpenURI.redirectable? *args; true end
+
+dir = File.dirname(__FILE__) + '/../public/images/deploys/'
+
+db = Mongo::Connection.new.db "nodeknockout"
+@db_teams = db.collection 'Team'
+@db_people = db.collection 'Person'
+
+query = ARGV.length > 0 ? { :slug => ARGV.shift } : { :validDeploy => true }
+
+@db_teams.find(query).each do |t|
+  puts t['slug']
+
+  team_dir = dir + t['slug']
+  FileUtils.mkdir_p team_dir
+
+  t['deployHeads'].each_with_index do |rev, i|
+    rev = t['lastDeployedTo'] == 'joyent' ? rev[0,6] : rev[0,7]
+    %w/ ? # /.each do |delimiter|
+      url = t['url'] + "/#{delimiter}" + rev
+      url = "http://pinkyurl.com/i?url=#{CGI.escape url}&out-format=png&only-cache=1"
+      begin
+        file = "#{team_dir}/#{i}.png"
+        open url do |h|
+          open file, 'w' do |f|
+            f.write h.read
+          end
+        end unless File.exists?(file)
+        puts "  #{i} #{url}"
+      rescue OpenURI::HTTPError
+      end
+    end
+  end
+end
