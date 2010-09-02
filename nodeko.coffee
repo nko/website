@@ -325,6 +325,9 @@ get '/teams/:teamId/votes.js', ->
     # TODO: handle error
     Vote.all { 'team._id': team._id }, { 'sort': [['createdAt', -1]], skip: skip, limit: 50 }, (error, votes) =>
       @votes = votes
+      for vote in @votes
+        vote.team = team
+        vote.instantiateReplyers()
       @render 'partials/votes/index.html.jade', { layout: false }
 
 # sign in
