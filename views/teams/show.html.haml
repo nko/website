@@ -127,36 +127,37 @@
 
 %h1 Votes
 
-%form#your_vote{ method: (ctx.vote.isNew() ? 'POST' : 'PUT'), action: '/teams/' + ctx.team.toParam() + '/votes' + (ctx.vote.isNew() ? '' : '/' + ctx.vote.id()), 'class': ctx.currentPerson && ctx.currentPerson.type }
-  %input{ type: 'hidden', name: 'requestAt', value: ctx.requestAt }
-  != partial("errors.html.haml", { locals: { ctx: ctx } })
-  .voter
-    %h3 Your Vote
-    != partial('votes/voter.html.haml', { locals: { vote: ctx.vote, ctx: ctx, hideReply: true }})
-    .note Email is required to confirm your vote. We don't spam.
-  %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
-    != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
-    .tips
-      .utility Is the site offering a service you'd use again and again?
-      .design How good does it look and feel to use?
-      .innovation How original is the idea and execution?
-      .completeness How &ldquo;fully baked&rdquo; is the site? Are there bugs or dead ends?
-    .show
-      %p.comment= ctx.vote.comment || ''
-      %a.button.change{ href: '#' } Edit
-    .edit
-      %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4, rel: 'nofollow' }= ctx.vote.comment || ''
-      - if (!ctx.currentPerson)
-        .email_input
-          %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.vote.email || '', placeholder: 'email@address.com' }
-      - if (ctx.currentPerson)
-        .note.email_hidden
-          Voting as
-          = ' ' + ctx.vote.email + ' '
-          &mdash;
-          %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
-      %input.button.important{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save' }
-    .clear
+- if (ctx.votingOpen)
+  %form#your_vote{ method: (ctx.vote.isNew() ? 'POST' : 'PUT'), action: '/teams/' + ctx.team.toParam() + '/votes' + (ctx.vote.isNew() ? '' : '/' + ctx.vote.id()), 'class': ctx.currentPerson && ctx.currentPerson.type }
+    %input{ type: 'hidden', name: 'requestAt', value: ctx.requestAt }
+    != partial("errors.html.haml", { locals: { ctx: ctx } })
+    .voter
+      %h3 Your Vote
+      != partial('votes/voter.html.haml', { locals: { vote: ctx.vote, ctx: ctx, hideReply: true }})
+      .note Email is required to confirm your vote. We don't spam.
+    %div{ 'class': 'vote ' + (ctx.vote.isNew() ? 'edit' : 'show') }
+      != partial('votes/stars.html.haml', { locals: { vote: ctx.vote }})
+      .tips
+        .utility Is the site offering a service you'd use again and again?
+        .design How good does it look and feel to use?
+        .innovation How original is the idea and execution?
+        .completeness How &ldquo;fully baked&rdquo; is the site? Are there bugs or dead ends?
+      .show
+        %p.comment= ctx.vote.comment || ''
+        %a.button.change{ href: '#' } Edit
+      .edit
+        %textarea{ name: 'comment', id: 'comment', placeholder: '2-3 sentence review. Optional.', rows: 4, rel: 'nofollow' }= ctx.vote.comment || ''
+        - if (!ctx.currentPerson)
+          .email_input
+            %input.email{ type: 'text', name: 'email', id: 'email', value: ctx.vote.email || '', placeholder: 'email@address.com' }
+        - if (ctx.currentPerson)
+          .note.email_hidden
+            Voting as
+            = ' ' + ctx.vote.email + ' '
+            &mdash;
+            %a{ href: '/logout?return_to=' + escapeURL('/teams/' + ctx.team.toParam() + '#draft') } Change
+        %input.button.important{ type: 'submit', value: ctx.vote.isNew() ? 'Vote!' : 'Save' }
+      .clear
 
 %h3 All Votes
 

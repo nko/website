@@ -184,6 +184,7 @@ get '/teams/:id', ->
       @team = team
       @title = @team.name
       @editAllowed = @canEditTeam team
+      @votingOpen = Date.now() < Date.UTC(2010, 8, 2, 23, 59, 59)
 
       people = team.members or []
       @members = _.select people, (person) -> person.name
