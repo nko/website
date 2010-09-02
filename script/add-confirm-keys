@@ -6,6 +6,9 @@ require 'active_support'
 require 'fastercsv'
 require 'mongo'
 
+# db = Mongo::Connection.new("localhost", 27017).db("mydb")
+# db.authenticate(my_user_name, my_password)
+
 db = Mongo::Connection.new.db "nodeknockout"
 @people = db.collection 'Person'
 
