@@ -513,6 +513,14 @@ app.helpers {
       "<img src=\"http://www.gravatar.com/avatar/#{p.emailHash}?s=#{s || 40}&d=monsterid\" />"
 }
 
+_.shuffle = (a) ->
+  r = _.clone a
+  for i in [r.length-1 .. 0]
+    j = parseInt(Math.random() * i)
+    [r[i], r[j]] = [r[j], r[i]]
+  r
+
+
 # has to be last
 app.use '/', express.errorHandler({ dumpExceptions: true, showStack: true })
 
