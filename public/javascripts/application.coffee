@@ -282,7 +282,7 @@ $ ->
     sorted = _.sortBy $('ul.teams li'), (t) ->
       t = $('.application', t)
       score = t.attr('data-' + dimension)
-      t.find('.score').find('h2').text(parseFloat(score).toFixed(2)).end().find('h6').text(dimension)
+      t.find('.score').find('h2').text(parseFloat(score).toFixed(2)).end().find('h6').text(dimension.replace(/ness$/, ''))
       -score
     $('ul.teams').html(sorted)
     false
