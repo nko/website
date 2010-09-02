@@ -473,7 +473,7 @@ aside#pullout {
 
 .body.teams-index .sort {
   color: #999999;
-  text-align: right;
+  text-align: center;
   font-size: small; }
   .body.teams-index .sort a {
     padding: 5px;
