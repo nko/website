@@ -368,6 +368,9 @@
     return $('.teams-index .sort').each(function() {
       $(window).hashchange(function() {
         var dimension, sorted;
+        if (!(location.hash)) {
+          return null;
+        }
         $('.sort a').removeClass('current').filter('a[href=' + location.hash + ']').addClass('current');
         dimension = location.hash.substring(1);
         sorted = _.sortBy($('ul.teams li'), function(t) {

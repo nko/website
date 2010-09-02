@@ -278,6 +278,7 @@ $ ->
 
   $('.teams-index .sort').each ->
     $(window).hashchange ->
+      return unless location.hash
       $('.sort a')
         .removeClass('current')
         .filter('a[href=' + location.hash + ']')
