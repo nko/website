@@ -219,6 +219,7 @@ class Person
     @password = @randomPassword()
     @new_password = true
     @confirmed = options?.confirmed or false
+    @confirmKey = Math.uuid()
 
     @type = options?.type # 'Judge', 'Voter', 'Participant'
 
@@ -309,6 +310,21 @@ class Person
       http://nodeknockout.com/
       """
 
+  sendConfirmKey: (fn) ->
+    @sendEmail "Confirm your Node.js Knockout Email", """
+      Hi,
+
+      You (or somebody like you) requested we resend your Node.js Knockout email confirmation code.
+
+      Your confirmaton code is: #{@confirmKey}
+
+      You can confirm your email at: http://nodeknockout.com/people/#{@toParam()}/confirm?confirmKey=#{@confirmKey}
+
+      Thanks!
+      The Node.js Knockout Organizers
+      http://nodeknockout.com/
+      """, fn
+
   sendEmail: (subject, message, fn) ->
     http.post 'http://www.postalgone.com/mail',
       { sender: '"Node.js Knockout" <mail@nodeknockout.com>',
@@ -370,27 +386,32 @@ class Person
       alphabet[Math.floor alphabet.length * Math.random()]
     syllables.join ''
 
+  login: (fn) ->
+    @token = Math.uuid()
+
+    @confirmed ?= true # grandfather old people in
+    if @new_password or @verifiedConfirmKey
+      confirm_votes = true
+      @confirmed = true
+      @confirmKey = Math.uuid()
+      @new_password = false
+      delete @verifiedConfirmKey
+
+    @save (errors, resp) =>
+      if confirm_votes
+        # TODO flash "your votes have been confirmed"
+        @confirmVotes (errors) =>
+          fn errors, this
+      else
+        fn null, this
+
 _.extend Person, {
   login: (credentials, fn) ->
     return fn ['Invalid email address'] unless validEmail credentials.email
     @first { email: credentials.email.trim().toLowerCase() }, (error, person) ->
       return fn ['Unknown email'] unless person?
       return fn ['Invalid password'] unless person.passwordHash is md5 credentials.password
-      person.token = Math.uuid()
-
-      person.confirmed ?= true # grandfather old people in
-      if person.new_password
-        confirm_votes = true
-        person.confirmed = true
-        person.new_password = false
-
-      person.save (errors, resp) ->
-        if confirm_votes
-          # TODO flash "your votes have been confirmed"
-          person.confirmVotes (errors) ->
-            fn errors, person
-        else
-          fn null, person
+      person.login fn
 
   firstByAuthKey: (authKey, fn) ->
     [id, token] = authKey.split ':' if authKey?

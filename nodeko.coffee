@@ -407,9 +407,11 @@ put '/people/:id', ->
     @ensurePermitted person, =>
       attributes = @req.body
 
-      # TODO this shouldn't be necessary
-      person.setPassword attributes.password if attributes.password
-      delete attributes.password
+      if attributes.password
+        person.confirmKey = Math.uuid()
+        # TODO this shouldn't be necessary
+        person.setPassword attributes.password
+        delete attributes.password
 
       attributes.link = '' unless /^https?:\/\/.+\./.test attributes.link
 
@@ -427,6 +429,29 @@ del '/people/:id', ->
     @ensurePermitted person, =>
       person.remove (error, result) =>
         @redirect '/'
+
+post '/people/:id/confirm', ->
+  Person.fromParam @req.param('id'), (error, person) =>
+    person.confirmKey = Math.uuid()
+    person.save =>
+      person.sendConfirmKey =>
+        @redirect '/people/' + person.toParam() + '/confirm'
+
+get '/people/:id/confirm', ->
+  @confirmKey = @req.param('confirmKey')
+  return @render 'people/confirm.html.jade', { layout: 'layout.haml' } unless @confirmKey
+
+  Person.fromParam @req.param('id'), (error, person) =>
+    unless person? and person.confirmKey is @confirmKey
+      @errors = ['Invalid confirmation key.  Please check your email for the correct key.']
+      return @render 'people/confirm.html.jade', { layout: 'layout.haml' }
+    else
+      person.verifiedConfirmKey = true
+      person.login =>
+        @setCurrentPerson person
+        @person = person
+        @render 'people/confirm.html.jade', { layout: 'layout.haml' }
+
 
 # TODO security
 post '/deploys', ->
@@ -484,13 +509,6 @@ app.helpers {
     else
       "<img src=\"http://www.gravatar.com/avatar/#{p.emailHash}?s=#{s || 40}&d=monsterid\" />"
 }
-
-_.shuffle = (a) ->
-  r = _.clone a
-  for i in [r.length-1 .. 0]
-    j = parseInt(Math.random() * i)
-    [r[i], r[j]] = [r[j], r[i]]
-  r
 
 # has to be last
 app.use '/', express.errorHandler({ dumpExceptions: true, showStack: true })

@@ -341,7 +341,7 @@
       });
       return false;
     });
-    return $('.votes').delegate('.reply form', 'submit', function(e) {
+    $('.votes').delegate('.reply form', 'submit', function(e) {
       var $errors, $form;
       $form = $(this);
       $errors = $form.find('.errors');
@@ -365,5 +365,9 @@
       });
       return false;
     });
+    $('.body.people-confirm form.resend a').click(function() {
+      return $(this).closest('form').submit();
+    });
+    return false;
   });
 })();

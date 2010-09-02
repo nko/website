@@ -275,3 +275,7 @@ $ ->
         $errors.html(_.map(errors, (error) -> "<li>#{error}</li>").join("\n"))
           .slideDown('fast')
     false
+
+  $('.body.people-confirm form.resend a').click ->
+      $(this).closest('form').submit()
+    false
