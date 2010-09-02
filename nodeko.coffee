@@ -445,7 +445,12 @@ get '/people/:id/confirm', ->
   return @render 'people/confirm.html.jade', { layout: 'layout.haml' } unless @confirmKey
 
   Person.fromParam @req.param('id'), (error, person) =>
-    unless person? and person.confirmKey is @confirmKey
+    if not person?
+      @res.send 'Not found', 404
+    else if @confirmKey? and person.confirmed
+      @person = person
+      @render 'people/confirm.html.jade', { layout: 'layout.haml' }
+    else if @confirmKey? and person.confirmKey isnt @confirmKey
       @errors = ['Invalid confirmation key.  Please check your email for the correct key.']
       return @render 'people/confirm.html.jade', { layout: 'layout.haml' }
     else

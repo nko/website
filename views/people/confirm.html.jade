@@ -8,7 +8,7 @@
 - else
   h2 Confirm Your Email
   p.note
-    | Please check your email for a confirmation code, and
+    | Please check your email for a confirmation code and
     | enter it in the form below.
   != partial('errors.html.haml', { locals: { ctx: ctx } })
   form( method: 'GET', action: ctx.req.url )
