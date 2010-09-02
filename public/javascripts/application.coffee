@@ -277,7 +277,8 @@ $ ->
     false
 
   $('.teams-index .sort').delegate 'a', 'click', (e) ->
-    dimension = $(e.currentTarget).html().toLowerCase()
+    a = $(e.currentTarget).addClass('current').siblings().removeClass('current').end()
+    dimension = a.html().toLowerCase()
     sorted = _.sortBy $('ul.teams li'), (t) ->
       t = $('.application', t)
       score = t.attr('data-' + dimension)

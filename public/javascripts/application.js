@@ -366,8 +366,9 @@
       return false;
     });
     return $('.teams-index .sort').delegate('a', 'click', function(e) {
-      var dimension, sorted;
-      dimension = $(e.currentTarget).html().toLowerCase();
+      var a, dimension, sorted;
+      a = $(e.currentTarget).addClass('current').siblings().removeClass('current').end();
+      dimension = a.html().toLowerCase();
       sorted = _.sortBy($('ul.teams li'), function(t) {
         var score;
         t = $('.application', t);
