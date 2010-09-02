@@ -1,4 +1,4 @@
-.application
+.application{ 'data-overall': team.score.overall / 5, 'data-utility': team.score.final.utility, 'data-design': team.score.final.design, 'data-innovation': team.score.final.innovation, 'data-completeness': team.score.final.completeness, 'data-popularity': team.score.final.popularity }
   .screenshot
     %a{ href: team.url }
       %img{ src: team.url ? 'http://pinkyurl.com/i?url=' + encodeURIComponent(team.url + '/#' + team.lastDeployedHead) + '&out-format=png&resize=160x93' : '/images/blank.png' }
@@ -9,7 +9,7 @@
       .score
         %a{ href: '/scores#' + team.slug }
           %h2= (team.score.overall / 5).toFixed(2)
-          %h6 score
+          %h6 overall
     %h2
       %a{ href: team.url }= team.application
     %h4

@@ -275,3 +275,13 @@ $ ->
         $errors.html(_.map(errors, (error) -> "<li>#{error}</li>").join("\n"))
           .slideDown('fast')
     false
+
+  $('.teams-index .sort').delegate 'a', 'click', (e) ->
+    dimension = $(e.currentTarget).html().toLowerCase()
+    sorted = _.sortBy $('ul.teams li'), (t) ->
+      t = $('.application', t)
+      score = t.attr('data-' + dimension)
+      t.find('.score').find('h2').text(parseFloat(score).toFixed(2)).end().find('h6').text(dimension)
+      -score
+    $('ul.teams').html(sorted)
+    false
