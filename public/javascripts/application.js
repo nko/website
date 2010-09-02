@@ -368,6 +368,25 @@
     $('.body.people-confirm form.resend a').click(function() {
       return $(this).closest('form').submit();
     });
-    return false;
+    false;
+    return $('.teams-index .sort').each(function() {
+      $(window).hashchange(function() {
+        var dimension, sorted;
+        if (!(location.hash)) {
+          return null;
+        }
+        $('.sort a').removeClass('current').filter('a[href=' + location.hash + ']').addClass('current');
+        dimension = location.hash.substring(1);
+        sorted = _.sortBy($('ul.teams li'), function(t) {
+          var score;
+          t = $('.application', t);
+          score = t.attr('data-' + dimension);
+          t.find('.score').find('h2').text(parseFloat(score).toFixed(2)).end().find('h6').text(dimension.replace(/ness$/, ''));
+          return -score;
+        });
+        return $('ul.teams').html(sorted);
+      });
+      return $(window).hashchange();
+    });
   });
 })();

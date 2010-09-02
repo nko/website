@@ -1,6 +1,18 @@
 %h1 Leaderboard
 
-.note!= 'Ranked by <a href="/scores">overall score</a>.'
+%p.sort
+  Order by:
+  %a.current{ href: '#overall' } Overall
+  |
+  %a{ href: '#utility' } Utility
+  |
+  %a{ href: '#design' } Design
+  |
+  %a{ href: '#innovation' } Innovation
+  |
+  %a{ href: '#completeness' } Completeness
+  |
+  %a{ href: '#popularity' } Popularity
 
 %ul.teams
   - each team in ctx.teams
