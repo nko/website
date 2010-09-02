@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# ruby script/add-confirm-keys > tmp/confirm-keys.txt
+
+require 'rubygems'
+require 'active_support'
+require 'fastercsv'
+require 'mongo'
+
+db = Mongo::Connection.new.db "nodeknockout"
+@people = db.collection 'Person'
+
+@people.find( :confirmed => false ).each do |person|
+  person['confirmKey'] = ActiveSupport::SecureRandom.hex
+  @people.save person
+  puts [person['email'], person['_id'], person['confirmKey']].to_csv
+end
