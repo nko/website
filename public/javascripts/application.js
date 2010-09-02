@@ -365,19 +365,21 @@
       });
       return false;
     });
-    return $('.teams-index .sort').delegate('a', 'click', function(e) {
-      var a, dimension, sorted;
-      a = $(e.currentTarget).addClass('current').siblings().removeClass('current').end();
-      dimension = a.html().toLowerCase();
-      sorted = _.sortBy($('ul.teams li'), function(t) {
-        var score;
-        t = $('.application', t);
-        score = t.attr('data-' + dimension);
-        t.find('.score').find('h2').text(parseFloat(score).toFixed(2)).end().find('h6').text(dimension.replace(/ness$/, ''));
-        return -score;
+    return $('.teams-index .sort').each(function() {
+      $(window).hashchange(function() {
+        var dimension, sorted;
+        $('.sort a').removeClass('current').filter('a[href=' + location.hash + ']').addClass('current');
+        dimension = location.hash.substring(1);
+        sorted = _.sortBy($('ul.teams li'), function(t) {
+          var score;
+          t = $('.application', t);
+          score = t.attr('data-' + dimension);
+          t.find('.score').find('h2').text(parseFloat(score).toFixed(2)).end().find('h6').text(dimension.replace(/ness$/, ''));
+          return -score;
+        });
+        return $('ul.teams').html(sorted);
       });
-      $('ul.teams').html(sorted);
-      return false;
+      return $(window).hashchange();
     });
   });
 })();
