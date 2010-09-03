@@ -401,6 +401,8 @@ aside#pullout {
   border-bottom: 1px dotted #142229; }
 .body.index .left {
   color: #a80003; }
+.body.index .score {
+  display: none; }
 
 .body.teams-new ol, .body.teams-edit ol {
   list-style-type: none;

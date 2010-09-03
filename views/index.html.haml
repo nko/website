@@ -1,16 +1,9 @@
-%h1 Stay Tuned for Winners
-
-%p
-  Voting is over. We've got some cleaning to do before we announce the
-  winners. Give us about a day.
-
-%h1 Top 10
-
-%ul.teams
-  - each team in ctx.teams
-    %li!= partial('teams/application.html.haml', { locals: { team: team } })
-%p
-  != 'Make sure to check out <a href="/teams">the full list</a> and vote!'
+%h1 Winners
+%p We&rsquo;re excited to announce the winners for the Node.js Knockout.
+- each winner in ctx.winners
+  %h2= winner[0]
+  %ul.teams
+    %li!= partial('teams/application.html.haml', { locals: { team: winner[1] } })
 
 %h1 What
 %p
