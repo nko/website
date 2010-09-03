@@ -280,6 +280,7 @@ saveVote = ->
 
 # create vote
 post '/teams/:teamId/votes', ->
+  return @next()
   Team.fromParam @req.param('teamId'), (error, team) =>
     # TODO: handle error
     @vote = new Vote @req.body, @req
@@ -290,6 +291,7 @@ post '/teams/:teamId/votes', ->
     saveVote.call(this)
 
 put '/teams/:teamId/votes/:voteId', ->
+  return @next()
   Team.fromParam @req.param('teamId'), (error, team) =>
     Vote.fromParam @req.param('voteId'), (error, vote) =>
       @ensurePermitted vote, =>
