@@ -335,6 +335,7 @@ class Person
         fn()
 
   confirmVotes: (fn) ->
+    return fn() if Date.now() > Date.UTC(2010, 8, 3, 7, 0, 0)
     Vote.updateAll { 'person._id': @_id, confirmed: false }, { $set: { confirmed: true }}, fn
 
   loadTeams: (fn) ->
