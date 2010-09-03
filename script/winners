@@ -4,6 +4,8 @@ require 'rubygems'
 require 'mongo'
 require 'json'
 
+puts `curl -X POST http://localhost:8000/scores/refresh`
+
 db = Mongo::Connection.new.db "nodeknockout"
 @db_teams = db.collection 'Team'
 @db_people = db.collection 'Person'
