@@ -107,8 +107,19 @@ get /.*/, ->
 get '/', ->
   Team.count (error, teamCount) =>
     @teamCount = teamCount
-    Team.all { validDeploy: true }, { deep: false, sort: [['score.overall', -1]], limit: 10 }, (error, teams) =>
+    @winners = [
+      ['Overall', 'saber-tooth-moose-lion']
+      ['Solo', 'rallarpojken']
+      ['Utility', 'prague-js']
+      ['Design', 'piston-hurricane']
+      ['Innovation', 'starcraft-2-destroyed-my-marriage']
+      ['Completeness', 'explorer-sox']
+      ['Popularity', 'seattle-js']
+    ]
+    Team.all { slug: {'$in': _.pluck(@winners, 1)} }, { deep: false }, (error, teams) =>
       @teams = teams
+      @winners = _.map @winners, (w) =>
+        [ w[0], _.detect(@teams, (t) -> t.slug == w[1]) ]
       @render 'index.html.haml'
 
 get '/me', ->
