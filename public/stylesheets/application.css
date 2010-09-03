@@ -117,6 +117,7 @@ input.error {
   background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
   -webkit-transition: -webkit-box-shadow 150ms linear; }
   .button.important {
+    display: none;
     background-color: #a80003;
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.5)), to(rgba(255, 255, 255, 0)));
     background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
