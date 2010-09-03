@@ -652,6 +652,8 @@ aside#pullout {
       min-width: 81px; }
   .body.teams-show .votes li.header, .body.teams-show #your_vote.header, .body.teams-show .replies li.header, .body.people-show .votes li.header, .body.people-show #your_vote.header, .body.people-show .replies li.header {
     padding: 2px 10px 2px 8px; }
+  .body.teams-show .votes li.unconfirmed, .body.teams-show #your_vote.unconfirmed, .body.teams-show .replies li.unconfirmed, .body.people-show .votes li.unconfirmed, .body.people-show #your_vote.unconfirmed, .body.people-show .replies li.unconfirmed {
+    opacity: 0.5; }
   .body.teams-show .votes li.small, .body.teams-show #your_vote.small, .body.teams-show .replies li.small, .body.people-show .votes li.small, .body.people-show #your_vote.small, .body.people-show .replies li.small {
     padding: 2px 10px 2px 8px;
     margin: 0px 0px 0px -10px; }
