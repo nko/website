@@ -13,58 +13,57 @@ db = Mongo::Connection.new.db "nodeknockout"
 @winners = {}
 
 def green s
-  "<b>#{s}</b>"
+  puts "\033[32m#{s}\033[0m"
 end
 
 def red s
-  "<del>#{s}</del>"
+  puts "\033[31m#{s}\033[0m"
 end
 
 def output t, dimension, score
   out = @winners.values.include?(t)
-  s = "[#{t['application']}](#{t['url']}) by [#{t['name']}](http://nodeknockout.com/teams/#{t['slug']}) - #{sprintf('%.2f', score)}"
-  s = if !@winners[dimension] && !out
-      @winners[dimension] = t
-      green s
-    elsif out
-      red s
-    else
-      s
-    end
-  puts "1. #{s}"
+  s = "  #{t['application']} by #{t['name']} - #{score}"
+  if !@winners[dimension] && !out
+    @winners[dimension] = t
+    green s
+  elsif out
+    red s
+  else
+    puts s
+  end
 end
 
-puts "\n\#\#\# Overall"
+puts "\nOVERALL"
 @db_teams.find({ :validDeploy => true }, { :sort => [['score.overall', -1]], :limit => 5}).each do |t|
-  output t, 'overall', t['score']['overall'] / 5
+  output t, 'overall', t['score']['overall']
 end
 
-puts "\n\#\#\# Solo"
+puts "\nSOLO"
 @db_teams.find({ :validDeploy => true, :members => {'$size' => 1} }, { :sort => [['score.overall', -1]], :limit => 5}).each do |t|
-  output t, 'solo', t['score']['overall'] / 5
+  output t, 'solo', t['score']['overall']
 end
 
-puts "\n\#\#\# Utility"
+puts "\nUTILITY"
 @db_teams.find({ :validDeploy => true }, { :sort => [['score.final.utility', -1]], :limit => 5}).each do |t|
   output t, 'utility', t['score']['final']['utility']
 end
 
-puts "\n\#\#\# Design"
+puts "\nDESIGN"
 @db_teams.find({ :validDeploy => true }, { :sort => [['score.final.design', -1]], :limit => 5}).each do |t|
   output t, 'design', t['score']['final']['design']
 end
 
-puts "\n\#\#\# Innovation"
+puts "\nINNOVATION"
 @db_teams.find({ :validDeploy => true }, { :sort => [['score.final.innovation', -1]], :limit => 5}).each do |t|
   output t, 'innovation', t['score']['final']['innovation']
 end
 
-puts "\n\#\#\# Completeness"
+puts "\nCOMPLETENESS"
 @db_teams.find({ :validDeploy => true }, { :sort => [['score.final.completeness', -1]], :limit => 5}).each do |t|
   output t, 'completeness', t['score']['final']['completeness']
 end
 
-puts "\n\#\#\# Popularity"
+puts "\nPOPULARITY"
 @db_teams.find({ :validDeploy => true }, { :sort => [['score.final.popularity', -1]], :limit => 5}).each do |t|
   output t, 'popularity', t['score']['final']['popularity']
 end
