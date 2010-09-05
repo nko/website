@@ -4,7 +4,7 @@ require 'rubygems'
 require 'mongo'
 require 'json'
 
-puts `curl -X POST http://localhost:8000/scores/refresh`
+#puts `curl -X POST http://localhost:8000/scores/refresh`
 
 db = Mongo::Connection.new.db "nodeknockout"
 @db_teams = db.collection 'Team'
@@ -66,4 +66,12 @@ end
 puts "\nPOPULARITY"
 @db_teams.find({ :validDeploy => true }, { :sort => [['score.final.popularity', -1]], :limit => 5}).each do |t|
   output t, 'popularity', t['score']['final']['popularity']
+end
+
+@winners.values.each do |t|
+  puts t['name']
+  t['members'].each do |p|
+    p = @db_people.find({ :_id => p['_id'] }).first
+    puts "  #{p['name']} <#{p['email']}>"
+  end
 end
