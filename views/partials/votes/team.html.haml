@@ -1,5 +1,6 @@
 - if (vote.team.url)
   %img{ src: 'http://pinkyurl.com/i?url=' + encodeURIComponent(vote.team.url + '/#' + vote.team.lastDeployedHead) + '&out-format=png&resize=160x93' }
+= vote.team.application + ' by'
 %a{ href: '/teams/' + vote.team.toParam() }= vote.team.name
 .details
   %time{ datetime: vote.createdAt.toISOString() }
