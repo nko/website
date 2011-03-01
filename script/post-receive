@@ -1,1 +1,0 @@
-curl -X POST -d url=http://$(hostname).no.de -d app=$(hostname) -d head=$rev -d head_long=$newrev http://nodeknockout.com/deploys

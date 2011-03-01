@@ -1,2 +1,0 @@
-#! /usr/bin/env bash
-mongoexport -dnodeknockout -cPerson --csv -f _id,type,confirmed > tmp/people.csv

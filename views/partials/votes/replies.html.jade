@@ -1,9 +1,0 @@
-.reply
-  ul.replies
-    - each reply in vote.replies
-      != partial('replies/reply.html.jade', { locals: { reply: reply, vote: vote, ctx: ctx } })
-  - if (ctx.canReplyTo(vote))
-    form( method: 'POST', action: '/teams/' + vote.team.toParam() + '/votes/' + vote.toParam() + '/replies', id: 'reply-' + vote.id() )
-      ul.errors
-      textarea( name: 'body', placeholder: 'Leave a reply.' )
-      input.button( type: 'submit', value: 'Reply' )

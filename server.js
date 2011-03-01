@@ -1,2 +1,0 @@
-require('./support')
-require('./nodeko')

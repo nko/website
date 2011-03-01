@@ -1,2 +1,0 @@
-#! /usr/bin/env bash
-mongoexport -dnodeknockout -cVote --csv -f team._id,person._id,confirmed,utility,design,innovation,completeness,createdAt,updatedAt,email,remoteAddress,remotePort,userAgent,referer,accept,requestAt,renderAt,responseAt,hoverAt > tmp/votes.csv
