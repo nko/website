@@ -33,20 +33,21 @@ nko.Vector.prototype = {
   }
 };
 
-nko.Dude = function(name) {
+nko.Dude = function(options) {
   var self = this;
 
-  this.world = $('body');
+  options = options || {};
+
   this.div = $('<div class="dude">');
 
-  this.name = name || 'littleguy';
+  this.name = options.name || 'littleguy';
   this.img = $('<img>', { src: '/images/734m/' + this.name + '.png' })
     .bind('load', function() {
       self.size = new nko.Vector(this.width / 10, this.height);
       self.draw();
     });
 
-  this.pos = new nko.Vector(150, 150);
+  this.pos = options.pos || new nko.Vector(150, 150);
 
   this.state = 'idle';
   this.frame = 0;
@@ -55,16 +56,17 @@ nko.Dude.prototype = {
   constructor: nko.Dude,
 
   draw: function draw() {
+    var offset = new nko.Vector(this.size.x * -0.5, -this.size.y + 20);
     this.div
       .css({
         left: this.pos.x,
         top: this.pos.y,
         width: this.size.x,
         height: this.size.y,
-        '-webkit-transform': 'translate(' + this.size.times(-0.5).toString() + ')',
+        '-webkit-transform': 'translate(' + offset.toString() + ')',
         background: 'url(' + this.img.attr('src') + ')'
       })
-      .appendTo(this.world);
+      .appendTo(document.body);
     this.animate();
   },
 
@@ -120,5 +122,5 @@ $(function() {
     me.goTo(new nko.Vector(e.pageX, e.pageY));
   });
 
-  var me = new nko.Dude();
+  var me = new nko.Dude({ name: 'suite' });
 });
