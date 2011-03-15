@@ -43,8 +43,8 @@ nko.Thing = function(name, options) {
 
   this.name = name;
   this.img = $('<img>', { src: '/images/734m/' + this.name + '.png' })
-    .bind('load', function() {
-      self.size = new nko.Vector(this.width / (options.frames || 1), this.height);
+    .load(function() {
+      self.size = new nko.Vector(this.width, this.height);
       self.draw();
     });
 
@@ -67,15 +67,18 @@ nko.Thing.prototype.draw = function draw() {
 nko.Thing.prototype.animate = function() { };
 
 nko.Dude = function(name, options) {
-  var options = options || {};
-  options.frames = 10;
-
   nko.Thing.call(this, name, options);
+
   this.state = 'idle';
   this.frame = 0;
 };
 nko.Dude.prototype = new nko.Thing();
 nko.Dude.prototype.constructor = nko.Dude;
+
+nko.Dude.prototype.draw = function draw() {
+  this.size.x = this.size.x / 10;
+  nko.Thing.prototype.draw.call(this);
+};
 
 nko.Dude.prototype.frames = { w: 2, e: 4, s: 6, n: 8 };
 nko.Dude.prototype.animate = function animate(state) {
