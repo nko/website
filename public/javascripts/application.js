@@ -9,6 +9,10 @@ nko.Vector = function(x, y) {
 nko.Vector.prototype = {
   constructor: nko.Vector,
 
+  plus: function(other) {
+    return new this.constructor(this.x + other.x, this.y + other.y);
+  },
+
   minus: function(other) {
     return new this.constructor(this.x - other.x, this.y - other.y);
   },
@@ -92,14 +96,40 @@ nko.Dude.prototype.animate = function animate(state) {
 };
 
 nko.Dude.prototype.goTo = function(pos) {
+  this.pos = new nko.Vector(this.div.offset().left, this.div.offset().top);
+
   var self = this
     , delta = pos.minus(this.pos)
     , duration = delta.length() / 150 * 1000;
   this.animate(delta.cardinalDirection());
-  this.div.animate({ left: pos.x, top: pos.y }, duration, 'linear', function() {
-    self.pos = pos;
-    self.animate('idle');
-  });
+  this.div
+    .stop()
+    .animate({ left: pos.x, top: pos.y }, duration, 'linear', function() {
+      self.pos = pos;
+      self.animate('idle');
+    });
+
+  var $win = $(window)
+    , left = $win.scrollLeft()
+    , top = $win.scrollTop()
+    , right = left + $win.width()
+    , bottom = top + $win.height()
+    , buffer = 200
+    , newLeft = left, newTop = top;
+
+  if (pos.x < left + buffer)
+    newLeft = left - $win.width() + buffer;
+  else if (pos.x > right - buffer)
+    newLeft = right - buffer;
+
+  if (pos.y < top + buffer)
+    newTop = top - $win.height() + buffer;
+  else if (pos.y > bottom - buffer)
+    newTop = bottom - buffer;
+
+  $('body')
+    .stop()
+    .animate({ scrollLeft: newLeft, scrollTop: newTop }, duration, 'linear');
 };
 
 $(function() {
@@ -130,6 +160,10 @@ $(function() {
   var me = new nko.Dude('suite');
 
   new nko.Thing('streetlamp', { pos: new nko.Vector(100, 400) });
+
+  // mark the ends of the universe
+  new nko.Thing('streetlamp', { pos: new nko.Vector(-10000, -10000) });
+  new nko.Thing('streetlamp', { pos: new nko.Vector(10000, 10000) });
 
   $(window).click(function(e) {
     me.goTo(new nko.Vector(e.pageX, e.pageY));
