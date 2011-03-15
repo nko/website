@@ -157,12 +157,12 @@ $(function() {
     }
   });
 
-  var me = new nko.Dude('suite');
+  var me = new nko.Dude('suite', { pos: new nko.Vector(920, 400) });
 
-  new nko.Thing('streetlamp', { pos: new nko.Vector(100, 400) });
+  new nko.Thing('streetlamp', { pos: new nko.Vector(220, 190) });
 
   // mark the ends of the universe
-  new nko.Thing('streetlamp', { pos: new nko.Vector(-10000, -10000) });
+  //new nko.Thing('streetlamp', { pos: new nko.Vector(-10000, -10000) });
   new nko.Thing('streetlamp', { pos: new nko.Vector(10000, 10000) });
 
   $(window).click(function(e) {
