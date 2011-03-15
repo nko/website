@@ -1,34 +1,18 @@
-var http = require('http'), fs = require('fs');
-http.createServer(function (req, res) {
-  console.log('-> ' + req.url);
-  stream(req.url, res);
-}).listen(parseInt(process.env.PORT || 8000), null);
+var express = require('express')
+  , pub = __dirname + '/public';
 
-function stream(url, res) {
-  var path, start, end;
+var app = express.createServer();
 
-  start = new Date;
+app.use(require('stylus').middleware(pub));
+app.use(express.static(pub));
+app.use(express.logger());
+app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
-  path = 'public' + url.replace(/\?.*/, '');
-  if (path === 'public/') {
-    path = 'public/index.html';
-  }
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
 
-  fs.createReadStream(path)
-    .on('error', function(e) {
-      var location = 'http://2010.nodeknockout.com' + url;
-      if (e.code === 'ENOENT') { // file not found
-        res.writeHead(301, { 'Location': location });
-        res.end('Redirecting to ' + location);
-        console.log('Redirecting to ' + location);
-      } else {
-        console.log(e);
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end(e.message);
-      }
-    }).on('end', function() {
-      end = new Date;
-      console.log('<- ' + path + ' (' + (end - start) + ' ms)');
-    }).pipe(res);
-}
+app.listen(process.env.PORT || 8000);
 
+app.get('/', function(req, res) {
+  res.render('index');
+});

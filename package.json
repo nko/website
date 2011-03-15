@@ -8,7 +8,7 @@
     "url": "git://github.com/nko/website.git"
   },
   "author": "NKO Team <all@nodeknockout.com>",
-  "main": "./app.js",
+  "main": "./server.js",
   "directories": {
     "lib": "."
   },
