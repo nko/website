@@ -157,20 +157,28 @@ $(function() {
     }
   });
 
-  var me = new nko.Dude('suite', { pos: new nko.Vector(5820, 5400) });
+  // a dude
+  var me = new nko.Dude('suite', { pos: new nko.Vector(4800, 4400) });
 
-  new nko.Thing('streetlamp', { pos: new nko.Vector(5080, 5150) });
+  // some flare
+  new nko.Thing('streetlamp', { pos: new nko.Vector(4080, 4160) });
+  new nko.Thing('livetree', { pos: new nko.Vector(3920, 4000) });
+  new nko.Thing('livetree', { pos: new nko.Vector(4080, 3920) });
+
+  new nko.Thing('livetree', { pos: new nko.Vector(3840, 4960) });
+  new nko.Thing('deadtree', { pos: new nko.Vector(4000, 4960) });
+  new nko.Thing('portopotty', { pos: new nko.Vector(4080, 4960) });
 
   // mark the ends of the universe
-  //new nko.Thing('streetlamp', { pos: new nko.Vector(-10000, -10000) });
-  new nko.Thing('streetlamp', { pos: new nko.Vector(10000, 10000) });
+  new nko.Thing('streetlamp', { pos: new nko.Vector(0, 0) });
+  new nko.Thing('streetlamp', { pos: new nko.Vector(8000, 8000) });
 
-  var page = $('.page#index')
-    , pos = page.position();
-
+  // center it
   $(window)
     .load(function() {
-      var left = pos.left - ($(this).width() - page.width()) / 2
+      var page = $('.page#index')
+        , pos = page.position()
+        , left = pos.left - ($(this).width() - page.width()) / 2
         , top = pos.top - ($(this).height() - page.height()) / 2;
       $(this).scrollLeft(left).scrollTop(top)
     })
