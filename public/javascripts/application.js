@@ -13,6 +13,10 @@ nko.Vector.prototype = {
     return new this.constructor(this.x - other.x, this.y - other.y);
   },
 
+  times: function(s) {
+    return new this.constructor(this.x * s, this.y * s);
+  },
+
   length: function() {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
   },
@@ -31,8 +35,9 @@ nko.Dude = function(name) {
   this.state = 'idle';
   this.frame = 0;
 
-  this.pos = new nko.Vector(5, 5);
   this.size = new nko.Vector(80, 80);
+  this.offset = this.size.times(0.5);
+  this.pos = new nko.Vector(150, 150).minus(this.offset);
 
   this.name = name || 'littleguy';
   this.div = $('<div class="dude">');
@@ -66,6 +71,7 @@ nko.Dude.prototype = {
 
   goTo: function(pos) {
     var self = this
+      , pos = pos.minus(this.offset)
       , delta = pos.minus(this.pos)
       , duration = delta.length() / 150 * 1000;
     this.state = delta.cardinalDirection();
