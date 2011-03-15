@@ -1,0 +1,25 @@
+{
+  "name": "nko",
+  "description": "node.js knockout: 48-hour node.js hackathon",
+  "version": "0.0.1",
+  "homepage": "http://nodeknockout.com",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nko/website.git"
+  },
+  "author": "NKO Team <all@nodeknockout.com>",
+  "main": "./app.js",
+  "directories": {
+    "lib": "."
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "express": ">=2.0.0rc",
+    "jade": ">=0.8.8",
+    "stylus": "0.8.0"
+  },
+  "devDependencies": {
+  }
+}
