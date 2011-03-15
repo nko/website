@@ -1,7 +1,7 @@
 {
   "name": "nko",
   "description": "node.js knockout: 48-hour node.js hackathon",
-  "version": "0.0.1",
+  "version": "2011.1.0",
   "homepage": "http://nodeknockout.com",
   "repository": {
     "type": "git",
