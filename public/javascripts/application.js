@@ -21,6 +21,10 @@ nko.Vector.prototype = {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
   },
 
+  toString: function() {
+    return this.x + 'px, ' + this.y + 'px';
+  },
+
   cardinalDirection: function() {
     if (Math.abs(this.x) > Math.abs(this.y))
       return this.x < 0 ? 'w' : 'e';
@@ -54,6 +58,7 @@ nko.Dude.prototype = {
         top: this.pos.y,
         width: this.size.x,
         height: this.size.y,
+        '-webkit-transform': 'translate(' + this.size.times(-0.5).toString() + ')',
         background: 'url("/images/734m/' + this.name + '.png")'
       })
       .appendTo(this.world);
@@ -71,7 +76,6 @@ nko.Dude.prototype = {
 
   goTo: function(pos) {
     var self = this
-      , pos = pos.minus(this.offset)
       , delta = pos.minus(this.pos)
       , duration = delta.length() / 150 * 1000;
     this.state = delta.cardinalDirection();
