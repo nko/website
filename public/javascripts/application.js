@@ -33,64 +33,70 @@ nko.Vector.prototype = {
   }
 };
 
-nko.Dude = function(options) {
-  var self = this;
+nko.Thing = function(name, options) {
+  if (!name) return;
 
-  options = options || {};
+  var self = this
+    , options = options || {};
 
-  this.div = $('<div class="dude">');
+  this.div = $('<div class="thing">');
 
-  this.name = options.name || 'littleguy';
+  this.name = name;
   this.img = $('<img>', { src: '/images/734m/' + this.name + '.png' })
     .bind('load', function() {
-      self.size = new nko.Vector(this.width / 10, this.height);
+      self.size = new nko.Vector(this.width / (options.frames || 1), this.height);
       self.draw();
     });
 
   this.pos = options.pos || new nko.Vector(150, 150);
+};
+nko.Thing.prototype.draw = function draw() {
+  var offset = new nko.Vector(this.size.x * -0.5, -this.size.y + 20);
+  this.div
+    .css({
+      left: this.pos.x,
+      top: this.pos.y,
+      width: this.size.x,
+      height: this.size.y,
+      '-webkit-transform': 'translate(' + offset.toString() + ')',
+      background: 'url(' + this.img.attr('src') + ')'
+    })
+    .appendTo(document.body);
+  this.animate();
+};
+nko.Thing.prototype.animate = function() { };
 
+nko.Dude = function(name, options) {
+  var options = options || {};
+  options.frames = 10;
+
+  nko.Thing.call(this, name, options);
   this.state = 'idle';
   this.frame = 0;
 };
-nko.Dude.prototype = {
-  constructor: nko.Dude,
+nko.Dude.prototype = new nko.Thing();
+nko.Dude.prototype.constructor = nko.Dude;
 
-  draw: function draw() {
-    var offset = new nko.Vector(this.size.x * -0.5, -this.size.y + 20);
-    this.div
-      .css({
-        left: this.pos.x,
-        top: this.pos.y,
-        width: this.size.x,
-        height: this.size.y,
-        '-webkit-transform': 'translate(' + offset.toString() + ')',
-        background: 'url(' + this.img.attr('src') + ')'
-      })
-      .appendTo(document.body);
-    this.animate();
-  },
+nko.Dude.prototype.frames = { w: 2, e: 4, s: 6, n: 8 };
+nko.Dude.prototype.animate = function animate(state) {
+  var self = this;
+  clearTimeout(this.animateTimeout);
 
-  frames: { w: 2, e: 4, s: 6, n: 8 },
-  animate: function animate(state) {
-    var self = this;
-    clearTimeout(this.animateTimeout);
+  if (state) this.state = state;
+  this.frame = ((this.frame + 1) & 1) + (this.frames[this.state] || 0);
+  this.div.css('background-position', '-' + (this.frame * this.size.x) + 'px 0px');
+  this.animateTimeout = setTimeout(function() { self.animate() }, 500);
+};
 
-    if (state) this.state = state;
-    this.frame = ((this.frame + 1) & 1) + (this.frames[this.state] || 0);
-    this.div.css('background-position', '-' + (this.frame * this.size.x) + 'px 0px');
-    this.animateTimeout = setTimeout(function() { self.animate() }, 500);
-  },
-
-  goTo: function(pos) {
-    var self = this
-      , delta = pos.minus(this.pos)
-      , duration = delta.length() / 150 * 1000;
-    this.animate(delta.cardinalDirection());
-    this.div.animate({ left: pos.x, top: pos.y }, duration, 'linear', function() {
-      self.pos = pos;
-      self.animate('idle');
-    });
-  }
+nko.Dude.prototype.goTo = function(pos) {
+  var self = this
+    , delta = pos.minus(this.pos)
+    , duration = delta.length() / 150 * 1000;
+  this.animate(delta.cardinalDirection());
+  this.div.animate({ left: pos.x, top: pos.y }, duration, 'linear', function() {
+    self.pos = pos;
+    self.animate('idle');
+  });
 };
 
 $(function() {
@@ -118,9 +124,11 @@ $(function() {
     }
   });
 
+  var me = new nko.Dude('suite');
+
+  new nko.Thing('streetlamp', { pos: new nko.Vector(100, 400) });
+
   $(window).click(function(e) {
     me.goTo(new nko.Vector(e.pageX, e.pageY));
   });
-
-  var me = new nko.Dude({ name: 'suite' });
 });
