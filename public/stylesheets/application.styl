@@ -17,6 +17,9 @@ body
 a:link, a:visited
   color hsl(200, 30%, 60%)
 
+p
+  line-height 150%
+
 header
   h1
     font-size 72pt
@@ -47,9 +50,16 @@ footer
 
 .page
   position absolute
+  width 800px
+  overflow hidden
+  text-align left
 
 .page#index
   top 4000px
   left 4000px
-  width 800px
-  overflow hidden
+  text-align center
+
+.page#about
+  width 480px
+  top 4000px
+  left 5040px
