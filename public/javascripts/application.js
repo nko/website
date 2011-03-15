@@ -96,11 +96,11 @@ nko.Dude.prototype.animate = function animate(state) {
 };
 
 nko.Dude.prototype.goTo = function(pos) {
-  this.pos = new nko.Vector(this.div.offset().left, this.div.offset().top);
+  this.pos = new nko.Vector(parseInt(this.div.css('left')), parseInt(this.div.css('top')));
 
   var self = this
     , delta = pos.minus(this.pos)
-    , duration = delta.length() / 150 * 1000;
+    , duration = delta.length() / 200 * 1000;
   this.animate(delta.cardinalDirection());
   this.div
     .stop()
@@ -118,14 +118,14 @@ nko.Dude.prototype.goTo = function(pos) {
     , newLeft = left, newTop = top;
 
   if (pos.x < left + buffer)
-    newLeft = left - $win.width() + buffer;
+    newLeft = left - $win.width()/2;
   else if (pos.x > right - buffer)
-    newLeft = right - buffer;
+    newLeft = left + $win.width()/2;
 
   if (pos.y < top + buffer)
-    newTop = top - $win.height() + buffer;
+    newTop = top - $win.height()/2;
   else if (pos.y > bottom - buffer)
-    newTop = bottom - buffer;
+    newTop = top + $win.height()/2;
 
   $('body')
     .stop()
@@ -142,7 +142,7 @@ $(function() {
     var $this = $(this);
     (function tick() {
       $this.html(countdownify((start - (new Date)) / 1000));
-      return setTimeout(tick, 1000);
+      return setTimeout(tick, 800);
     })();
 
     function countdownify(secs) {
@@ -157,15 +157,24 @@ $(function() {
     }
   });
 
-  var me = new nko.Dude('suite', { pos: new nko.Vector(920, 400) });
+  var me = new nko.Dude('suite', { pos: new nko.Vector(5820, 5400) });
 
-  new nko.Thing('streetlamp', { pos: new nko.Vector(220, 190) });
+  new nko.Thing('streetlamp', { pos: new nko.Vector(5080, 5150) });
 
   // mark the ends of the universe
   //new nko.Thing('streetlamp', { pos: new nko.Vector(-10000, -10000) });
   new nko.Thing('streetlamp', { pos: new nko.Vector(10000, 10000) });
 
-  $(window).click(function(e) {
-    me.goTo(new nko.Vector(e.pageX, e.pageY));
-  });
+  var page = $('.page#index')
+    , pos = page.position();
+
+  $(window)
+    .load(function() {
+      var left = pos.left - ($(this).width() - page.width()) / 2
+        , top = pos.top - ($(this).height() - page.height()) / 2;
+      $(this).scrollLeft(left).scrollTop(top)
+    })
+    .click(function(e) {
+      me.goTo(new nko.Vector(e.pageX, e.pageY));
+    });
 });
