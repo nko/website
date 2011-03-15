@@ -34,19 +34,22 @@ nko.Vector.prototype = {
 };
 
 nko.Dude = function(name) {
+  var self = this;
+
   this.world = $('body');
+  this.div = $('<div class="dude">');
+
+  this.name = name || 'littleguy';
+  this.img = $('<img>', { src: '/images/734m/' + this.name + '.png' })
+    .bind('load', function() {
+      self.size = new nko.Vector(this.width / 10, this.height);
+      self.draw();
+    });
+
+  this.pos = new nko.Vector(150, 150);
 
   this.state = 'idle';
   this.frame = 0;
-
-  this.size = new nko.Vector(80, 80);
-  this.offset = this.size.times(0.5);
-  this.pos = new nko.Vector(150, 150).minus(this.offset);
-
-  this.name = name || 'littleguy';
-  this.div = $('<div class="dude">');
-
-  this.draw();
 };
 nko.Dude.prototype = {
   constructor: nko.Dude,
@@ -59,29 +62,31 @@ nko.Dude.prototype = {
         width: this.size.x,
         height: this.size.y,
         '-webkit-transform': 'translate(' + this.size.times(-0.5).toString() + ')',
-        background: 'url("/images/734m/' + this.name + '.png")'
+        background: 'url(' + this.img.attr('src') + ')'
       })
       .appendTo(this.world);
     this.animate();
   },
 
   frames: { w: 2, e: 4, s: 6, n: 8 },
-  animate: function animate() {
+  animate: function animate(state) {
     var self = this;
+    clearTimeout(this.animateTimeout);
 
+    if (state) this.state = state;
     this.frame = ((this.frame + 1) & 1) + (this.frames[this.state] || 0);
     this.div.css('background-position', '-' + (this.frame * this.size.x) + 'px 0px');
-    setTimeout(function() { self.animate() }, 500);
+    this.animateTimeout = setTimeout(function() { self.animate() }, 500);
   },
 
   goTo: function(pos) {
     var self = this
       , delta = pos.minus(this.pos)
       , duration = delta.length() / 150 * 1000;
-    this.state = delta.cardinalDirection();
+    this.animate(delta.cardinalDirection());
     this.div.animate({ left: pos.x, top: pos.y }, duration, 'linear', function() {
       self.pos = pos;
-      self.state = 'idle';
+      self.animate('idle');
     });
   }
 };
