@@ -135,7 +135,7 @@ nko.Dude.prototype.goTo = function(pos) {
   else if (pos.y > bottom - buffer)
     newTop = top + $win.height()/2;
 
-  if (typeof(TouchEvent) === 'undefined')
+  if (!('ontouchstart' in window))
     $('body')
       .stop()
       .animate({ scrollLeft: newLeft, scrollTop: newTop }, duration, 'linear');
