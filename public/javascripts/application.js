@@ -116,6 +116,7 @@ nko.Dude.prototype.goTo = function(pos) {
       self.animate('idle');
     });
 
+  // TODO move into nko.Viewport
   var $win = $(window)
     , left = $win.scrollLeft()
     , top = $win.scrollTop()
@@ -184,20 +185,19 @@ $(function() {
   new nko.Thing('streetlamp', { pos: new nko.Vector(0, 0) });
   new nko.Thing('streetlamp', { pos: new nko.Vector(8000, 8000) });
 
-  // center it
   $(window)
-    .load(function() {
+    .load(function() { // center it
       var page = $('.page#index')
         , pos = page.position()
         , left = pos.left - ($(this).width() - page.width()) / 2
         , top = pos.top - ($(this).height() - page.height()) / 2;
       $(this).scrollLeft(left).scrollTop(top)
     })
-    .click(function(e) {
+    .click(function(e) { // move on click
       me.goTo(new nko.Vector(e.pageX, e.pageY));
     });
   $('body')
-    .bind('touchstart', function(e) {
+    .bind('touchstart', function(e) { // move on touch
       var t = e.originalEvent.touches.item(0);
       me.goTo(new nko.Vector(t.pageX, t.pageY));
     });
