@@ -2,6 +2,7 @@
 
 var nko = { };
 
+//// Vector
 nko.Vector = function(x, y) {
   this.x = x || 0;
   this.y = y || 0;
@@ -37,6 +38,7 @@ nko.Vector.prototype = {
   }
 };
 
+//// Thing
 nko.Thing = function(name, options) {
   if (!name) return;
 
@@ -70,6 +72,7 @@ nko.Thing.prototype.draw = function draw() {
 };
 nko.Thing.prototype.animate = function() { };
 
+//// Dude
 nko.Dude = function(name, options) {
   nko.Thing.call(this, name, options);
 
@@ -80,19 +83,23 @@ nko.Dude.prototype = new nko.Thing();
 nko.Dude.prototype.constructor = nko.Dude;
 
 nko.Dude.prototype.draw = function draw() {
-  this.size.x = this.size.x / 10;
+  this.idleFrames = (this.size.x - 640) / 80;
+  this.size.x = 80;
   nko.Thing.prototype.draw.call(this);
 };
 
-nko.Dude.prototype.frames = { w: 2, e: 4, s: 6, n: 8 };
+nko.Dude.prototype.frameOffset = { w: 0, e: 2, s: 4, n: 6, idle: 8 };
 nko.Dude.prototype.animate = function animate(state) {
   var self = this;
-  clearTimeout(this.animateTimeout);
 
+  clearTimeout(this.animateTimeout);
   if (state) this.state = state;
-  this.frame = ((this.frame + 1) & 1) + (this.frames[this.state] || 0);
-  this.div.css('background-position', '-' + (this.frame * this.size.x) + 'px 0px');
-  this.animateTimeout = setTimeout(function() { self.animate() }, 500);
+
+  var frames = this.state === 'idle' ? this.idleFrames : 2;
+  this.frame = ((this.frame + 1) % frames) + this.frameOffset[this.state];
+  this.div.css('background-position', (-this.frame * this.size.x) + 'px 0px');
+
+  this.animateTimeout = setTimeout(function() { self.animate() }, 400);
 };
 
 nko.Dude.prototype.goTo = function(pos) {
@@ -159,7 +166,11 @@ $(function() {
   });
 
   // a dude
-  var me = new nko.Dude('suite', { pos: new nko.Vector(4800, 4400) });
+  //var types = [ 'suit', 'littleguy', 'beast', 'gifter' ];
+  var types = [ 'gifter' ];
+  var me = new nko.Dude(types[Math.floor(types.length * Math.random())], {
+    pos: new nko.Vector(4800, 4400)
+  });
 
   // some flare
   new nko.Thing('streetlamp', { pos: new nko.Vector(4080, 4160) });
