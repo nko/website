@@ -127,9 +127,10 @@ nko.Dude.prototype.goTo = function(pos) {
   else if (pos.y > bottom - buffer)
     newTop = top + $win.height()/2;
 
-  $('body')
-    .stop()
-    .animate({ scrollLeft: newLeft, scrollTop: newTop }, duration, 'linear');
+  if (typeof(TouchEvent) === 'undefined')
+    $('body')
+      .stop()
+      .animate({ scrollLeft: newLeft, scrollTop: newTop }, duration, 'linear');
 };
 
 $(function() {
@@ -184,5 +185,10 @@ $(function() {
     })
     .click(function(e) {
       me.goTo(new nko.Vector(e.pageX, e.pageY));
+    });
+  $('body')
+    .bind('touchstart', function(e) {
+      var t = e.originalEvent.touches.item(0);
+      me.goTo(new nko.Vector(t.pageX, t.pageY));
     });
 });
