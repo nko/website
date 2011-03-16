@@ -166,8 +166,7 @@ $(function() {
   });
 
   // a dude
-  //var types = [ 'suit', 'littleguy', 'beast', 'gifter' ];
-  var types = [ 'gifter' ];
+  var types = [ 'suit', 'littleguy', 'beast', 'gifter' ];
   var me = new nko.Dude(types[Math.floor(types.length * Math.random())], {
     pos: new nko.Vector(4800, 4400)
   });
