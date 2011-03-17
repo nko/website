@@ -1,5 +1,7 @@
+// safe console usage
 (function(b){function c(){}for(var d="assert,count,debug,dir,dirxml,error,exception,group,groupCollapsed,groupEnd,info, log,markTimeline,profile,profileEnd,time,timeEnd,trace,warn".split(","),a;a=d.pop();)b[a]=b[a]||c})(window.console=window.console||{});
 
+//// a lil place for ourselves
 var nko = { };
 
 //// Vector
@@ -64,7 +66,7 @@ nko.Thing.prototype.draw = function draw() {
       top: this.pos.y,
       width: this.size.x,
       height: this.size.y,
-      '-webkit-transform': 'translate(' + offset.toString() + ')',
+      transform: 'translate(' + offset.toString() + ')',
       background: 'url(' + this.img.attr('src') + ')'
     })
     .appendTo(document.body);

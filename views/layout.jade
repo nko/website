@@ -9,5 +9,5 @@ html
   body
     != body
     script( type: 'text/javascript', src: '//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js' )
-    script( type: 'text/javascript', src: '/javascripts/jquery.keylisten.min.js' )
-    script( type: 'text/javascript', src: '/javascripts/application.js' )
+    - each s in [ 'jquery.transform.light', 'jquery.keylisten.min', 'application' ]
+      script( type: 'text/javascript', src: '/javascripts/' + s + '.js' )
