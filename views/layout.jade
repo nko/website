@@ -11,12 +11,10 @@ html
       <script async src="//www.google-analytics.com/ga.js"></script>
   body
     != body
-
     - if (this.development)
-      script( src: '//code.jquery.com/jquery-1.5.1.min.js' )
-    - else
       script( src: '/javascripts/jquery-1.5.1.js' )
-
+    - else
+      script( src: '//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js' )
     - each s in [ 'socket.io.min', 'jquery.transform.light', 'jquery.keylisten.min', 'application' ]
       script( src: '/javascripts/' + s + '.js' )
     script
