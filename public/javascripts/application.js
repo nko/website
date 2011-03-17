@@ -275,7 +275,7 @@ $(function() {
 
   // socket
   var dudes = {};
-  var ws = new io.Socket(null, { maxReconnectionAttempts: 100 });
+  var ws = new io.Socket(null);
   ws.on('connect', function() {
     ws.send(JSON.stringify({ obj: me }));
   });
