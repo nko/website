@@ -9,6 +9,16 @@ var app = express.createServer();
 app.get('/', function(req, res) {
   res.render('index');
 });
+
+// let 2010 routes redirect for a while
+app.get(/\/(.*)\//, function(req, res, next) {
+  var path = req.params[0];
+  if (/^(stylesheets|javascripts|images|fonts)/.test(path)) {
+    next(); // don't redirect for stylesheets and the like
+  } else {
+    res.redirect('http://2010.nodeknockout.com' + req.url, 301);
+  }
+});
 app.listen(port);
 
 // socket.io
