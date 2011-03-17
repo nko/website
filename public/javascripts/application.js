@@ -95,7 +95,7 @@ nko.Thing.prototype.draw = function draw() {
 nko.Thing.prototype.animate = function() { };
 
 nko.Thing.prototype.remove = function() {
-  this.div.remove();
+  this.div.fadeOut(function() { $(this).remove(); });
 };
 
 
