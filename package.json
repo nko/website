@@ -20,8 +20,9 @@
     "jade": ">=0.9.1",
     "markdown": ">=0.2.1",
     "socket.io": ">=0.6.16",
-    "stylus": "0.8.0"
+    "stylus": ">=0.8.0"
   },
   "devDependencies": {
+    "nodemon": ">=0.2.1"
   }
 }
