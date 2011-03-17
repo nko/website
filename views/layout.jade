@@ -6,8 +6,24 @@ html
     meta( name: 'viewport', content: 'width=800,initial-scale=1' )
     title node.js knockout
     link( rel: 'stylesheet', href: '/stylesheets/application.css' )
+    script( type: 'text/javascript' )
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16773586-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
   body
     != body
     script( type: 'text/javascript', src: '//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js' )
+    script( type: 'text/javascript' )
+      $('a').live('mousedown', function() {
+        var href = this.href;
+        try {
+          if (/^https?:/.test(href)) { _gaq.push([ '_trackPageview', href ]); }
+        } catch(e) {}
+      });
     - each s in [ 'jquery.transform.light', 'jquery.keylisten.min', 'application' ]
       script( type: 'text/javascript', src: '/javascripts/' + s + '.js' )
