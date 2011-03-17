@@ -83,6 +83,7 @@ nko.Thing.prototype.draw = function draw() {
       top: this.pos.y,
       width: this.size.x,
       height: this.size.y,
+      'z-index': this.pos.y,
       transform: 'translate(' + offset.toString() + ')',
       background: 'url(' + this.img.attr('src') + ')'
     })
@@ -141,9 +142,20 @@ nko.Dude.prototype.goTo = function(pos) {
   this.animate(delta.cardinalDirection());
   this.div
     .stop()
-    .animate({ left: pos.x, top: pos.y }, duration, 'linear', function() {
-      self.pos = pos;
-      self.animate('idle');
+    .animate({
+      left: pos.x,
+      top: pos.y
+    }, {
+      duration: duration,
+      easing: 'linear',
+      step: function(now, fx) {
+        if (fx.prop === 'top')
+          self.div.css('z-index', Math.floor(now));
+      },
+      complete: function() {
+        self.pos = pos;
+        self.animate('idle');
+      }
     });
 };
 
