@@ -125,7 +125,7 @@ nko.Dude.prototype.goTo = function(pos) {
     , top = $win.scrollTop()
     , right = left + $win.width()
     , bottom = top + $win.height()
-    , buffer = 200
+    , buffer = 160
     , newLeft = left, newTop = top;
 
   if (pos.x < left + buffer)
