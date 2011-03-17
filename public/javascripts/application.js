@@ -144,17 +144,29 @@ nko.Dude.prototype.goTo = function(pos) {
       .animate({ scrollLeft: newLeft, scrollTop: newTop }, duration, 'linear');
 };
 
-nko.Dude.prototype.speak = function(text) {
-  var $words = this.div.find('.words');
-  $words.text(text).append('<span>&hellip;</span>')
-    .attr({ scrollTop: $words.attr("scrollHeight") })
-    .closest('.bubble').css({ display: 'block' }).show();
+nko.Dude.prototype.speak = function(text, done) {
+  var $words = this.div.find('.words')
+    , hellip = done ? '' : '<span>&hellip;</span>';
+  if (text) {
+    $words.text(text).append(hellip)
+      .attr({ scrollTop: $words.attr("scrollHeight") })
+      .closest('.bubble').css({ display: 'block' }).show();
+  }
 };
 
 nko.Dude.prototype.keylisten = function() {
   var self = this, $text = $('<textarea>');
   $text.appendTo($('<div class="textarea-container">').appendTo(this.div)).bind('keylisten keyup', function(e) {
-    self.speak($(this).val());
+    var text = $text.val();
+    switch (e.keyName) {
+      case "enter":
+      case "return":
+        self.speak(text, true);
+        $text.val('');
+        return false;
+      default:
+        self.speak(text);
+    }
   }).focus();
   $(document).keylisten(function() { $text.focus() });
 };
