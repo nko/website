@@ -1,4 +1,6 @@
 var express = require('express')
+  , io = require('socket.io')
+  , util = require('util')
   , pub = __dirname + '/public'
   , port = process.env.PORT || 8000;
 
@@ -18,4 +20,11 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-console.log("listening on 0.0.0.0:" + port + ".");
+var socket = io.listen(app)
+socket.on('connection', function(client) {
+  client.on('message', function(data) {
+    socket.broadcast(data, client.sessionId);
+  });
+});
+
+util.log("listening on 0.0.0.0:" + port + ".");

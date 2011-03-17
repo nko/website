@@ -25,5 +25,6 @@ html
           if (/^https?:/.test(href)) { _gaq.push([ '_trackPageview', href ]); }
         } catch(e) {}
       });
+    script( type: 'text/javascript', src: '//cdn.socket.io/stable/socket.io.js' )
     - each s in [ 'jquery.transform.light', 'jquery.keylisten.min', 'application' ]
       script( type: 'text/javascript', src: '/javascripts/' + s + '.js' )

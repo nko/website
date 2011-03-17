@@ -81,6 +81,8 @@ nko.Dude = function(name, options) {
   this.state = 'idle';
   this.frame = 0;
   this.div.append('<div class="bubble"><div class="words"></div></div>');
+
+  this.listen(options.socket);
 };
 nko.Dude.prototype = new nko.Thing();
 nko.Dude.prototype.constructor = nko.Dude;
@@ -177,6 +179,29 @@ nko.Dude.prototype.keylisten = function() {
   $(document).keylisten(function() { $text.focus() });
 };
 
+nko.Dude.prototype.listen = function listen(socket) {
+  if (!socket) return;
+
+  var ws = this.socket = socket
+    , retry = 1000;
+  ws.on('message', function(data) {
+    console.log(data);
+  });
+  // auto reconnect
+  ws.on('disconnect', function() {
+    setTimeout(connect, retry);
+  });
+
+  connect();
+
+  // persistent connect
+  function connect() {
+    if (ws.connected) return;
+    ws.connect();
+    setTimeout(connect, retry);
+  }
+};
+
 $(function() {
   var parts, start;
   parts = $('time.start').attr('datetime').split(/[-:TZ]/);
@@ -203,9 +228,11 @@ $(function() {
   });
 
   // a dude
+  var socket = new io.Socket('localhost');
   var types = [ 'suit', 'littleguy', 'beast', 'gifter' ];
   var me = new nko.Dude(types[Math.floor(types.length * Math.random())], {
-    pos: new nko.Vector(4800, 4400)
+    pos: new nko.Vector(4800, 4400),
+    socket: socket
   });
   me.keylisten();
   me.speak('type to speak; arrow/click to move');
