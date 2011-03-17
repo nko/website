@@ -134,7 +134,6 @@ nko.Dude.prototype.animate = function animate(state) {
 
 nko.Dude.prototype.goTo = function(pos) {
   pos = new nko.Vector(pos);
-  this.pos = new nko.Vector(parseInt(this.div.css('left')), parseInt(this.div.css('top')));
 
   var self = this
     , delta = pos.minus(this.pos)
@@ -149,8 +148,15 @@ nko.Dude.prototype.goTo = function(pos) {
       duration: duration,
       easing: 'linear',
       step: function(now, fx) {
-        if (fx.prop === 'top')
-          self.div.css('z-index', Math.floor(now));
+        switch (fx.prop) {
+          case 'left':
+            self.pos.x = now;
+            break;
+          case 'top':
+            self.pos.y = now;
+            self.div.css('z-index', Math.floor(now));
+            break;
+        }
       },
       complete: function() {
         self.pos = pos;
