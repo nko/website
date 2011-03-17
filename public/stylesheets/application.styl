@@ -57,11 +57,16 @@ footer
     display none
   .words
     margin 22px 20px 40px 25px
-    height 66px
-    overflow hidden
+    height 56px
     padding 5px
     text-align center
     overflow-y auto
+    white-space pre-wrap
+    line-height 125%
+  ::-webkit-scrollbar
+    width 1ex
+  ::-webkit-scrollbar-thumb:vertical
+    background-color hsla(0, 0%, 0%, 0.2)
   .textarea-container
     overflow hidden
     position relative

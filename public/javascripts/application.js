@@ -166,13 +166,11 @@ nko.Dude.prototype.goTo = function(pos) {
 };
 
 nko.Dude.prototype.speak = function(text, done) {
-  var $words = this.div.find('.words')
-    , hellip = done ? '' : '<span>&hellip;</span>';
-  if (text) {
-    $words.text(text).append(hellip)
-      .attr({ scrollTop: $words.attr("scrollHeight") })
-      .closest('.bubble').css({ display: 'block' }).show();
-  }
+  var $words = this.div.find('.words');
+  $words
+    .text(text)
+    .attr({ scrollTop: $words.attr("scrollHeight") })
+    .closest('.bubble').show();
 };
 
 nko.Dude.prototype.keylisten = function() {
@@ -185,11 +183,6 @@ nko.Dude.prototype.keylisten = function() {
       case "left":
       case "right":
         // TODO move
-        return false;
-      case "enter":
-      case "return":
-        self.speak(text, true);
-        $text.val('');
         return false;
       default:
         self.speak(text);
@@ -230,7 +223,6 @@ $(function() {
     pos: new nko.Vector(4000 + Math.random() * 800, 4200 + Math.random() * 200)
   });
   me.keylisten();
-  me.speak('type to speak; arrow/click to move');
 
   // some flare
   new nko.Thing({ name: 'streetlamp', pos: new nko.Vector(4080, 4160) });
