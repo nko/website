@@ -1,0 +1,8 @@
+# https://github.com/remy/nodemon
+
+./public/*
+./views/*
+./designs/*
+./LICENSE
+./README.md
+./nodemon-ignore
