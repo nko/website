@@ -145,8 +145,18 @@ nko.Dude.prototype.goTo = function(pos) {
 };
 
 nko.Dude.prototype.speak = function(text) {
-  var words = this.div.find('.words');
-  words.text(text).closest('.bubble').css({ display: 'block' }).show().delay(10 * 1000).fadeOut();
+  var $words = this.div.find('.words');
+  $words.text(text).append('<span>&hellip;</span>')
+    .attr({ scrollTop: $words.attr("scrollHeight") })
+    .closest('.bubble').css({ display: 'block' }).show();
+};
+
+nko.Dude.prototype.keylisten = function() {
+  var self = this, $text = $('<textarea>');
+  $text.appendTo($('<div class="textarea-container">').appendTo(this.div)).bind('keylisten keyup', function(e) {
+    self.speak($(this).val());
+  }).focus();
+  $(document).keylisten(function() { $text.focus() });
 };
 
 $(function() {
@@ -179,6 +189,7 @@ $(function() {
   var me = new nko.Dude(types[Math.floor(types.length * Math.random())], {
     pos: new nko.Vector(4800, 4400)
   });
+  me.keylisten();
   me.speak('type to speak; arrow/click to move');
 
   // some flare
