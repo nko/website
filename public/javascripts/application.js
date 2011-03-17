@@ -209,7 +209,7 @@ $(function() {
   var types = [ 'suit', 'littleguy', 'beast', 'gifter' ];
   var me = new nko.Dude({
     name: types[Math.floor(types.length * Math.random())],
-    pos: new nko.Vector(4800, 4400)
+    pos: new nko.Vector(4000 + Math.random() * 800, 4200 + Math.random() * 200)
   });
   me.keylisten();
   me.speak('type to speak; arrow/click to move');
