@@ -159,6 +159,12 @@ nko.Dude.prototype.keylisten = function() {
   $text.appendTo($('<div class="textarea-container">').appendTo(this.div)).bind('keylisten keyup', function(e) {
     var text = $text.val();
     switch (e.keyName) {
+      case "up":
+      case "down":
+      case "left":
+      case "right":
+        // TODO move
+        return false;
       case "enter":
       case "return":
         self.speak(text, true);
