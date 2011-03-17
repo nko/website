@@ -78,6 +78,7 @@ nko.Dude = function(name, options) {
 
   this.state = 'idle';
   this.frame = 0;
+  this.div.append('<div class="bubble"><div class="words"></div></div>');
 };
 nko.Dude.prototype = new nko.Thing();
 nko.Dude.prototype.constructor = nko.Dude;
@@ -141,6 +142,11 @@ nko.Dude.prototype.goTo = function(pos) {
       .animate({ scrollLeft: newLeft, scrollTop: newTop }, duration, 'linear');
 };
 
+nko.Dude.prototype.speak = function(text) {
+  var words = this.div.find('.words');
+  words.text(text).closest('.bubble').css({ display: 'block' }).show().delay(10 * 1000).fadeOut();
+};
+
 $(function() {
   var parts, start;
   parts = $('time.start').attr('datetime').split(/[-:TZ]/);
@@ -171,6 +177,7 @@ $(function() {
   var me = new nko.Dude(types[Math.floor(types.length * Math.random())], {
     pos: new nko.Vector(4800, 4400)
   });
+  me.speak('type to speak; arrow/click to move');
 
   // some flare
   new nko.Thing('streetlamp', { pos: new nko.Vector(4080, 4160) });
