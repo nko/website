@@ -20,11 +20,20 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-var socket = io.listen(app)
-socket.on('connection', function(client) {
-  client.on('message', function(data) {
-    socket.broadcast(data, client.sessionId);
-  });
+var ws = io.listen(app)
+ws.on('connection', function(client) {
+  client
+    .on('message', function(data) {
+      data = JSON.parse(data);
+      data.sessionId = client.sessionId;
+
+      ws.broadcast(JSON.stringify(data), client.sessionId);
+    })
+    .on('disconnect', function() {
+      ws.broadcast(JSON.stringify({
+        sessionId: client.sessionId, disconnect: true
+      }));
+    });
 });
 
 util.log("listening on 0.0.0.0:" + port + ".");

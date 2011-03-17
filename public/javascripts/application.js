@@ -4,10 +4,17 @@
 //// a lil place for ourselves
 var nko = { };
 
+
 //// Vector
 nko.Vector = function(x, y) {
-  this.x = x || 0;
-  this.y = y || 0;
+  if (typeof(x) === 'undefined') return
+  if (typeof(x) === 'number') {
+    this.x = x || 0;
+    this.y = y || 0;
+  } else {
+    this.x = x.x;
+    this.y = x.y;
+  }
 };
 nko.Vector.prototype = {
   constructor: nko.Vector,
@@ -40,24 +47,34 @@ nko.Vector.prototype = {
   }
 };
 
+
 //// Thing
-nko.Thing = function(name, options) {
-  if (!name) return;
+nko.Thing = function(options) {
+  if (!options) return;
 
   var self = this
     , options = options || {};
 
-  this.div = $('<div class="thing">');
+  this.name = options.name;
+  this.pos = new nko.Vector(options.pos);
+  this.size = new nko.Vector(options.size);
 
-  this.name = name;
+  this.div = $('<div class="thing">');
   this.img = $('<img>', { src: '/images/734m/' + this.name + '.png' })
     .load(function() {
       self.size = new nko.Vector(this.width, this.height);
       self.draw();
     });
-
-  this.pos = options.pos || new nko.Vector(150, 150);
 };
+
+nko.Thing.prototype.toJSON = function() {
+  return {
+    name: this.name,
+    pos: this.pos,
+    size: this.size
+  };
+};
+
 nko.Thing.prototype.draw = function draw() {
   var offset = new nko.Vector(this.size.x * -0.5, -this.size.y + 20);
   this.div
@@ -71,18 +88,24 @@ nko.Thing.prototype.draw = function draw() {
     })
     .appendTo(document.body);
   this.animate();
+
+  return this;
 };
+
 nko.Thing.prototype.animate = function() { };
 
+nko.Thing.prototype.remove = function() {
+  this.div.remove();
+};
+
+
 //// Dude
-nko.Dude = function(name, options) {
-  nko.Thing.call(this, name, options);
+nko.Dude = function(options) {
+  nko.Thing.call(this, options);
 
   this.state = 'idle';
   this.frame = 0;
   this.div.append('<div class="bubble"><div class="words"></div></div>');
-
-  this.listen(options.socket);
 };
 nko.Dude.prototype = new nko.Thing();
 nko.Dude.prototype.constructor = nko.Dude;
@@ -90,7 +113,8 @@ nko.Dude.prototype.constructor = nko.Dude;
 nko.Dude.prototype.draw = function draw() {
   this.idleFrames = (this.size.x - 640) / 80;
   this.size.x = 80;
-  nko.Thing.prototype.draw.call(this);
+
+  return nko.Thing.prototype.draw.call(this);
 };
 
 nko.Dude.prototype.frameOffset = { w: 0, e: 2, s: 4, n: 6, idle: 8 };
@@ -108,6 +132,7 @@ nko.Dude.prototype.animate = function animate(state) {
 };
 
 nko.Dude.prototype.goTo = function(pos) {
+  pos = new nko.Vector(pos);
   this.pos = new nko.Vector(parseInt(this.div.css('left')), parseInt(this.div.css('top')));
 
   var self = this
@@ -120,30 +145,6 @@ nko.Dude.prototype.goTo = function(pos) {
       self.pos = pos;
       self.animate('idle');
     });
-
-  // TODO move into nko.Viewport
-  var $win = $(window)
-    , left = $win.scrollLeft()
-    , top = $win.scrollTop()
-    , right = left + $win.width()
-    , bottom = top + $win.height()
-    , buffer = 160
-    , newLeft = left, newTop = top;
-
-  if (pos.x < left + buffer)
-    newLeft = left - $win.width()/2;
-  else if (pos.x > right - buffer)
-    newLeft = left + $win.width()/2;
-
-  if (pos.y < top + buffer)
-    newTop = top - $win.height()/2;
-  else if (pos.y > bottom - buffer)
-    newTop = top + $win.height()/2;
-
-  if (!('ontouchstart' in window))
-    $('body')
-      .stop()
-      .animate({ scrollLeft: newLeft, scrollTop: newTop }, duration, 'linear');
 };
 
 nko.Dude.prototype.speak = function(text, done) {
@@ -179,29 +180,6 @@ nko.Dude.prototype.keylisten = function() {
   $(document).keylisten(function() { $text.focus() });
 };
 
-nko.Dude.prototype.listen = function listen(socket) {
-  if (!socket) return;
-
-  var ws = this.socket = socket
-    , retry = 1000;
-  ws.on('message', function(data) {
-    console.log(data);
-  });
-  // auto reconnect
-  ws.on('disconnect', function() {
-    setTimeout(connect, retry);
-  });
-
-  connect();
-
-  // persistent connect
-  function connect() {
-    if (ws.connected) return;
-    ws.connect();
-    setTimeout(connect, retry);
-  }
-};
-
 $(function() {
   var parts, start;
   parts = $('time.start').attr('datetime').split(/[-:TZ]/);
@@ -228,27 +206,26 @@ $(function() {
   });
 
   // a dude
-  var socket = new io.Socket('localhost');
   var types = [ 'suit', 'littleguy', 'beast', 'gifter' ];
-  var me = new nko.Dude(types[Math.floor(types.length * Math.random())], {
-    pos: new nko.Vector(4800, 4400),
-    socket: socket
+  var me = new nko.Dude({
+    name: types[Math.floor(types.length * Math.random())],
+    pos: new nko.Vector(4800, 4400)
   });
   me.keylisten();
   me.speak('type to speak; arrow/click to move');
 
   // some flare
-  new nko.Thing('streetlamp', { pos: new nko.Vector(4080, 4160) });
-  new nko.Thing('livetree', { pos: new nko.Vector(3920, 4000) });
-  new nko.Thing('livetree', { pos: new nko.Vector(4080, 3920) });
+  new nko.Thing({ name: 'streetlamp', pos: new nko.Vector(4080, 4160) });
+  new nko.Thing({ name: 'livetree', pos: new nko.Vector(3920, 4000) });
+  new nko.Thing({ name: 'livetree', pos: new nko.Vector(4080, 3920) });
 
-  new nko.Thing('livetree', { pos: new nko.Vector(3840, 4960) });
-  new nko.Thing('deadtree', { pos: new nko.Vector(4000, 4960) });
-  new nko.Thing('portopotty', { pos: new nko.Vector(4080, 4960) });
+  new nko.Thing({ name: 'livetree', pos: new nko.Vector(3840, 4960) });
+  new nko.Thing({ name: 'deadtree', pos: new nko.Vector(4000, 4960) });
+  new nko.Thing({ name: 'portopotty', pos: new nko.Vector(4080, 4960) });
 
   // mark the ends of the universe
-  new nko.Thing('streetlamp', { pos: new nko.Vector(0, 0) });
-  new nko.Thing('streetlamp', { pos: new nko.Vector(8000, 8000) });
+  //new nko.Thing({ name: 'streetlamp', pos: new nko.Vector(0, 0) });
+  new nko.Thing({ name: 'streetlamp', pos: new nko.Vector(8000, 8000) });
 
   $(window)
     .load(function() { // center it
@@ -259,11 +236,64 @@ $(function() {
       $(this).scrollLeft(left).scrollTop(top)
     })
     .click(function(e) { // move on click
-      me.goTo(new nko.Vector(e.pageX, e.pageY));
+      var pos = { x: e.pageX, y: e.pageY };
+      me.goTo(pos);
+      ws.send(JSON.stringify({
+        obj: me,
+        method: 'goTo',
+        arguments: [ pos ]
+      }));
+
+      // TODO move into nko.Viewport
+      var $win = $(this)
+        , left = $win.scrollLeft()
+        , top = $win.scrollTop()
+        , right = left + $win.width()
+        , bottom = top + $win.height()
+        , buffer = 160
+        , newLeft = left, newTop = top;
+
+      if (pos.x < left + buffer)
+        newLeft = left - $win.width()/2;
+      else if (pos.x > right - buffer)
+        newLeft = left + $win.width()/2;
+
+      if (pos.y < top + buffer)
+        newTop = top - $win.height()/2;
+      else if (pos.y > bottom - buffer)
+        newTop = top + $win.height()/2;
+
+      $('body')
+        .stop()
+        .animate({ scrollLeft: newLeft, scrollTop: newTop }, 1000, 'linear');
     });
   $('body')
     .bind('touchstart', function(e) { // move on touch
       var t = e.originalEvent.touches.item(0);
       me.goTo(new nko.Vector(t.pageX, t.pageY));
     });
+
+  // socket
+  var dudes = {};
+  var ws = new io.Socket('localhost', { maxReconnectionAttempts: 100 });
+  ws.on('connect', function() {
+    ws.send(JSON.stringify({ obj: me }));
+  });
+  ws.on('message', function(data) {
+    var data = JSON.parse(data)
+      , dude = dudes[data.sessionId];
+
+    if (data.disconnect && dude) {
+      dude.remove();
+      delete dudes[data.sessionId];
+    }
+
+    if (data.obj && !dude)
+      dude = dudes[data.sessionId] = new nko.Dude(data.obj).draw();
+
+    if (data.method)
+      nko.Dude.prototype[data.method].apply(dude, data.arguments);
+  });
+
+  ws.connect();
 });
