@@ -138,7 +138,9 @@ nko.Dude.prototype.animate = function animate(state) {
 
   if (this.bubble.is(':visible')) {
     this.bubbleFrame = (this.bubbleFrame + 1) % 3;
-    this.bubble.css('border-image', "url('/images/734m/talkbubble" + this.bubbleFrame + ".png') 21 20 42 21");
+    $('<img>', { src: '/images/734m/talkbubble' + this.bubbleFrame + '.png' }).load(function() {
+      self.bubble.css('border-image', "url('" + this.src + "') 21 20 42 21");
+    });
   }
 
   this.animateTimeout = setTimeout(function() { self.animate() }, 400);
