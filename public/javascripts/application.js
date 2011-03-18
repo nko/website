@@ -106,7 +106,6 @@ nko.Dude = function(options) {
 
   this.state = 'idle';
   this.frame = 0;
-  this.div.append('<div class="bubble"><div class="words"></div></div>');
 };
 nko.Dude.prototype = new nko.Thing();
 nko.Dude.prototype.constructor = nko.Dude;
@@ -114,6 +113,10 @@ nko.Dude.prototype.constructor = nko.Dude;
 nko.Dude.prototype.draw = function draw() {
   this.idleFrames = (this.size.x - 640) / 80;
   this.size.x = 80;
+
+  this.bubble = $('<div class="bubble">')
+    .css('bottom', this.size.y + 10)
+    .appendTo(this.div);
 
   return nko.Thing.prototype.draw.call(this);
 };
@@ -165,31 +168,23 @@ nko.Dude.prototype.goTo = function(pos) {
     });
 };
 
-nko.Dude.prototype.speak = function(text, done) {
-  var $words = this.div.find('.words');
-  $words
-    .text(text)
-    .attr({ scrollTop: $words.attr("scrollHeight") })
-    .closest('.bubble').show();
+nko.Dude.prototype.speak = function(text) {
+  if (!text)
+    this.bubble.fadeOut();
+  else {
+    this.bubble
+      .text(text)
+      .scrollTop(this.bubble.attr("scrollHeight"))
+      .fadeIn();
+
+    var self = this;
+    clearTimeout(this.speakTimeout);
+    this.speakTimeout = setTimeout(function() {
+      self.bubble.fadeOut();
+    }, 5000);
+  }
 };
 
-nko.Dude.prototype.keylisten = function() {
-  var self = this, $text = $('<textarea>');
-  $text.appendTo($('<div class="textarea-container">').appendTo(this.div)).bind('keylisten keyup', function(e) {
-    var text = $text.val();
-    switch (e.keyName) {
-      case "up":
-      case "down":
-      case "left":
-      case "right":
-        // TODO move
-        return false;
-      default:
-        self.speak(text);
-    }
-  }).focus();
-  $(document).keylisten(function() { $text.focus() });
-};
 
 $(function() {
   var parts, start;
@@ -222,7 +217,6 @@ $(function() {
     name: types[Math.floor(types.length * Math.random())],
     pos: new nko.Vector(4000 + Math.random() * 800, 4200 + Math.random() * 200)
   });
-  me.keylisten();
 
   // some flare
   new nko.Thing({ name: 'streetlamp', pos: new nko.Vector(4080, 4160) });
@@ -282,6 +276,31 @@ $(function() {
       var t = e.originalEvent.touches.item(0);
       me.goTo(new nko.Vector(t.pageX, t.pageY));
     });
+
+  // keyboard
+  var $text = $('<textarea>');
+  $text
+    .appendTo($('<div class="textarea-container">')
+    .appendTo(me.div))
+    .bind('keylisten keyup', function(e) {
+      var text = $text.val();
+      switch (e.keyName) {
+        case "up":
+        case "down":
+        case "left":
+        case "right":
+          // TODO move
+          return false;
+        default:
+          me.speak(text);
+          ws.send(JSON.stringify({
+            obj: me,
+            method: 'speak',
+            arguments: [ text ]
+          }));
+      }
+    }).focus();
+  $(document).keylisten(function() { $text.focus() });
 
   // socket
   var dudes = {};

@@ -1,3 +1,8 @@
+border-image()
+  -webkit-border-image arguments
+  -moz-border-image arguments
+  border-image arguments
+
 @font-face
   font-family "04b_03"
   src url(/fonts/04B_03__.TTF)
@@ -49,16 +54,13 @@ footer
   position absolute
   .bubble
     position absolute
-    top -143px
-    right -220px
-    width 292px
-    height 133px
-    background url('/images/734m/talkbubble.png') no-repeat top left
-    display none
-  .words
-    margin 22px 20px 40px 25px
-    height 56px
+    left -15px
+    width 294px - 20px - 21px
+    max-height 133px - 21px - 42px
+    border-image url('/images/734m/talkbubble1.png') 21 20 42 21
+    border-width 21px 20px 42px 21px
     padding 5px
+    display none
     text-align center
     overflow-y auto
     white-space pre-wrap
