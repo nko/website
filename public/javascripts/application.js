@@ -84,7 +84,7 @@ nko.Thing.prototype.draw = function draw() {
       top: this.pos.y,
       width: this.size.x,
       height: this.size.y,
-      'z-index': this.pos.y,
+      'z-index': Math.floor(this.pos.y),
       transform: 'translate(' + offset.toString() + ')',
       background: 'url(' + this.img.attr('src') + ')'
     })
@@ -288,14 +288,11 @@ $(function() {
   var speakTimeout, $text = $('<textarea>')
     .appendTo($('<div class="textarea-container">')
     .appendTo(me.div))
-    .bind('keylisten keyup', function(e) {
+    .bind('keyup', function(e) {
       var text = $text.val();
-      switch (e.keyName) {
-        case "up":
-        case "down":
-        case "left":
-        case "right":
-          // TODO move
+      switch (e.keyCode) {
+        case 13:
+          $text.val('');
           return false;
         default:
           me.speak(text);
