@@ -177,18 +177,11 @@ nko.Dude.prototype.goTo = function(pos) {
 nko.Dude.prototype.speak = function(text) {
   if (!text)
     this.bubble.fadeOut();
-  else {
+  else
     this.bubble
       .text(text)
       .scrollTop(this.bubble.attr("scrollHeight"))
       .fadeIn();
-
-    var self = this;
-    clearTimeout(this.speakTimeout);
-    this.speakTimeout = setTimeout(function() {
-      self.bubble.fadeOut();
-    }, 5000);
-  }
 };
 
 
@@ -285,8 +278,7 @@ $(function() {
     });
 
   // keyboard
-  var $text = $('<textarea>');
-  $text
+  var speakTimeout, $text = $('<textarea>')
     .appendTo($('<div class="textarea-container">')
     .appendTo(me.div))
     .bind('keylisten keyup', function(e) {
@@ -305,6 +297,15 @@ $(function() {
             method: 'speak',
             arguments: [ text ]
           }));
+          clearTimeout(speakTimeout);
+          speakTimeout = setTimeout(function() {
+            $text.val('');
+            me.speak();
+            ws.send(JSON.stringify({
+              obj: me,
+              method: 'speak'
+            }));
+          }, 5000);
       }
     }).focus();
   $(document).keylisten(function() { $text.focus() });
