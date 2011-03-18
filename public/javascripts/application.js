@@ -58,6 +58,7 @@ nko.Thing = function(options) {
   this.name = options.name;
   this.pos = new nko.Vector(options.pos);
   this.size = new nko.Vector(options.size);
+  this.ready = options.ready;
 
   this.div = $('<div class="thing">');
   this.img = $('<img>', { src: '/images/734m/' + this.name + '.png' })
@@ -88,6 +89,8 @@ nko.Thing.prototype.draw = function draw() {
       background: 'url(' + this.img.attr('src') + ')'
     })
     .appendTo(document.body);
+  if (this.ready) this.ready();
+
   this.animate();
 
   return this;
@@ -215,7 +218,11 @@ $(function() {
   var types = [ 'suit', 'littleguy', 'beast', 'gifter' ];
   var me = new nko.Dude({
     name: types[Math.floor(types.length * Math.random())],
-    pos: new nko.Vector(4000 + Math.random() * 800, 4200 + Math.random() * 200)
+    pos: new nko.Vector(4000 + Math.random() * 800, 4200 + Math.random() * 200),
+    ready: function() {
+      this.speak('type to chat. click to move around.');
+      speakTimeout = setTimeout(function() { me.speak(''); }, 5000);
+    }
   });
 
   // some flare
