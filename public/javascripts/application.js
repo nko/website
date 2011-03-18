@@ -106,6 +106,7 @@ nko.Dude = function(options) {
 
   this.state = 'idle';
   this.frame = 0;
+  this.bubbleFrame = 0;
 };
 nko.Dude.prototype = new nko.Thing();
 nko.Dude.prototype.constructor = nko.Dude;
@@ -131,6 +132,11 @@ nko.Dude.prototype.animate = function animate(state) {
   var frames = this.state === 'idle' ? this.idleFrames : 2;
   this.frame = ((this.frame + 1) % frames) + this.frameOffset[this.state];
   this.div.css('background-position', (-this.frame * this.size.x) + 'px 0px');
+
+  if (this.bubble.is(':visible')) {
+    this.bubbleFrame = (this.bubbleFrame + 1) % 3;
+    this.bubble.css('border-image', "url('/images/734m/talkbubble" + this.bubbleFrame + ".png') 21 20 42 21");
+  }
 
   this.animateTimeout = setTimeout(function() { self.animate() }, 400);
 };
