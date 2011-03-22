@@ -85,7 +85,7 @@ nko.Thing.prototype.draw = function draw() {
       width: this.size.x,
       height: this.size.y,
       'z-index': Math.floor(this.pos.y),
-      transform: 'translate(' + offset.toString() + ')',
+      transform: Modernizr.csstransforms ? 'translate(' + offset.toString() + ')' : null,
       background: 'url(' + this.img.attr('src') + ')'
     })
     .appendTo(document.body);
