@@ -193,7 +193,7 @@ nko.Dude.prototype.speak = function(text) {
 $(function() {
   // countdown
   var parts, start;
-  parts = $('time.start').attr('datetime').split(/[-:TZ]/);
+  parts = $('time:first').attr('datetime').split(/[-:TZ]/);
   parts[1]--; // js dates :( js dates are hot dates.
   start = Date.UTC.apply(null, parts);
 
