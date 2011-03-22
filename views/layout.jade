@@ -15,6 +15,8 @@ html
       script( src: '/javascripts/jquery-1.5.1.js' )
     - else
       script( src: '//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js' )
+    script
+      window.JSON || document.write("<script src='/javascripts/json2.js'>\\x3C/script>"); // include json2.js if needed
     - each s in [ 'socket.io.min', 'jquery.transform.light', 'jquery.border-image', 'jquery.keylisten.min', 'application' ]
       script( src: '/javascripts/' + s + '.js' )
     script
