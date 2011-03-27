@@ -6,9 +6,8 @@ html
     meta( name: 'viewport', content: 'width=800,initial-scale=1' )
     title node.js knockout
     link( rel: 'stylesheet', href: '/stylesheets/application.css' )
-    :text
-      <script>_gaq = [['_setAccount', 'UA-16773586-1'], ['_trackPageview']];</script>
-      <script async src="//www.google-analytics.com/ga.js"></script>
+    script _gaq = [['_setAccount', 'UA-16773586-1'], ['_trackPageview']];
+    script( async: true, src: "//www.google-analytics.com/ga.js" )
   body
     != body
     - if (this.development)

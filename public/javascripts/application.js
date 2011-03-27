@@ -287,10 +287,10 @@ $(function() {
     });
 
   // keyboard
-  var speakTimeout, $text = $('<textarea>')
+  var speakTimeout, $text = $('<input type="text" x-webkit-speech>')
     .appendTo($('<div class="textarea-container">')
     .appendTo(me.div))
-    .bind('keyup', function(e) {
+    .bind('keyup webkitspeechchange', function(e) {
       var text = $text.val();
       switch (e.keyCode) {
         case 13:
