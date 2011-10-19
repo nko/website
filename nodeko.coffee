@@ -21,9 +21,11 @@ app.use connect.methodOverride()
 app.use connect.cookieDecoder()
 
 Hoptoad = require('./lib/hoptoad-notifier/lib/hoptoad-notifier').Hoptoad
-Hoptoad.key = 'b76b10945d476da44a0eac6bfe1aeabd'
+Hoptoad.key = 'some key'
+###
 process.on 'uncaughtException', (e) ->
   Hoptoad.notify e
+###
 
 request = (type) ->
   (path, fn) ->
@@ -90,7 +92,7 @@ request = (type) ->
           __bind(fn, ctx)()
         catch e
           e.action = e.url = req.url
-          Hoptoad.notify e
+          #Hoptoad.notify e
           next e
 get = request 'get'
 post = request 'post'
