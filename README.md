@@ -16,3 +16,8 @@ We'll likely throw all of this out by next year.
 [express]:http://expressjs.com/
 [Connect]:http://senchalabs.github.com/connect/
 [npm]:http://npmjs.org/
+
+
+Thank You For Reading Our Documentation
+
+[END]
